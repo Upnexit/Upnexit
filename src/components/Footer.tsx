@@ -1,5 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Facebook, Twitter, Linkedin, Instagram, ArrowRight } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram, ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -9,8 +9,14 @@ const Footer = () => {
     <footer className="gradient-dark text-white relative overflow-hidden pb-20 lg:pb-0">
       {/* Top accent line */}
       <div className="h-1 gradient-accent" />
+
+      {/* Subtle dot texture overlay */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+        backgroundSize: '24px 24px'
+      }} />
       
-      <div className="container mx-auto px-4 lg:px-8 py-10 md:py-16">
+      <div className="container mx-auto px-4 lg:px-8 py-10 md:py-16 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
@@ -18,13 +24,13 @@ const Footer = () => {
               <div className="w-9 h-9 rounded-xl gradient-accent flex items-center justify-center">
                 <span className="text-white font-black text-lg">T</span>
               </div>
-              <span className="text-xl font-extrabold">TechSoft</span>
+              <span className="text-xl font-extrabold tracking-tight">TechSoft</span>
             </div>
-            <p className="text-sm text-white/60 leading-relaxed mb-6 max-w-xs">{t.footer.desc}</p>
+            <p className="text-sm text-white/65 leading-relaxed mb-6 max-w-xs">{t.footer.desc}</p>
             <div className="flex gap-3">
               {[Facebook, Twitter, Linkedin, Instagram].map((Icon, i) => (
-                <a key={i} href="#" className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors">
-                  <Icon className="h-4 w-4 text-white/60" />
+                <a key={i} href="#" className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary/30 transition-all duration-300">
+                  <Icon className="h-4 w-4 text-white/60 group-hover:text-white" />
                 </a>
               ))}
             </div>
@@ -33,16 +39,16 @@ const Footer = () => {
           {/* Quick Links + Contact side by side on mobile */}
           <div className="grid grid-cols-2 gap-6 sm:contents">
             {/* Quick Links */}
-            <div>
-              <h4 className="font-bold mb-4 text-white/90">{t.footer.quickLinks}</h4>
-              <div className="space-y-2.5">
+            <div className="rounded-2xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] p-5">
+              <h4 className="font-bold mb-4 text-white tracking-wide text-sm uppercase">{t.footer.quickLinks}</h4>
+              <div className="space-y-3">
                 {[
                   { label: t.nav.home, href: '/' },
                   { label: t.nav.services, href: '/services' },
                   { label: t.nav.about, href: '/about' },
                   { label: t.nav.contact, href: '/contact' },
                 ].map((l) => (
-                  <Link key={l.href} to={l.href} className="flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors group">
+                  <Link key={l.href} to={l.href} className="flex items-center gap-1.5 text-sm text-white/60 hover:text-white hover:translate-x-1 transition-all duration-200 group">
                     <ArrowRight className="h-3 w-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                     {l.label}
                   </Link>
@@ -51,25 +57,34 @@ const Footer = () => {
             </div>
 
             {/* Contact */}
-            <div>
-              <h4 className="font-bold mb-4 text-white/90">{t.footer.contactInfo}</h4>
-              <div className="space-y-2.5 text-sm text-white/50">
-                <p>info@techsoft.com.bd</p>
-                <p>+880 1XXX-XXXXXX</p>
-                <p>ঢাকা, বাংলাদেশ</p>
+            <div className="rounded-2xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] p-5">
+              <h4 className="font-bold mb-4 text-white tracking-wide text-sm uppercase">{t.footer.contactInfo}</h4>
+              <div className="space-y-3 text-sm">
+                <p className="flex items-center gap-2 text-white/65">
+                  <Mail className="h-3.5 w-3.5 text-primary/70 shrink-0" />
+                  info@techsoft.com.bd
+                </p>
+                <p className="flex items-center gap-2 text-white/65">
+                  <Phone className="h-3.5 w-3.5 text-primary/70 shrink-0" />
+                  +880 1XXX-XXXXXX
+                </p>
+                <p className="flex items-center gap-2 text-white/65">
+                  <MapPin className="h-3.5 w-3.5 text-primary/70 shrink-0" />
+                  ঢাকা, বাংলাদেশ
+                </p>
               </div>
             </div>
           </div>
 
           {/* Newsletter CTA */}
-          <div>
-            <h4 className="font-bold mb-4 text-white/90">Newsletter</h4>
-            <p className="text-sm text-white/50 mb-4">Stay updated with our latest news.</p>
+          <div className="rounded-2xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] p-5">
+            <h4 className="font-bold mb-3 text-white tracking-wide text-sm uppercase">Newsletter</h4>
+            <p className="text-sm text-white/60 mb-4 leading-relaxed">Stay updated with our latest news.</p>
             <div className="flex gap-2">
               <input
                 type="email"
                 placeholder="Email"
-                className="flex-1 h-10 px-4 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-white/25"
+                className="flex-1 h-10 px-4 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-primary/40 focus:bg-white/[0.07] transition-all"
               />
               <button className="h-10 px-4 rounded-lg gradient-accent text-white text-sm font-semibold hover:opacity-90 transition-opacity">
                 <ArrowRight className="h-4 w-4" />
