@@ -1,4 +1,6 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface TeamMember {
   name: string;
@@ -7,7 +9,7 @@ interface TeamMember {
 }
 
 const MemberCard = ({ member }: { member: TeamMember }) => (
-  <div className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden shrink-0 w-[calc(50%-6px)] md:w-[calc(25%-18px)]">
+  <div className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden h-full">
     <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
       <img src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
     </div>
@@ -19,10 +21,25 @@ const MemberCard = ({ member }: { member: TeamMember }) => (
 );
 
 const TeamSlider = ({ team }: { team: TeamMember[] }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const isMobile = useIsMobile();
+
+  const perPage = isMobile ? 2 : 4;
+  const totalPages = Math.ceil(team.length / perPage);
+  const needsSlider = totalPages > 1;
+
+  useEffect(() => {
+    if (!needsSlider) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % totalPages);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [totalPages, needsSlider]);
+
   if (team.length === 0) return null;
 
-  // If 4 or fewer, just show grid without sliding
-  if (team.length <= 4) {
+  // No slider needed - static grid
+  if (!needsSlider) {
     return (
       <div className={`grid gap-3 sm:gap-6 ${
         team.length <= 2 ? 'grid-cols-2' : 
@@ -43,27 +60,42 @@ const TeamSlider = ({ team }: { team: TeamMember[] }) => {
     );
   }
 
-  // Infinite marquee for more than 4 members
-  const duplicated = [...team, ...team];
+  const startIdx = activeIndex * perPage;
+  const currentMembers = team.slice(startIdx, startIdx + perPage);
 
   return (
-    <div className="overflow-hidden">
-      <motion.div
-        className="flex gap-3 sm:gap-6"
-        animate={{ x: ['0%', '-50%'] }}
-        transition={{
-          x: {
-            repeat: Infinity,
-            repeatType: 'loop',
-            duration: team.length * 4,
-            ease: 'linear',
-          },
-        }}
-      >
-        {duplicated.map((member, i) => (
-          <MemberCard key={`${member.name}-${i}`} member={member} />
+    <div className="relative">
+      <div className="overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            initial={{ opacity: 0, x: 300 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -300 }}
+            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className={`grid gap-3 sm:gap-6 ${
+              perPage <= 2 ? 'grid-cols-2' : 'grid-cols-2 md:grid-cols-4'
+            }`}
+          >
+            {currentMembers.map((member, i) => (
+              <MemberCard key={i} member={member} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-2 mt-6">
+        {Array.from({ length: totalPages }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveIndex(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === activeIndex ? 'w-6 bg-primary' : 'w-2 bg-border hover:bg-muted-foreground/40'
+            }`}
+          />
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 };
