@@ -263,7 +263,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Leadership Section */}
       <section className="section-padding">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
@@ -273,14 +273,84 @@ const About = () => {
             className="text-center mb-14"
           >
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
+              {lang === 'bn' ? 'আমাদের নেতৃত্ব' : 'Our Leadership'}
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-foreground">
+              {lang === 'bn' ? 'যারা আমাদের পরিচালনা করেন' : 'Meet Our Leaders'}
+            </h2>
+            <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
+              {lang === 'bn' ? 'অভিজ্ঞ ও দূরদর্শী নেতৃত্বের অধীনে আমরা এগিয়ে যাচ্ছি' : 'Moving forward under experienced and visionary leadership'}
+            </p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                name: lang === 'bn' ? 'মোহাম্মদ আলী' : 'Mohammad Ali',
+                role: lang === 'bn' ? 'প্রতিষ্ঠাতা ও সিইও' : 'Founder & CEO',
+                bio: lang === 'bn' ? '১০+ বছরের সফটওয়্যার ইন্ডাস্ট্রি অভিজ্ঞতা। প্রযুক্তি ও ব্যবসায়িক কৌশলে পারদর্শী।' : '10+ years in software industry. Expert in technology and business strategy.',
+                image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face',
+              },
+              {
+                name: lang === 'bn' ? 'সাদিয়া রহমান' : 'Sadia Rahman',
+                role: lang === 'bn' ? 'সভাপতি' : 'President',
+                bio: lang === 'bn' ? 'ব্যবসায়িক উন্নয়ন ও ক্লায়েন্ট রিলেশনশিপে বিশেষজ্ঞ। কোম্পানির সামগ্রিক পরিচালনায় নেতৃত্ব দেন।' : 'Expert in business development and client relations. Leads overall company operations.',
+                image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face',
+              },
+              {
+                name: lang === 'bn' ? 'রাকিব হাসান' : 'Rakib Hasan',
+                role: lang === 'bn' ? 'প্রধান প্রযুক্তি কর্মকর্তা (CTO)' : 'Chief Technology Officer (CTO)',
+                bio: lang === 'bn' ? 'আধুনিক প্রযুক্তি স্ট্যাক ও সিস্টেম আর্কিটেকচারে দক্ষ। টেকনিক্যাল টিম পরিচালনা করেন।' : 'Skilled in modern tech stacks and system architecture. Manages the technical team.',
+                image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
+              },
+            ].map((leader, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 }}
+                whileHover={{ y: -8 }}
+                className="bg-background rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all group relative overflow-hidden"
+              >
+                <div className="relative h-64 sm:h-72 overflow-hidden rounded-t-3xl">
+                  <img
+                    src={leader.image}
+                    alt={leader.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+                  <div className="absolute bottom-4 left-5 right-5">
+                    <h3 className="font-bold text-lg text-primary-foreground">{leader.name}</h3>
+                    <span className="inline-block mt-1 px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/80 text-primary-foreground">
+                      {leader.role}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-sm text-muted-foreground leading-relaxed">{leader.bio}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className="section-padding bg-muted/30">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-14"
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-5">
               {lang === 'bn' ? 'আমাদের টিম' : 'Our Team'}
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-foreground">
               {lang === 'bn' ? 'দক্ষ পেশাদারদের দল' : 'Expert Professionals'}
             </h2>
-            <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
-              {lang === 'bn' ? 'অভিজ্ঞ ও দক্ষ পেশাদারদের নিয়ে আমাদের টিম' : 'Our team of experienced professionals'}
-            </p>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -294,15 +364,10 @@ const About = () => {
                 whileHover={{ y: -6 }}
                 className="bg-background rounded-3xl p-7 border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden"
               >
-                {/* Subtle background pattern */}
-                <div className="absolute top-0 right-0 w-24 h-24 opacity-[0.04]" style={{
-                  backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
-                  backgroundSize: '8px 8px',
-                }} />
-                <div className="w-24 h-24 rounded-3xl bg-primary/8 border-2 border-primary/15 flex items-center justify-center mx-auto mb-5 group-hover:bg-primary/15 group-hover:scale-105 group-hover:border-primary/25 transition-all duration-300">
-                  <member.icon className="h-10 w-10 text-primary" />
+                <div className="w-20 h-20 rounded-2xl bg-primary/8 border-2 border-primary/15 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/15 group-hover:scale-105 transition-all duration-300">
+                  <member.icon className="h-9 w-9 text-primary" />
                 </div>
-                <h3 className="font-bold text-lg text-foreground mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
+                <h3 className="font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
                 <p className="text-xs text-muted-foreground font-medium">{member.role}</p>
               </motion.div>
             ))}
