@@ -18,11 +18,23 @@ const AdminLogin = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
+
     setLoading(true);
     try {
-      const { error } = await signIn(email, password);
-      if (error) {
-        toast({ title: 'লগইন ব্যর্থ', description: error.message, variant: 'destructive' });
+      const normalizedEmail = email.trim().toLowerCase();
+
+      const result = await Promise.race([
+        signIn(normalizedEmail, password),
+        new Promise<{ error: { message: string } }>((resolve) => {
+          setTimeout(() => {
+            resolve({ error: { message: 'অনুরোধটি বেশি সময় নিচ্ছে। আবার চেষ্টা করুন।' } });
+          }, 12000);
+        }),
+      ]);
+
+      if (result.error) {
+        toast({ title: 'লগইন ব্যর্থ', description: result.error.message, variant: 'destructive' });
       } else {
         toast({ title: '✅ সফল', description: 'লগইন সম্পন্ন হয়েছে!' });
         navigate('/admin');
