@@ -6,11 +6,11 @@ const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="gradient-dark text-white relative overflow-hidden pb-16 lg:pb-0">
+    <footer className="gradient-dark text-white relative overflow-hidden pb-20 lg:pb-0">
       {/* Top accent line */}
       <div className="h-1 gradient-accent" />
       
-      <div className="container mx-auto px-4 lg:px-8 py-12 md:py-16">
+      <div className="container mx-auto px-4 lg:px-8 py-10 md:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
@@ -30,31 +30,34 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-bold mb-4 text-white/90">{t.footer.quickLinks}</h4>
-            <div className="space-y-2.5">
-              {[
-                { label: t.nav.home, href: '/' },
-                { label: t.nav.services, href: '/services' },
-                { label: t.nav.about, href: '/about' },
-                { label: t.nav.contact, href: '/contact' },
-              ].map((l) => (
-                <Link key={l.href} to={l.href} className="flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors group">
-                  <ArrowRight className="h-3 w-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                  {l.label}
-                </Link>
-              ))}
+          {/* Quick Links + Contact side by side on mobile */}
+          <div className="grid grid-cols-2 gap-6 sm:contents">
+            {/* Quick Links */}
+            <div>
+              <h4 className="font-bold mb-4 text-white/90">{t.footer.quickLinks}</h4>
+              <div className="space-y-2.5">
+                {[
+                  { label: t.nav.home, href: '/' },
+                  { label: t.nav.services, href: '/services' },
+                  { label: t.nav.about, href: '/about' },
+                  { label: t.nav.contact, href: '/contact' },
+                ].map((l) => (
+                  <Link key={l.href} to={l.href} className="flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors group">
+                    <ArrowRight className="h-3 w-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="font-bold mb-4 text-white/90">{t.footer.contactInfo}</h4>
-            <div className="space-y-2.5 text-sm text-white/50">
-              <p>info@techsoft.com.bd</p>
-              <p>+880 1XXX-XXXXXX</p>
-              <p>ঢাকা, বাংলাদেশ</p>
+            {/* Contact */}
+            <div>
+              <h4 className="font-bold mb-4 text-white/90">{t.footer.contactInfo}</h4>
+              <div className="space-y-2.5 text-sm text-white/50">
+                <p>info@techsoft.com.bd</p>
+                <p>+880 1XXX-XXXXXX</p>
+                <p>ঢাকা, বাংলাদেশ</p>
+              </div>
             </div>
           </div>
 
@@ -75,7 +78,8 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Copyright - hidden on mobile, visible on desktop */}
+        <div className="hidden sm:flex mt-12 pt-8 border-t border-white/10 flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/40">
             © {new Date().getFullYear()} TechSoft. {t.footer.rights}.
           </p>
