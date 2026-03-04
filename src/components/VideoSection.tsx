@@ -31,7 +31,7 @@ const VideoSection = () => {
           <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-elevated ring-1 ring-border/30" style={{ paddingBottom: '56.25%' }}>
             <iframe
               className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              src="https://www.youtube.com/embed/GuXDGUQbawI"
               title="Company Introduction"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
