@@ -72,7 +72,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold bg-secondary/15 text-secondary border border-secondary/25 mb-8 shadow-sm" style={{ color: 'hsl(46 92% 42%)' }}>
+            <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-extrabold bg-secondary/20 border border-secondary/30 mb-8 shadow-sm" style={{ color: 'hsl(40 95% 38%)', textShadow: '0 0 12px hsl(46 92% 55% / 0.3)' }}>
               {t.hero.badge}
             </span>
           </motion.div>
