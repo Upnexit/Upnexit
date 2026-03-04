@@ -138,9 +138,9 @@ const Navbar = () => {
       </nav>
 
       {/* Floating Mobile Bottom Navigation Bar */}
-      <div className="lg:hidden fixed bottom-4 left-0 right-0 z-50 px-4">
+      <div className="lg:hidden fixed bottom-4 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md" style={{ transform: 'translateX(-50%)' }}>
         <div
-          className="relative rounded-[28px] p-1.5 mx-auto max-w-md"
+          className="rounded-[28px] p-1.5"
           style={{
             background: 'hsl(var(--foreground) / 0.06)',
             backdropFilter: 'blur(24px)',
