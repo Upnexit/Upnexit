@@ -100,22 +100,22 @@ const About = () => {
       {/* Mission & Vision */}
       <section className="py-10 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-10 md:mb-16">
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 md:gap-8 mb-10 md:mb-16">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-9 border border-primary/15 overflow-hidden"
+              className="relative rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:p-9 border border-primary/15 overflow-hidden"
               style={{ background: 'linear-gradient(135deg, hsl(145 63% 32% / 0.05), hsl(145 63% 32% / 0.02))' }}
             >
-              <div className="absolute top-0 left-0 right-0 h-1 gradient-accent rounded-t-3xl" />
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5">
-                <Target className="h-7 w-7 text-primary" />
+              <div className="absolute top-0 left-0 right-0 h-1 gradient-accent rounded-t-2xl sm:rounded-t-3xl" />
+              <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center mb-3 sm:mb-5">
+                <Target className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
+              <h3 className="text-sm sm:text-xl md:text-2xl font-bold text-foreground mb-2 sm:mb-3">
                 {lang === 'bn' ? 'আমাদের মিশন' : 'Our Mission'}
               </h3>
-              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+              <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm md:text-base">
                 {lang === 'bn'
                   ? 'প্রযুক্তির মাধ্যমে বাংলাদেশের প্রতিষ্ঠানগুলোকে ডিজিটাল রূপান্তরে সহায়তা করা এবং সাশ্রয়ী মূল্যে মানসম্মত সফটওয়্যার প্রদান করা।'
                   : 'To help organizations in Bangladesh with digital transformation through technology and provide quality software at affordable prices.'
@@ -127,17 +127,17 @@ const About = () => {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-9 border border-secondary/20 overflow-hidden"
+              className="relative rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:p-9 border border-secondary/20 overflow-hidden"
               style={{ background: 'linear-gradient(135deg, hsl(46 92% 55% / 0.06), hsl(46 92% 55% / 0.02))' }}
             >
-              <div className="absolute top-0 left-0 right-0 h-1 gradient-yellow rounded-t-3xl" />
-              <div className="w-14 h-14 rounded-2xl bg-secondary/15 flex items-center justify-center mb-5">
-                <Eye className="h-7 w-7 text-secondary" />
+              <div className="absolute top-0 left-0 right-0 h-1 gradient-yellow rounded-t-2xl sm:rounded-t-3xl" />
+              <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-secondary/15 flex items-center justify-center mb-3 sm:mb-5">
+                <Eye className="h-5 w-5 sm:h-7 sm:w-7 text-secondary" />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
+              <h3 className="text-sm sm:text-xl md:text-2xl font-bold text-foreground mb-2 sm:mb-3">
                 {lang === 'bn' ? 'আমাদের ভিশন' : 'Our Vision'}
               </h3>
-              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+              <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm md:text-base">
                 {lang === 'bn'
                   ? 'বাংলাদেশের শীর্ষস্থানীয় সফটওয়্যার কোম্পানি হিসেবে প্রতিষ্ঠিত হওয়া এবং আন্তর্জাতিক মানের সেবা প্রদান করা।'
                   : 'To be established as a leading software company in Bangladesh and provide world-class services.'
@@ -275,9 +275,9 @@ const About = () => {
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
               Leadership
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-3 text-foreground tracking-tight" style={{ fontFamily: "'Inter', sans-serif" }}>
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Founder</span>{' '}
-              {lang === 'bn' ? 'অফ দ্য কোম্পানি' : 'of the Company'}
+              of the Company
             </h2>
             <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
               {lang === 'bn' ? 'অভিজ্ঞ ও দূরদর্শী নেতৃত্বের অধীনে আমরা এগিয়ে যাচ্ছি' : 'Moving forward under experienced and visionary leadership'}
@@ -348,7 +348,7 @@ const About = () => {
             </h2>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {team.map((member, i) => (
               <motion.div
                 key={i}
@@ -357,13 +357,13 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -6 }}
-                className="bg-background rounded-3xl p-7 border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden"
+                className="bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden"
               >
-                <div className="w-20 h-20 rounded-2xl bg-primary/8 border-2 border-primary/15 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/15 group-hover:scale-105 transition-all duration-300">
-                  <member.icon className="h-9 w-9 text-primary" />
+                <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-primary/8 border-2 border-primary/15 flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-105 transition-all duration-300">
+                  <member.icon className="h-6 w-6 sm:h-9 sm:w-9 text-primary" />
                 </div>
-                <h3 className="font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
-                <p className="text-xs text-muted-foreground font-medium">{member.role}</p>
+                <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
+                <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{member.role}</p>
               </motion.div>
             ))}
           </div>
