@@ -1,121 +1,117 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Facebook, Twitter, Linkedin, Instagram, ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import footerSketch from '@/assets/footer-sketch.png';
-
-const CloudSVG = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 200 80" className={className} fill="currentColor">
-    <ellipse cx="60" cy="50" rx="50" ry="20" />
-    <ellipse cx="90" cy="40" rx="40" ry="18" />
-    <ellipse cx="130" cy="48" rx="45" ry="18" />
-    <ellipse cx="100" cy="35" rx="30" ry="15" />
-  </svg>
-);
+import footerCharacters from '@/assets/footer-characters.png';
 
 const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="relative overflow-hidden pb-14 lg:pb-0">
-      {/* Background sketch image - full coverage */}
-      <div className="absolute inset-0">
-        <img
-          src={footerSketch}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-50"
-        />
-      </div>
-
-      {/* Animated clouds */}
-      <CloudSVG className="absolute top-6 text-white/10 w-32 h-12 animate-[float-cloud_30s_linear_infinite] z-[1]" />
-      <CloudSVG className="absolute top-16 text-white/15 w-24 h-10 animate-[float-cloud_40s_linear_8s_infinite] z-[1]" />
-      <CloudSVG className="absolute top-3 text-white/[0.07] w-40 h-14 animate-[float-cloud_25s_linear_15s_infinite] z-[1]" />
-
-      {/* Top accent line */}
-      <div className="h-1 gradient-accent relative z-10" />
-
-      <div className="container mx-auto px-4 lg:px-8 py-8 md:py-10 relative z-10">
-        {/* Content area with transparent dark backdrop */}
-        <div className="rounded-2xl bg-[hsl(150_20%_8%/0.8)] backdrop-blur-md p-6 md:p-8 border border-white/5">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
-            {/* Brand */}
-            <div className="col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-9 h-9 rounded-xl gradient-accent flex items-center justify-center">
-                  <span className="text-white font-black text-lg">T</span>
+    <footer className="relative pb-14 lg:pb-0">
+      {/* Top section - Logo + CTA */}
+      <div className="bg-[hsl(0_0%_98%)] border-t border-border">
+        <div className="container mx-auto px-4 lg:px-8 py-12 md:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            {/* Left - Brand */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-10 h-10 rounded-xl gradient-accent flex items-center justify-center">
+                  <span className="text-white font-black text-xl">T</span>
                 </div>
-                <span className="text-xl font-extrabold text-white">TechSoft</span>
+                <span className="text-2xl font-extrabold text-foreground">TechSoft</span>
               </div>
-              <p className="text-xs text-white/50 leading-relaxed mb-4 max-w-xs">{t.footer.desc}</p>
-              <div className="flex gap-2">
-                {[Facebook, Twitter, Linkedin, Instagram].map((Icon, i) => (
-                  <a key={i} href="#" className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary/30 transition-all duration-300">
-                    <Icon className="h-3.5 w-3.5 text-white/50" />
-                  </a>
-                ))}
-              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
+                {t.footer.desc}
+              </p>
             </div>
 
-            {/* Quick Links */}
+            {/* Right - Demo/Newsletter CTA */}
             <div>
-              <h4 className="font-bold mb-3 text-sm text-white/90">{t.footer.quickLinks}</h4>
-              <div className="space-y-2">
+              <p className="text-primary font-semibold text-sm uppercase tracking-wider mb-2">Newsletter</p>
+              <h3 className="text-3xl md:text-4xl font-extrabold text-foreground leading-tight mb-6">
+                Stay Updated<br />With Us
+              </h3>
+              <div className="flex gap-2 max-w-md">
+                <input
+                  type="email"
+                  placeholder="Enter your email..."
+                  className="flex-1 h-12 px-4 rounded-full bg-white border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
+                />
+                <button className="h-12 w-12 shrink-0 rounded-full gradient-accent text-white flex items-center justify-center hover:opacity-90 transition-opacity shadow-glow">
+                  <ArrowRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Dark section - Links + Characters */}
+      <div className="bg-[hsl(0_0%_18%)] relative overflow-hidden">
+        <div className="container mx-auto px-4 lg:px-8 py-12 md:py-16 relative z-10">
+          {/* Link columns */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 mb-16">
+            {/* Resources / Quick Links */}
+            <div>
+              <h4 className="font-bold mb-5 text-base text-white">{t.footer.quickLinks}</h4>
+              <div className="space-y-3">
                 {[
                   { label: t.nav.home, href: '/' },
                   { label: t.nav.services, href: '/services' },
                   { label: t.nav.about, href: '/about' },
                   { label: t.nav.contact, href: '/contact' },
                 ].map((l) => (
-                  <Link key={l.href} to={l.href} className="flex items-center gap-1.5 text-xs text-white/45 hover:text-primary transition-colors group">
-                    <ArrowRight className="h-3 w-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
+                  <Link key={l.href} to={l.href} className="block text-sm text-white/60 hover:text-primary transition-colors">
                     {l.label}
                   </Link>
                 ))}
               </div>
             </div>
 
-            {/* Contact */}
+            {/* Company */}
             <div>
-              <h4 className="font-bold mb-3 text-sm text-white/90">{t.footer.contactInfo}</h4>
-              <div className="space-y-2.5">
-                {[
-                  { icon: Mail, text: 'info@techsoft.com.bd' },
-                  { icon: Phone, text: '+880 1XXX-XXXXXX' },
-                  { icon: MapPin, text: 'ঢাকা, বাংলাদেশ' },
-                ].map(({ icon: Icon, text }, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs text-white/45">
-                    <Icon className="h-3.5 w-3.5 text-primary/60 shrink-0" />
-                    {text}
-                  </div>
-                ))}
+              <h4 className="font-bold mb-5 text-base text-white">{t.footer.contactInfo}</h4>
+              <div className="space-y-3">
+                <p className="text-sm text-white/60">info@techsoft.com.bd</p>
+                <p className="text-sm text-white/60">+880 1XXX-XXXXXX</p>
+                <p className="text-sm text-white/60">ঢাকা, বাংলাদেশ</p>
               </div>
             </div>
 
-            {/* Newsletter */}
+            {/* Social */}
             <div>
-              <h4 className="font-bold mb-3 text-sm text-white/90">Newsletter</h4>
-              <p className="text-xs text-white/45 mb-3">Stay updated with our latest news.</p>
-              <div className="flex gap-1.5">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="flex-1 h-9 px-3 rounded-lg bg-white/5 border border-white/10 text-xs text-white placeholder:text-white/25 focus:outline-none focus:border-primary/40 transition-colors"
-                />
-                <button className="h-9 w-9 shrink-0 rounded-lg gradient-accent text-white flex items-center justify-center hover:opacity-90 transition-opacity">
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </button>
+              <h4 className="font-bold mb-5 text-base text-white">Social</h4>
+              <div className="space-y-3">
+                {['LinkedIn', 'Twitter', 'Facebook', 'Instagram'].map((s) => (
+                  <a key={s} href="#" className="block text-sm text-white/60 hover:text-primary transition-colors">
+                    {s}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Copyright - minimal gap */}
-        <div className="mt-3 pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-[10px] text-white/50 drop-shadow-sm">
-            © {new Date().getFullYear()} TechSoft. {t.footer.rights}.
-          </p>
-          <div className="flex items-center gap-1 text-[10px] text-white/50 drop-shadow-sm">
-            Made with <span className="text-primary mx-0.5">♥</span> in Bangladesh
+        {/* Characters illustration */}
+        <div className="relative w-full flex justify-center">
+          <img
+            src={footerCharacters}
+            alt="Team illustration"
+            className="w-full max-w-4xl h-auto object-contain"
+          />
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-white/10 relative z-10">
+          <div className="container mx-auto px-4 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-white/50">
+              © {new Date().getFullYear()} TechSoft. {t.footer.rights}.
+            </p>
+            <div className="flex items-center gap-4 text-xs text-white/50">
+              <a href="#" className="hover:text-white/80 transition-colors">Support</a>
+              <a href="#" className="hover:text-white/80 transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white/80 transition-colors">Terms of Use</a>
+            </div>
           </div>
         </div>
       </div>
