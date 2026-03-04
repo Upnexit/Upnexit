@@ -58,7 +58,7 @@ const Services = () => {
       ];
 
   return (
-    <div className="min-h-screen bg-background pb-20 lg:pb-0">
+    <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
       <Navbar />
 
       {/* Hero Banner */}
@@ -176,14 +176,14 @@ const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="flex items-start gap-2 sm:gap-4 p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-background border border-border hover:border-primary/20 hover:shadow-card transition-all group"
+                className="flex items-start gap-2.5 sm:gap-4 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-background border border-border hover:border-primary/20 hover:shadow-card transition-all group"
               >
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/8 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
                   <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1">{f.title}</h4>
-                  <p className="text-[10px] sm:text-sm text-muted-foreground">{f.desc}</p>
+                  <h4 className="font-bold text-sm sm:text-base text-foreground mb-0.5 sm:mb-1">{f.title}</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -228,7 +228,7 @@ const Services = () => {
                   {p.step}
                 </div>
                 <h3 className="font-bold text-sm sm:text-lg text-foreground mb-1 sm:mb-2 group-hover:text-primary transition-colors">{p.title}</h3>
-                <p className="text-[10px] sm:text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -252,17 +252,25 @@ const Services = () => {
             {techStack.map((tech, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                whileHover={{ scale: 1.05, y: -4 }}
-                className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-6 rounded-xl sm:rounded-2xl bg-background border border-border hover:border-primary/20 hover:shadow-elevated transition-all group"
+                transition={{ delay: i * 0.07, type: 'spring', stiffness: 200 }}
+                whileHover={{ scale: 1.08, y: -6 }}
+                className="flex flex-col items-center gap-2 sm:gap-3 p-4 sm:p-6 rounded-2xl bg-background border border-border hover:border-primary/25 hover:shadow-elevated transition-all group relative overflow-hidden"
               >
-                <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
+                {/* Subtle glow on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{
+                  background: 'radial-gradient(circle at center, hsl(var(--primary) / 0.06), transparent 70%)'
+                }} />
+                <motion.div 
+                  className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/15 transition-colors relative z-10"
+                  whileHover={{ rotate: [0, -5, 5, 0] }}
+                  transition={{ duration: 0.4 }}
+                >
                   <tech.icon className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />
-                </div>
-                <span className="text-[10px] sm:text-xs font-bold text-foreground text-center">{tech.label}</span>
+                </motion.div>
+                <span className="text-xs sm:text-xs font-bold text-foreground text-center relative z-10">{tech.label}</span>
               </motion.div>
             ))}
           </div>
