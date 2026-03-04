@@ -364,9 +364,28 @@ const About = () => {
             className="relative rounded-3xl overflow-hidden p-8 md:p-14 text-center"
             style={{ background: 'var(--gradient-hero)' }}
           >
-            <div className="absolute inset-0 opacity-10" style={{
-              backgroundImage: 'radial-gradient(circle, hsl(0 0% 100%) 1px, transparent 1px)',
-              backgroundSize: '20px 20px',
+            {/* Artistic texture overlay */}
+            <div className="absolute inset-0 opacity-[0.06]" style={{
+              backgroundImage: `
+                linear-gradient(30deg, hsl(0 0% 100%) 12%, transparent 12.5%, transparent 87%, hsl(0 0% 100%) 87.5%, hsl(0 0% 100%)),
+                linear-gradient(150deg, hsl(0 0% 100%) 12%, transparent 12.5%, transparent 87%, hsl(0 0% 100%) 87.5%, hsl(0 0% 100%)),
+                linear-gradient(30deg, hsl(0 0% 100%) 12%, transparent 12.5%, transparent 87%, hsl(0 0% 100%) 87.5%, hsl(0 0% 100%)),
+                linear-gradient(150deg, hsl(0 0% 100%) 12%, transparent 12.5%, transparent 87%, hsl(0 0% 100%) 87.5%, hsl(0 0% 100%)),
+                linear-gradient(60deg, hsl(0 0% 100% / 0.6) 25%, transparent 25.5%, transparent 75%, hsl(0 0% 100% / 0.6) 75%, hsl(0 0% 100% / 0.6)),
+                linear-gradient(60deg, hsl(0 0% 100% / 0.6) 25%, transparent 25.5%, transparent 75%, hsl(0 0% 100% / 0.6) 75%, hsl(0 0% 100% / 0.6))
+              `,
+              backgroundSize: '80px 140px',
+              backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px',
+            }} />
+            {/* Diagonal lines */}
+            <div className="absolute inset-0 opacity-[0.04]" style={{
+              backgroundImage: `repeating-linear-gradient(
+                -45deg,
+                hsl(0 0% 100%),
+                hsl(0 0% 100%) 1px,
+                transparent 1px,
+                transparent 16px
+              )`,
             }} />
             <div className="relative z-10">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground mb-4">
@@ -375,11 +394,11 @@ const About = () => {
               <p className="text-primary-foreground/80 mb-8 max-w-lg mx-auto text-sm md:text-base">
                 {lang === 'bn' ? 'আপনার আইডিয়া বাস্তবে রূপ দিতে আমরা প্রস্তুত' : 'We are ready to bring your ideas to life'}
               </p>
-              <Link to="/contact">
+              <a href="tel:+8801234567890">
                 <Button size="lg" className="bg-background text-foreground hover:bg-background/90 font-bold px-8 gap-2 rounded-xl shadow-elevated">
-                  {t.contact.title} <ArrowRight className="h-4 w-4" />
+                  {lang === 'bn' ? 'যোগাযোগ করুন' : 'Contact Us'} <ArrowRight className="h-4 w-4" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </motion.div>
         </div>
