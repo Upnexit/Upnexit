@@ -127,3 +127,12 @@
     @apply py-16 md:py-24 lg:py-28;
   }
 }
+
+@keyframes float-cloud {
+  0% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(calc(100vw + 200px));
+  }
+}
