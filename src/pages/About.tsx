@@ -12,16 +12,16 @@ const About = () => {
 
   const team = lang === 'bn'
     ? [
-        { name: 'মোহাম্মদ আলী', role: 'সিইও ও ফাউন্ডার', icon: Target },
-        { name: 'সাদিয়া রহমান', role: 'লিড ডেভেলপার', icon: Code2 },
-        { name: 'রাকিব হাসান', role: 'UI/UX ডিজাইনার', icon: Eye },
-        { name: 'ফাতেমা খাতুন', role: 'প্রজেক্ট ম্যানেজার', icon: Users },
+        { name: 'মোহাম্মদ আলী', role: 'সিইও ও ফাউন্ডার', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face' },
+        { name: 'সাদিয়া রহমান', role: 'লিড ডেভেলপার', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=300&fit=crop&crop=face' },
+        { name: 'রাকিব হাসান', role: 'UI/UX ডিজাইনার', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face' },
+        { name: 'ফাতেমা খাতুন', role: 'প্রজেক্ট ম্যানেজার', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=300&fit=crop&crop=face' },
       ]
     : [
-        { name: 'Mohammad Ali', role: 'CEO & Founder', icon: Target },
-        { name: 'Sadia Rahman', role: 'Lead Developer', icon: Code2 },
-        { name: 'Rakib Hasan', role: 'UI/UX Designer', icon: Eye },
-        { name: 'Fatema Khatun', role: 'Project Manager', icon: Users },
+        { name: 'Mohammad Ali', role: 'CEO & Founder', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face' },
+        { name: 'Sadia Rahman', role: 'Lead Developer', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=300&fit=crop&crop=face' },
+        { name: 'Rakib Hasan', role: 'UI/UX Designer', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face' },
+        { name: 'Fatema Khatun', role: 'Project Manager', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=300&fit=crop&crop=face' },
       ];
 
   const values = lang === 'bn'
@@ -357,13 +357,15 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -6 }}
-                className="bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden"
+                className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden"
               >
-                <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-primary/8 border-2 border-primary/15 flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-105 transition-all duration-300">
-                  <member.icon className="h-6 w-6 sm:h-9 sm:w-9 text-primary" />
+                <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                  <img src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
-                <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
-                <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{member.role}</p>
+                <div className="p-3 sm:p-5">
+                  <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{member.role}</p>
+                </div>
               </motion.div>
             ))}
           </div>
