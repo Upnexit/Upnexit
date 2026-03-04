@@ -66,7 +66,7 @@ const ContactSection = () => {
             className="md:col-span-2 space-y-4 flex flex-col justify-between"
           >
             {[
-              { icon: Mail, text: 'info@techsoft.com.bd', label: 'Email' },
+              { icon: Mail, text: 'info@upnexit.com', label: 'Email' },
               { icon: Phone, text: '+880 1XXX-XXXXXX', label: 'Phone' },
               { icon: MapPin, text: 'সাপাহার, নওগাঁ, বাংলাদেশ', label: 'Address' },
             ].map((item, i) => (

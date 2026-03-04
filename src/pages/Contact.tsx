@@ -103,7 +103,7 @@ const Contact = () => {
               className="md:col-span-2 space-y-4 flex flex-col"
             >
               {[
-                { icon: Mail, text: 'info@techsoft.com.bd', label: 'Email' },
+                { icon: Mail, text: 'info@upnexit.com', label: 'Email' },
                 { icon: Phone, text: '+880 1XXX-XXXXXX', label: lang === 'bn' ? 'ফোন' : 'Phone' },
                 { icon: MapPin, text: lang === 'bn' ? 'সাপাহার, নওগাঁ, বাংলাদেশ' : 'Sapahar, Naogaon, Bangladesh', label: lang === 'bn' ? 'ঠিকানা' : 'Address' },
                 { icon: Clock, text: lang === 'bn' ? 'শনি - বৃহস্পতি, সকাল ৯টা - রাত ৯টা' : 'Sat - Thu, 9AM - 9PM', label: lang === 'bn' ? 'কার্যসময়' : 'Working Hours' },

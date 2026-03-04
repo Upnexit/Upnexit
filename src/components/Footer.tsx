@@ -22,9 +22,9 @@ const Footer = () => {
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-9 h-9 rounded-xl gradient-accent flex items-center justify-center">
-                <span className="text-white font-black text-lg">T</span>
+                <span className="text-white font-black text-lg">U</span>
               </div>
-              <span className="text-xl font-extrabold tracking-tight">TechSoft</span>
+              <span className="text-xl font-extrabold tracking-tight">Upnex It</span>
             </div>
             <p className="text-sm text-white/65 leading-relaxed mb-6 max-w-xs">{t.footer.desc}</p>
             <div className="flex gap-3">
@@ -62,7 +62,7 @@ const Footer = () => {
               <div className="space-y-3 text-sm">
                 <p className="flex items-center gap-2 text-white/65">
                   <Mail className="h-3.5 w-3.5 text-primary/70 shrink-0" />
-                  info@techsoft.com.bd
+                  info@upnexit.com
                 </p>
                 <p className="flex items-center gap-2 text-white/65">
                   <Phone className="h-3.5 w-3.5 text-primary/70 shrink-0" />
@@ -96,7 +96,7 @@ const Footer = () => {
         {/* Copyright - hidden on mobile, visible on desktop */}
         <div className="hidden sm:flex mt-12 pt-8 border-t border-white/10 flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/40">
-            © {new Date().getFullYear()} TechSoft. {t.footer.rights}.
+            © {new Date().getFullYear()} Upnex It. {t.footer.rights}.
           </p>
           <div className="flex items-center gap-1 text-xs text-white/40">
             Made with <span className="text-destructive mx-0.5">♥</span> in Bangladesh
