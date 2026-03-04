@@ -73,8 +73,8 @@ const ServicesManagement = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-foreground">সার্ভিস ম্যানেজমেন্ট</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <h1 className="text-xl md:text-2xl font-bold text-foreground">সার্ভিস ম্যানেজমেন্ট</h1>
         <Dialog open={open} onOpenChange={(v) => { if (!v) resetForm(); setOpen(v); }}>
           <DialogTrigger asChild>
             <Button variant="hero" className="gap-2"><Plus className="h-4 w-4" /> নতুন সার্ভিস</Button>

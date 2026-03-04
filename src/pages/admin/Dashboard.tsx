@@ -164,7 +164,7 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-foreground">ড্যাশবোর্ড</h1>
+      <h1 className="text-xl md:text-2xl font-bold text-foreground">ড্যাশবোর্ড</h1>
 
       {/* Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
@@ -390,13 +390,13 @@ const Dashboard = () => {
                     data={countryData.slice(0, 6)}
                     cx="50%"
                     cy="50%"
-                    innerRadius={40}
-                    outerRadius={70}
+                    innerRadius={35}
+                    outerRadius={65}
                     dataKey="count"
                     nameKey="name"
                     label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                     labelLine={false}
-                    style={{ fontSize: '10px' }}
+                    style={{ fontSize: '9px' }}
                   >
                     {countryData.slice(0, 6).map((_, i) => (
                       <Cell key={i} fill={COLORS[i % COLORS.length]} />

@@ -60,14 +60,14 @@ const SiteSettings = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-foreground">ওয়েবসাইট সেটিংস</h1>
-        <Button variant="hero" className="gap-2" onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <h1 className="text-xl md:text-2xl font-bold text-foreground">ওয়েবসাইট সেটিংস</h1>
+        <Button variant="hero" className="gap-2 w-full sm:w-auto" onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}>
           <Save className="h-4 w-4" /> {saveMutation.isPending ? 'সংরক্ষণ হচ্ছে...' : 'সংরক্ষণ করুন'}
         </Button>
       </div>
 
-      <div className="bg-background rounded-2xl border border-border p-6 shadow-sm space-y-5 max-w-2xl">
+      <div className="bg-background rounded-2xl border border-border p-4 md:p-6 shadow-sm space-y-5">
         {settingsFields.map((field) => (
           <div key={field.key}>
             <label className="block text-sm font-medium text-foreground mb-1.5">{field.label}</label>
