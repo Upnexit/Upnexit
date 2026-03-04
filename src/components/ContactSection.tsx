@@ -84,7 +84,7 @@ const ContactSection = () => {
             {/* Google Map - Sapahar, Naogaon */}
             <div className="flex-1 min-h-[160px] rounded-2xl overflow-hidden border border-border shadow-soft">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36244.94372177964!2d88.5833!3d25.0333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fb99e048bc7c51%3A0x87c1f1a4a1f4d8fa!2sSapahar%2C%20Bangladesh!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14498.5!2d88.5850!3d25.0340!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fb99e048bc7c51%3A0x87c1f1a4a1f4d8fa!2sSapahar%2C%20Bangladesh!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd"
                 width="100%"
                 height="100%"
                 style={{ border: 0, minHeight: '160px' }}
