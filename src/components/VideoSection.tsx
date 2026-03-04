@@ -27,7 +27,7 @@ const VideoSection = () => {
               : 'Watch this video to learn more about our services'}
           </p>
         </div>
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl lg:max-w-6xl mx-auto">
           <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-elevated ring-1 ring-border/30" style={{ paddingBottom: '56.25%' }}>
             <iframe
               className="absolute inset-0 w-full h-full"
