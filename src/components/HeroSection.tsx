@@ -10,7 +10,21 @@ const HeroSection = () => {
     <section id="home" className="relative min-h-[100svh] flex items-center overflow-hidden">
       {/* Rich gradient background */}
       <div className="absolute inset-0" style={{
-        background: 'linear-gradient(135deg, hsl(145 63% 97%) 0%, hsl(0 0% 100%) 30%, hsl(46 92% 97%) 60%, hsl(145 50% 95%) 100%)'
+        background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
+      }} />
+
+      {/* Grid texture overlay */}
+      <div className="absolute inset-0 opacity-[0.04]" style={{
+        backgroundImage: `
+          linear-gradient(hsl(145 63% 32%) 1.5px, transparent 1.5px),
+          linear-gradient(90deg, hsl(145 63% 32%) 1.5px, transparent 1.5px)
+        `,
+        backgroundSize: '48px 48px'
+      }} />
+
+      {/* Diagonal lines texture */}
+      <div className="absolute inset-0 opacity-[0.02]" style={{
+        backgroundImage: 'repeating-linear-gradient(45deg, hsl(145 63% 32%), hsl(145 63% 32%) 1px, transparent 1px, transparent 20px)',
       }} />
 
       {/* Animated floating shapes */}
@@ -19,36 +33,36 @@ const HeroSection = () => {
           animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-20 right-[15%] w-72 h-72 rounded-full"
-          style={{ background: 'radial-gradient(circle, hsl(145 63% 42% / 0.08), transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, hsl(145 63% 42% / 0.1), transparent 70%)' }}
         />
         <motion.div
           animate={{ y: [0, 15, 0], rotate: [0, -3, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
           className="absolute bottom-32 left-[10%] w-96 h-96 rounded-full"
-          style={{ background: 'radial-gradient(circle, hsl(46 92% 55% / 0.1), transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, hsl(46 92% 55% / 0.12), transparent 70%)' }}
         />
         <motion.div
           animate={{ y: [0, 12, 0] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
           className="absolute top-1/3 left-[60%] w-48 h-48 rounded-full"
-          style={{ background: 'radial-gradient(circle, hsl(145 63% 42% / 0.06), transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, hsl(145 63% 42% / 0.07), transparent 70%)' }}
         />
 
-        {/* Decorative dots pattern */}
-        <div className="absolute top-28 left-8 grid grid-cols-4 gap-3 opacity-20">
-          {Array.from({ length: 16 }).map((_, i) => (
+        {/* Decorative dots */}
+        <div className="absolute top-28 left-8 grid grid-cols-5 gap-2.5 opacity-20">
+          {Array.from({ length: 25 }).map((_, i) => (
             <div key={i} className="w-1.5 h-1.5 rounded-full bg-primary" />
           ))}
         </div>
-        <div className="absolute bottom-28 right-12 grid grid-cols-3 gap-3 opacity-15">
-          {Array.from({ length: 9 }).map((_, i) => (
+        <div className="absolute bottom-28 right-12 grid grid-cols-4 gap-2.5 opacity-15">
+          {Array.from({ length: 16 }).map((_, i) => (
             <div key={i} className="w-1.5 h-1.5 rounded-full bg-secondary" />
           ))}
         </div>
 
-        {/* Subtle line accents */}
-        <div className="absolute top-0 left-1/4 w-px h-40 bg-gradient-to-b from-transparent via-primary/10 to-transparent" />
-        <div className="absolute top-0 right-1/3 w-px h-60 bg-gradient-to-b from-transparent via-secondary/8 to-transparent" />
+        {/* Line accents */}
+        <div className="absolute top-0 left-1/4 w-px h-48 bg-gradient-to-b from-transparent via-primary/12 to-transparent" />
+        <div className="absolute top-0 right-1/3 w-px h-64 bg-gradient-to-b from-transparent via-secondary/10 to-transparent" />
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 pt-28 pb-16 relative z-10">
@@ -119,10 +133,11 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Bottom wave */}
+      {/* Bottom wave - more prominent */}
       <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-          <path d="M0 80L60 72C120 64 240 48 360 40C480 32 600 32 720 36C840 40 960 48 1080 50C1200 52 1320 48 1380 46L1440 44V80H0Z" fill="hsl(140 8% 96%)" />
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+          <path d="M0 120L48 110C96 100 192 80 288 68C384 56 480 52 576 56C672 60 768 72 864 78C960 84 1056 84 1152 76C1248 68 1344 52 1392 44L1440 36V120H0Z" fill="hsl(140 8% 96%)" />
+          <path d="M0 120L48 114C96 108 192 96 288 88C384 80 480 76 576 78C672 80 768 88 864 92C960 96 1056 96 1152 90C1248 84 1344 72 1392 66L1440 60V120H0Z" fill="hsl(140 8% 96% / 0.5)" />
         </svg>
       </div>
     </section>
