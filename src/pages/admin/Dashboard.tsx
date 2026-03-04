@@ -251,16 +251,16 @@ const Dashboard = () => {
                           key={geo.rsmKey}
                           geography={geo}
                           fill={getColor(count)}
-                          stroke="hsl(220, 10%, 25%)"
-                          strokeWidth={0.4}
+                          stroke="hsl(220, 20%, 42%)"
+                          strokeWidth={0.8}
                           style={{
                             default: { outline: 'none' },
                             hover: {
                               outline: 'none',
                               fill: count > 0 ? 'hsl(46, 92%, 55%)' : 'hsl(220, 10%, 30%)',
                               cursor: 'pointer',
-                              strokeWidth: 0.8,
-                              stroke: 'hsl(0, 0%, 50%)',
+                              strokeWidth: 1.2,
+                              stroke: 'hsl(0, 0%, 65%)',
                             },
                             pressed: { outline: 'none' },
                           }}
