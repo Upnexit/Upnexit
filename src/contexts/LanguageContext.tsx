@@ -6,7 +6,7 @@ const translations = {
   bn: {
     nav: { home: 'হোম', services: 'সেবাসমূহ', about: 'আমাদের সম্পর্কে', contact: 'যোগাযোগ', portfolio: 'পোর্টফোলিও' },
     hero: {
-      badge: '🚀 আপনার ব্যবসার ডিজিটাল সমাধান',
+      badge: 'আপনার ব্যবসার ডিজিটাল সমাধান',
       title1: 'কাস্টম সফটওয়্যার',
       title2: 'সলিউশন',
       subtitle: 'আমরা আপনার প্রতিষ্ঠানের জন্য স্কুল ম্যানেজমেন্ট, হসপিটাল ম্যানেজমেন্ট সহ যেকোনো কাস্টম সফটওয়্যার তৈরি করে থাকি।',
@@ -53,7 +53,7 @@ const translations = {
   en: {
     nav: { home: 'Home', services: 'Services', about: 'About Us', contact: 'Contact', portfolio: 'Portfolio' },
     hero: {
-      badge: '🚀 Digital Solutions for Your Business',
+      badge: 'Digital Solutions for Your Business',
       title1: 'Custom Software',
       title2: 'Solutions',
       subtitle: 'We build custom software solutions including School Management, Hospital Management, and more for your organization.',
