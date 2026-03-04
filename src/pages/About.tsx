@@ -6,24 +6,32 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, Zap, Shield, Clock, Heart, Users, Code2, Award, Target, Eye, Sparkles, ArrowRight, Star, TrendingUp, Lightbulb, Handshake } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 const About = () => {
   const { t, lang } = useLanguage();
   const reasonIcons = [Zap, Shield, Clock, Heart];
 
-  const team = lang === 'bn'
-    ? [
-        { name: 'মোহাম্মদ আলী', role: 'সিইও ও ফাউন্ডার', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face' },
-        { name: 'সাদিয়া রহমান', role: 'লিড ডেভেলপার', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=300&fit=crop&crop=face' },
-        { name: 'রাকিব হাসান', role: 'UI/UX ডিজাইনার', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face' },
-        { name: 'ফাতেমা খাতুন', role: 'প্রজেক্ট ম্যানেজার', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=300&fit=crop&crop=face' },
-      ]
-    : [
-        { name: 'Mohammad Ali', role: 'CEO & Founder', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face' },
-        { name: 'Sadia Rahman', role: 'Lead Developer', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=300&fit=crop&crop=face' },
-        { name: 'Rakib Hasan', role: 'UI/UX Designer', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face' },
-        { name: 'Fatema Khatun', role: 'Project Manager', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=300&fit=crop&crop=face' },
-      ];
+  // Fetch all team members from DB
+  const { data: allMembers = [] } = useQuery({
+    queryKey: ['team-members-public'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('team_members')
+        .select('*')
+        .order('sort_order');
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const founders = allMembers.filter(m => m.is_founder);
+  const teamMembers = allMembers.filter(m => !m.is_founder).map(m => ({
+    name: m.name,
+    role: m.role,
+    image: m.image_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face',
+  }));
 
   const values = lang === 'bn'
     ? [
@@ -264,7 +272,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Leadership Section */}
+      {/* Leadership Section - from DB */}
       <section className="section-padding">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
@@ -286,22 +294,9 @@ const About = () => {
           </motion.div>
 
           <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-2xl mx-auto">
-            {[
-              {
-                name: lang === 'bn' ? 'মোহাম্মদ আলী' : 'Mohammad Ali',
-                role: lang === 'bn' ? 'সিইও ও সহ-প্রতিষ্ঠাতা' : 'CEO & Co-Founder',
-                bio: lang === 'bn' ? '১০+ বছরের সফটওয়্যার ইন্ডাস্ট্রি অভিজ্ঞতা। প্রযুক্তি ও ব্যবসায়িক কৌশলে পারদর্শী।' : '10+ years in software industry. Expert in technology and business strategy.',
-                image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face',
-              },
-              {
-                name: lang === 'bn' ? 'রাকিব হাসান' : 'Rakib Hasan',
-                role: lang === 'bn' ? 'পরিচালক' : 'Director',
-                bio: lang === 'bn' ? 'ব্যবসায়িক উন্নয়ন ও কোম্পানি পরিচালনায় অভিজ্ঞ। কৌশলগত সিদ্ধান্তে নেতৃত্ব দেন।' : 'Experienced in business development and company management. Leads strategic decisions.',
-                image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
-              },
-            ].map((leader, i) => (
+            {founders.map((leader, i) => (
               <motion.div
-                key={i}
+                key={leader.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -311,7 +306,7 @@ const About = () => {
               >
                 <div className="relative h-40 sm:h-56 md:h-64 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
                   <img
-                    src={leader.image}
+                    src={leader.image_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'}
                     alt={leader.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -324,7 +319,7 @@ const About = () => {
                   </div>
                 </div>
                 <div className="p-3 sm:p-5 md:p-6">
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{leader.bio}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{leader.bio || ''}</p>
                 </div>
               </motion.div>
             ))}
@@ -332,7 +327,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Team Section - from DB */}
       <section className="section-padding bg-muted/30">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
@@ -349,7 +344,13 @@ const About = () => {
             </h2>
           </motion.div>
 
-          <TeamSlider team={team} />
+          {teamMembers.length > 0 ? (
+            <TeamSlider team={teamMembers} />
+          ) : (
+            <p className="text-center text-muted-foreground">
+              {lang === 'bn' ? 'টিম সদস্য লোড হচ্ছে...' : 'Loading team members...'}
+            </p>
+          )}
         </div>
       </section>
 
