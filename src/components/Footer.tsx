@@ -60,15 +60,15 @@ const Footer = () => {
               <div className="space-y-3 text-sm">
                 <p className="flex items-center gap-2 text-white/65">
                   <Mail className="h-3.5 w-3.5 text-primary/70 shrink-0" />
-                  info@upnexit.com
+                  upnex360@gmail.com
                 </p>
                 <p className="flex items-center gap-2 text-white/65">
                   <Phone className="h-3.5 w-3.5 text-primary/70 shrink-0" />
-                  +880 1XXX-XXXXXX
+                  +880 1628112731
                 </p>
                 <p className="flex items-center gap-2 text-white/65">
                   <MapPin className="h-3.5 w-3.5 text-primary/70 shrink-0" />
-                  ঢাকা, বাংলাদেশ
+                  সাপাহার, নওগাঁ, বাংলাদেশ
                 </p>
               </div>
             </div>
