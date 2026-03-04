@@ -7,6 +7,18 @@ interface TeamMember {
   image: string;
 }
 
+const MemberCard = ({ member }: { member: TeamMember }) => (
+  <div className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden h-full">
+    <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+      <img src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+    </div>
+    <div className="p-3 sm:p-5">
+      <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
+      <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{member.role}</p>
+    </div>
+  </div>
+);
+
 const TeamSlider = ({ team }: { team: TeamMember[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -17,57 +29,25 @@ const TeamSlider = ({ team }: { team: TeamMember[] }) => {
     return () => clearInterval(interval);
   }, [team.length]);
 
-  // The two visible: activeIndex (sliding in) and the previous one (stays/slides out)
-  const currentMember = team[activeIndex];
-  const stableIndex = (activeIndex + 1) % team.length;
-  const stableMember = team[stableIndex];
+  const leftMember = team[activeIndex];
+  const rightMember = team[(activeIndex + 1) % team.length];
 
   return (
     <div className="relative">
-      <div className="grid grid-cols-2 gap-3 sm:gap-6">
-        {/* Left card - animates in/out */}
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-background">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndex}
-              initial={{ x: '100%', opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: '-100%', opacity: 0 }}
-              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-center group"
-            >
-              <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
-                <img src={currentMember.image} alt={currentMember.name} className="w-full h-full object-cover" />
-              </div>
-              <div className="p-3 sm:p-5">
-                <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1">{currentMember.name}</h3>
-                <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{currentMember.role}</p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Right card - stable, swaps when left changes */}
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-background">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={stableIndex}
-              initial={{ x: '100%', opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: '-100%', opacity: 0 }}
-              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
-              className="text-center group"
-            >
-              <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
-                <img src={stableMember.image} alt={stableMember.name} className="w-full h-full object-cover" />
-              </div>
-              <div className="p-3 sm:p-5">
-                <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1">{stableMember.name}</h3>
-                <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{stableMember.role}</p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+      <div className="overflow-hidden rounded-2xl sm:rounded-3xl">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '-100%' }}
+            transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="grid grid-cols-2 gap-3 sm:gap-6"
+          >
+            <MemberCard member={leftMember} />
+            <MemberCard member={rightMember} />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Dots */}
