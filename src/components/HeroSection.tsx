@@ -7,7 +7,7 @@ const HeroSection = () => {
   const { t, lang } = useLanguage();
 
   return (
-    <section id="home" className="relative min-h-[90svh] sm:min-h-[100svh] flex items-center overflow-hidden">
+    <section id="home" className="relative min-h-[88svh] sm:min-h-[100svh] flex items-center overflow-hidden">
       {/* Rich gradient background */}
       <div className="absolute inset-0" style={{
         background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
@@ -65,14 +65,14 @@ const HeroSection = () => {
         <div className="absolute top-0 right-1/3 w-px h-64 bg-gradient-to-b from-transparent via-secondary/10 to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 pt-24 sm:pt-28 pb-8 sm:pb-16 relative z-10">
+      <div className="container mx-auto px-4 lg:px-8 pt-16 sm:pt-28 pb-8 sm:pb-16 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-full text-xs sm:text-sm font-extrabold bg-secondary/20 border border-secondary/30 mb-4 sm:mb-8 shadow-sm" style={{ color: 'hsl(40 95% 38%)', textShadow: '0 0 12px hsl(46 92% 55% / 0.3)' }}>
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-full text-sm sm:text-sm font-extrabold bg-secondary/20 border border-secondary/30 mb-4 sm:mb-8 shadow-sm" style={{ color: 'hsl(40 95% 38%)', textShadow: '0 0 12px hsl(46 92% 55% / 0.3)' }}>
               {t.hero.badge}
             </span>
           </motion.div>
@@ -81,10 +81,10 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.08] mb-6 tracking-tight text-foreground"
+            className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.08] mb-6 tracking-tight text-foreground"
           >
             {t.hero.title1}{' '}
-            <br className="hidden sm:block" />
+            <br />
             <span className="text-gradient">{t.hero.title2}</span>
           </motion.h1>
 
@@ -116,14 +116,14 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-10 sm:mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-12"
+            className="mt-8 sm:mt-16 grid grid-cols-1 min-[380px]:grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-4 sm:gap-12"
           >
             {[
               { num: '150+', label: lang === 'bn' ? 'ক্লায়েন্ট' : 'Clients' },
               { num: '200+', label: lang === 'bn' ? 'প্রজেক্ট' : 'Projects' },
               { num: '8+', label: lang === 'bn' ? 'বছরের অভিজ্ঞতা' : 'Years Experience' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3">
+              <div key={i} className="flex flex-col items-center gap-1 sm:flex-row sm:items-center sm:gap-3">
                 <span className="text-3xl sm:text-4xl font-black text-primary">{item.num}</span>
                 <span className="text-sm text-muted-foreground font-medium">{item.label}</span>
               </div>
