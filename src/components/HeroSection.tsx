@@ -106,7 +106,27 @@ const HeroSection = () => {
             <Button variant="hero" size="xl" className="gap-2 px-10 w-full sm:w-auto">
               {t.hero.cta1} <ArrowRight className="h-5 w-5" />
             </Button>
-            <Button variant="heroOutline" size="xl" className="px-10 gap-2 w-full sm:w-auto">
+            <Button
+              variant="heroOutline"
+              size="xl"
+              className="px-10 gap-2 w-full sm:w-auto"
+              onClick={() => {
+                const videoEl = document.getElementById('video-section');
+                if (videoEl) {
+                  videoEl.scrollIntoView({ behavior: 'smooth' });
+                  // Auto-play: swap iframe src to include autoplay
+                  setTimeout(() => {
+                    const iframe = videoEl.querySelector('iframe');
+                    if (iframe) {
+                      const src = iframe.src;
+                      if (!src.includes('autoplay=1')) {
+                        iframe.src = src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
+                      }
+                    }
+                  }, 800);
+                }
+              }}
+            >
               <Play className="h-4 w-4" /> {t.hero.cta2}
             </Button>
           </motion.div>
@@ -116,14 +136,14 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-8 sm:mt-16 grid grid-cols-1 min-[380px]:grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-4 sm:gap-12"
+            className="mt-8 sm:mt-16 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-12"
           >
             {[
               { num: '10+', label: lang === 'bn' ? 'ক্লায়েন্ট' : 'Clients' },
               { num: '50+', label: lang === 'bn' ? 'প্রজেক্ট' : 'Projects' },
               { num: '2+', label: lang === 'bn' ? 'বছরের অভিজ্ঞতা' : 'Years Experience' },
             ].map((item, i) => (
-              <div key={i} className="flex flex-col items-center gap-1 sm:flex-row sm:items-center sm:gap-3">
+              <div key={i} className={`flex flex-col items-center gap-1 sm:flex-row sm:items-center sm:gap-3 ${i === 2 ? 'w-full sm:w-auto flex justify-center' : ''}`}>
                 <span className="text-3xl sm:text-4xl font-black text-primary">{item.num}</span>
                 <span className="text-sm text-muted-foreground font-medium">{item.label}</span>
               </div>
