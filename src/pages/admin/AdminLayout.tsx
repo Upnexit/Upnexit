@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import { Users, MessageSquare, Settings, LayoutDashboard, Wrench, LogOut, ArrowLeft } from 'lucide-react';
+import { Users, MessageSquare, Settings, LayoutDashboard, Wrench, LogOut, ArrowLeft, Star } from 'lucide-react';
 
 const navItems = [
   { label: 'ড্যাশবোর্ড', shortLabel: 'Home', icon: LayoutDashboard, path: '/admin' },
   { label: 'টিম', shortLabel: 'Team', icon: Users, path: '/admin/team' },
   { label: 'মেসেজ', shortLabel: 'Inbox', icon: MessageSquare, path: '/admin/messages' },
   { label: 'সার্ভিস', shortLabel: 'Service', icon: Wrench, path: '/admin/services' },
+  { label: 'রিভিউ', shortLabel: 'Review', icon: Star, path: '/admin/reviews' },
   { label: 'সেটিংস', shortLabel: 'Settings', icon: Settings, path: '/admin/settings' },
 ];
 

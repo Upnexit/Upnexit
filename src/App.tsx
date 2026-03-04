@@ -18,6 +18,7 @@ import TeamManagement from "./pages/admin/TeamManagement";
 import Messages from "./pages/admin/Messages";
 import ServicesManagement from "./pages/admin/ServicesManagement";
 import SiteSettings from "./pages/admin/SiteSettings";
+import ClientReviewsManagement from "./pages/admin/ClientReviewsManagement";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const AppRoutes = () => {
         <Route path="team" element={<TeamManagement />} />
         <Route path="messages" element={<Messages />} />
         <Route path="services" element={<ServicesManagement />} />
+        <Route path="reviews" element={<ClientReviewsManagement />} />
         <Route path="settings" element={<SiteSettings />} />
       </Route>
       <Route path="*" element={<NotFound />} />
