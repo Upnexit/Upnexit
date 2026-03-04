@@ -154,21 +154,27 @@ const Navbar = () => {
           <div className="flex items-center justify-around rounded-[22px] py-1.5 px-1" style={{ background: 'hsl(var(--background) / 0.85)' }}>
             {links.map((l) => {
               const active = isActive(l.href);
+              const englishLabels: Record<string, string> = {
+                '/': 'Home',
+                '/services': 'Services',
+                '/about': 'About',
+                '/contact': 'Contact',
+              };
               return (
                 <Link
                   key={l.href}
                   to={l.href}
-                  className="relative flex flex-col items-center gap-0.5 py-1 px-2 min-w-[56px]"
+                  className="relative flex flex-col items-center gap-0.5 py-1.5 px-3 flex-1"
                 >
                   <motion.div
-                    className="relative z-10 flex flex-col items-center gap-0.5"
+                    className="relative z-10 flex flex-col items-center gap-0.5 w-full"
                     whileTap={{ scale: 0.85 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                   >
                     {active && (
                       <motion.div
                         layoutId="bottomNavIndicator"
-                        className="absolute -inset-x-2 -inset-y-1 rounded-2xl"
+                        className="absolute -inset-x-1 -inset-y-1 rounded-2xl"
                         style={{ background: 'hsl(var(--primary) / 0.12)' }}
                         transition={{ type: 'spring', stiffness: 350, damping: 25 }}
                       />
@@ -185,15 +191,8 @@ const Navbar = () => {
                       animate={active ? { opacity: 1, y: 0 } : { opacity: 0.6, y: 0 }}
                       className={`text-[9px] font-semibold relative z-10 ${active ? 'text-primary' : 'text-muted-foreground'}`}
                     >
-                      {l.label}
+                      {englishLabels[l.href]}
                     </motion.span>
-                    {active && (
-                      <motion.div
-                        layoutId="bottomNavDot"
-                        className="w-1 h-1 rounded-full bg-primary"
-                        transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-                      />
-                    )}
                   </motion.div>
                 </Link>
               );
