@@ -155,11 +155,11 @@ const Dashboard = () => {
   ];
 
   const getColor = (count: number) => {
-    if (count === 0) return 'hsl(140, 8%, 92%)';
-    if (count < 5) return 'hsl(145, 63%, 75%)';
-    if (count < 20) return 'hsl(145, 63%, 55%)';
-    if (count < 50) return 'hsl(145, 63%, 38%)';
-    return 'hsl(145, 63%, 25%)';
+    if (count === 0) return 'hsl(150, 10%, 18%)';
+    if (count < 5) return 'hsl(145, 63%, 28%)';
+    if (count < 20) return 'hsl(145, 63%, 42%)';
+    if (count < 50) return 'hsl(145, 63%, 55%)';
+    return 'hsl(46, 92%, 55%)';
   };
 
   return (
@@ -228,13 +228,14 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="lg:col-span-2 bg-background rounded-2xl border border-border p-4 md:p-6 shadow-sm relative"
+          className="lg:col-span-2 rounded-2xl border border-border shadow-sm relative overflow-hidden"
+          style={{ background: 'hsl(220, 15%, 8%)' }}
         >
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 p-4 md:p-6 pb-0">
             <Globe className="h-5 w-5 text-primary" />
-            <h2 className="font-bold text-foreground text-sm md:text-base">বিশ্ব ট্রাফিক ম্যাপ</h2>
+            <h2 className="font-bold text-white text-sm md:text-base">বিশ্ব ট্রাফিক ম্যাপ</h2>
           </div>
-          <div className="relative">
+          <div className="relative p-2 md:p-4">
             <ComposableMap
               projectionConfig={{ scale: 147, center: [0, 20] }}
               style={{ width: '100%', height: 'auto' }}
@@ -250,14 +251,20 @@ const Dashboard = () => {
                           key={geo.rsmKey}
                           geography={geo}
                           fill={getColor(count)}
-                          stroke="hsl(0, 0%, 100%)"
-                          strokeWidth={0.5}
+                          stroke="hsl(220, 10%, 25%)"
+                          strokeWidth={0.4}
                           style={{
                             default: { outline: 'none' },
-                            hover: { outline: 'none', fill: count > 0 ? 'hsl(145, 63%, 42%)' : 'hsl(140, 8%, 85%)', cursor: 'pointer' },
+                            hover: {
+                              outline: 'none',
+                              fill: count > 0 ? 'hsl(46, 92%, 55%)' : 'hsl(220, 10%, 30%)',
+                              cursor: 'pointer',
+                              strokeWidth: 0.8,
+                              stroke: 'hsl(0, 0%, 50%)',
+                            },
                             pressed: { outline: 'none' },
                           }}
-                          onMouseEnter={(e) => {
+                          onMouseEnter={() => {
                             const name = geo.properties.name || 'Unknown';
                             setTooltipContent(`${name}: ${count} ভিজিট`);
                           }}
@@ -277,21 +284,28 @@ const Dashboard = () => {
             </ComposableMap>
             {tooltipContent && (
               <div
-                className="absolute pointer-events-none z-50 px-3 py-1.5 rounded-lg bg-foreground text-background text-xs font-semibold shadow-lg whitespace-nowrap"
-                style={{ left: tooltipPos.x, top: tooltipPos.y, transform: 'translateX(-50%)' }}
+                className="absolute pointer-events-none z-50 px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg whitespace-nowrap"
+                style={{
+                  left: tooltipPos.x,
+                  top: tooltipPos.y,
+                  transform: 'translateX(-50%)',
+                  background: 'hsl(145, 63%, 32%)',
+                  color: 'white',
+                  border: '1px solid hsl(145, 63%, 45%)',
+                }}
               >
                 {tooltipContent}
               </div>
             )}
           </div>
           {/* Legend */}
-          <div className="flex flex-wrap items-center gap-3 mt-3 text-[10px] md:text-xs text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-3 px-4 md:px-6 pb-4 text-[10px] md:text-xs" style={{ color: 'hsl(220, 10%, 55%)' }}>
             {[
-              { color: 'hsl(140, 8%, 92%)', label: '0' },
-              { color: 'hsl(145, 63%, 75%)', label: '1-4' },
-              { color: 'hsl(145, 63%, 55%)', label: '5-19' },
-              { color: 'hsl(145, 63%, 38%)', label: '20-49' },
-              { color: 'hsl(145, 63%, 25%)', label: '50+' },
+              { color: 'hsl(150, 10%, 18%)', label: '0' },
+              { color: 'hsl(145, 63%, 28%)', label: '1-4' },
+              { color: 'hsl(145, 63%, 42%)', label: '5-19' },
+              { color: 'hsl(145, 63%, 55%)', label: '20-49' },
+              { color: 'hsl(46, 92%, 55%)', label: '50+' },
             ].map((l, i) => (
               <span key={i} className="flex items-center gap-1">
                 <span className="w-3 h-3 rounded-sm inline-block" style={{ background: l.color }} />
