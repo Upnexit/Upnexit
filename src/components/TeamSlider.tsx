@@ -52,10 +52,10 @@ const TeamSlider = ({ team }: { team: TeamMember[] }) => {
           <AnimatePresence mode="wait">
             <motion.div
               key={stableIndex}
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -30, opacity: 0 }}
-              transition={{ duration: 0.4, ease: 'easeOut', delay: 0.15 }}
+              initial={{ x: '100%', opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: '-100%', opacity: 0 }}
+              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
               className="text-center group"
             >
               <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
