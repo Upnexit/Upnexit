@@ -109,40 +109,40 @@ const Footer = () => {
         </div>
 
         {/* Characters section - positioned individually like reference */}
-        <div className="relative h-48 sm:h-56 md:h-72 lg:h-80 overflow-hidden">
+        <div className="relative h-44 sm:h-52 md:h-64 lg:h-72 overflow-visible">
           {/* Left leaves decoration */}
           <img
             src={footerLeaves}
             alt=""
-            className="absolute bottom-0 left-0 w-24 md:w-36 opacity-70 -translate-x-2 rotate-[30deg] pointer-events-none"
+            className="absolute bottom-0 left-0 w-20 md:w-32 opacity-60 -translate-x-2 translate-y-2 rotate-[30deg] pointer-events-none"
           />
 
-          {/* Character 1 - left side, smaller */}
+          {/* Character 1 - left side */}
           <img
             src={footerChar1}
             alt="Team member"
-            className="absolute bottom-0 left-[5%] md:left-[10%] h-40 sm:h-48 md:h-60 lg:h-72 object-contain drop-shadow-2xl"
+            className="absolute bottom-0 left-[2%] sm:left-[5%] md:left-[10%] h-36 sm:h-44 md:h-56 lg:h-64 object-contain drop-shadow-2xl"
           />
 
-          {/* Character 2 - center, medium */}
+          {/* Character 2 - center */}
           <img
             src={footerChar2}
             alt="Team member"
-            className="absolute bottom-0 left-[30%] md:left-[35%] h-36 sm:h-44 md:h-56 lg:h-64 object-contain drop-shadow-2xl"
+            className="absolute bottom-0 left-[28%] sm:left-[32%] md:left-[35%] h-40 sm:h-48 md:h-60 lg:h-68 object-contain drop-shadow-2xl"
           />
 
-          {/* Character 3 - right side, largest (like reference) */}
+          {/* Character 3 - right side, largest */}
           <img
             src={footerChar3}
             alt="Team member"
-            className="absolute bottom-0 right-[2%] md:right-[5%] h-48 sm:h-56 md:h-68 lg:h-80 object-contain drop-shadow-2xl"
+            className="absolute bottom-0 right-[0%] sm:right-[2%] md:right-[5%] h-44 sm:h-52 md:h-64 lg:h-72 object-contain drop-shadow-2xl"
           />
 
           {/* Right leaves decoration */}
           <img
             src={footerLeaves}
             alt=""
-            className="absolute bottom-0 right-[15%] w-20 md:w-28 opacity-50 rotate-[-20deg] pointer-events-none"
+            className="absolute bottom-0 right-[12%] w-16 md:w-24 opacity-40 rotate-[-20deg] -scale-x-100 pointer-events-none"
           />
         </div>
 
