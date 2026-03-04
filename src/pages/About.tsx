@@ -196,9 +196,9 @@ const About = () => {
                 <div className="absolute top-0 left-0 right-0 h-1.5 gradient-accent rounded-t-3xl" />
                 <div className="grid grid-cols-2 gap-4 mt-2">
                   {[
-                    { icon: Users, num: '150+', label: lang === 'bn' ? 'সন্তুষ্ট ক্লায়েন্ট' : 'Happy Clients', color: 'primary' },
-                    { icon: Code2, num: '200+', label: lang === 'bn' ? 'সম্পন্ন প্রজেক্ট' : 'Projects Done', color: 'secondary' },
-                    { icon: Award, num: '8+', label: lang === 'bn' ? 'বছরের অভিজ্ঞতা' : 'Years Experience', color: 'primary' },
+                    { icon: Users, num: '10+', label: lang === 'bn' ? 'সন্তুষ্ট ক্লায়েন্ট' : 'Happy Clients', color: 'primary' },
+                    { icon: Code2, num: '50+', label: lang === 'bn' ? 'সম্পন্ন প্রজেক্ট' : 'Projects Done', color: 'secondary' },
+                    { icon: Award, num: '2+', label: lang === 'bn' ? 'বছরের অভিজ্ঞতা' : 'Years Experience', color: 'primary' },
                     { icon: Shield, num: '99%', label: lang === 'bn' ? 'ক্লায়েন্ট সন্তুষ্টি' : 'Satisfaction', color: 'secondary' },
                   ].map((item, i) => (
                     <motion.div

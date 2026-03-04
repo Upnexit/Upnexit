@@ -6,9 +6,9 @@ const StatsSection = () => {
   const { t } = useLanguage();
 
   const stats = [
-    { value: '150+', label: t.stats.clients, icon: Users },
-    { value: '200+', label: t.stats.projects, icon: FolderCheck },
-    { value: '8+', label: t.stats.years, icon: Clock },
+    { value: '10+', label: t.stats.clients, icon: Users },
+    { value: '50+', label: t.stats.projects, icon: FolderCheck },
+    { value: '2+', label: t.stats.years, icon: Clock },
     { value: '24/7', label: t.stats.support, icon: Headphones },
   ];
 
