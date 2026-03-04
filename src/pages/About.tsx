@@ -304,7 +304,7 @@ const About = () => {
                 whileHover={{ y: -6 }}
                 className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all group relative overflow-hidden"
               >
-                <div className="relative h-40 sm:h-56 md:h-64 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                <div className="relative h-56 sm:h-72 md:h-80 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
                   <img
                     src={leader.image_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'}
                     alt={leader.name}
