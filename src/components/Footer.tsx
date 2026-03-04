@@ -21,9 +21,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-xl gradient-accent flex items-center justify-center">
-                <span className="text-white font-black text-lg">U</span>
-              </div>
+              <img src="/logo.png" alt="Upnex It Logo" className="w-9 h-9 rounded-xl object-contain" />
               <span className="text-xl font-extrabold tracking-tight">Upnex It</span>
             </div>
             <p className="text-sm text-white/65 leading-relaxed mb-6 max-w-xs">{t.footer.desc}</p>
