@@ -138,12 +138,9 @@ const Navbar = () => {
       </nav>
 
       {/* Floating Mobile Bottom Navigation Bar */}
-      <div className="lg:hidden fixed bottom-4 left-4 right-4 z-50">
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3, type: 'spring', stiffness: 260, damping: 20 }}
-          className="relative rounded-[28px] p-1.5"
+      <div className="lg:hidden fixed bottom-4 left-0 right-0 z-50 px-4">
+        <div
+          className="relative rounded-[28px] p-1.5 mx-auto max-w-md"
           style={{
             background: 'hsl(var(--foreground) / 0.06)',
             backdropFilter: 'blur(24px)',
@@ -198,8 +195,7 @@ const Navbar = () => {
               );
             })}
           </div>
-        </motion.div>
-        {/* Safe area */}
+        </div>
         <div className="h-[env(safe-area-inset-bottom)]" />
       </div>
     </>

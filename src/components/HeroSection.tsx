@@ -65,14 +65,14 @@ const HeroSection = () => {
         <div className="absolute top-0 right-1/3 w-px h-64 bg-gradient-to-b from-transparent via-secondary/10 to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 pt-28 pb-16 relative z-10">
+      <div className="container mx-auto px-4 lg:px-8 pt-20 sm:pt-28 pb-10 sm:pb-16 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-full text-xs sm:text-sm font-extrabold bg-secondary/20 border border-secondary/30 mb-6 sm:mb-8 shadow-sm" style={{ color: 'hsl(40 95% 38%)', textShadow: '0 0 12px hsl(46 92% 55% / 0.3)' }}>
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-full text-xs sm:text-sm font-extrabold bg-secondary/20 border border-secondary/30 mb-4 sm:mb-8 shadow-sm" style={{ color: 'hsl(40 95% 38%)', textShadow: '0 0 12px hsl(46 92% 55% / 0.3)' }}>
               {t.hero.badge}
             </span>
           </motion.div>
@@ -116,7 +116,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-16 flex flex-wrap items-center justify-center gap-8 sm:gap-12"
+            className="mt-10 sm:mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-12"
           >
             {[
               { num: '150+', label: lang === 'bn' ? 'ক্লায়েন্ট' : 'Clients' },
