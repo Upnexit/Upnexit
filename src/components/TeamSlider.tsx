@@ -8,64 +8,76 @@ interface TeamMember {
 }
 
 const TeamSlider = ({ team }: { team: TeamMember[] }) => {
-  const [page, setPage] = useState(0);
-  const totalPages = Math.ceil(team.length / 2);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPage((p) => (p + 1) % totalPages);
-    }, 4000);
+      setActiveIndex((prev) => (prev + 1) % team.length);
+    }, 3500);
     return () => clearInterval(interval);
-  }, [totalPages]);
+  }, [team.length]);
 
-  const currentMembers = team.slice(page * 2, page * 2 + 2);
+  // The two visible: activeIndex (sliding in) and the previous one (stays/slides out)
+  const currentMember = team[activeIndex];
+  const stableIndex = (activeIndex + 1) % team.length;
+  const stableMember = team[stableIndex];
 
   return (
     <div className="relative">
-      <div className="overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={page}
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -60 }}
-            transition={{ duration: 0.45, ease: 'easeInOut' }}
-            className="grid grid-cols-2 gap-3 sm:gap-6"
-          >
-            {currentMembers.map((member, i) => (
-              <div
-                key={i}
-                className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden"
-              >
-                <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-3 sm:p-5">
-                  <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">
-                    {member.name}
-                  </h3>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">
-                    {member.role}
-                  </p>
-                </div>
+      <div className="grid grid-cols-2 gap-3 sm:gap-6">
+        {/* Left card - animates in/out */}
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-background">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ x: '100%', opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: '-100%', opacity: 0 }}
+              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="text-center group"
+            >
+              <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                <img src={currentMember.image} alt={currentMember.name} className="w-full h-full object-cover" />
               </div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+              <div className="p-3 sm:p-5">
+                <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1">{currentMember.name}</h3>
+                <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{currentMember.role}</p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Right card - stable, swaps when left changes */}
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-background">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={stableIndex}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -30, opacity: 0 }}
+              transition={{ duration: 0.4, ease: 'easeOut', delay: 0.15 }}
+              className="text-center group"
+            >
+              <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                <img src={stableMember.image} alt={stableMember.name} className="w-full h-full object-cover" />
+              </div>
+              <div className="p-3 sm:p-5">
+                <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1">{stableMember.name}</h3>
+                <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{stableMember.role}</p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
-      {/* Dots indicator */}
+      {/* Dots */}
       <div className="flex justify-center gap-2 mt-6">
-        {Array.from({ length: totalPages }).map((_, i) => (
+        {team.map((_, i) => (
           <button
             key={i}
-            onClick={() => setPage(i)}
+            onClick={() => setActiveIndex(i)}
             className={`h-2 rounded-full transition-all duration-300 ${
-              i === page ? 'w-6 bg-primary' : 'w-2 bg-border hover:bg-muted-foreground/40'
+              i === activeIndex ? 'w-6 bg-primary' : 'w-2 bg-border hover:bg-muted-foreground/40'
             }`}
           />
         ))}
