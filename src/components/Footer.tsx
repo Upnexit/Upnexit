@@ -1,31 +1,13 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import footerChar1 from '@/assets/footer-char1.png';
-import footerChar2 from '@/assets/footer-char2.png';
-import footerChar3 from '@/assets/footer-char3.png';
-import footerLeaves from '@/assets/footer-leaves.png';
 
 const Footer = () => {
   const { t } = useLanguage();
 
   return (
     <footer className="relative pb-14 lg:pb-0">
-      {/* All dark background */}
       <div className="bg-[hsl(0_0%_18%)] relative overflow-hidden">
-        {/* Decorative leaves - top left */}
-        <img
-          src={footerLeaves}
-          alt=""
-          className="absolute top-0 left-0 w-32 md:w-48 opacity-60 -translate-x-4 -translate-y-4 rotate-[20deg] pointer-events-none"
-        />
-        {/* Decorative leaves - top right */}
-        <img
-          src={footerLeaves}
-          alt=""
-          className="absolute top-0 right-0 w-28 md:w-40 opacity-50 translate-x-4 -translate-y-4 -scale-x-100 rotate-[-10deg] pointer-events-none"
-        />
-
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Top section - Brand + Newsletter CTA */}
           <div className="py-12 md:py-16 border-b border-white/10">
@@ -106,44 +88,6 @@ const Footer = () => {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Characters section - positioned individually like reference */}
-        <div className="relative h-44 sm:h-52 md:h-64 lg:h-72 overflow-visible">
-          {/* Left leaves decoration */}
-          <img
-            src={footerLeaves}
-            alt=""
-            className="absolute bottom-0 left-0 w-20 md:w-32 opacity-60 -translate-x-2 translate-y-2 rotate-[30deg] pointer-events-none"
-          />
-
-          {/* Character 1 - left side */}
-          <img
-            src={footerChar1}
-            alt="Team member"
-            className="absolute bottom-0 left-[2%] sm:left-[5%] md:left-[10%] h-36 sm:h-44 md:h-56 lg:h-64 object-contain drop-shadow-2xl"
-          />
-
-          {/* Character 2 - center */}
-          <img
-            src={footerChar2}
-            alt="Team member"
-            className="absolute bottom-0 left-[28%] sm:left-[32%] md:left-[35%] h-40 sm:h-48 md:h-60 lg:h-68 object-contain drop-shadow-2xl"
-          />
-
-          {/* Character 3 - right side, largest */}
-          <img
-            src={footerChar3}
-            alt="Team member"
-            className="absolute bottom-0 right-[0%] sm:right-[2%] md:right-[5%] h-44 sm:h-52 md:h-64 lg:h-72 object-contain drop-shadow-2xl"
-          />
-
-          {/* Right leaves decoration */}
-          <img
-            src={footerLeaves}
-            alt=""
-            className="absolute bottom-0 right-[12%] w-16 md:w-24 opacity-40 rotate-[-20deg] -scale-x-100 pointer-events-none"
-          />
         </div>
 
         {/* Bottom bar */}
