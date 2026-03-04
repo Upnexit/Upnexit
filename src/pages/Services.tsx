@@ -2,16 +2,18 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { GraduationCap, HeartPulse, Code, Globe, ArrowUpRight, CheckCircle2, Layers, Monitor, Smartphone, Database, Cloud, Shield } from 'lucide-react';
+import { GraduationCap, HeartPulse, Code, Globe, ArrowUpRight, CheckCircle2, Layers, Monitor, Smartphone, Database, Cloud, Shield, ArrowRight, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Services = () => {
   const { t, lang } = useLanguage();
 
   const services = [
-    { icon: GraduationCap, ...t.services.school, accent: 'bg-primary/8 text-primary border-primary/15' },
-    { icon: HeartPulse, ...t.services.hospital, accent: 'bg-destructive/8 text-destructive border-destructive/15' },
-    { icon: Code, ...t.services.custom, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20' },
-    { icon: Globe, ...t.services.web, accent: 'bg-primary/8 text-primary border-primary/15' },
+    { icon: GraduationCap, ...t.services.school, accent: 'bg-primary/8 text-primary border-primary/15', gradient: 'from-primary/10 to-primary/5' },
+    { icon: HeartPulse, ...t.services.hospital, accent: 'bg-destructive/8 text-destructive border-destructive/15', gradient: 'from-destructive/10 to-destructive/5' },
+    { icon: Code, ...t.services.custom, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', gradient: 'from-secondary/15 to-secondary/5' },
+    { icon: Globe, ...t.services.web, accent: 'bg-primary/8 text-primary border-primary/15', gradient: 'from-primary/10 to-primary/5' },
   ];
 
   const process = lang === 'bn'
@@ -37,12 +39,30 @@ const Services = () => {
     { icon: Layers, label: 'Scalable Architecture' },
   ];
 
+  const features = lang === 'bn'
+    ? [
+        { title: 'রেসপন্সিভ ডিজাইন', desc: 'সব ডিভাইসে পারফেক্ট দেখায়' },
+        { title: 'দ্রুত পারফরম্যান্স', desc: 'অপটিমাইজড কোড ও ক্যাশিং' },
+        { title: 'SEO অপটিমাইজড', desc: 'সার্চ ইঞ্জিনে উপরে থাকুন' },
+        { title: 'নিরাপদ ও স্কেলেবল', desc: 'এন্টারপ্রাইজ-গ্রেড সিকিউরিটি' },
+        { title: 'API ইন্টিগ্রেশন', desc: 'থার্ড-পার্টি সার্ভিস সংযুক্ত করুন' },
+        { title: 'রিয়েল-টাইম আপডেট', desc: 'লাইভ ডেটা সিঙ্ক্রোনাইজেশন' },
+      ]
+    : [
+        { title: 'Responsive Design', desc: 'Looks perfect on all devices' },
+        { title: 'Fast Performance', desc: 'Optimized code & caching' },
+        { title: 'SEO Optimized', desc: 'Rank higher in search engines' },
+        { title: 'Secure & Scalable', desc: 'Enterprise-grade security' },
+        { title: 'API Integration', desc: 'Connect third-party services' },
+        { title: 'Real-time Updates', desc: 'Live data synchronization' },
+      ];
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20 lg:pb-0">
       <Navbar />
 
       {/* Hero Banner */}
-      <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+      <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
         <div className="absolute inset-0" style={{
           background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
         }} />
@@ -50,19 +70,34 @@ const Services = () => {
           backgroundImage: `linear-gradient(hsl(145 63% 32%) 1px, transparent 1px), linear-gradient(90deg, hsl(145 63% 32%) 1px, transparent 1px)`,
           backgroundSize: '40px 40px'
         }} />
+        {/* Floating shapes */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute top-20 right-[10%] w-60 h-60 rounded-full"
+            style={{ background: 'radial-gradient(circle, hsl(145 63% 42% / 0.08), transparent 70%)' }}
+          />
+          <motion.div
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            className="absolute bottom-20 left-[5%] w-80 h-80 rounded-full"
+            style={{ background: 'radial-gradient(circle, hsl(46 92% 55% / 0.1), transparent 70%)' }}
+          />
+        </div>
         <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-5"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-6"
           >
-            Services
+            <Sparkles className="h-3.5 w-3.5" /> Services
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4 text-foreground"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-5 text-foreground"
           >
             {t.services.title}
           </motion.h1>
@@ -70,47 +105,55 @@ const Services = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base"
+            className="text-muted-foreground max-w-2xl mx-auto text-sm md:text-lg leading-relaxed"
           >
             {t.services.subtitle}
           </motion.p>
         </div>
         <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 80" fill="none" className="w-full h-auto">
-            <path d="M0 80L48 72C96 64 192 48 288 40C384 32 480 32 576 36C672 40 768 48 864 52C960 56 1056 56 1152 48C1248 40 1344 24 1392 16L1440 8V80H0Z" fill="hsl(var(--background))" />
+          <svg viewBox="0 0 1440 100" fill="none" className="w-full h-auto">
+            <path d="M0 100L48 90C96 80 192 60 288 50C384 40 480 40 576 45C672 50 768 60 864 65C960 70 1056 70 1152 60C1248 50 1344 30 1392 20L1440 10V100H0Z" fill="hsl(var(--background))" />
           </svg>
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Services Grid - Enhanced */}
       <section className="section-padding">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+          <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
             {services.map((s, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="group bg-background rounded-2xl p-6 md:p-7 border border-border hover:border-primary/20 transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 cursor-pointer relative overflow-hidden"
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -6 }}
+                className={`group bg-gradient-to-br ${s.gradient} rounded-3xl p-7 md:p-9 border border-border hover:border-primary/25 transition-all duration-500 cursor-pointer relative overflow-hidden shadow-soft hover:shadow-elevated`}
               >
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowUpRight className="h-4 w-4 text-primary" />
+                {/* Background pattern */}
+                <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.04]" style={{
+                  backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
+                  backgroundSize: '12px 12px',
+                }} />
+                <div className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                  <ArrowUpRight className="h-5 w-5 text-primary" />
                 </div>
-                <div className={`w-14 h-14 rounded-2xl ${s.accent} border flex items-center justify-center mb-5`}>
-                  <s.icon className="h-7 w-7" />
+                <div className={`w-16 h-16 rounded-2xl ${s.accent} border flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <s.icon className="h-8 w-8" />
                 </div>
-                <h3 className="font-bold text-base md:text-lg mb-3 text-foreground group-hover:text-primary transition-colors">{s.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                <h3 className="font-bold text-lg md:text-xl mb-3 text-foreground group-hover:text-primary transition-colors">{s.title}</h3>
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{s.desc}</p>
+                {/* Bottom accent line */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary/0 group-hover:bg-primary/20 transition-all duration-500 rounded-b-3xl" />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Process Section */}
-      <section className="section-padding bg-muted/40">
+      {/* Features Grid */}
+      <section className="section-padding bg-muted/30">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -118,6 +161,48 @@ const Services = () => {
             viewport={{ once: true }}
             className="text-center mb-14"
           >
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
+              {lang === 'bn' ? 'বৈশিষ্ট্যসমূহ' : 'Features'}
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-foreground">
+              {lang === 'bn' ? 'কেন আমাদের সফটওয়্যার বেছে নেবেন?' : 'Why Choose Our Software?'}
+            </h2>
+          </motion.div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {features.map((f, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
+                className="flex items-start gap-4 p-5 rounded-2xl bg-background border border-border hover:border-primary/20 hover:shadow-card transition-all group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
+                  <CheckCircle2 className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-foreground mb-1">{f.title}</h4>
+                  <p className="text-sm text-muted-foreground">{f.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section - Timeline Style */}
+      <section className="section-padding relative">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-14"
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-5">
+              {lang === 'bn' ? 'প্রক্রিয়া' : 'Process'}
+            </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-foreground">
               {lang === 'bn' ? 'আমাদের কাজের প্রক্রিয়া' : 'Our Work Process'}
             </h2>
@@ -126,21 +211,23 @@ const Services = () => {
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            {/* Connection line (desktop) */}
+            <div className="hidden lg:block absolute top-16 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20" />
             {process.map((p, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="relative bg-background rounded-2xl p-6 border border-border hover:border-primary/20 transition-all hover:shadow-card"
+                transition={{ delay: i * 0.12 }}
+                className="relative bg-background rounded-3xl p-7 border border-border hover:border-primary/20 transition-all hover:shadow-elevated group"
               >
-                <span className="text-4xl font-black text-primary/15 absolute top-4 right-4">{p.step}</span>
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                  <CheckCircle2 className="h-5 w-5 text-primary" />
+                {/* Step number circle */}
+                <div className="w-12 h-12 rounded-full gradient-accent flex items-center justify-center mb-5 text-primary-foreground font-black text-lg shadow-glow relative z-10">
+                  {p.step}
                 </div>
-                <h3 className="font-bold text-foreground mb-2">{p.title}</h3>
+                <h3 className="font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">{p.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
               </motion.div>
             ))}
@@ -149,7 +236,7 @@ const Services = () => {
       </section>
 
       {/* Tech Stack */}
-      <section className="section-padding">
+      <section className="section-padding bg-muted/30">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -169,13 +256,47 @@ const Services = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="flex flex-col items-center gap-3 p-5 rounded-2xl bg-muted/50 border border-border hover:border-primary/20 hover:shadow-card transition-all"
+                whileHover={{ scale: 1.05, y: -4 }}
+                className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-background border border-border hover:border-primary/20 hover:shadow-elevated transition-all group"
               >
-                <tech.icon className="h-8 w-8 text-primary" />
-                <span className="text-xs font-semibold text-foreground text-center">{tech.label}</span>
+                <div className="w-14 h-14 rounded-2xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
+                  <tech.icon className="h-7 w-7 text-primary" />
+                </div>
+                <span className="text-xs font-bold text-foreground text-center">{tech.label}</span>
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section-padding">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative rounded-3xl overflow-hidden p-8 md:p-14 text-center"
+            style={{ background: 'var(--gradient-hero)' }}
+          >
+            <div className="absolute inset-0 opacity-10" style={{
+              backgroundImage: 'radial-gradient(circle, hsl(0 0% 100%) 1px, transparent 1px)',
+              backgroundSize: '20px 20px',
+            }} />
+            <div className="relative z-10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground mb-4">
+                {lang === 'bn' ? 'আপনার প্রজেক্ট শুরু করুন' : 'Start Your Project Today'}
+              </h2>
+              <p className="text-primary-foreground/80 mb-8 max-w-lg mx-auto text-sm md:text-base">
+                {lang === 'bn' ? 'আমাদের সাথে যোগাযোগ করুন এবং ফ্রি কনসালটেশন নিন' : 'Contact us and get a free consultation'}
+              </p>
+              <Link to="/contact">
+                <Button size="lg" className="bg-background text-foreground hover:bg-background/90 font-bold px-8 gap-2 rounded-xl shadow-elevated">
+                  {t.hero.cta1} <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
 
