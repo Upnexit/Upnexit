@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface TeamMember {
   name: string;
@@ -21,16 +22,45 @@ const MemberCard = ({ member }: { member: TeamMember }) => (
 
 const TeamSlider = ({ team }: { team: TeamMember[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const isMobile = useIsMobile();
+
+  // Desktop: 4 per page, Mobile: 2 per page
+  const perPage = isMobile ? 2 : 4;
+  const totalPages = Math.ceil(team.length / perPage);
+  const needsSlider = totalPages > 1;
 
   useEffect(() => {
+    if (!needsSlider) return;
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % team.length);
+      setActiveIndex((prev) => (prev + 1) % totalPages);
     }, 3500);
     return () => clearInterval(interval);
-  }, [team.length]);
+  }, [totalPages, needsSlider]);
 
-  const leftMember = team[activeIndex];
-  const rightMember = team[(activeIndex + 1) % team.length];
+  // If no slider needed, show all members in a grid
+  if (!needsSlider) {
+    return (
+      <div className={`grid gap-3 sm:gap-6 ${
+        team.length <= 2 ? 'grid-cols-2' : 
+        team.length === 3 ? 'grid-cols-3' : 'grid-cols-2 md:grid-cols-4'
+      }`}>
+        {team.map((member, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1 }}
+          >
+            <MemberCard member={member} />
+          </motion.div>
+        ))}
+      </div>
+    );
+  }
+
+  const startIdx = activeIndex * perPage;
+  const currentMembers = team.slice(startIdx, startIdx + perPage);
 
   return (
     <div className="relative">
@@ -42,17 +72,20 @@ const TeamSlider = ({ team }: { team: TeamMember[] }) => {
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="grid grid-cols-2 gap-3 sm:gap-6"
+            className={`grid gap-3 sm:gap-6 ${
+              perPage <= 2 ? 'grid-cols-2' : 'grid-cols-2 md:grid-cols-4'
+            }`}
           >
-            <MemberCard member={leftMember} />
-            <MemberCard member={rightMember} />
+            {currentMembers.map((member, i) => (
+              <MemberCard key={i} member={member} />
+            ))}
           </motion.div>
         </AnimatePresence>
       </div>
 
       {/* Dots */}
       <div className="flex justify-center gap-2 mt-6">
-        {team.map((_, i) => (
+        {Array.from({ length: totalPages }).map((_, i) => (
           <button
             key={i}
             onClick={() => setActiveIndex(i)}

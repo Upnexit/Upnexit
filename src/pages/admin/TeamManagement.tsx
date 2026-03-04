@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Trash2, Edit2, Upload, X, Check } from 'lucide-react';
+import { Plus, Trash2, Edit2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 interface TeamMember {
@@ -21,7 +21,7 @@ const TeamManagement = () => {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: '', role: '', is_founder: false });
+  const [form, setForm] = useState({ name: '', role: '', bio: '', is_founder: false });
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const { data: members = [], isLoading } = useQuery({
@@ -55,6 +55,7 @@ const TeamManagement = () => {
         const { error } = await supabase.from('team_members').update({
           name: form.name,
           role: form.role,
+          bio: form.bio || null,
           is_founder: form.is_founder,
           ...(imageUrl && { image_url: imageUrl }),
         }).eq('id', editId);
@@ -63,6 +64,7 @@ const TeamManagement = () => {
         const { error } = await supabase.from('team_members').insert({
           name: form.name,
           role: form.role,
+          bio: form.bio || null,
           is_founder: form.is_founder,
           image_url: imageUrl,
           sort_order: members.length,
@@ -92,14 +94,14 @@ const TeamManagement = () => {
   });
 
   const resetForm = () => {
-    setForm({ name: '', role: '', is_founder: false });
+    setForm({ name: '', role: '', bio: '', is_founder: false });
     setImageFile(null);
     setEditId(null);
     setOpen(false);
   };
 
   const startEdit = (m: TeamMember) => {
-    setForm({ name: m.name, role: m.role, is_founder: m.is_founder });
+    setForm({ name: m.name, role: m.role, bio: (m as any).bio || '', is_founder: m.is_founder });
     setEditId(m.id);
     setOpen(true);
   };
@@ -119,6 +121,7 @@ const TeamManagement = () => {
             <form onSubmit={(e) => { e.preventDefault(); saveMutation.mutate(); }} className="space-y-4">
               <Input placeholder="নাম" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
               <Input placeholder="পদবি (যেমন: সিইও, ডেভেলপার)" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} required />
+              <Input placeholder="বিবরণ / যোগ্যতা (ঐচ্ছিক)" value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} />
               <label className="flex items-center gap-2 text-sm cursor-pointer">
                 <input type="checkbox" checked={form.is_founder} onChange={(e) => setForm({ ...form, is_founder: e.target.checked })} className="rounded" />
                 ফাউন্ডার হিসেবে চিহ্নিত করুন

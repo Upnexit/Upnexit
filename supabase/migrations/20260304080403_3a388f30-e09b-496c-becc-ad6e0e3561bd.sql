@@ -1,0 +1,1 @@
+ALTER TABLE public.team_members ADD COLUMN bio text DEFAULT NULL;
