@@ -364,28 +364,17 @@ const About = () => {
             className="relative rounded-3xl overflow-hidden p-8 md:p-14 text-center"
             style={{ background: 'var(--gradient-hero)' }}
           >
-            {/* Artistic texture overlay */}
-            <div className="absolute inset-0 opacity-[0.06]" style={{
+            {/* Grid texture overlay */}
+            <div className="absolute inset-0 opacity-[0.08]" style={{
               backgroundImage: `
-                linear-gradient(30deg, hsl(0 0% 100%) 12%, transparent 12.5%, transparent 87%, hsl(0 0% 100%) 87.5%, hsl(0 0% 100%)),
-                linear-gradient(150deg, hsl(0 0% 100%) 12%, transparent 12.5%, transparent 87%, hsl(0 0% 100%) 87.5%, hsl(0 0% 100%)),
-                linear-gradient(30deg, hsl(0 0% 100%) 12%, transparent 12.5%, transparent 87%, hsl(0 0% 100%) 87.5%, hsl(0 0% 100%)),
-                linear-gradient(150deg, hsl(0 0% 100%) 12%, transparent 12.5%, transparent 87%, hsl(0 0% 100%) 87.5%, hsl(0 0% 100%)),
-                linear-gradient(60deg, hsl(0 0% 100% / 0.6) 25%, transparent 25.5%, transparent 75%, hsl(0 0% 100% / 0.6) 75%, hsl(0 0% 100% / 0.6)),
-                linear-gradient(60deg, hsl(0 0% 100% / 0.6) 25%, transparent 25.5%, transparent 75%, hsl(0 0% 100% / 0.6) 75%, hsl(0 0% 100% / 0.6))
+                linear-gradient(hsl(0 0% 100%) 1.5px, transparent 1.5px),
+                linear-gradient(90deg, hsl(0 0% 100%) 1.5px, transparent 1.5px)
               `,
-              backgroundSize: '80px 140px',
-              backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px',
+              backgroundSize: '48px 48px',
             }} />
-            {/* Diagonal lines */}
+            {/* Diagonal lines texture */}
             <div className="absolute inset-0 opacity-[0.04]" style={{
-              backgroundImage: `repeating-linear-gradient(
-                -45deg,
-                hsl(0 0% 100%),
-                hsl(0 0% 100%) 1px,
-                transparent 1px,
-                transparent 16px
-              )`,
+              backgroundImage: 'repeating-linear-gradient(45deg, hsl(0 0% 100%), hsl(0 0% 100%) 1px, transparent 1px, transparent 20px)',
             }} />
             <div className="relative z-10">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground mb-4">
