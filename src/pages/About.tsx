@@ -43,7 +43,7 @@ const About = () => {
       <Navbar />
 
       {/* Hero Banner */}
-      <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
+      <section className="relative pt-24 pb-16 md:pt-36 md:pb-28 overflow-hidden">
         <div className="absolute inset-0" style={{
           background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
         }} />
@@ -77,7 +77,7 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-5 text-foreground"
+            className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black leading-tight mb-4 text-foreground"
           >
             {t.about.title}
           </motion.h1>
@@ -98,14 +98,14 @@ const About = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="section-padding">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-16">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-10 md:mb-16">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative rounded-3xl p-7 md:p-9 border border-primary/15 overflow-hidden"
+              className="relative rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-9 border border-primary/15 overflow-hidden"
               style={{ background: 'linear-gradient(135deg, hsl(145 63% 32% / 0.05), hsl(145 63% 32% / 0.02))' }}
             >
               <div className="absolute top-0 left-0 right-0 h-1 gradient-accent rounded-t-3xl" />
@@ -127,7 +127,7 @@ const About = () => {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative rounded-3xl p-7 md:p-9 border border-secondary/20 overflow-hidden"
+              className="relative rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-9 border border-secondary/20 overflow-hidden"
               style={{ background: 'linear-gradient(135deg, hsl(46 92% 55% / 0.06), hsl(46 92% 55% / 0.02))' }}
             >
               <div className="absolute top-0 left-0 right-0 h-1 gradient-yellow rounded-t-3xl" />
@@ -191,7 +191,7 @@ const About = () => {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="bg-background rounded-3xl border border-border p-6 md:p-8 shadow-elevated relative overflow-hidden">
+              <div className="bg-background rounded-2xl sm:rounded-3xl border border-border p-4 sm:p-6 md:p-8 shadow-elevated relative overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-1.5 gradient-accent rounded-t-3xl" />
                 <div className="grid grid-cols-2 gap-4 mt-2">
                   {[
@@ -207,12 +207,12 @@ const About = () => {
                       viewport={{ once: true }}
                       transition={{ delay: 0.2 + i * 0.1 }}
                       whileHover={{ scale: 1.05 }}
-                      className={`p-5 rounded-2xl text-center border transition-all ${
+                      className={`p-3 sm:p-5 rounded-xl sm:rounded-2xl text-center border transition-all ${
                         item.color === 'primary' ? 'bg-primary/5 border-primary/10 hover:border-primary/25' : 'bg-secondary/8 border-secondary/15 hover:border-secondary/30'
                       }`}
                     >
                       <item.icon className={`h-7 w-7 mx-auto mb-2 ${item.color === 'primary' ? 'text-primary' : 'text-secondary'}`} />
-                      <p className="text-2xl md:text-3xl font-black text-foreground">{item.num}</p>
+                      <p className="text-lg sm:text-2xl md:text-3xl font-black text-foreground">{item.num}</p>
                       <p className="text-xs text-muted-foreground mt-1 font-medium">{item.label}</p>
                     </motion.div>
                   ))}
@@ -226,7 +226,7 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="section-padding bg-muted/30">
+      <section className="py-10 md:py-20 bg-muted/30">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -241,7 +241,7 @@ const About = () => {
               {lang === 'bn' ? 'যে নীতিতে আমরা চলি' : 'Principles We Follow'}
             </h2>
           </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {values.map((v, i) => (
               <motion.div
                 key={i}
@@ -250,13 +250,13 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -6 }}
-                className="bg-background rounded-3xl p-7 border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group"
+                className="bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group"
               >
-                <div className="w-16 h-16 rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mx-auto mb-5 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
-                  <v.icon className="h-7 w-7 text-primary" />
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mx-auto mb-3 sm:mb-5 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
+                  <v.icon className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />
                 </div>
-                <h3 className="font-bold text-foreground mb-2 group-hover:text-primary transition-colors">{v.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
+                <h3 className="font-bold text-xs sm:text-base text-foreground mb-1 group-hover:text-primary transition-colors">{v.title}</h3>
+                <p className="text-[10px] sm:text-sm text-muted-foreground leading-relaxed hidden sm:block">{v.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -273,34 +273,29 @@ const About = () => {
             className="text-center mb-14"
           >
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
-              {lang === 'bn' ? 'আমাদের নেতৃত্ব' : 'Our Leadership'}
+              Leadership
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-foreground">
-              {lang === 'bn' ? 'যারা আমাদের পরিচালনা করেন' : 'Meet Our Leaders'}
+              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Founder</span>{' '}
+              {lang === 'bn' ? 'অফ দ্য কোম্পানি' : 'of the Company'}
             </h2>
             <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
               {lang === 'bn' ? 'অভিজ্ঞ ও দূরদর্শী নেতৃত্বের অধীনে আমরা এগিয়ে যাচ্ছি' : 'Moving forward under experienced and visionary leadership'}
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-2xl mx-auto">
             {[
               {
                 name: lang === 'bn' ? 'মোহাম্মদ আলী' : 'Mohammad Ali',
-                role: lang === 'bn' ? 'প্রতিষ্ঠাতা ও সিইও' : 'Founder & CEO',
+                role: lang === 'bn' ? 'সিইও ও সহ-প্রতিষ্ঠাতা' : 'CEO & Co-Founder',
                 bio: lang === 'bn' ? '১০+ বছরের সফটওয়্যার ইন্ডাস্ট্রি অভিজ্ঞতা। প্রযুক্তি ও ব্যবসায়িক কৌশলে পারদর্শী।' : '10+ years in software industry. Expert in technology and business strategy.',
                 image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face',
               },
               {
-                name: lang === 'bn' ? 'সাদিয়া রহমান' : 'Sadia Rahman',
-                role: lang === 'bn' ? 'সভাপতি' : 'President',
-                bio: lang === 'bn' ? 'ব্যবসায়িক উন্নয়ন ও ক্লায়েন্ট রিলেশনশিপে বিশেষজ্ঞ। কোম্পানির সামগ্রিক পরিচালনায় নেতৃত্ব দেন।' : 'Expert in business development and client relations. Leads overall company operations.',
-                image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face',
-              },
-              {
                 name: lang === 'bn' ? 'রাকিব হাসান' : 'Rakib Hasan',
-                role: lang === 'bn' ? 'প্রধান প্রযুক্তি কর্মকর্তা (CTO)' : 'Chief Technology Officer (CTO)',
-                bio: lang === 'bn' ? 'আধুনিক প্রযুক্তি স্ট্যাক ও সিস্টেম আর্কিটেকচারে দক্ষ। টেকনিক্যাল টিম পরিচালনা করেন।' : 'Skilled in modern tech stacks and system architecture. Manages the technical team.',
+                role: lang === 'bn' ? 'পরিচালক' : 'Director',
+                bio: lang === 'bn' ? 'ব্যবসায়িক উন্নয়ন ও কোম্পানি পরিচালনায় অভিজ্ঞ। কৌশলগত সিদ্ধান্তে নেতৃত্ব দেন।' : 'Experienced in business development and company management. Leads strategic decisions.',
                 image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
               },
             ].map((leader, i) => (
@@ -310,25 +305,25 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
-                whileHover={{ y: -8 }}
-                className="bg-background rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all group relative overflow-hidden"
+                whileHover={{ y: -6 }}
+                className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all group relative overflow-hidden"
               >
-                <div className="relative h-64 sm:h-72 overflow-hidden rounded-t-3xl">
+                <div className="relative h-40 sm:h-56 md:h-64 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
                   <img
                     src={leader.image}
                     alt={leader.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-5 right-5">
-                    <h3 className="font-bold text-lg text-primary-foreground">{leader.name}</h3>
-                    <span className="inline-block mt-1 px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/80 text-primary-foreground">
+                  <div className="absolute bottom-2 sm:bottom-4 left-3 sm:left-5 right-3 sm:right-5">
+                    <h3 className="font-bold text-sm sm:text-lg text-primary-foreground">{leader.name}</h3>
+                    <span className="inline-block mt-0.5 sm:mt-1 px-2 sm:px-3 py-0.5 rounded-full text-[8px] sm:text-[10px] font-bold uppercase tracking-wider bg-primary/80 text-primary-foreground">
                       {leader.role}
                     </span>
                   </div>
                 </div>
-                <div className="p-6">
-                  <p className="text-sm text-muted-foreground leading-relaxed">{leader.bio}</p>
+                <div className="p-3 sm:p-5 md:p-6">
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{leader.bio}</p>
                 </div>
               </motion.div>
             ))}
