@@ -20,30 +20,67 @@ const MemberCard = ({ member }: { member: TeamMember }) => (
   </div>
 );
 
+const MarqueeCard = ({ member }: { member: TeamMember }) => (
+  <div className="bg-background rounded-2xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden shrink-0 w-[calc(50%-6px)]">
+    <div className="w-full aspect-square overflow-hidden rounded-t-2xl">
+      <img src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+    </div>
+    <div className="p-3">
+      <h3 className="font-bold text-xs text-foreground mb-0.5 group-hover:text-primary transition-colors">{member.name}</h3>
+      <p className="text-[10px] text-muted-foreground font-medium">{member.role}</p>
+    </div>
+  </div>
+);
+
 const TeamSlider = ({ team }: { team: TeamMember[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const isMobile = useIsMobile();
 
-  const perPage = isMobile ? 2 : 4;
+  const perPage = 4;
   const totalPages = Math.ceil(team.length / perPage);
   const needsSlider = totalPages > 1;
 
   useEffect(() => {
-    if (!needsSlider) return;
+    if (isMobile || !needsSlider) return;
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % totalPages);
     }, 3500);
     return () => clearInterval(interval);
-  }, [totalPages, needsSlider]);
+  }, [totalPages, needsSlider, isMobile]);
 
   if (team.length === 0) return null;
 
-  // No slider needed - static grid
+  // Mobile: infinite marquee
+  if (isMobile) {
+    const duplicated = [...team, ...team];
+    return (
+      <div className="overflow-hidden -mx-4 px-4">
+        <motion.div
+          className="flex gap-3"
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: 'loop',
+              duration: team.length * 3,
+              ease: 'linear',
+            },
+          }}
+        >
+          {duplicated.map((member, i) => (
+            <MarqueeCard key={`${member.name}-${i}`} member={member} />
+          ))}
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Desktop: no slider needed
   if (!needsSlider) {
     return (
-      <div className={`grid gap-3 sm:gap-6 ${
+      <div className={`grid gap-6 ${
         team.length <= 2 ? 'grid-cols-2' : 
-        team.length === 3 ? 'grid-cols-3' : 'grid-cols-2 md:grid-cols-4'
+        team.length === 3 ? 'grid-cols-3' : 'grid-cols-4'
       }`}>
         {team.map((member, i) => (
           <motion.div
@@ -60,6 +97,7 @@ const TeamSlider = ({ team }: { team: TeamMember[] }) => {
     );
   }
 
+  // Desktop: page slider
   const startIdx = activeIndex * perPage;
   const currentMembers = team.slice(startIdx, startIdx + perPage);
 
@@ -73,9 +111,7 @@ const TeamSlider = ({ team }: { team: TeamMember[] }) => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -300 }}
             transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className={`grid gap-3 sm:gap-6 ${
-              perPage <= 2 ? 'grid-cols-2' : 'grid-cols-2 md:grid-cols-4'
-            }`}
+            className="grid grid-cols-4 gap-6"
           >
             {currentMembers.map((member, i) => (
               <MemberCard key={i} member={member} />
@@ -84,7 +120,6 @@ const TeamSlider = ({ team }: { team: TeamMember[] }) => {
         </AnimatePresence>
       </div>
 
-      {/* Dots */}
       <div className="flex justify-center gap-2 mt-6">
         {Array.from({ length: totalPages }).map((_, i) => (
           <button
