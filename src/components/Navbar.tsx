@@ -17,7 +17,6 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
@@ -138,27 +137,70 @@ const Navbar = () => {
         </AnimatePresence>
       </nav>
 
-      {/* Mobile Bottom Navigation Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-t border-border/60 shadow-elevated">
-        <div className="flex items-center justify-around py-2 px-2">
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              to={l.href}
-              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl transition-all min-w-[60px] ${
-                isActive(l.href)
-                  ? 'text-primary'
-                  : 'text-muted-foreground'
-              }`}
-            >
-              <div className={`p-1.5 rounded-lg transition-all ${isActive(l.href) ? 'bg-primary/10' : ''}`}>
-                <l.icon className="h-5 w-5" />
-              </div>
-              <span className={`text-[10px] font-medium ${isActive(l.href) ? 'font-bold' : ''}`}>{l.label}</span>
-            </Link>
-          ))}
-        </div>
-        {/* Safe area for iPhones */}
+      {/* Floating Mobile Bottom Navigation Bar */}
+      <div className="lg:hidden fixed bottom-4 left-4 right-4 z-50">
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3, type: 'spring', stiffness: 260, damping: 20 }}
+          className="relative rounded-[28px] p-1.5"
+          style={{
+            background: 'hsl(var(--foreground) / 0.06)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            boxShadow: '0 8px 40px hsl(150 10% 15% / 0.12), 0 0 0 1px hsl(var(--border) / 0.5)',
+          }}
+        >
+          <div className="flex items-center justify-around rounded-[22px] py-1.5 px-1" style={{ background: 'hsl(var(--background) / 0.85)' }}>
+            {links.map((l) => {
+              const active = isActive(l.href);
+              return (
+                <Link
+                  key={l.href}
+                  to={l.href}
+                  className="relative flex flex-col items-center gap-0.5 py-1 px-2 min-w-[56px]"
+                >
+                  <motion.div
+                    className="relative z-10 flex flex-col items-center gap-0.5"
+                    whileTap={{ scale: 0.85 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  >
+                    {active && (
+                      <motion.div
+                        layoutId="bottomNavIndicator"
+                        className="absolute -inset-x-2 -inset-y-1 rounded-2xl"
+                        style={{ background: 'hsl(var(--primary) / 0.12)' }}
+                        transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+                      />
+                    )}
+                    <div className="relative z-10">
+                      <motion.div
+                        animate={active ? { y: -2, scale: 1.15 } : { y: 0, scale: 1 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                      >
+                        <l.icon className={`h-[22px] w-[22px] transition-colors duration-200 ${active ? 'text-primary' : 'text-muted-foreground'}`} />
+                      </motion.div>
+                    </div>
+                    <motion.span
+                      animate={active ? { opacity: 1, y: 0 } : { opacity: 0.6, y: 0 }}
+                      className={`text-[9px] font-semibold relative z-10 ${active ? 'text-primary' : 'text-muted-foreground'}`}
+                    >
+                      {l.label}
+                    </motion.span>
+                    {active && (
+                      <motion.div
+                        layoutId="bottomNavDot"
+                        className="w-1 h-1 rounded-full bg-primary"
+                        transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+                      />
+                    )}
+                  </motion.div>
+                </Link>
+              );
+            })}
+          </div>
+        </motion.div>
+        {/* Safe area */}
         <div className="h-[env(safe-area-inset-bottom)]" />
       </div>
     </>
