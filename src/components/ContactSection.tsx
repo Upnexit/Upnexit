@@ -30,10 +30,7 @@ const ContactSection = () => {
           viewport={{ once: true }}
           className="text-center mb-14 md:mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-5">
-            Contact
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{t.contact.title}</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{t.contact.title}</h2>
           <p className="text-muted-foreground text-sm md:text-base">{t.contact.subtitle}</p>
         </motion.div>
 
@@ -66,15 +63,15 @@ const ContactSection = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-2 space-y-4 flex flex-col justify-center"
+            className="md:col-span-2 space-y-4 flex flex-col justify-between"
           >
             {[
               { icon: Mail, text: 'info@techsoft.com.bd', label: 'Email' },
               { icon: Phone, text: '+880 1XXX-XXXXXX', label: 'Phone' },
-              { icon: MapPin, text: 'ঢাকা, বাংলাদেশ', label: 'Address' },
+              { icon: MapPin, text: 'সাপাহার, নওগাঁ, বাংলাদেশ', label: 'Address' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-4 p-5 bg-background rounded-2xl border border-border shadow-soft hover:shadow-card transition-all group">
-                <div className="w-12 h-12 rounded-xl bg-primary/8 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
+              <div key={i} className="flex items-center gap-4 p-4 bg-background rounded-2xl border border-border shadow-soft hover:shadow-card transition-all group">
+                <div className="w-11 h-11 rounded-xl bg-primary/8 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
                   <item.icon className="h-5 w-5 text-primary" />
                 </div>
                 <div>
@@ -84,15 +81,18 @@ const ContactSection = () => {
               </div>
             ))}
 
-            {/* Map placeholder */}
-            <div className="h-32 md:h-40 rounded-2xl bg-muted border border-border overflow-hidden relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <MapPin className="h-8 w-8 text-primary/30" />
-              </div>
-              <div className="absolute inset-0 opacity-[0.03]" style={{
-                backgroundImage: 'linear-gradient(hsl(145 63% 32%) 1px, transparent 1px), linear-gradient(90deg, hsl(145 63% 32%) 1px, transparent 1px)',
-                backgroundSize: '20px 20px'
-              }} />
+            {/* Google Map - Sapahar, Naogaon */}
+            <div className="flex-1 min-h-[160px] rounded-2xl overflow-hidden border border-border shadow-soft">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36244.94372177964!2d88.5833!3d25.0333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fb99e048bc7c51%3A0x87c1f1a4a1f4d8fa!2sSapahar%2C%20Bangladesh!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd"
+                width="100%"
+                height="100%"
+                style={{ border: 0, minHeight: '160px' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Office Location - Sapahar, Naogaon"
+              />
             </div>
           </motion.div>
         </div>
