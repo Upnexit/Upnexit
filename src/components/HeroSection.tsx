@@ -119,9 +119,9 @@ const HeroSection = () => {
             className="mt-8 sm:mt-16 grid grid-cols-1 min-[380px]:grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-4 sm:gap-12"
           >
             {[
-              { num: '150+', label: lang === 'bn' ? 'ক্লায়েন্ট' : 'Clients' },
-              { num: '200+', label: lang === 'bn' ? 'প্রজেক্ট' : 'Projects' },
-              { num: '8+', label: lang === 'bn' ? 'বছরের অভিজ্ঞতা' : 'Years Experience' },
+              { num: '10+', label: lang === 'bn' ? 'ক্লায়েন্ট' : 'Clients' },
+              { num: '50+', label: lang === 'bn' ? 'প্রজেক্ট' : 'Projects' },
+              { num: '2+', label: lang === 'bn' ? 'বছরের অভিজ্ঞতা' : 'Years Experience' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col items-center gap-1 sm:flex-row sm:items-center sm:gap-3">
                 <span className="text-3xl sm:text-4xl font-black text-primary">{item.num}</span>
