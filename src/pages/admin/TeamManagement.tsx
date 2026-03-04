@@ -108,8 +108,8 @@ const TeamManagement = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-foreground">টিম ম্যানেজমেন্ট</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <h1 className="text-xl md:text-2xl font-bold text-foreground">টিম ম্যানেজমেন্ট</h1>
         <Dialog open={open} onOpenChange={(v) => { if (!v) resetForm(); setOpen(v); }}>
           <DialogTrigger asChild>
             <Button variant="hero" className="gap-2"><Plus className="h-4 w-4" /> নতুন সদস্য</Button>
@@ -145,8 +145,8 @@ const TeamManagement = () => {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {members.map((m) => (
-            <div key={m.id} className="bg-background rounded-2xl border border-border p-4 flex gap-4 items-center shadow-sm">
-              <div className="w-14 h-14 rounded-xl bg-muted overflow-hidden shrink-0">
+            <div key={m.id} className="bg-background rounded-2xl border border-border p-3 md:p-4 flex gap-3 md:gap-4 items-center shadow-sm">
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-muted overflow-hidden shrink-0">
                 {m.image_url ? (
                   <img src={m.image_url} alt={m.name} className="w-full h-full object-cover" />
                 ) : (

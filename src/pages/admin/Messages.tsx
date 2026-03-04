@@ -38,7 +38,7 @@ const Messages = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-foreground mb-6">মেসেজ ইনবক্স</h1>
+      <h1 className="text-xl md:text-2xl font-bold text-foreground mb-6">মেসেজ ইনবক্স</h1>
       {isLoading ? (
         <div className="text-center py-12 text-muted-foreground">লোড হচ্ছে...</div>
       ) : messages.length === 0 ? (
