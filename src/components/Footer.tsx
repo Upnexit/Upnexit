@@ -1,11 +1,12 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Facebook, Twitter, Linkedin, Instagram, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="gradient-dark text-white relative overflow-hidden">
+    <footer className="gradient-dark text-white relative overflow-hidden pb-16 lg:pb-0">
       {/* Top accent line */}
       <div className="h-1 gradient-accent" />
       
@@ -34,15 +35,15 @@ const Footer = () => {
             <h4 className="font-bold mb-4 text-white/90">{t.footer.quickLinks}</h4>
             <div className="space-y-2.5">
               {[
-                { label: t.nav.home, href: '#home' },
-                { label: t.nav.services, href: '#services' },
-                { label: t.nav.about, href: '#about' },
-                { label: t.nav.contact, href: '#contact' },
+                { label: t.nav.home, href: '/' },
+                { label: t.nav.services, href: '/services' },
+                { label: t.nav.about, href: '/about' },
+                { label: t.nav.contact, href: '/contact' },
               ].map((l) => (
-                <a key={l.href} href={l.href} className="flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors group">
+                <Link key={l.href} to={l.href} className="flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors group">
                   <ArrowRight className="h-3 w-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                   {l.label}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
