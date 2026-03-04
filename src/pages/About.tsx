@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import TeamSlider from '@/components/TeamSlider';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Zap, Shield, Clock, Heart, Users, Code2, Award, Target, Eye, Sparkles, ArrowRight, Star, TrendingUp, Lightbulb, Handshake } from 'lucide-react';
@@ -348,27 +349,7 @@ const About = () => {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-            {team.map((member, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -6 }}
-                className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden"
-              >
-                <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                </div>
-                <div className="p-3 sm:p-5">
-                  <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground font-medium">{member.role}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <TeamSlider team={team} />
         </div>
       </section>
 
