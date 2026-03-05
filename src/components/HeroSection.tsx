@@ -8,7 +8,7 @@ const HeroSection = () => {
   const { t, lang } = useLanguage();
 
   return (
-    <section id="home" className="relative min-h-[88svh] sm:min-h-[100svh] flex items-center overflow-hidden">
+    <section id="home" className="relative min-h-[95svh] sm:min-h-[105svh] flex items-center overflow-hidden">
       {/* Rich gradient background */}
       <div className="absolute inset-0" style={{
         background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
@@ -66,7 +66,7 @@ const HeroSection = () => {
         <div className="absolute top-0 right-1/3 w-px h-64 bg-gradient-to-b from-transparent via-secondary/10 to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 pt-16 sm:pt-28 pb-8 sm:pb-16 relative z-10">
+      <div className="container mx-auto px-4 lg:px-8 pt-20 sm:pt-36 pb-12 sm:pb-24 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
