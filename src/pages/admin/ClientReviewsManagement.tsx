@@ -11,6 +11,8 @@ const ClientReviewsManagement = () => {
   const queryClient = useQueryClient();
   const [newName, setNewName] = useState('');
   const [newRating, setNewRating] = useState(5);
+  const [newLogoFile, setNewLogoFile] = useState<File | null>(null);
+  const [newLogoPreview, setNewLogoPreview] = useState<string | null>(null);
 
   const { data: reviews = [], isLoading } = useQuery({
     queryKey: ['admin-client-reviews'],
