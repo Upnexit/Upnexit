@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Globe, Home, Briefcase, Users, MessageSquare } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, Globe, Home, Briefcase, Users, MessageSquare } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 
 const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
