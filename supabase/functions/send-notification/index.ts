@@ -44,7 +44,7 @@ serve(async (req) => {
         to: ['mehedihasanwork25@gmail.com'],
         subject: `নতুন কনসালটেশন রিকোয়েস্ট: ${service}`,
         html,
-        reply_to: email,
+        ...(email && email.includes('@') ? { reply_to: email } : {}),
       }),
     });
 
