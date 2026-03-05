@@ -57,7 +57,7 @@ const TeamSlider = ({ team }: { team: TeamMember[] }) => {
       <div className="overflow-hidden -mx-4 px-4">
         <motion.div
           className="flex gap-3"
-          animate={{ x: ['-50%', '0%'] }}
+          animate={{ x: ['0%', '-50%'] }}
           transition={{
             x: {
               repeat: Infinity,

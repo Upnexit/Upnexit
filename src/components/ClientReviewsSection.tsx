@@ -80,7 +80,7 @@ const ClientReviewsSection = () => {
       <div className="overflow-hidden">
         <motion.div
           className="flex gap-4 md:gap-6 px-4"
-          animate={{ x: ['-50%', '0%'] }}
+          animate={{ x: ['0%', '-50%'] }}
           transition={{
             x: {
               repeat: Infinity,
