@@ -2,6 +2,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const { t, lang } = useLanguage();
@@ -103,9 +104,11 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button variant="hero" size="xl" className="gap-2 px-10 w-full sm:w-auto">
-              {t.hero.cta1} <ArrowRight className="h-5 w-5" />
-            </Button>
+            <Link to="/contact" className="w-full sm:w-auto">
+              <Button variant="hero" size="xl" className="gap-2 px-10 w-full">
+                {t.hero.cta1} <ArrowRight className="h-5 w-5" />
+              </Button>
+            </Link>
             <Button
               variant="heroOutline"
               size="xl"
