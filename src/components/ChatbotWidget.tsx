@@ -83,6 +83,8 @@ const ChatbotWidget = () => {
       : 'Sorry, I couldn\'t find an answer. Please contact us directly for more help.';
   };
 
+  const [isTyping, setIsTyping] = useState(false);
+
   const handleSend = () => {
     if (!input.trim()) return;
 
@@ -94,16 +96,17 @@ const ChatbotWidget = () => {
 
     setMessages(prev => [...prev, userMsg]);
     setInput('');
+    setIsTyping(true);
 
-    // Simulate typing delay
     setTimeout(() => {
       const answer = findAnswer(userMsg.text);
+      setIsTyping(false);
       setMessages(prev => [...prev, {
         id: `bot-${Date.now()}`,
         text: answer,
         sender: 'bot',
       }]);
-    }, 500);
+    }, 1200);
   };
 
   // Show suggested questions
