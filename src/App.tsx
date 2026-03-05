@@ -19,6 +19,8 @@ import Messages from "./pages/admin/Messages";
 import ServicesManagement from "./pages/admin/ServicesManagement";
 import SiteSettings from "./pages/admin/SiteSettings";
 import ClientReviewsManagement from "./pages/admin/ClientReviewsManagement";
+import ChatbotManagement from "./pages/admin/ChatbotManagement";
+import ChatbotWidget from "./components/ChatbotWidget";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,7 @@ const AppRoutes = () => {
         <Route path="messages" element={<Messages />} />
         <Route path="services" element={<ServicesManagement />} />
         <Route path="reviews" element={<ClientReviewsManagement />} />
+        <Route path="chatbot" element={<ChatbotManagement />} />
         <Route path="settings" element={<SiteSettings />} />
       </Route>
       <Route path="*" element={<NotFound />} />
@@ -53,6 +56,7 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <AppRoutes />
+            <ChatbotWidget />
           </BrowserRouter>
         </AuthProvider>
       </LanguageProvider>
