@@ -66,7 +66,7 @@ const HeroSection = () => {
         <div className="absolute top-0 right-1/3 w-px h-64 bg-gradient-to-b from-transparent via-secondary/10 to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 pt-20 sm:pt-36 pb-12 sm:pb-24 relative z-10">
+      <div className="container mx-auto px-4 lg:px-8 pt-24 sm:pt-40 pb-16 sm:pb-28 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
