@@ -19,6 +19,8 @@ import Messages from "./pages/admin/Messages";
 import ServicesManagement from "./pages/admin/ServicesManagement";
 import SiteSettings from "./pages/admin/SiteSettings";
 import ClientReviewsManagement from "./pages/admin/ClientReviewsManagement";
+import ChatbotManagement from "./pages/admin/ChatbotManagement";
+import ChatbotWidget from "./components/ChatbotWidget";
 
 const queryClient = new QueryClient();
 
