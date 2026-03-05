@@ -130,13 +130,26 @@ const ChatbotWidget = () => {
     window.open(`https://wa.me/${cleaned}`, '_blank');
   };
 
+  // Close on outside click
+  const chatRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (chatRef.current && !chatRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
   return (
     <>
-      {/* WhatsApp Button */}
+      {/* WhatsApp Button - same style as chatbot toggle */}
       {whatsappNumber && (
         <motion.button
           onClick={handleWhatsApp}
-          className="fixed bottom-[7.5rem] lg:bottom-[5.5rem] right-4 lg:right-6 z-[60] w-13 h-13 rounded-full bg-[#25D366] text-white shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
+          className="fixed bottom-[8.5rem] lg:bottom-[5.5rem] right-4 lg:right-6 z-[60] w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#25D366] text-white shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
           whileTap={{ scale: 0.9 }}
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -148,7 +161,7 @@ const ChatbotWidget = () => {
       )}
 
       {/* Chatbot Toggle Button with Help Center text */}
-      <div className="fixed bottom-28 lg:bottom-6 right-4 lg:right-6 z-[60] flex items-center gap-2">
+      <div className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-[60] flex items-center gap-2">
         <AnimatePresence>
           {showHelpText && !open && (
             <motion.div
@@ -164,50 +177,51 @@ const ChatbotWidget = () => {
         </AnimatePresence>
         <motion.button
           onClick={() => setOpen(!open)}
-          className="w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
+          className="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-primary text-primary-foreground shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
           whileTap={{ scale: 0.9 }}
           aria-label="Toggle chatbot"
         >
           <AnimatePresence mode="wait">
             {open ? (
               <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                <X className="h-6 w-6" />
+                <X className="h-5 w-5 lg:h-6 lg:w-6" />
               </motion.div>
             ) : (
               <motion.div key="chat" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                <MessageCircle className="h-6 w-6" />
+                <MessageCircle className="h-5 w-5 lg:h-6 lg:w-6" />
               </motion.div>
             )}
           </AnimatePresence>
         </motion.button>
       </div>
 
-      {/* Chat Window - smaller */}
+      {/* Chat Window */}
       <AnimatePresence>
         {open && (
           <motion.div
+            ref={chatRef}
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-44 lg:bottom-24 right-4 lg:right-6 z-[60] w-[calc(100vw-2rem)] sm:w-[340px] h-[380px] bg-background border border-border rounded-2xl shadow-elevated flex flex-col overflow-hidden"
+            className="fixed bottom-36 lg:bottom-24 right-3 lg:right-6 z-[60] w-[calc(100vw-1.5rem)] max-w-[300px] sm:max-w-[340px] h-[320px] sm:h-[380px] bg-background border border-border rounded-2xl shadow-elevated flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-primary text-primary-foreground px-3 py-2.5 flex items-center gap-2.5 shrink-0">
-              <div className="w-8 h-8 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-                <MessageCircle className="h-4 w-4" />
+            <div className="bg-primary text-primary-foreground px-3 py-2 flex items-center gap-2 shrink-0">
+              <div className="w-7 h-7 rounded-full bg-primary-foreground/20 flex items-center justify-center">
+                <MessageCircle className="h-3.5 w-3.5" />
               </div>
               <div>
-                <p className="font-semibold text-xs">Upnex It</p>
-                <p className="text-[10px] opacity-80">{lang === 'bn' ? 'সাধারণত তাৎক্ষণিক উত্তর' : 'Usually replies instantly'}</p>
+                <p className="font-semibold text-[11px]">Upnex It</p>
+                <p className="text-[9px] opacity-80">{lang === 'bn' ? 'সাধারণত তাৎক্ষণিক উত্তর' : 'Usually replies instantly'}</p>
               </div>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-2.5 space-y-2.5">
+            <div className="flex-1 overflow-y-auto p-2 space-y-2">
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] px-3 py-2 rounded-2xl text-xs leading-relaxed ${
+                  <div className={`max-w-[85%] px-2.5 py-1.5 rounded-2xl text-[11px] leading-relaxed ${
                     msg.sender === 'user'
                       ? 'bg-primary text-primary-foreground rounded-br-md'
                       : 'bg-muted text-foreground rounded-bl-md'
@@ -219,14 +233,14 @@ const ChatbotWidget = () => {
 
               {messages.length === 1 && suggestedQuestions.length > 0 && (
                 <div className="space-y-1">
-                  <p className="text-[10px] text-muted-foreground px-1">
+                  <p className="text-[9px] text-muted-foreground px-1">
                     {lang === 'bn' ? 'জনপ্রিয় প্রশ্ন:' : 'Popular questions:'}
                   </p>
                   {suggestedQuestions.map((qa) => (
                     <button
                       key={qa.id}
                       onClick={() => handleSuggestionClick(qa.question)}
-                      className="block w-full text-left text-[11px] bg-primary/5 hover:bg-primary/10 text-primary border border-primary/15 rounded-xl px-2.5 py-1.5 transition-colors"
+                      className="block w-full text-left text-[10px] bg-primary/5 hover:bg-primary/10 text-primary border border-primary/15 rounded-xl px-2 py-1.5 transition-colors"
                     >
                       {qa.question}
                     </button>
@@ -236,7 +250,7 @@ const ChatbotWidget = () => {
 
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-muted rounded-2xl rounded-bl-md px-3 py-2.5 flex items-center gap-1.5">
+                  <div className="bg-muted rounded-2xl rounded-bl-md px-3 py-2 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-foreground/40 animate-bounce [animation-delay:0ms]" />
                     <span className="w-1.5 h-1.5 rounded-full bg-foreground/40 animate-bounce [animation-delay:150ms]" />
                     <span className="w-1.5 h-1.5 rounded-full bg-foreground/40 animate-bounce [animation-delay:300ms]" />
@@ -248,22 +262,22 @@ const ChatbotWidget = () => {
             </div>
 
             {/* Input */}
-            <div className="border-t border-border p-2.5 shrink-0">
-              <div className="flex gap-2">
+            <div className="border-t border-border p-2 shrink-0">
+              <div className="flex gap-1.5">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder={lang === 'bn' ? 'আপনার প্রশ্ন লিখুন...' : 'Type your question...'}
-                  className="flex-1 h-9 px-3 rounded-xl bg-muted border-0 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  className="flex-1 h-8 px-2.5 rounded-xl bg-muted border-0 text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
                 />
                 <button
                   onClick={handleSend}
                   disabled={!input.trim()}
-                  className="w-9 h-9 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0 hover:bg-primary/90 disabled:opacity-40 transition-all"
+                  className="w-8 h-8 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0 hover:bg-primary/90 disabled:opacity-40 transition-all"
                 >
-                  <Send className="h-3.5 w-3.5" />
+                  <Send className="h-3 w-3" />
                 </button>
               </div>
             </div>
