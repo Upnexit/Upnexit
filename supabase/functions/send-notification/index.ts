@@ -41,7 +41,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: 'UpnexIT <onboarding@resend.dev>',
-        to: ['upnex360@gmail.com'],
+        to: ['mehedihasanwork25@gmail.com'],
         subject: `নতুন কনসালটেশন রিকোয়েস্ট: ${service}`,
         html,
         reply_to: email,
