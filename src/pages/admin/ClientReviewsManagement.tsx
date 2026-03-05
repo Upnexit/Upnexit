@@ -11,6 +11,8 @@ const ClientReviewsManagement = () => {
   const queryClient = useQueryClient();
   const [newName, setNewName] = useState('');
   const [newRating, setNewRating] = useState(5);
+  const [newLogoFile, setNewLogoFile] = useState<File | null>(null);
+  const [newLogoPreview, setNewLogoPreview] = useState<string | null>(null);
 
   const { data: reviews = [], isLoading } = useQuery({
     queryKey: ['admin-client-reviews'],
@@ -27,17 +29,34 @@ const ClientReviewsManagement = () => {
   const addMutation = useMutation({
     mutationFn: async () => {
       if (!newName.trim()) throw new Error('কোম্পানির নাম দিন');
-      const { error } = await supabase.from('client_reviews').insert({
+      
+      // Insert review first
+      const { data: inserted, error } = await supabase.from('client_reviews').insert({
         company_name: newName.trim(),
         rating: newRating,
         sort_order: reviews.length,
-      });
+      }).select().single();
       if (error) throw error;
+
+      // Upload logo if provided
+      if (newLogoFile && inserted) {
+        const ext = newLogoFile.name.split('.').pop();
+        const path = `client-logos/${inserted.id}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from('team-photos')
+          .upload(path, newLogoFile, { upsert: true });
+        if (!uploadError) {
+          const { data: { publicUrl } } = supabase.storage.from('team-photos').getPublicUrl(path);
+          await supabase.from('client_reviews').update({ logo_url: publicUrl }).eq('id', inserted.id);
+        }
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-client-reviews'] });
       setNewName('');
       setNewRating(5);
+      setNewLogoFile(null);
+      setNewLogoPreview(null);
       toast({ title: '✅', description: 'ক্লায়েন্ট যোগ হয়েছে!' });
     },
     onError: (err: any) => toast({ title: 'ত্রুটি', description: err.message, variant: 'destructive' }),
@@ -87,23 +106,42 @@ const ClientReviewsManagement = () => {
       {/* Add new */}
       <div className="bg-background rounded-2xl border border-border p-4 md:p-6 shadow-sm mb-6">
         <h2 className="font-semibold text-foreground mb-3">নতুন ক্লায়েন্ট যোগ করুন</h2>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Input
-            placeholder="কোম্পানির নাম"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            className="h-11 rounded-xl flex-1"
-          />
-          <div className="flex items-center gap-1">
-            {[1, 2, 3, 4, 5].map((s) => (
-              <button key={s} onClick={() => setNewRating(s)}>
-                <Star className={`h-5 w-5 ${s <= newRating ? 'text-accent fill-accent' : 'text-muted-foreground/30'}`} />
-              </button>
-            ))}
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
+            {/* Logo upload preview */}
+            <label className="shrink-0 cursor-pointer">
+              {newLogoPreview ? (
+                <img src={newLogoPreview} alt="Logo preview" className="w-11 h-11 rounded-xl object-contain border border-border" />
+              ) : (
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center border border-dashed border-primary/30 hover:bg-primary/15 transition-colors">
+                  <Upload className="h-4 w-4 text-primary" />
+                </div>
+              )}
+              <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) {
+                  setNewLogoFile(f);
+                  setNewLogoPreview(URL.createObjectURL(f));
+                }
+              }} />
+            </label>
+            <Input
+              placeholder="কোম্পানির নাম"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              className="h-11 rounded-xl flex-1"
+            />
+            <div className="flex items-center gap-1">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <button key={s} onClick={() => setNewRating(s)}>
+                  <Star className={`h-5 w-5 ${s <= newRating ? 'text-accent fill-accent' : 'text-muted-foreground/30'}`} />
+                </button>
+              ))}
+            </div>
+            <Button variant="hero" className="gap-2 w-full sm:w-auto" onClick={() => addMutation.mutate()} disabled={addMutation.isPending}>
+              <Plus className="h-4 w-4" /> যোগ করুন
+            </Button>
           </div>
-          <Button variant="hero" className="gap-2 w-full sm:w-auto" onClick={() => addMutation.mutate()} disabled={addMutation.isPending}>
-            <Plus className="h-4 w-4" /> যোগ করুন
-          </Button>
         </div>
       </div>
 

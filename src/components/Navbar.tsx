@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Globe, Home, Briefcase, Users, MessageSquare } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, Globe, Home, Briefcase, Users, MessageSquare } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 
 const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
@@ -76,64 +77,57 @@ const Navbar = () => {
             <button onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')} className="p-2.5 text-muted-foreground hover:text-primary rounded-lg hover:bg-primary/5 transition-colors">
               <Globe className="h-5 w-5" />
             </button>
-            <button onClick={() => setOpen(!open)} className="p-2.5 text-foreground rounded-lg hover:bg-muted transition-colors">
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <button onClick={() => setOpen(true)} className="p-2.5 text-foreground rounded-lg hover:bg-muted transition-colors">
+              <Menu className="h-5 w-5" />
             </button>
           </div>
         </div>
-
-        {/* Mobile menu - full screen overlay */}
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="lg:hidden fixed inset-x-0 top-[4.5rem] bottom-0 bg-background/98 backdrop-blur-xl z-40"
-            >
-              <div className="container mx-auto flex flex-col gap-2 px-4 py-6">
-                {links.map((l, i) => (
-                  <motion.div
-                    key={l.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                  >
-                    <Link
-                      to={l.href}
-                      className={`flex items-center gap-4 text-base font-medium py-4 px-5 rounded-2xl transition-all ${
-                        isActive(l.href)
-                          ? 'text-primary bg-primary/8 font-semibold border border-primary/15'
-                          : 'text-foreground hover:text-primary hover:bg-muted/60'
-                      }`}
-                    >
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                        isActive(l.href) ? 'bg-primary/15' : 'bg-muted'
-                      }`}>
-                        <l.icon className={`h-5 w-5 ${isActive(l.href) ? 'text-primary' : 'text-muted-foreground'}`} />
-                      </div>
-                      {l.label}
-                    </Link>
-                  </motion.div>
-                ))}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.25 }}
-                  className="pt-4"
-                >
-                  <Link to="/contact">
-                    <Button variant="hero" size="lg" className="w-full">
-                      {t.hero.cta1}
-                    </Button>
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </nav>
+
+      {/* Mobile Sidebar Sheet */}
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent side="right" className="w-[280px] p-0">
+          <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+          <div className="flex flex-col h-full">
+            <div className="p-5 border-b border-border">
+              <div className="flex items-center gap-2">
+                <img src="/logo.png" alt="Upnex It Logo" className="w-8 h-8 rounded-xl object-contain" />
+                <span className="text-lg font-extrabold tracking-tight text-foreground">Upnex <span className="text-gradient">It</span></span>
+              </div>
+            </div>
+
+            <nav className="flex-1 p-3 space-y-1">
+              {links.map((l) => (
+                <Link
+                  key={l.href}
+                  to={l.href}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                    isActive(l.href)
+                      ? 'text-primary bg-primary/10 font-semibold'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                  }`}
+                >
+                  <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
+                    isActive(l.href) ? 'bg-primary/15' : 'bg-muted'
+                  }`}>
+                    <l.icon className={`h-4 w-4 ${isActive(l.href) ? 'text-primary' : 'text-muted-foreground'}`} />
+                  </div>
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="p-4 border-t border-border">
+              <Link to="/contact" onClick={() => setOpen(false)}>
+                <Button variant="hero" size="lg" className="w-full">
+                  {t.hero.cta1}
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
 
       {/* Floating Mobile Bottom Navigation Bar */}
       <div className="lg:hidden fixed inset-x-0 bottom-4 z-50 px-4">
