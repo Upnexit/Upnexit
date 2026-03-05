@@ -55,7 +55,7 @@ const ChatbotWidget = () => {
     const interval = setInterval(() => {
       setShowHelpText(true);
       setTimeout(() => setShowHelpText(false), 1500);
-    }, 2000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [open]);
 
