@@ -66,7 +66,7 @@ const HeroSection = () => {
         <div className="absolute top-0 right-1/3 w-px h-64 bg-gradient-to-b from-transparent via-secondary/10 to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 pt-24 sm:pt-40 pb-16 sm:pb-28 relative z-10">
+      <div className="container mx-auto px-4 lg:px-8 pt-28 sm:pt-44 pb-20 sm:pb-32 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -82,7 +82,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.08] mb-6 tracking-tight text-foreground"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.08] mb-6 tracking-tight text-foreground"
           >
             {t.hero.title1}{' '}
             <br />
@@ -93,7 +93,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             {t.hero.subtitle}
           </motion.p>
