@@ -147,17 +147,13 @@ const ChatbotWidget = () => {
     <>
       {/* WhatsApp Button - same style as chatbot toggle */}
       {whatsappNumber && (
-        <motion.button
+        <button
           onClick={handleWhatsApp}
           className="fixed bottom-[11rem] lg:bottom-[5.5rem] right-4 lg:right-6 z-[60] w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#25D366] text-white shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
-          whileTap={{ scale: 0.9 }}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
           aria-label="WhatsApp"
         >
           <WhatsAppIcon />
-        </motion.button>
+        </button>
       )}
 
       {/* Chatbot Toggle Button with Help Center text */}
