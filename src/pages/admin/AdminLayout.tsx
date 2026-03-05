@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import { Users, MessageSquare, Settings, LayoutDashboard, Wrench, LogOut, ArrowLeft, Star } from 'lucide-react';
+import { Users, MessageSquare, Settings, LayoutDashboard, Wrench, LogOut, ArrowLeft, Star, MessageCircle } from 'lucide-react';
 
 const navItems = [
   { label: 'ড্যাশবোর্ড', shortLabel: 'Home', icon: LayoutDashboard, path: '/admin' },
@@ -9,6 +9,7 @@ const navItems = [
   { label: 'মেসেজ', shortLabel: 'Inbox', icon: MessageSquare, path: '/admin/messages' },
   { label: 'সার্ভিস', shortLabel: 'Service', icon: Wrench, path: '/admin/services' },
   { label: 'রিভিউ', shortLabel: 'Review', icon: Star, path: '/admin/reviews' },
+  { label: 'চ্যাটবট', shortLabel: 'Chatbot', icon: MessageCircle, path: '/admin/chatbot' },
   { label: 'সেটিংস', shortLabel: 'Settings', icon: Settings, path: '/admin/settings' },
 ];
 

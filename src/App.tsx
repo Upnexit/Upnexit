@@ -56,6 +56,7 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <AppRoutes />
+            <ChatbotWidget />
           </BrowserRouter>
         </AuthProvider>
       </LanguageProvider>
