@@ -29,17 +29,34 @@ const ClientReviewsManagement = () => {
   const addMutation = useMutation({
     mutationFn: async () => {
       if (!newName.trim()) throw new Error('কোম্পানির নাম দিন');
-      const { error } = await supabase.from('client_reviews').insert({
+      
+      // Insert review first
+      const { data: inserted, error } = await supabase.from('client_reviews').insert({
         company_name: newName.trim(),
         rating: newRating,
         sort_order: reviews.length,
-      });
+      }).select().single();
       if (error) throw error;
+
+      // Upload logo if provided
+      if (newLogoFile && inserted) {
+        const ext = newLogoFile.name.split('.').pop();
+        const path = `client-logos/${inserted.id}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from('team-photos')
+          .upload(path, newLogoFile, { upsert: true });
+        if (!uploadError) {
+          const { data: { publicUrl } } = supabase.storage.from('team-photos').getPublicUrl(path);
+          await supabase.from('client_reviews').update({ logo_url: publicUrl }).eq('id', inserted.id);
+        }
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-client-reviews'] });
       setNewName('');
       setNewRating(5);
+      setNewLogoFile(null);
+      setNewLogoPreview(null);
       toast({ title: '✅', description: 'ক্লায়েন্ট যোগ হয়েছে!' });
     },
     onError: (err: any) => toast({ title: 'ত্রুটি', description: err.message, variant: 'destructive' }),
