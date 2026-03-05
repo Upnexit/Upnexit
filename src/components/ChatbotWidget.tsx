@@ -119,15 +119,17 @@ const ChatbotWidget = () => {
       sender: 'user',
     };
     setMessages(prev => [...prev, userMsg]);
+    setIsTyping(true);
 
     setTimeout(() => {
       const answer = findAnswer(question);
+      setIsTyping(false);
       setMessages(prev => [...prev, {
         id: `bot-${Date.now()}`,
         text: answer,
         sender: 'bot',
       }]);
-    }, 500);
+    }, 1200);
   };
 
   return (
