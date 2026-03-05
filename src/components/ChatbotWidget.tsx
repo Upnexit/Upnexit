@@ -137,7 +137,7 @@ const ChatbotWidget = () => {
       {/* Toggle Button */}
       <motion.button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-[60] w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
+        className="fixed bottom-28 lg:bottom-6 right-4 lg:right-6 z-[60] w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
         whileTap={{ scale: 0.9 }}
         aria-label="Toggle chatbot"
       >
@@ -162,7 +162,7 @@ const ChatbotWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-36 lg:bottom-24 right-4 lg:right-6 z-[60] w-[calc(100vw-2rem)] sm:w-[380px] h-[450px] bg-background border border-border rounded-2xl shadow-elevated flex flex-col overflow-hidden"
+            className="fixed bottom-44 lg:bottom-24 right-4 lg:right-6 z-[60] w-[calc(100vw-2rem)] sm:w-[380px] h-[450px] bg-background border border-border rounded-2xl shadow-elevated flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="bg-primary text-primary-foreground px-4 py-3 flex items-center gap-3 shrink-0">
