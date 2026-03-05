@@ -65,7 +65,7 @@ const Navbar = () => {
               <Globe className="h-4 w-4" />
               {lang === 'bn' ? 'EN' : 'বাং'}
             </button>
-            <Link to="/contact">
+            <Link to="/consultation">
               <Button variant="hero" size="default" className="px-6">
                 {t.hero.cta1}
               </Button>
@@ -119,7 +119,7 @@ const Navbar = () => {
             </nav>
 
             <div className="p-4 border-t border-border">
-              <Link to="/contact" onClick={() => setOpen(false)}>
+              <Link to="/consultation" onClick={() => setOpen(false)}>
                 <Button variant="hero" size="lg" className="w-full">
                   {t.hero.cta1}
                 </Button>
