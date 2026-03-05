@@ -39,6 +39,7 @@ const AppRoutes = () => {
         <Route path="messages" element={<Messages />} />
         <Route path="services" element={<ServicesManagement />} />
         <Route path="reviews" element={<ClientReviewsManagement />} />
+        <Route path="chatbot" element={<ChatbotManagement />} />
         <Route path="settings" element={<SiteSettings />} />
       </Route>
       <Route path="*" element={<NotFound />} />
