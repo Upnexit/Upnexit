@@ -52,6 +52,17 @@ const Consultation = () => {
       message: fullMessage,
     });
 
+    // Send email notification (fire and forget)
+    supabase.functions.invoke('send-notification', {
+      body: {
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim() || null,
+        message: form.message.trim(),
+        service: subjectLabel,
+      },
+    }).catch(console.error);
+
     setLoading(false);
 
     if (error) {
