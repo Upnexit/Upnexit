@@ -104,7 +104,7 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Link to="/contact" className="w-full sm:w-auto">
+            <Link to="/consultation" className="w-full sm:w-auto">
               <Button variant="hero" size="xl" className="gap-2 px-10 w-full">
                 {t.hero.cta1} <ArrowRight className="h-5 w-5" />
               </Button>

@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Services from "./pages/Services";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Consultation from "./pages/Consultation";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -32,6 +33,7 @@ const AppRoutes = () => {
       <Route path="/services" element={<Services />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/consultation" element={<Consultation />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
