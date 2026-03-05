@@ -16,6 +16,7 @@ const settingsFields = [
   { key: 'projects_count', label: 'প্রজেক্ট সংখ্যা (যেমন: 50+)' },
   { key: 'years_experience', label: 'অভিজ্ঞতা (যেমন: 2+)' },
   { key: 'youtube_video_id', label: 'YouTube Video ID' },
+  { key: 'whatsapp_number', label: 'WhatsApp নম্বর (যেমন: +8801XXXXXXXXX)' },
 ];
 
 const SiteSettings = () => {
