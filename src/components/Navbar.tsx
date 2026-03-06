@@ -36,8 +36,8 @@ const Navbar = () => {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass shadow-soft border-b border-primary/15' : 'bg-white/95 backdrop-blur-sm border-b border-border/60'}`}>
         <div className="container mx-auto flex h-16 lg:h-20 items-center justify-between px-4 lg:px-8">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Upnex It Logo" className="w-9 h-9 rounded-xl object-contain" />
-            <span className="text-xl font-extrabold tracking-tight text-foreground">Upnex <span className="text-gradient">It</span></span>
+            <img src="/logo.png" alt="Upnex It Logo" className="w-10 h-10 lg:w-11 lg:h-11 rounded-xl object-contain" />
+            <span className="text-xl lg:text-2xl font-extrabold tracking-tight text-foreground">Upnex <span className="text-gradient">It</span></span>
           </Link>
 
           {/* Desktop */}
@@ -46,7 +46,7 @@ const Navbar = () => {
               <Link
                 key={l.href}
                 to={l.href}
-                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                className={`px-4 py-2.5 text-[15px] font-medium rounded-lg transition-all ${
                   isActive(l.href)
                     ? 'text-primary bg-primary/8 font-semibold'
                     : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
