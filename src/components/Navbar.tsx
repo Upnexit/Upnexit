@@ -34,7 +34,7 @@ const Navbar = () => {
   return (
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass shadow-soft border-b border-primary/15' : 'bg-white/95 backdrop-blur-sm border-b border-border/60'}`}>
-        <div className="container mx-auto flex h-16 lg:h-20 items-center justify-between px-4 lg:px-8">
+        <div className="container mx-auto flex h-16 lg:h-[72px] items-center justify-between px-4 lg:px-8">
           <Link to="/" className="flex items-center gap-2">
             <img src="/logo.png" alt="Upnex It Logo" className="w-10 h-10 lg:w-11 lg:h-11 rounded-xl object-contain" />
             <span className="text-xl lg:text-2xl font-extrabold tracking-tight text-foreground">Upnex <span className="text-gradient">It</span></span>
