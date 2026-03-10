@@ -841,7 +841,7 @@ const ServiceDetail = () => {
               </div>
 
               <Link to="/consultation" className="block">
-                <Button variant="hero" className="w-full rounded-xl text-xs sm:text-sm" size="lg">
+                <Button variant="hero" className="w-full rounded-lg sm:rounded-xl text-[11px] sm:text-sm h-9 sm:h-12" size="lg">
                   {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
               </Link>
