@@ -661,7 +661,7 @@ const ServiceDetail = () => {
       </section>
 
       {/* ═══════════════════ BENEFITS / WHY CHOOSE ═══════════════════ */}
-      <section className="py-10 sm:py-16 md:py-20">
+      <section className="py-8 sm:py-16 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
