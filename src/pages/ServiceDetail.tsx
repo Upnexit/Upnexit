@@ -497,7 +497,7 @@ const ServiceDetail = () => {
       <Navbar />
 
       {/* ═══════════════════ HERO ═══════════════════ */}
-      <section className="relative pt-24 pb-14 sm:pt-32 sm:pb-20 md:pt-36 md:pb-28 overflow-hidden">
+      <section className="relative pt-20 pb-10 sm:pt-32 sm:pb-20 md:pt-36 md:pb-28 overflow-hidden">
         <div className="absolute inset-0" style={{
           background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
         }} />
@@ -525,7 +525,7 @@ const ServiceDetail = () => {
         </div>
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <Link to="/#services" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 text-sm group">
+          <Link to="/#services" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-4 sm:mb-6 text-xs sm:text-sm group">
             <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
             {isBn ? 'ফিরে যান' : 'Go Back'}
           </Link>
@@ -533,26 +533,25 @@ const ServiceDetail = () => {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-5">
+                className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-5 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-3 sm:mb-5">
                 <Sparkles className="h-3.5 w-3.5" /> {data.badge}
               </motion.span>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-4 tracking-tight text-foreground">
+              <h1 className="text-[26px] sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-2.5 sm:mb-4 tracking-tight text-foreground">
                 {data.title}{' '}
-                <br className="hidden sm:block" />
                 <span className="text-gradient">{data.titleHighlight}</span>
               </h1>
-              <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-3 leading-relaxed">{data.subtitle}</p>
-              <p className="text-xs sm:text-sm text-muted-foreground/70 leading-relaxed mb-6 sm:mb-8 max-w-xl">{data.description}</p>
+              <p className="text-[13px] sm:text-base md:text-lg text-muted-foreground mb-2 sm:mb-3 leading-relaxed">{data.subtitle}</p>
+              <p className="text-[11px] sm:text-sm text-muted-foreground/70 leading-relaxed mb-4 sm:mb-8 max-w-xl hidden sm:block">{data.description}</p>
 
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link to="/consultation">
-                  <Button variant="hero" size="lg" className="gap-2 w-full sm:w-auto">
-                    {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-4 w-4" />
+              <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+                <Link to="/consultation" className="w-full sm:w-auto">
+                  <Button variant="hero" size="default" className="gap-2 w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12">
+                    {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Button>
                 </Link>
-                <Link to="/contact">
-                  <Button variant="heroOutline" size="lg" className="w-full sm:w-auto">
+                <Link to="/contact" className="w-full sm:w-auto">
+                  <Button variant="heroOutline" size="default" className="w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12">
                     {isBn ? 'যোগাযোগ করুন' : 'Contact Us'}
                   </Button>
                 </Link>
@@ -596,9 +595,9 @@ const ServiceDetail = () => {
       </section>
 
       {/* ═══════════════════ HIGHLIGHTS BAR ═══════════════════ */}
-      <section className="py-8 sm:py-12">
+      <section className="py-6 sm:py-12">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-5">
             {[
               { icon: Shield, title: isBn ? '১০০% নিরাপদ' : '100% Secure', desc: isBn ? 'ডেটা এনক্রিপশন ও সুরক্ষা' : 'Data encryption & protection' },
               { icon: Clock, title: isBn ? 'দ্রুত ডেলিভারি' : 'Fast Delivery', desc: isBn ? 'সময়মতো প্রজেক্ট হ্যান্ডওভার' : 'On-time project handover' },
@@ -607,12 +606,12 @@ const ServiceDetail = () => {
             ].map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
                 whileHover={{ y: -4 }}
-                className="group p-3.5 sm:p-5 rounded-2xl bg-muted/50 border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300">
-                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-2.5 sm:mb-3 group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-300">
-                  <item.icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                className="group p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-muted/50 border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-300">
+                  <item.icon className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
                 </div>
-                <h4 className="font-bold text-xs sm:text-sm text-foreground mb-0.5 sm:mb-1">{item.title}</h4>
-                <p className="text-[10px] sm:text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                <h4 className="font-bold text-[11px] sm:text-sm text-foreground mb-0.5">{item.title}</h4>
+                <p className="text-[9px] sm:text-xs text-muted-foreground leading-snug">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -620,39 +619,39 @@ const ServiceDetail = () => {
       </section>
 
       {/* ═══════════════════ FEATURES GRID ═══════════════════ */}
-      <section className="py-10 sm:py-16 md:py-20 bg-muted/30 relative">
+      <section className="py-8 sm:py-16 md:py-20 bg-muted/30 relative">
         <div className="absolute inset-0 opacity-[0.02]" style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
           backgroundSize: '28px 28px'
         }} />
         <div className="container mx-auto px-4 lg:px-8 relative">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10 sm:mb-14">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-4 sm:mb-5">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-7 sm:mb-14">
+            <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-3 sm:mb-5">
               {isBn ? 'বৈশিষ্ট্যসমূহ' : 'Features'}
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3">
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-3">
               {isBn ? 'মূল বৈশিষ্ট্যসমূহ' : 'Key Features'}
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto">
+            <p className="text-[11px] sm:text-sm text-muted-foreground max-w-lg mx-auto">
               {isBn ? 'আমাদের সফটওয়্যারে যা যা পাবেন' : 'Everything included in our software'}
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5">
             {data.features.map((feature, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
                 whileHover={{ y: -6 }}
-                className="group bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 relative overflow-hidden">
+                className="group bg-background rounded-xl sm:rounded-3xl p-3 sm:p-6 border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 relative overflow-hidden">
                 {/* Background pattern */}
-                <div className="absolute top-0 right-0 w-24 h-24 opacity-[0.03]" style={{
+                <div className="absolute top-0 right-0 w-20 h-20 opacity-[0.03] hidden sm:block" style={{
                   backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
                   backgroundSize: '10px 10px',
                 }} />
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
-                  <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
+                  <feature.icon className="h-4 w-4 sm:h-6 sm:w-6 text-primary" />
                 </div>
-                <h3 className="font-bold text-xs sm:text-sm md:text-base text-foreground mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
-                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground leading-relaxed">{feature.desc}</p>
+                <h3 className="font-bold text-[11px] sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
+                <p className="text-[9px] sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
                 {/* Bottom accent line */}
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary/0 group-hover:bg-primary/20 transition-all duration-500 rounded-b-3xl" />
               </motion.div>
@@ -662,32 +661,32 @@ const ServiceDetail = () => {
       </section>
 
       {/* ═══════════════════ BENEFITS / WHY CHOOSE ═══════════════════ */}
-      <section className="py-10 sm:py-16 md:py-20">
+      <section className="py-8 sm:py-16 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-12 lg:gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
+              <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-3 sm:mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
                 {isBn ? 'সুবিধাসমূহ' : 'Benefits'}
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-5 leading-tight text-foreground">
+              <h2 className="text-xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-5 leading-tight text-foreground">
                 {isBn ? 'কেন এই সফটওয়্যার' : 'Why Choose This'}{' '}
                 <span className="text-gradient">{isBn ? 'বেছে নেবেন?' : 'Software?'}</span>
               </h2>
-              <p className="text-xs sm:text-sm text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+              <p className="text-[11px] sm:text-sm text-muted-foreground mb-4 sm:mb-8 leading-relaxed">
                 {isBn
                   ? 'আমাদের সফটওয়্যার ব্যবহার করে আপনার প্রতিষ্ঠানকে সম্পূর্ণ ডিজিটাল করুন এবং কাজের দক্ষতা বাড়ান।'
                   : 'Digitize your organization completely and increase efficiency with our software.'}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                 {data.benefits.map((b, i) => (
                   <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
                     whileHover={{ x: 4 }}
-                    className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-4 rounded-xl bg-muted/60 border border-border/50 hover:border-primary/20 hover:shadow-card transition-all group">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
-                      <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
+                    className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 rounded-lg sm:rounded-xl bg-muted/60 border border-border/50 hover:border-primary/20 hover:shadow-card transition-all group">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
+                      <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
                     </div>
-                    <span className="text-xs sm:text-sm font-semibold text-foreground">{b}</span>
+                    <span className="text-[11px] sm:text-sm font-semibold text-foreground">{b}</span>
                   </motion.div>
                 ))}
               </div>
@@ -695,12 +694,12 @@ const ServiceDetail = () => {
 
             {/* Process Steps - right side */}
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
-              <div className="bg-background rounded-2xl sm:rounded-3xl border border-border p-4 sm:p-6 md:p-8 shadow-elevated relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-1.5 gradient-accent rounded-t-2xl sm:rounded-t-3xl" />
-                <h3 className="text-base sm:text-lg font-bold text-foreground mb-4 sm:mb-6 mt-1">
+              <div className="bg-background rounded-xl sm:rounded-3xl border border-border p-3.5 sm:p-6 md:p-8 shadow-elevated relative overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 h-1 sm:h-1.5 gradient-accent rounded-t-xl sm:rounded-t-3xl" />
+                <h3 className="text-sm sm:text-lg font-bold text-foreground mb-3 sm:mb-6 mt-1">
                   {isBn ? 'আমাদের কাজের প্রক্রিয়া' : 'Our Work Process'}
                 </h3>
-                <div className="space-y-3 sm:space-y-4">
+                <div className="space-y-2.5 sm:space-y-4">
                   {[
                     { step: isBn ? '০১' : '01', title: isBn ? 'পরিকল্পনা' : 'Planning', desc: isBn ? 'আপনার প্রয়োজনীয়তা বিশ্লেষণ' : 'Analyze your requirements' },
                     { step: isBn ? '০২' : '02', title: isBn ? 'ডিজাইন' : 'Design', desc: isBn ? 'আকর্ষণীয় UI/UX ডিজাইন' : 'Attractive UI/UX design' },
@@ -708,13 +707,13 @@ const ServiceDetail = () => {
                     { step: isBn ? '০৪' : '04', title: isBn ? 'ডেলিভারি' : 'Delivery', desc: isBn ? 'সময়মতো হ্যান্ডওভার ও সাপোর্ট' : 'On-time handover & support' },
                   ].map((p, i) => (
                     <motion.div key={i} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                      className="flex items-start gap-3 sm:gap-4 group">
-                      <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl gradient-accent flex items-center justify-center text-primary-foreground font-black text-xs sm:text-sm shadow-glow shrink-0">
+                      className="flex items-center gap-2.5 sm:gap-4 group">
+                      <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl gradient-accent flex items-center justify-center text-primary-foreground font-black text-[10px] sm:text-sm shadow-glow shrink-0">
                         {p.step}
                       </div>
-                      <div className="pt-0.5">
-                        <h4 className="font-bold text-xs sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
-                        <p className="text-[10px] sm:text-xs text-muted-foreground">{p.desc}</p>
+                      <div>
+                        <h4 className="font-bold text-[11px] sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
+                        <p className="text-[9px] sm:text-xs text-muted-foreground">{p.desc}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -728,50 +727,50 @@ const ServiceDetail = () => {
       </section>
 
       {/* ═══════════════════ PRICING ═══════════════════ */}
-      <section className="py-10 sm:py-16 md:py-20 bg-muted/30 relative overflow-hidden">
+      <section className="py-8 sm:py-16 md:py-20 bg-muted/30 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, hsl(145 63% 42% / 0.06), transparent 70%)' }} />
           <div className="absolute -bottom-32 -left-32 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, hsl(46 92% 55% / 0.08), transparent 70%)' }} />
         </div>
         <div className="container mx-auto px-4 lg:px-8 relative">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10 sm:mb-14">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-4 sm:mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-7 sm:mb-14">
+            <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-3 sm:mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
               Pricing
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3">
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-3">
               {isBn ? 'প্রাইসিং প্ল্যান' : 'Pricing Plans'}
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto">
+            <p className="text-[11px] sm:text-sm text-muted-foreground max-w-lg mx-auto">
               {isBn ? 'আপনার প্রতিষ্ঠানের চাহিদা অনুযায়ী সেরা প্ল্যান বেছে নিন' : 'Choose the best plan for your organization'}
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
             {/* Silver Plan */}
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               whileHover={{ y: -4 }}
-              className="bg-background rounded-2xl sm:rounded-3xl border border-border p-5 sm:p-7 md:p-8 relative hover:border-primary/20 transition-all duration-300 hover:shadow-elevated group">
-              <div className="mb-4 sm:mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
-                    <Layers className="h-4 w-4 text-muted-foreground" />
+              className="bg-background rounded-xl sm:rounded-3xl border border-border p-4 sm:p-7 md:p-8 relative hover:border-primary/20 transition-all duration-300 hover:shadow-elevated group">
+              <div className="mb-3 sm:mb-6">
+                <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-muted flex items-center justify-center">
+                    <Layers className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-foreground">{data.silver.name}</h3>
+                  <h3 className="text-sm sm:text-lg font-bold text-foreground">{data.silver.name}</h3>
                 </div>
-                <div className="flex items-baseline gap-1 flex-wrap">
-                  {data.silver.currency && <span className="text-base sm:text-lg font-bold text-muted-foreground">{data.silver.currency}</span>}
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground tracking-tight">{data.silver.price}</span>
-                  {data.silver.period && <span className="text-muted-foreground text-xs sm:text-sm ml-1">{data.silver.period}</span>}
+                <div className="flex items-baseline gap-0.5 sm:gap-1 flex-wrap">
+                  {data.silver.currency && <span className="text-sm sm:text-lg font-bold text-muted-foreground">{data.silver.currency}</span>}
+                  <span className="text-xl sm:text-3xl md:text-4xl font-black text-foreground tracking-tight">{data.silver.price}</span>
+                  {data.silver.period && <span className="text-muted-foreground text-[10px] sm:text-sm ml-0.5 sm:ml-1">{data.silver.period}</span>}
                 </div>
               </div>
 
-              <div className="h-px bg-border mb-4 sm:mb-5" />
+              <div className="h-px bg-border mb-3 sm:mb-5" />
 
-              <div className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-7">
+              <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-7">
                 {data.silver.features.map((f, i) => (
-                  <div key={i} className="flex items-center gap-2.5 sm:gap-3">
+                  <div key={i} className="flex items-center gap-2 sm:gap-3">
                     {f.included ? (
-                      <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <div className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                         <Check className="h-3 w-3 text-primary" />
                       </div>
                     ) : (
@@ -779,13 +778,13 @@ const ServiceDetail = () => {
                         <X className="h-3 w-3 text-muted-foreground/40" />
                       </div>
                     )}
-                    <span className={`text-xs sm:text-sm ${f.included ? 'text-foreground' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
+                    <span className={`text-[11px] sm:text-sm ${f.included ? 'text-foreground' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
                   </div>
                 ))}
               </div>
 
               <Link to="/consultation" className="block">
-                <Button variant="outline" className="w-full rounded-xl text-xs sm:text-sm" size="lg">
+                <Button variant="outline" className="w-full rounded-lg sm:rounded-xl text-[11px] sm:text-sm h-9 sm:h-12" size="lg">
                   {isBn ? 'যোগাযোগ করুন' : 'Contact Us'}
                 </Button>
               </Link>
@@ -794,7 +793,7 @@ const ServiceDetail = () => {
             {/* Gold Plan */}
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
               whileHover={{ y: -4 }}
-              className="bg-background rounded-2xl sm:rounded-3xl border-2 border-primary p-5 sm:p-7 md:p-8 relative shadow-lg hover:shadow-xl transition-all duration-300">
+              className="bg-background rounded-xl sm:rounded-3xl border-2 border-primary p-4 sm:p-7 md:p-8 relative shadow-lg hover:shadow-xl transition-all duration-300">
               {/* Recommended badge */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
                 <span className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold shadow-md whitespace-nowrap"
@@ -808,25 +807,25 @@ const ServiceDetail = () => {
               <div className="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-50 pointer-events-none"
                 style={{ boxShadow: 'inset 0 1px 0 0 hsl(145 63% 42% / 0.15), 0 0 40px -10px hsl(145 63% 42% / 0.15)' }} />
 
-              <div className="mb-4 sm:mb-6 relative">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Star className="h-4 w-4 text-primary fill-primary" />
+              <div className="mb-3 sm:mb-6 relative">
+                <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary fill-primary" />
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-foreground">{data.gold.name}</h3>
+                  <h3 className="text-sm sm:text-lg font-bold text-foreground">{data.gold.name}</h3>
                 </div>
-                <div className="flex items-baseline gap-1 flex-wrap">
-                  {data.gold.currency && <span className="text-base sm:text-lg font-bold text-primary">{data.gold.currency}</span>}
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-black text-primary tracking-tight">{data.gold.price}</span>
-                  {data.gold.period && <span className="text-muted-foreground text-xs sm:text-sm ml-1">{data.gold.period}</span>}
+                <div className="flex items-baseline gap-0.5 sm:gap-1 flex-wrap">
+                  {data.gold.currency && <span className="text-sm sm:text-lg font-bold text-primary">{data.gold.currency}</span>}
+                  <span className="text-xl sm:text-3xl md:text-4xl font-black text-primary tracking-tight">{data.gold.price}</span>
+                  {data.gold.period && <span className="text-muted-foreground text-[10px] sm:text-sm ml-0.5 sm:ml-1">{data.gold.period}</span>}
                 </div>
               </div>
 
-              <div className="h-px bg-primary/15 mb-4 sm:mb-5" />
+              <div className="h-px bg-primary/15 mb-3 sm:mb-5" />
 
-              <div className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-7 relative">
+              <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-7 relative">
                 {data.gold.features.map((f, i) => (
-                  <div key={i} className="flex items-center gap-2.5 sm:gap-3">
+                  <div key={i} className="flex items-center gap-2 sm:gap-3">
                     {f.included ? (
                       <div className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
                         <Check className="h-3 w-3 text-primary" />
@@ -836,13 +835,13 @@ const ServiceDetail = () => {
                         <X className="h-3 w-3 text-muted-foreground/40" />
                       </div>
                     )}
-                    <span className={`text-xs sm:text-sm ${f.included ? 'text-foreground font-medium' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
+                    <span className={`text-[11px] sm:text-sm ${f.included ? 'text-foreground font-medium' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
                   </div>
                 ))}
               </div>
 
               <Link to="/consultation" className="block">
-                <Button variant="hero" className="w-full rounded-xl text-xs sm:text-sm" size="lg">
+                <Button variant="hero" className="w-full rounded-lg sm:rounded-xl text-[11px] sm:text-sm h-9 sm:h-12" size="lg">
                   {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
               </Link>
@@ -852,7 +851,7 @@ const ServiceDetail = () => {
       </section>
 
       {/* ═══════════════════ CTA ═══════════════════ */}
-      <section className="py-10 sm:py-16 md:py-20">
+      <section className="py-8 sm:py-16 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="relative rounded-2xl sm:rounded-3xl overflow-hidden p-6 sm:p-8 md:p-14 text-center"
