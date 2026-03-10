@@ -525,7 +525,7 @@ const ServiceDetail = () => {
         </div>
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <Link to="/#services" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 text-sm group">
+          <Link to="/#services" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-4 sm:mb-6 text-xs sm:text-sm group">
             <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
             {isBn ? 'ফিরে যান' : 'Go Back'}
           </Link>
