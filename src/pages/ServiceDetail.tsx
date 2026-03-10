@@ -544,14 +544,14 @@ const ServiceDetail = () => {
               <p className="text-[13px] sm:text-base md:text-lg text-muted-foreground mb-2 sm:mb-3 leading-relaxed">{data.subtitle}</p>
               <p className="text-[11px] sm:text-sm text-muted-foreground/70 leading-relaxed mb-4 sm:mb-8 max-w-xl hidden sm:block">{data.description}</p>
 
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link to="/consultation">
-                  <Button variant="hero" size="lg" className="gap-2 w-full sm:w-auto">
-                    {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-4 w-4" />
+              <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+                <Link to="/consultation" className="w-full sm:w-auto">
+                  <Button variant="hero" size="default" className="gap-2 w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12">
+                    {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Button>
                 </Link>
-                <Link to="/contact">
-                  <Button variant="heroOutline" size="lg" className="w-full sm:w-auto">
+                <Link to="/contact" className="w-full sm:w-auto">
+                  <Button variant="heroOutline" size="default" className="w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12">
                     {isBn ? 'যোগাযোগ করুন' : 'Contact Us'}
                   </Button>
                 </Link>
