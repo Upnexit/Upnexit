@@ -606,12 +606,12 @@ const ServiceDetail = () => {
             ].map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
                 whileHover={{ y: -4 }}
-                className="group p-3.5 sm:p-5 rounded-2xl bg-muted/50 border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300">
-                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-2.5 sm:mb-3 group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-300">
-                  <item.icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                className="group p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-muted/50 border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-300">
+                  <item.icon className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
                 </div>
-                <h4 className="font-bold text-xs sm:text-sm text-foreground mb-0.5 sm:mb-1">{item.title}</h4>
-                <p className="text-[10px] sm:text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                <h4 className="font-bold text-[11px] sm:text-sm text-foreground mb-0.5">{item.title}</h4>
+                <p className="text-[9px] sm:text-xs text-muted-foreground leading-snug">{item.desc}</p>
               </motion.div>
             ))}
           </div>
