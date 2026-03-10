@@ -533,7 +533,7 @@ const ServiceDetail = () => {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-5">
+                className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-5 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-3 sm:mb-5">
                 <Sparkles className="h-3.5 w-3.5" /> {data.badge}
               </motion.span>
 
