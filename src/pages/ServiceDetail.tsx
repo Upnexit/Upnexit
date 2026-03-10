@@ -694,9 +694,9 @@ const ServiceDetail = () => {
 
             {/* Process Steps - right side */}
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
-              <div className="bg-background rounded-2xl sm:rounded-3xl border border-border p-4 sm:p-6 md:p-8 shadow-elevated relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-1.5 gradient-accent rounded-t-2xl sm:rounded-t-3xl" />
-                <h3 className="text-base sm:text-lg font-bold text-foreground mb-4 sm:mb-6 mt-1">
+              <div className="bg-background rounded-xl sm:rounded-3xl border border-border p-3.5 sm:p-6 md:p-8 shadow-elevated relative overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 h-1 sm:h-1.5 gradient-accent rounded-t-xl sm:rounded-t-3xl" />
+                <h3 className="text-sm sm:text-lg font-bold text-foreground mb-3 sm:mb-6 mt-1">
                   {isBn ? 'আমাদের কাজের প্রক্রিয়া' : 'Our Work Process'}
                 </h3>
                 <div className="space-y-3 sm:space-y-4">
