@@ -497,7 +497,7 @@ const ServiceDetail = () => {
       <Navbar />
 
       {/* ═══════════════════ HERO ═══════════════════ */}
-      <section className="relative pt-24 pb-14 sm:pt-32 sm:pb-20 md:pt-36 md:pb-28 overflow-hidden">
+      <section className="relative pt-20 pb-10 sm:pt-32 sm:pb-20 md:pt-36 md:pb-28 overflow-hidden">
         <div className="absolute inset-0" style={{
           background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
         }} />
