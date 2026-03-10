@@ -825,7 +825,7 @@ const ServiceDetail = () => {
 
               <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-7 relative">
                 {data.gold.features.map((f, i) => (
-                  <div key={i} className="flex items-center gap-2.5 sm:gap-3">
+                  <div key={i} className="flex items-center gap-2 sm:gap-3">
                     {f.included ? (
                       <div className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
                         <Check className="h-3 w-3 text-primary" />
