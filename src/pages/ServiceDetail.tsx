@@ -619,7 +619,7 @@ const ServiceDetail = () => {
       </section>
 
       {/* ═══════════════════ FEATURES GRID ═══════════════════ */}
-      <section className="py-10 sm:py-16 md:py-20 bg-muted/30 relative">
+      <section className="py-8 sm:py-16 md:py-20 bg-muted/30 relative">
         <div className="absolute inset-0 opacity-[0.02]" style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
           backgroundSize: '28px 28px'
