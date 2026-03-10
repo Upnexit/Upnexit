@@ -7,10 +7,10 @@ const ServicesSection = () => {
   const { t } = useLanguage();
 
   const services = [
-    { icon: GraduationCap, ...t.services.school, accent: 'bg-primary/8 text-primary border-primary/15' },
-    { icon: HeartPulse, ...t.services.hospital, accent: 'bg-destructive/8 text-destructive border-destructive/15' },
-    { icon: Code, ...t.services.custom, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20' },
-    { icon: Globe, ...t.services.web, accent: 'bg-primary/8 text-primary border-primary/15' },
+    { icon: GraduationCap, ...t.services.school, accent: 'bg-primary/8 text-primary border-primary/15', slug: 'school' },
+    { icon: HeartPulse, ...t.services.hospital, accent: 'bg-destructive/8 text-destructive border-destructive/15', slug: 'hospital' },
+    { icon: Code, ...t.services.custom, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', slug: 'custom' },
+    { icon: Globe, ...t.services.web, accent: 'bg-primary/8 text-primary border-primary/15', slug: 'web' },
   ];
 
   return (
