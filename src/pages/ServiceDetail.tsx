@@ -699,7 +699,7 @@ const ServiceDetail = () => {
                 <h3 className="text-sm sm:text-lg font-bold text-foreground mb-3 sm:mb-6 mt-1">
                   {isBn ? 'আমাদের কাজের প্রক্রিয়া' : 'Our Work Process'}
                 </h3>
-                <div className="space-y-3 sm:space-y-4">
+                <div className="space-y-2.5 sm:space-y-4">
                   {[
                     { step: isBn ? '০১' : '01', title: isBn ? 'পরিকল্পনা' : 'Planning', desc: isBn ? 'আপনার প্রয়োজনীয়তা বিশ্লেষণ' : 'Analyze your requirements' },
                     { step: isBn ? '০২' : '02', title: isBn ? 'ডিজাইন' : 'Design', desc: isBn ? 'আকর্ষণীয় UI/UX ডিজাইন' : 'Attractive UI/UX design' },
