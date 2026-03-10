@@ -733,14 +733,14 @@ const ServiceDetail = () => {
           <div className="absolute -bottom-32 -left-32 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, hsl(46 92% 55% / 0.08), transparent 70%)' }} />
         </div>
         <div className="container mx-auto px-4 lg:px-8 relative">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10 sm:mb-14">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-4 sm:mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-7 sm:mb-14">
+            <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-3 sm:mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
               Pricing
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3">
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-3">
               {isBn ? 'প্রাইসিং প্ল্যান' : 'Pricing Plans'}
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto">
+            <p className="text-[11px] sm:text-sm text-muted-foreground max-w-lg mx-auto">
               {isBn ? 'আপনার প্রতিষ্ঠানের চাহিদা অনুযায়ী সেরা প্ল্যান বেছে নিন' : 'Choose the best plan for your organization'}
             </p>
           </motion.div>
