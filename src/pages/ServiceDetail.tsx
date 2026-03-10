@@ -764,9 +764,9 @@ const ServiceDetail = () => {
                 </div>
               </div>
 
-              <div className="h-px bg-border mb-4 sm:mb-5" />
+              <div className="h-px bg-border mb-3 sm:mb-5" />
 
-              <div className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-7">
+              <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-7">
                 {data.silver.features.map((f, i) => (
                   <div key={i} className="flex items-center gap-2.5 sm:gap-3">
                     {f.included ? (
