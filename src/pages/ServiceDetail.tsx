@@ -595,9 +595,9 @@ const ServiceDetail = () => {
       </section>
 
       {/* ═══════════════════ HIGHLIGHTS BAR ═══════════════════ */}
-      <section className="py-8 sm:py-12">
+      <section className="py-6 sm:py-12">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-5">
             {[
               { icon: Shield, title: isBn ? '১০০% নিরাপদ' : '100% Secure', desc: isBn ? 'ডেটা এনক্রিপশন ও সুরক্ষা' : 'Data encryption & protection' },
               { icon: Clock, title: isBn ? 'দ্রুত ডেলিভারি' : 'Fast Delivery', desc: isBn ? 'সময়মতো প্রজেক্ট হ্যান্ডওভার' : 'On-time project handover' },
