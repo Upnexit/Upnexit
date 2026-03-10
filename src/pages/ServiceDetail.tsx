@@ -807,17 +807,17 @@ const ServiceDetail = () => {
               <div className="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-50 pointer-events-none"
                 style={{ boxShadow: 'inset 0 1px 0 0 hsl(145 63% 42% / 0.15), 0 0 40px -10px hsl(145 63% 42% / 0.15)' }} />
 
-              <div className="mb-4 sm:mb-6 relative">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Star className="h-4 w-4 text-primary fill-primary" />
+              <div className="mb-3 sm:mb-6 relative">
+                <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary fill-primary" />
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-foreground">{data.gold.name}</h3>
+                  <h3 className="text-sm sm:text-lg font-bold text-foreground">{data.gold.name}</h3>
                 </div>
-                <div className="flex items-baseline gap-1 flex-wrap">
-                  {data.gold.currency && <span className="text-base sm:text-lg font-bold text-primary">{data.gold.currency}</span>}
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-black text-primary tracking-tight">{data.gold.price}</span>
-                  {data.gold.period && <span className="text-muted-foreground text-xs sm:text-sm ml-1">{data.gold.period}</span>}
+                <div className="flex items-baseline gap-0.5 sm:gap-1 flex-wrap">
+                  {data.gold.currency && <span className="text-sm sm:text-lg font-bold text-primary">{data.gold.currency}</span>}
+                  <span className="text-xl sm:text-3xl md:text-4xl font-black text-primary tracking-tight">{data.gold.price}</span>
+                  {data.gold.period && <span className="text-muted-foreground text-[10px] sm:text-sm ml-0.5 sm:ml-1">{data.gold.period}</span>}
                 </div>
               </div>
 
