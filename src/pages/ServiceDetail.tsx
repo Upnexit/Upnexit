@@ -672,7 +672,7 @@ const ServiceDetail = () => {
                 {isBn ? 'কেন এই সফটওয়্যার' : 'Why Choose This'}{' '}
                 <span className="text-gradient">{isBn ? 'বেছে নেবেন?' : 'Software?'}</span>
               </h2>
-              <p className="text-xs sm:text-sm text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+              <p className="text-[11px] sm:text-sm text-muted-foreground mb-4 sm:mb-8 leading-relaxed">
                 {isBn
                   ? 'আমাদের সফটওয়্যার ব্যবহার করে আপনার প্রতিষ্ঠানকে সম্পূর্ণ ডিজিটাল করুন এবং কাজের দক্ষতা বাড়ান।'
                   : 'Digitize your organization completely and increase efficiency with our software.'}
