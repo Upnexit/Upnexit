@@ -745,11 +745,11 @@ const ServiceDetail = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
             {/* Silver Plan */}
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               whileHover={{ y: -4 }}
-              className="bg-background rounded-2xl sm:rounded-3xl border border-border p-5 sm:p-7 md:p-8 relative hover:border-primary/20 transition-all duration-300 hover:shadow-elevated group">
+              className="bg-background rounded-xl sm:rounded-3xl border border-border p-4 sm:p-7 md:p-8 relative hover:border-primary/20 transition-all duration-300 hover:shadow-elevated group">
               <div className="mb-4 sm:mb-6">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
