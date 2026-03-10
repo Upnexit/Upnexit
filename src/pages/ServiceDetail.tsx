@@ -663,7 +663,7 @@ const ServiceDetail = () => {
       {/* ═══════════════════ BENEFITS / WHY CHOOSE ═══════════════════ */}
       <section className="py-8 sm:py-16 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-12 lg:gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
                 {isBn ? 'সুবিধাসমূহ' : 'Benefits'}
