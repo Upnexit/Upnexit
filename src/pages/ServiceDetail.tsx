@@ -793,7 +793,7 @@ const ServiceDetail = () => {
             {/* Gold Plan */}
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
               whileHover={{ y: -4 }}
-              className="bg-background rounded-2xl sm:rounded-3xl border-2 border-primary p-5 sm:p-7 md:p-8 relative shadow-lg hover:shadow-xl transition-all duration-300">
+              className="bg-background rounded-xl sm:rounded-3xl border-2 border-primary p-4 sm:p-7 md:p-8 relative shadow-lg hover:shadow-xl transition-all duration-300">
               {/* Recommended badge */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
                 <span className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold shadow-md whitespace-nowrap"
