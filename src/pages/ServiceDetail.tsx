@@ -784,7 +784,7 @@ const ServiceDetail = () => {
               </div>
 
               <Link to="/consultation" className="block">
-                <Button variant="outline" className="w-full rounded-xl text-xs sm:text-sm" size="lg">
+                <Button variant="outline" className="w-full rounded-lg sm:rounded-xl text-[11px] sm:text-sm h-9 sm:h-12" size="lg">
                   {isBn ? 'যোগাযোগ করুন' : 'Contact Us'}
                 </Button>
               </Link>
