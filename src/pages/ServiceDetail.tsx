@@ -641,17 +641,17 @@ const ServiceDetail = () => {
             {data.features.map((feature, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
                 whileHover={{ y: -6 }}
-                className="group bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 relative overflow-hidden">
+                className="group bg-background rounded-xl sm:rounded-3xl p-3 sm:p-6 border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 relative overflow-hidden">
                 {/* Background pattern */}
-                <div className="absolute top-0 right-0 w-24 h-24 opacity-[0.03]" style={{
+                <div className="absolute top-0 right-0 w-20 h-20 opacity-[0.03] hidden sm:block" style={{
                   backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
                   backgroundSize: '10px 10px',
                 }} />
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
-                  <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
+                  <feature.icon className="h-4 w-4 sm:h-6 sm:w-6 text-primary" />
                 </div>
-                <h3 className="font-bold text-xs sm:text-sm md:text-base text-foreground mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
-                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground leading-relaxed">{feature.desc}</p>
+                <h3 className="font-bold text-[11px] sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
+                <p className="text-[9px] sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
                 {/* Bottom accent line */}
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary/0 group-hover:bg-primary/20 transition-all duration-500 rounded-b-3xl" />
               </motion.div>
