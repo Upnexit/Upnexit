@@ -707,13 +707,13 @@ const ServiceDetail = () => {
                     { step: isBn ? '০৪' : '04', title: isBn ? 'ডেলিভারি' : 'Delivery', desc: isBn ? 'সময়মতো হ্যান্ডওভার ও সাপোর্ট' : 'On-time handover & support' },
                   ].map((p, i) => (
                     <motion.div key={i} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                      className="flex items-start gap-3 sm:gap-4 group">
-                      <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl gradient-accent flex items-center justify-center text-primary-foreground font-black text-xs sm:text-sm shadow-glow shrink-0">
+                      className="flex items-center gap-2.5 sm:gap-4 group">
+                      <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl gradient-accent flex items-center justify-center text-primary-foreground font-black text-[10px] sm:text-sm shadow-glow shrink-0">
                         {p.step}
                       </div>
-                      <div className="pt-0.5">
-                        <h4 className="font-bold text-xs sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
-                        <p className="text-[10px] sm:text-xs text-muted-foreground">{p.desc}</p>
+                      <div>
+                        <h4 className="font-bold text-[11px] sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
+                        <p className="text-[9px] sm:text-xs text-muted-foreground">{p.desc}</p>
                       </div>
                     </motion.div>
                   ))}
