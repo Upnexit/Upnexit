@@ -36,33 +36,97 @@ const serviceData = {
         'মোবাইল থেকে সব কিছু পরিচালনা',
       ],
       gold: {
-        name: 'গোল্ড', price: '৫০,০০০', period: '/বছর', currency: '৳',
-        features: [
-          { text: 'সীমাহীন ছাত্র-ছাত্রী', included: true },
-          { text: 'সীমাহীন শিক্ষক', included: true },
-          { text: 'অনলাইন ফি কালেকশন', included: true },
-          { text: 'অভিভাবক অ্যাপ', included: true },
-          { text: 'SMS নোটিফিকেশন', included: true },
-          { text: 'অনলাইন পরীক্ষা সিস্টেম', included: true },
-          { text: 'লাইব্রেরি ম্যানেজমেন্ট', included: true },
-          { text: 'কাস্টম ডোমেইন', included: true },
-          { text: '২৪/৭ প্রিমিয়াম সাপোর্ট', included: true },
-          { text: 'ডেটা ব্যাকআপ ও রিকভারি', included: true },
+        name: 'গোল্ড', subtitle: 'ফি কালেকশন ও রেজাল্ট', price: '১০', period: 'শিক্ষার্থী প্রতি মাসিক', currency: '৳',
+        gradient: 'linear-gradient(135deg, hsl(25 95% 55%), hsl(35 95% 50%))',
+        categories: [
+          {
+            title: 'কমন ফিচার সমূহ',
+            items: [
+              'ইনস্টিটিউট-ক্লাস-সেকশন-শিফট সেটিংস',
+              'টিচার-স্টাফ ও ছাত্র-ছাত্রী রেজিস্ট্রেশন',
+              'শিক্ষক-শিক্ষার্থী প্রোফাইল ও কুইক সার্চ',
+              'রোল-বেইজড ইউজার অ্যাক্সেস কন্ট্রোল',
+              'ডায়নামিন রুটিন ম্যানেজমেন্ট সিস্টেম',
+              'ক্লাস/মডেল টেস্ট মার্ক ইনপুট ও রেজাল্ট',
+              'ক্লাস/সেকশন/শিফট ও বাল্ক SMS (Excel)',
+              'ওয়েবসাইট ইন্টিগ্রেশন (অটো ডাটা সিঙ্ক)',
+            ],
+          },
+          {
+            title: 'অনলাইন ফি কালেকশন',
+            items: [
+              'বেতন, ফান্ড ও স্টুডেন্ট ক্যাটাগরি সেটআপ',
+              'বিকাশ/রকেট/নগদ/সেলফিনে ফি পেমেন্ট',
+              'ইন্টারনেট ব্যাংকিং ও কার্ড ফি পেমেন্ট',
+              'ব্যাংক ও পেমেন্ট গেটওয়ে ইন্টিগ্রেশন',
+              '১ ক্লিকে পে-স্লিপ পাঠানো ও বকেয়া SMS',
+              'অনলাইনে পেমেন্ট ও রিসিট ডাউনলোড',
+              'SMS ও তাৎক্ষণিক মানি রিসিট প্রাপ্তি',
+              'তাৎক্ষণিক অটো ফান্ড ডিস্ট্রিবিউশন',
+              'ক্লাস/সেকশন বকেয়া ও ফান্ড রিপোর্ট',
+            ],
+          },
+          {
+            title: 'রেজাল্ট প্রসেস ও পাবলিশ',
+            items: [
+              'সাবজেক্ট-মার্ক-জিপিএ কাস্টমাইজেশন',
+              'এডমিট কার্ড, সিট প্ল্যান ও এক্সাম রুটিন',
+              'ঘরে বসে কুইক মার্ক ইনপুট',
+              'টেবুলেশন শিট ও কারেকশনের সুযোগ',
+              '৩ ক্লিকে রেজাল্ট প্রসেস ও পাবলিশ',
+              'একাডেমিক ট্রান্সক্রিপ্ট/মার্কশিট',
+              'এসএমএস ও ওয়েবসাইটে রেজাল্ট',
+              'মেরিট/ফেল লিস্ট ও গ্র্যান্ড ফাইনাল',
+              'টেস্টিমোনিয়াল ও ট্রান্সফার সার্টিফিকেট',
+            ],
+          },
         ],
       },
       silver: {
-        name: 'সিলভার', price: '৩০,০০০', period: '/বছর', currency: '৳',
-        features: [
-          { text: '৫০০ ছাত্র-ছাত্রী পর্যন্ত', included: true },
-          { text: '৫০ শিক্ষক পর্যন্ত', included: true },
-          { text: 'অনলাইন ফি কালেকশন', included: true },
-          { text: 'অভিভাবক অ্যাপ', included: true },
-          { text: 'SMS নোটিফিকেশন', included: false },
-          { text: 'অনলাইন পরীক্ষা সিস্টেম', included: false },
-          { text: 'লাইব্রেরি ম্যানেজমেন্ট', included: true },
-          { text: 'কাস্টম ডোমেইন', included: false },
-          { text: 'বিজনেস আওয়ার সাপোর্ট', included: true },
-          { text: 'ডেটা ব্যাকআপ', included: true },
+        name: 'সিলভার', subtitle: 'অ্যাটেনডেন্স ও রেজাল্ট', price: '১০', period: 'শিক্ষার্থী প্রতি মাসিক', currency: '৳',
+        gradient: 'linear-gradient(135deg, hsl(200 80% 50%), hsl(210 85% 45%))',
+        categories: [
+          {
+            title: 'কমন ফিচার সমূহ',
+            items: [
+              'ইনস্টিটিউট-ক্লাস-সেকশন-শিফট সেটিংস',
+              'টিচার-স্টাফ ও ছাত্র-ছাত্রী রেজিস্ট্রেশন',
+              'শিক্ষক-শিক্ষার্থী প্রোফাইল ও কুইক সার্চ',
+              'রোল-বেইজড ইউজার অ্যাক্সেস কন্ট্রোল',
+              'ডায়নামিন রুটিন ম্যানেজমেন্ট সিস্টেম',
+              'ক্লাস/মডেল টেস্ট মার্ক ইনপুট ও রেজাল্ট',
+              'ক্লাস/সেকশন/শিফট ও বাল্ক SMS (Excel)',
+              'ওয়েবসাইট ইন্টিগ্রেশন (অটো ডাটা সিঙ্ক)',
+            ],
+          },
+          {
+            title: 'অ্যাটেনডেন্স ম্যানেজমেন্ট',
+            items: [
+              '১ ক্লিকে রেডি আইডি কার্ড ডাউনলোড',
+              'বায়োমেট্রিক ও RF কার্ড হাজিরা',
+              'তারবিহীন WiFi ডিভাইস ইন্টিগ্রেশন',
+              'শিক্ষার্থীদের হাজিরা ও রিপোর্ট',
+              'উপস্থিতির ও অনুপস্থিতির SMS',
+              'শিক্ষক-স্টাফ হাজিরা ও তাৎক্ষণিক রিপোর্ট',
+              'সেকশন-ক্লাস-শিফট-জেন্ডার ভিত্তিক রিপোর্ট',
+              'ডেট টু ডেট কম্পারিজন রিপোর্ট',
+              'প্রয়োজনীয় রিপোর্ট ও ড্যাশবোর্ড',
+            ],
+          },
+          {
+            title: 'রেজাল্ট প্রসেস ও পাবলিশ',
+            items: [
+              'সাবজেক্ট-মার্ক-জিপিএ কাস্টমাইজেশন',
+              'এডমিট কার্ড, সিট প্ল্যান ও এক্সাম রুটিন',
+              'ঘরে বসে কুইক মার্ক ইনপুট',
+              'টেবুলেশন শিট ও কারেকশনের সুযোগ',
+              '৩ ক্লিকে রেজাল্ট প্রসেস ও পাবলিশ',
+              'একাডেমিক ট্রান্সক্রিপ্ট/মার্কশিট',
+              'এসএমএস ও ওয়েবসাইটে রেজাল্ট',
+              'মেরিট/ফেল লিস্ট ও গ্র্যান্ড ফাইনাল',
+              'টেস্টিমোনিয়াল ও ট্রান্সফার সার্টিফিকেট',
+            ],
+          },
         ],
       },
     },
@@ -745,142 +809,84 @@ const ServiceDetail = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
-            {/* Silver Plan */}
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              whileHover={{ y: -4 }}
-              className="bg-background rounded-xl sm:rounded-3xl border border-border p-4 sm:p-7 md:p-8 relative hover:border-primary/20 transition-all duration-300 hover:shadow-elevated group">
-              <div className="mb-3 sm:mb-6">
-                <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-muted flex items-center justify-center">
-                    <Layers className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 max-w-5xl mx-auto">
+            {/* Render pricing cards */}
+            {[data.gold, data.silver].map((plan, planIdx) => {
+              const hasCategories = 'categories' in plan && Array.isArray((plan as any).categories);
+              const planGradient = 'gradient' in plan ? (plan as any).gradient : (planIdx === 0 ? 'linear-gradient(135deg, hsl(25 95% 55%), hsl(35 95% 50%))' : 'linear-gradient(135deg, hsl(200 80% 50%), hsl(210 85% 45%))');
+              const planSubtitle = 'subtitle' in plan ? (plan as any).subtitle : '';
+
+              return (
+                <motion.div key={planIdx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: planIdx * 0.1 }}
+                  className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-elevated hover:shadow-xl transition-all duration-300 bg-background">
+                  
+                  {/* Gradient Header */}
+                  <div className="relative px-5 sm:px-8 pt-6 sm:pt-8 pb-8 sm:pb-10 text-center" style={{ background: planGradient }}>
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground mb-0.5 sm:mb-1">{plan.name}</h3>
+                    {planSubtitle && (
+                      <p className="text-sm sm:text-lg font-bold text-primary-foreground/90 mb-4 sm:mb-6">{planSubtitle}</p>
+                    )}
+                    
+                    {/* Price Badge */}
+                    <div className="inline-flex items-baseline gap-1 bg-background rounded-xl sm:rounded-2xl px-6 sm:px-8 py-3 sm:py-4 shadow-lg">
+                      {plan.currency && <span className="text-lg sm:text-2xl font-bold text-foreground">{plan.currency}</span>}
+                      <span className="text-3xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight">{plan.price}</span>
+                    </div>
+                    {plan.period && (
+                      <p className="text-xs sm:text-sm font-semibold text-primary-foreground/80 mt-2">{plan.period}</p>
+                    )}
                   </div>
-                  <h3 className="text-sm sm:text-lg font-bold text-foreground">{data.silver.name}</h3>
-                </div>
-                <div className="flex items-baseline gap-0.5 sm:gap-1 flex-wrap">
-                  {data.silver.currency && <span className="text-sm sm:text-lg font-bold text-muted-foreground">{data.silver.currency}</span>}
-                  <span className="text-xl sm:text-3xl md:text-4xl font-black text-foreground tracking-tight">{data.silver.price}</span>
-                  {data.silver.period && <span className="text-muted-foreground text-[10px] sm:text-sm ml-0.5 sm:ml-1">{data.silver.period}</span>}
-                </div>
-              </div>
 
-              <div className="h-px bg-border mb-3 sm:mb-5" />
-
-              <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-7">
-                {data.silver.features.map((f, i) => (
-                  <div key={i} className="flex items-center gap-2 sm:gap-3">
-                    {f.included ? (
-                      <div className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                        <Check className="h-3 w-3 text-primary" />
+                  {/* Features Body */}
+                  <div className="px-5 sm:px-8 py-5 sm:py-8">
+                    {hasCategories ? (
+                      <div className="space-y-5 sm:space-y-7">
+                        {(plan as any).categories.map((cat: { title: string; items: string[] }, catIdx: number) => (
+                          <div key={catIdx}>
+                            <h4 className="text-sm sm:text-base font-black text-foreground mb-2.5 sm:mb-3 border-b border-border pb-2">{cat.title}</h4>
+                            <ul className="space-y-1.5 sm:space-y-2">
+                              {cat.items.map((item: string, itemIdx: number) => (
+                                <li key={itemIdx} className="flex items-start gap-2 sm:gap-2.5">
+                                  <span className="mt-1.5 w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full shrink-0" style={{ background: planGradient }} />
+                                  <span className="text-[11px] sm:text-sm text-foreground/80 leading-snug">{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
                       </div>
                     ) : (
-                      <div className="w-5 h-5 rounded-full bg-muted flex items-center justify-center shrink-0">
-                        <X className="h-3 w-3 text-muted-foreground/40" />
+                      <div className="space-y-2 sm:space-y-3">
+                        {'features' in plan && Array.isArray((plan as any).features) && (plan as any).features.map((f: { text: string; included: boolean }, i: number) => (
+                          <div key={i} className="flex items-center gap-2 sm:gap-3">
+                            {f.included ? (
+                              <div className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
+                                <Check className="h-3 w-3 text-primary" />
+                              </div>
+                            ) : (
+                              <div className="w-5 h-5 rounded-full bg-muted flex items-center justify-center shrink-0">
+                                <X className="h-3 w-3 text-muted-foreground/40" />
+                              </div>
+                            )}
+                            <span className={`text-[11px] sm:text-sm ${f.included ? 'text-foreground' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
+                          </div>
+                        ))}
                       </div>
                     )}
-                    <span className={`text-[11px] sm:text-sm ${f.included ? 'text-foreground' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
+
+                    <div className="mt-5 sm:mt-8">
+                      <Link to="/consultation" className="block">
+                        <Button className="w-full rounded-xl text-[11px] sm:text-sm h-10 sm:h-12 font-bold text-primary-foreground shadow-md" size="lg"
+                          style={{ background: planGradient }}>
+                          {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-4 w-4 ml-1" />
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
-                ))}
-              </div>
-
-              <Link to="/consultation" className="block">
-                <Button variant="outline" className="w-full rounded-lg sm:rounded-xl text-[11px] sm:text-sm h-9 sm:h-12" size="lg">
-                  {isBn ? 'যোগাযোগ করুন' : 'Contact Us'}
-                </Button>
-              </Link>
-            </motion.div>
-
-            {/* Gold Plan */}
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-              whileHover={{ y: -4 }}
-              className="bg-background rounded-xl sm:rounded-3xl border-2 border-primary p-4 sm:p-7 md:p-8 relative shadow-lg hover:shadow-xl transition-all duration-300">
-              {/* Recommended badge */}
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                <span className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold shadow-md whitespace-nowrap"
-                  style={{ background: 'linear-gradient(135deg, hsl(145 63% 38%), hsl(145 63% 28%))', color: 'white' }}>
-                  <Star className="h-3 w-3 fill-current" />
-                  {isBn ? 'রিকমেন্ডেড' : 'Recommended'}
-                </span>
-              </div>
-
-              {/* Subtle glow */}
-              <div className="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-50 pointer-events-none"
-                style={{ boxShadow: 'inset 0 1px 0 0 hsl(145 63% 42% / 0.15), 0 0 40px -10px hsl(145 63% 42% / 0.15)' }} />
-
-              <div className="mb-3 sm:mb-6 relative">
-                <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary fill-primary" />
-                  </div>
-                  <h3 className="text-sm sm:text-lg font-bold text-foreground">{data.gold.name}</h3>
-                </div>
-                <div className="flex items-baseline gap-0.5 sm:gap-1 flex-wrap">
-                  {data.gold.currency && <span className="text-sm sm:text-lg font-bold text-primary">{data.gold.currency}</span>}
-                  <span className="text-xl sm:text-3xl md:text-4xl font-black text-primary tracking-tight">{data.gold.price}</span>
-                  {data.gold.period && <span className="text-muted-foreground text-[10px] sm:text-sm ml-0.5 sm:ml-1">{data.gold.period}</span>}
-                </div>
-              </div>
-
-              <div className="h-px bg-primary/15 mb-3 sm:mb-5" />
-
-              <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-7 relative">
-                {data.gold.features.map((f, i) => (
-                  <div key={i} className="flex items-center gap-2 sm:gap-3">
-                    {f.included ? (
-                      <div className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
-                        <Check className="h-3 w-3 text-primary" />
-                      </div>
-                    ) : (
-                      <div className="w-5 h-5 rounded-full bg-muted flex items-center justify-center shrink-0">
-                        <X className="h-3 w-3 text-muted-foreground/40" />
-                      </div>
-                    )}
-                    <span className={`text-[11px] sm:text-sm ${f.included ? 'text-foreground font-medium' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
-                  </div>
-                ))}
-              </div>
-
-              <Link to="/consultation" className="block">
-                <Button variant="hero" className="w-full rounded-lg sm:rounded-xl text-[11px] sm:text-sm h-9 sm:h-12" size="lg">
-                  {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-4 w-4 ml-1" />
-                </Button>
-              </Link>
-            </motion.div>
+                </motion.div>
+              );
+            })}
           </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════ CTA ═══════════════════ */}
-      <section className="py-8 sm:py-16 md:py-20">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="relative rounded-2xl sm:rounded-3xl overflow-hidden p-6 sm:p-8 md:p-14 text-center"
-            style={{ background: 'var(--gradient-hero)' }}>
-            <div className="absolute inset-0 opacity-10" style={{
-              backgroundImage: 'radial-gradient(circle, hsl(0 0% 100%) 1px, transparent 1px)',
-              backgroundSize: '20px 20px',
-            }} />
-            <div className="relative z-10">
-              <h2 className="text-xl sm:text-2xl md:text-4xl font-black text-primary-foreground mb-3 sm:mb-4">
-                {isBn ? 'আজই শুরু করুন' : 'Get Started Today'}
-              </h2>
-              <p className="text-primary-foreground/80 mb-6 sm:mb-8 max-w-lg mx-auto text-xs sm:text-sm md:text-base leading-relaxed">
-                {isBn ? 'আমাদের সাথে যোগাযোগ করুন এবং আপনার প্রতিষ্ঠানের জন্য সেরা সমাধান পান।' : 'Contact us and get the best solution for your organization.'}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link to="/consultation">
-                  <Button size="lg" className="bg-background text-foreground hover:bg-background/90 font-bold px-6 sm:px-8 gap-2 rounded-xl shadow-elevated text-xs sm:text-sm w-full sm:w-auto">
-                    {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link to="/contact">
-                  <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 px-6 sm:px-8 rounded-xl text-xs sm:text-sm w-full sm:w-auto">
-                    {isBn ? 'যোগাযোগ করুন' : 'Contact Us'}
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
