@@ -625,14 +625,14 @@ const ServiceDetail = () => {
           backgroundSize: '28px 28px'
         }} />
         <div className="container mx-auto px-4 lg:px-8 relative">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10 sm:mb-14">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-4 sm:mb-5">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-7 sm:mb-14">
+            <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-3 sm:mb-5">
               {isBn ? 'বৈশিষ্ট্যসমূহ' : 'Features'}
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3">
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-3">
               {isBn ? 'মূল বৈশিষ্ট্যসমূহ' : 'Key Features'}
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto">
+            <p className="text-[11px] sm:text-sm text-muted-foreground max-w-lg mx-auto">
               {isBn ? 'আমাদের সফটওয়্যারে যা যা পাবেন' : 'Everything included in our software'}
             </p>
           </motion.div>
