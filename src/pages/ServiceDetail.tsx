@@ -832,7 +832,7 @@ const ServiceDetail = () => {
                         <path d="M0,0 L400,0 C380,40 400,80 370,120 C340,160 360,200 330,240 L0,270 Z" fill="url(#silverGrad)" />
                       ) : (
                         /* Gold - wavy triangle from top-right going down */
-                        <path d="M0,0 L400,0 L400,270 C370,240 380,200 350,160 C320,120 340,80 310,40 L0,0 Z" fill="url(#goldGrad)" />
+                        <path d="M400,0 L0,0 C20,40 0,80 30,120 C60,160 40,200 70,240 L400,270 Z" fill="url(#goldGrad)" />
                       )}
                       <defs>
                         <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
