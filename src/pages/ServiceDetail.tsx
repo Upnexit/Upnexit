@@ -866,7 +866,8 @@ const ServiceDetail = () => {
                   {plan.period && (
                     <p className="text-[10px] sm:text-sm font-bold text-foreground/70 text-center py-2">{plan.period}</p>
                   )}
-                  </div>
+
+
 
                   {/* Features Body */}
                   <div className="px-5 sm:px-8 py-5 sm:py-8">
