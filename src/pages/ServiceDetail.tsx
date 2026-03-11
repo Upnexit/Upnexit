@@ -820,38 +820,38 @@ const ServiceDetail = () => {
                 <motion.div key={planIdx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: planIdx * 0.1 }}
                   className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-elevated hover:shadow-xl transition-all duration-300 bg-background">
                   
-                  {/* Gradient Header - Diagonal Design */}
-                  <div className="relative h-[180px] sm:h-[220px] md:h-[250px] overflow-hidden">
-                    {/* Diagonal colored shape */}
-                    <div className="absolute inset-0" style={{
-                      background: planGradient,
-                      clipPath: planIdx === 1
-                        ? 'polygon(0 0, 75% 0, 55% 100%, 0 100%)'
-                        : 'polygon(25% 0, 100% 0, 100% 100%, 45% 100%)',
-                    }} />
-                    {/* White area */}
-                    <div className="absolute inset-0 bg-background" style={{
-                      clipPath: planIdx === 1
-                        ? 'polygon(75% 0, 100% 0, 100% 100%, 55% 100%)'
-                        : 'polygon(0 0, 25% 0, 45% 100%, 0 100%)',
-                    }} />
+                  {/* Gradient Header - Curved Diagonal Design */}
+                  <div className="relative h-[200px] sm:h-[240px] md:h-[270px] overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                    {/* Full background color */}
+                    <div className="absolute inset-0" style={{ background: planGradient }} />
+                    
+                    {/* White curved shape - Silver: right side, Gold: left side */}
+                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 270" preserveAspectRatio="none">
+                      {planIdx === 1 ? (
+                        /* Silver - white curve on the right */
+                        <path d="M220,0 Q260,135 200,270 L400,270 L400,0 Z" fill="hsl(var(--background))" />
+                      ) : (
+                        /* Gold - white curve on the left */
+                        <path d="M180,0 Q140,135 200,270 L0,270 L0,0 Z" fill="hsl(var(--background))" />
+                      )}
+                    </svg>
 
-                    {/* Text content positioned on the colored side */}
-                    <div className={`absolute top-0 ${planIdx === 1 ? 'left-0 pl-5 sm:pl-8 text-left' : 'right-0 pr-5 sm:pr-8 text-right'} pt-5 sm:pt-7 z-10`}>
-                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1">{plan.name}</h3>
+                    {/* Title text - centered on the colored area */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-start pt-5 sm:pt-7 z-10">
+                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white drop-shadow-md">{plan.name}</h3>
                       {planSubtitle && (
-                        <p className="text-xs sm:text-base font-bold text-white/90">{planSubtitle}</p>
+                        <p className="text-[11px] sm:text-base font-bold text-white/90 mt-0.5">{planSubtitle}</p>
                       )}
                     </div>
 
-                    {/* Price Badge - centered */}
-                    <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-10">
-                      <div className="inline-flex items-baseline gap-1 bg-background rounded-xl sm:rounded-2xl px-6 sm:px-8 py-2.5 sm:py-4 shadow-lg border border-border/50">
+                    {/* Price Badge - centered bottom */}
+                    <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-10">
+                      <div className="inline-flex items-baseline gap-1 bg-background rounded-xl sm:rounded-2xl px-6 sm:px-8 py-2.5 sm:py-4 shadow-xl border border-border/60">
                         {plan.currency && <span className="text-lg sm:text-2xl font-bold text-foreground">{plan.currency}</span>}
                         <span className="text-3xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight">{plan.price}</span>
                       </div>
                       {plan.period && (
-                        <p className="text-[10px] sm:text-sm font-semibold text-muted-foreground mt-1 text-center">{plan.period}</p>
+                        <p className="text-[10px] sm:text-sm font-semibold text-muted-foreground mt-1.5 text-center">{plan.period}</p>
                       )}
                     </div>
                   </div>
