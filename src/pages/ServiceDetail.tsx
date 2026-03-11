@@ -847,24 +847,27 @@ const ServiceDetail = () => {
                     </svg>
 
                     {/* Title text - on the colored triangle area */}
-                    <div className={`absolute top-0 z-10 pt-5 sm:pt-7 ${planIdx === 1 ? 'left-0 pl-5 sm:pl-8 text-left' : 'right-0 pr-5 sm:pr-8 text-right'}`}>
-                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.25)' }}>{plan.name}</h3>
+                    <div className="absolute inset-0 flex flex-col items-center justify-start pt-5 sm:pt-7 z-10">
+                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-wide" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.35)' }}>{plan.name}</h3>
                       {planSubtitle && (
-                        <p className="text-[11px] sm:text-base font-bold text-white" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.2)' }}>{planSubtitle}</p>
+                        <p className="text-xs sm:text-lg font-extrabold text-white tracking-wide mt-0.5" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}>{planSubtitle}</p>
                       )}
                     </div>
 
-                    {/* Price Badge - centered bottom */}
-                    <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-10">
+                    {/* Price Badge - centered */}
+                    <div className="absolute bottom-1 sm:bottom-2 left-1/2 -translate-x-1/2 z-10">
                       <div className="inline-flex items-baseline gap-1 bg-background rounded-xl sm:rounded-2xl px-6 sm:px-8 py-2.5 sm:py-4 shadow-xl border border-border/60">
                         {plan.currency && <span className="text-lg sm:text-2xl font-bold text-foreground">{plan.currency}</span>}
                         <span className="text-3xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight">{plan.price}</span>
                       </div>
-                      {plan.period && (
-                        <p className="text-[10px] sm:text-sm font-semibold text-muted-foreground mt-1.5 text-center">{plan.period}</p>
-                      )}
                     </div>
                   </div>
+                  {/* Period text - outside header in white area */}
+                  {plan.period && (
+                    <p className="text-[10px] sm:text-sm font-bold text-foreground/70 text-center py-2">{plan.period}</p>
+                  )}
+
+
 
                   {/* Features Body */}
                   <div className="px-5 sm:px-8 py-5 sm:py-8">
