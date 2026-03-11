@@ -809,7 +809,7 @@ const ServiceDetail = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 gap-3 sm:gap-8 max-w-5xl mx-auto">
             {/* Render pricing cards */}
             {[data.gold, data.silver].map((plan, planIdx) => {
               const hasCategories = 'categories' in plan && Array.isArray((plan as any).categories);
@@ -821,7 +821,7 @@ const ServiceDetail = () => {
                   className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-elevated hover:shadow-xl transition-all duration-300 bg-background">
                   
                   {/* Gradient Header - Wavy 45° Diagonal Design */}
-                  <div className="relative h-[200px] sm:h-[240px] md:h-[270px] overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                  <div className="relative h-[160px] sm:h-[240px] md:h-[270px] overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
                     {/* White background */}
                     <div className="absolute inset-0 bg-background" />
                     
@@ -846,19 +846,19 @@ const ServiceDetail = () => {
                       </defs>
                     </svg>
 
-                    {/* Title text - on the colored triangle area */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-start pt-5 sm:pt-7 z-10">
-                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-wide" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.35)' }}>{plan.name}</h3>
+                    {/* Title text - centered with more top spacing */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-start pt-7 sm:pt-9 md:pt-10 z-10">
+                      <h3 className="text-xl sm:text-3xl md:text-4xl font-black text-white tracking-wider uppercase" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)', letterSpacing: '0.08em' }}>{plan.name}</h3>
                       {planSubtitle && (
-                        <p className="text-xs sm:text-lg font-extrabold text-white tracking-wide mt-0.5" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}>{planSubtitle}</p>
+                        <p className="text-[10px] sm:text-base font-extrabold text-white tracking-wide mt-1 sm:mt-1.5" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}>{planSubtitle}</p>
                       )}
                     </div>
 
                     {/* Price Badge - centered */}
-                    <div className="absolute bottom-1 sm:bottom-2 left-1/2 -translate-x-1/2 z-10">
-                      <div className="inline-flex items-baseline gap-1 bg-background rounded-xl sm:rounded-2xl px-6 sm:px-8 py-2.5 sm:py-4 shadow-xl border border-border/60">
-                        {plan.currency && <span className="text-lg sm:text-2xl font-bold text-foreground">{plan.currency}</span>}
-                        <span className="text-3xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight">{plan.price}</span>
+                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-10">
+                      <div className="inline-flex items-baseline gap-0.5 sm:gap-1 bg-background rounded-lg sm:rounded-2xl px-4 sm:px-8 py-2 sm:py-4 shadow-xl border border-border/60">
+                        {plan.currency && <span className="text-sm sm:text-2xl font-bold text-foreground">{plan.currency}</span>}
+                        <span className="text-2xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight">{plan.price}</span>
                       </div>
                     </div>
                   </div>
