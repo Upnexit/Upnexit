@@ -846,11 +846,11 @@ const ServiceDetail = () => {
                       </defs>
                     </svg>
 
-                    {/* Title text - on the colored triangle area */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-start pt-5 sm:pt-7 z-10">
-                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-wide" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.35)' }}>{plan.name}</h3>
+                    {/* Title text - centered with more top spacing */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-start pt-7 sm:pt-9 md:pt-10 z-10">
+                      <h3 className="text-xl sm:text-3xl md:text-4xl font-black text-white tracking-wider uppercase" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)', letterSpacing: '0.08em' }}>{plan.name}</h3>
                       {planSubtitle && (
-                        <p className="text-xs sm:text-lg font-extrabold text-white tracking-wide mt-0.5" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}>{planSubtitle}</p>
+                        <p className="text-[10px] sm:text-base font-extrabold text-white tracking-wide mt-1 sm:mt-1.5" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}>{planSubtitle}</p>
                       )}
                     </div>
 
