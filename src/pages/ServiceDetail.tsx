@@ -798,15 +798,18 @@ const ServiceDetail = () => {
         </div>
         <div className="container mx-auto px-4 lg:px-8 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-7 sm:mb-14">
-            <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-3 sm:mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
-              Pricing
-            </span>
-            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-3">
-              {isBn ? 'প্রাইসিং প্ল্যান' : 'Pricing Plans'}
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3">
+              {isBn ? 'সফটওয়্যারের প্যাকেজ ও মূল্য' : 'Software Packages & Pricing'}
             </h2>
-            <p className="text-[11px] sm:text-sm text-muted-foreground max-w-lg mx-auto">
+            <p className="text-[11px] sm:text-sm text-muted-foreground max-w-lg mx-auto mb-3 sm:mb-5">
               {isBn ? 'আপনার প্রতিষ্ঠানের চাহিদা অনুযায়ী সেরা প্ল্যান বেছে নিন' : 'Choose the best plan for your organization'}
             </p>
+            {/* Decorative lines */}
+            <div className="flex items-center justify-center gap-1.5">
+              <span className="block w-8 sm:w-12 h-[2px] rounded-full bg-primary/40" />
+              <span className="block w-14 sm:w-20 h-[3px] rounded-full bg-primary" />
+              <span className="block w-8 sm:w-12 h-[2px] rounded-full bg-primary/40" />
+            </div>
           </motion.div>
 
           <div className="grid grid-cols-2 gap-3 sm:gap-8 max-w-5xl mx-auto">
