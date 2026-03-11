@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import Consultation from "./pages/Consultation";
 import NotFound from "./pages/NotFound";
 import ServiceDetail from "./pages/ServiceDetail";
+import Order from "./pages/Order";
 import AdminLogin from "./pages/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
@@ -36,6 +37,7 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/consultation" element={<Consultation />} />
       <Route path="/services/:slug" element={<ServiceDetail />} />
+      <Route path="/order" element={<Order />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />

@@ -910,10 +910,10 @@ const ServiceDetail = () => {
                     )}
 
                     <div className="mt-5 sm:mt-8">
-                      <Link to="/consultation" className="block">
+                      <Link to={`/order?service=${slug}&plan=${planIdx === 0 ? 'gold' : 'silver'}`} className="block">
                         <Button className="w-full rounded-xl text-[11px] sm:text-sm h-10 sm:h-12 font-bold text-primary-foreground shadow-md" size="lg"
                           style={{ background: planGradient }}>
-                          {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-4 w-4 ml-1" />
+                          {isBn ? 'অর্ডার করুন' : 'Order Now'} <ArrowRight className="h-4 w-4 ml-1" />
                         </Button>
                       </Link>
                     </div>
