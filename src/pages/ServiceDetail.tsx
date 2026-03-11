@@ -822,25 +822,35 @@ const ServiceDetail = () => {
                   
                   {/* Gradient Header - Wavy 45° Diagonal Design */}
                   <div className="relative h-[200px] sm:h-[240px] md:h-[270px] overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
-                    {/* Full background color */}
-                    <div className="absolute inset-0" style={{ background: planGradient }} />
+                    {/* White background */}
+                    <div className="absolute inset-0 bg-background" />
                     
-                    {/* White wavy diagonal shape corner-to-corner */}
+                    {/* Colored triangle shape */}
                     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 270" preserveAspectRatio="none">
                       {planIdx === 1 ? (
-                        /* Silver - wavy diagonal from top-right to bottom-left, white on right */
-                        <path d="M400,0 L160,0 C190,60 140,120 170,180 C200,240 160,270 180,270 L400,270 Z" fill="hsl(var(--background))" />
+                        /* Silver - triangle from left: covers top-left, bottom-left, and tapers to right */
+                        <path d="M0,0 L400,0 L0,270 Z" fill="url(#silverGrad)" />
                       ) : (
-                        /* Gold - wavy diagonal from top-left to bottom-right, white on left */
-                        <path d="M0,0 L240,0 C210,60 260,120 230,180 C200,240 240,270 220,270 L0,270 Z" fill="hsl(var(--background))" />
+                        /* Gold - triangle from right: covers top-right, bottom-right, and tapers to left */
+                        <path d="M0,0 L400,0 L400,270 Z" fill="url(#goldGrad)" />
                       )}
+                      <defs>
+                        <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="hsl(200, 80%, 50%)" />
+                          <stop offset="100%" stopColor="hsl(210, 85%, 45%)" />
+                        </linearGradient>
+                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="hsl(25, 95%, 55%)" />
+                          <stop offset="100%" stopColor="hsl(35, 95%, 50%)" />
+                        </linearGradient>
+                      </defs>
                     </svg>
 
-                    {/* Title text - positioned on the colored side */}
-                    <div className={`absolute top-0 z-10 pt-5 sm:pt-7 ${planIdx === 1 ? 'left-0 pl-5 sm:pl-8 text-left' : 'right-0 pr-5 sm:pr-8 text-right'}`} style={{ maxWidth: '60%' }}>
-                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>{plan.name}</h3>
+                    {/* Title text - on the colored triangle area */}
+                    <div className={`absolute top-0 z-10 pt-5 sm:pt-7 ${planIdx === 1 ? 'left-0 pl-5 sm:pl-8 text-left' : 'right-0 pr-5 sm:pr-8 text-right'}`}>
+                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.25)' }}>{plan.name}</h3>
                       {planSubtitle && (
-                        <p className="text-[11px] sm:text-base font-bold text-white" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.25)' }}>{planSubtitle}</p>
+                        <p className="text-[11px] sm:text-base font-bold text-white" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.2)' }}>{planSubtitle}</p>
                       )}
                     </div>
 
