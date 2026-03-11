@@ -836,11 +836,11 @@ const ServiceDetail = () => {
                       )}
                     </svg>
 
-                    {/* Title text - centered */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-start pt-5 sm:pt-7 z-10">
-                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white drop-shadow-md">{plan.name}</h3>
+                    {/* Title text - positioned on the colored side */}
+                    <div className={`absolute top-0 z-10 pt-5 sm:pt-7 ${planIdx === 1 ? 'left-0 pl-5 sm:pl-8 text-left' : 'right-0 pr-5 sm:pr-8 text-right'}`} style={{ maxWidth: '60%' }}>
+                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>{plan.name}</h3>
                       {planSubtitle && (
-                        <p className="text-[11px] sm:text-base font-bold text-white/90 mt-0.5">{planSubtitle}</p>
+                        <p className="text-[11px] sm:text-base font-bold text-white" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.25)' }}>{planSubtitle}</p>
                       )}
                     </div>
 
