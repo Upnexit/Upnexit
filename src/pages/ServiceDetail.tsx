@@ -855,10 +855,10 @@ const ServiceDetail = () => {
                     </div>
 
                     {/* Price Badge - centered */}
-                    <div className="absolute bottom-1 sm:bottom-2 left-1/2 -translate-x-1/2 z-10">
-                      <div className="inline-flex items-baseline gap-1 bg-background rounded-xl sm:rounded-2xl px-6 sm:px-8 py-2.5 sm:py-4 shadow-xl border border-border/60">
-                        {plan.currency && <span className="text-lg sm:text-2xl font-bold text-foreground">{plan.currency}</span>}
-                        <span className="text-3xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight">{plan.price}</span>
+                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-10">
+                      <div className="inline-flex items-baseline gap-0.5 sm:gap-1 bg-background rounded-lg sm:rounded-2xl px-4 sm:px-8 py-2 sm:py-4 shadow-xl border border-border/60">
+                        {plan.currency && <span className="text-sm sm:text-2xl font-bold text-foreground">{plan.currency}</span>}
+                        <span className="text-2xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight">{plan.price}</span>
                       </div>
                     </div>
                   </div>
