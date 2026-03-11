@@ -820,21 +820,40 @@ const ServiceDetail = () => {
                 <motion.div key={planIdx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: planIdx * 0.1 }}
                   className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-elevated hover:shadow-xl transition-all duration-300 bg-background">
                   
-                  {/* Gradient Header */}
-                  <div className="relative px-5 sm:px-8 pt-6 sm:pt-8 pb-8 sm:pb-10 text-center" style={{ background: planGradient }}>
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-primary-foreground mb-0.5 sm:mb-1">{plan.name}</h3>
-                    {planSubtitle && (
-                      <p className="text-sm sm:text-lg font-bold text-primary-foreground/90 mb-4 sm:mb-6">{planSubtitle}</p>
-                    )}
-                    
-                    {/* Price Badge */}
-                    <div className="inline-flex items-baseline gap-1 bg-background rounded-xl sm:rounded-2xl px-6 sm:px-8 py-3 sm:py-4 shadow-lg">
-                      {plan.currency && <span className="text-lg sm:text-2xl font-bold text-foreground">{plan.currency}</span>}
-                      <span className="text-3xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight">{plan.price}</span>
+                  {/* Gradient Header - Diagonal Design */}
+                  <div className="relative h-[180px] sm:h-[220px] md:h-[250px] overflow-hidden">
+                    {/* Diagonal colored shape */}
+                    <div className="absolute inset-0" style={{
+                      background: planGradient,
+                      clipPath: planIdx === 1
+                        ? 'polygon(0 0, 75% 0, 55% 100%, 0 100%)'
+                        : 'polygon(25% 0, 100% 0, 100% 100%, 45% 100%)',
+                    }} />
+                    {/* White area */}
+                    <div className="absolute inset-0 bg-background" style={{
+                      clipPath: planIdx === 1
+                        ? 'polygon(75% 0, 100% 0, 100% 100%, 55% 100%)'
+                        : 'polygon(0 0, 25% 0, 45% 100%, 0 100%)',
+                    }} />
+
+                    {/* Text content positioned on the colored side */}
+                    <div className={`absolute top-0 ${planIdx === 1 ? 'left-0 pl-5 sm:pl-8 text-left' : 'right-0 pr-5 sm:pr-8 text-right'} pt-5 sm:pt-7 z-10`}>
+                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-0.5 sm:mb-1">{plan.name}</h3>
+                      {planSubtitle && (
+                        <p className="text-xs sm:text-base font-bold text-white/90">{planSubtitle}</p>
+                      )}
                     </div>
-                    {plan.period && (
-                      <p className="text-xs sm:text-sm font-semibold text-primary-foreground/80 mt-2">{plan.period}</p>
-                    )}
+
+                    {/* Price Badge - centered */}
+                    <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-10">
+                      <div className="inline-flex items-baseline gap-1 bg-background rounded-xl sm:rounded-2xl px-6 sm:px-8 py-2.5 sm:py-4 shadow-lg border border-border/50">
+                        {plan.currency && <span className="text-lg sm:text-2xl font-bold text-foreground">{plan.currency}</span>}
+                        <span className="text-3xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight">{plan.price}</span>
+                      </div>
+                      {plan.period && (
+                        <p className="text-[10px] sm:text-sm font-semibold text-muted-foreground mt-1 text-center">{plan.period}</p>
+                      )}
+                    </div>
                   </div>
 
                   {/* Features Body */}
