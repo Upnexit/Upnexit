@@ -23,8 +23,8 @@ const serviceInfo: Record<string, { icon: any; name_bn: string; name_en: string;
 };
 
 const Order = () => {
-  const { t, language } = useLanguage();
-  const isBn = language === 'bn';
+  const { lang } = useLanguage();
+  const isBn = lang === 'bn';
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
 
