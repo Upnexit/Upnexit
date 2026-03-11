@@ -820,23 +820,23 @@ const ServiceDetail = () => {
                 <motion.div key={planIdx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: planIdx * 0.1 }}
                   className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-elevated hover:shadow-xl transition-all duration-300 bg-background">
                   
-                  {/* Gradient Header - Curved Diagonal Design */}
+                  {/* Gradient Header - Wavy 45° Diagonal Design */}
                   <div className="relative h-[200px] sm:h-[240px] md:h-[270px] overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
                     {/* Full background color */}
                     <div className="absolute inset-0" style={{ background: planGradient }} />
                     
-                    {/* White curved shape - Silver: right side, Gold: left side */}
+                    {/* White wavy diagonal shape corner-to-corner */}
                     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 270" preserveAspectRatio="none">
                       {planIdx === 1 ? (
-                        /* Silver - white curve on the right */
-                        <path d="M220,0 Q260,135 200,270 L400,270 L400,0 Z" fill="hsl(var(--background))" />
+                        /* Silver - wavy diagonal from top-right to bottom-left, white on right */
+                        <path d="M400,0 L160,0 C190,60 140,120 170,180 C200,240 160,270 180,270 L400,270 Z" fill="hsl(var(--background))" />
                       ) : (
-                        /* Gold - white curve on the left */
-                        <path d="M180,0 Q140,135 200,270 L0,270 L0,0 Z" fill="hsl(var(--background))" />
+                        /* Gold - wavy diagonal from top-left to bottom-right, white on left */
+                        <path d="M0,0 L240,0 C210,60 260,120 230,180 C200,240 240,270 220,270 L0,270 Z" fill="hsl(var(--background))" />
                       )}
                     </svg>
 
-                    {/* Title text - centered on the colored area */}
+                    {/* Title text - centered */}
                     <div className="absolute inset-0 flex flex-col items-center justify-start pt-5 sm:pt-7 z-10">
                       <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white drop-shadow-md">{plan.name}</h3>
                       {planSubtitle && (
