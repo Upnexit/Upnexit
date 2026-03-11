@@ -821,7 +821,7 @@ const ServiceDetail = () => {
                   className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-elevated hover:shadow-xl transition-all duration-300 bg-background">
                   
                   {/* Gradient Header - Wavy 45° Diagonal Design */}
-                  <div className="relative h-[200px] sm:h-[240px] md:h-[270px] overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                  <div className="relative h-[160px] sm:h-[240px] md:h-[270px] overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
                     {/* White background */}
                     <div className="absolute inset-0 bg-background" />
                     
