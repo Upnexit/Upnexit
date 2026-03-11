@@ -828,11 +828,11 @@ const ServiceDetail = () => {
                     {/* Colored triangle shape */}
                     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 270" preserveAspectRatio="none">
                       {planIdx === 1 ? (
-                        /* Silver - triangle from left: covers top-left, bottom-left, and tapers to right */
-                        <path d="M0,0 L400,0 L0,270 Z" fill="url(#silverGrad)" />
+                        /* Silver - wavy triangle from top-left going down */
+                        <path d="M0,0 L400,0 C380,40 400,80 370,120 C340,160 360,200 330,240 L0,270 Z" fill="url(#silverGrad)" />
                       ) : (
-                        /* Gold - triangle from right: covers top-right, bottom-right, and tapers to left */
-                        <path d="M0,0 L400,0 L400,270 Z" fill="url(#goldGrad)" />
+                        /* Gold - wavy triangle from top-right going down */
+                        <path d="M0,0 L400,0 L400,270 C370,240 380,200 350,160 C320,120 340,80 310,40 L0,0 Z" fill="url(#goldGrad)" />
                       )}
                       <defs>
                         <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
