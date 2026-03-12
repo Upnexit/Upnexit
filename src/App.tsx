@@ -24,6 +24,7 @@ import SiteSettings from "./pages/admin/SiteSettings";
 import ClientReviewsManagement from "./pages/admin/ClientReviewsManagement";
 import ChatbotManagement from "./pages/admin/ChatbotManagement";
 import ChatbotWidget from "./components/ChatbotWidget";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
