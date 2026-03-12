@@ -62,6 +62,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <ScrollToTop />
             <AppRoutes />
             <ChatbotWidget />
           </BrowserRouter>
