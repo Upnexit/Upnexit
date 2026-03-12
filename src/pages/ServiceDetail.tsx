@@ -538,11 +538,20 @@ const serviceData = {
 
 type ServiceKey = 'school' | 'hospital' | 'custom' | 'web';
 
+const demoDefaults: Record<ServiceKey, { url: string; username: string; password: string }> = {
+  school: { url: '#', username: 'demo@school.com', password: 'demo123' },
+  hospital: { url: '#', username: 'demo@hospital.com', password: 'demo123' },
+  custom: { url: '#', username: 'demo@custom.com', password: 'demo123' },
+  web: { url: '#', username: 'demo@web.com', password: 'demo123' },
+};
+
 const ServiceDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { lang } = useLanguage();
+  const [demoOpen, setDemoOpen] = useState(false);
   const serviceKey = slug as ServiceKey;
   const data = serviceData[lang]?.[serviceKey];
+  const demo = demoDefaults[serviceKey];
 
   if (!data) {
     return (
