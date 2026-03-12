@@ -936,6 +936,46 @@ const ServiceDetail = () => {
         </div>
       </section>
 
+      {/* Demo Credentials Modal */}
+      <Dialog open={demoOpen} onOpenChange={setDemoOpen}>
+        <DialogContent className="max-w-sm rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-center text-lg font-bold">
+              {isBn ? '🎯 ফ্রি ডেমো অ্যাক্সেস' : '🎯 Free Demo Access'}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <p className="text-sm text-muted-foreground text-center">
+              {isBn ? 'নিচের তথ্য দিয়ে ডেমো সফটওয়্যারে লগইন করুন' : 'Use the credentials below to access the demo'}
+            </p>
+            <div className="bg-muted/50 rounded-xl p-4 space-y-3 border border-border">
+              <div>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+                  {isBn ? 'ইউজারনেম' : 'Username'}
+                </p>
+                <p className="text-sm font-bold text-foreground bg-background rounded-lg px-3 py-2 border border-border">
+                  {demo?.username}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+                  {isBn ? 'পাসওয়ার্ড' : 'Password'}
+                </p>
+                <p className="text-sm font-bold text-foreground bg-background rounded-lg px-3 py-2 border border-border">
+                  {demo?.password}
+                </p>
+              </div>
+            </div>
+            <a href={demo?.url || '#'} target="_blank" rel="noopener noreferrer" className="block">
+              <Button className="w-full gap-2 h-11 rounded-xl font-bold" variant="hero">
+                <Play className="h-4 w-4" />
+                {isBn ? 'ডেমো দেখুন' : 'Open Demo'}
+              </Button>
+            </a>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <Footer />
     </div>
   );
