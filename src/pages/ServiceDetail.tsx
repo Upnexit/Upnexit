@@ -611,11 +611,11 @@ const ServiceDetail = () => {
               <p className="text-[11px] sm:text-sm text-muted-foreground/70 leading-relaxed mb-4 sm:mb-8 max-w-xl hidden sm:block">{data.description}</p>
 
               <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
-                <Link to="/consultation" className="w-full sm:w-auto">
-                  <Button variant="hero" size="default" className="gap-2 w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12">
-                    {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  </Button>
-                </Link>
+                <Button variant="hero" size="default" className="gap-2 w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12"
+                  onClick={() => setDemoOpen(true)}>
+                  <Play className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  {isBn ? 'ফ্রি ডেমো নিন' : 'Get Free Demo'}
+                </Button>
                 <Link to="/contact" className="w-full sm:w-auto">
                   <Button variant="heroOutline" size="default" className="w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12">
                     {isBn ? 'যোগাযোগ করুন' : 'Contact Us'}
