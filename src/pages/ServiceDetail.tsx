@@ -3,10 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Check, X, ArrowLeft, GraduationCap, HeartPulse, Code, Globe, Shield, Clock, Headphones, Zap, Star, ArrowRight, Sparkles, Users, BarChart3, Settings, Monitor, Database, Lock, FileText, CheckCircle2, Target, Layers, Award, Play, Copy } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Check, X, ArrowLeft, GraduationCap, HeartPulse, Code, Globe, Shield, Clock, Headphones, Zap, ArrowRight, Sparkles, Users, BarChart3, Settings, Monitor, Database, Lock, FileText, CheckCircle2, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 // ─── Feature data with icons ────────────────────────────────
 const serviceData = {
