@@ -65,14 +65,19 @@ const ClientReviewsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
-            {lang === 'bn' ? 'আমাদের সার্ভিসে সন্তুষ্ট' : 'Satisfied With Our Service'}
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary">
+            {lang === 'bn' ? 'আপনেক্স আইটি' : 'Upnex It'}
           </h2>
-          <p className="text-muted-foreground mt-2 text-sm md:text-base">
+          <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mt-1">
             {lang === 'bn'
-              ? 'যারা আমাদের উপর বিশ্বাস রেখেছেন'
-              : 'Companies that trust us'}
+              ? 'সফটওয়্যার ব্যবহারকারী প্রতিষ্ঠান সমূহ'
+              : 'Software Using Institutions'}
           </p>
+          {/* Decorative yellow underlines like reference */}
+          <div className="flex flex-col items-center mt-2 gap-[3px]">
+            <span className="block w-48 sm:w-64 md:w-80 h-[3px] rounded-full bg-accent" />
+            <span className="block w-36 sm:w-48 md:w-60 h-[2px] rounded-full bg-accent/60" />
+          </div>
         </motion.div>
       </div>
 
