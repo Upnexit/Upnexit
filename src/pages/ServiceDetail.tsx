@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
-import { Check, X, ArrowLeft, GraduationCap, HeartPulse, Code, Globe, Shield, Clock, Headphones, Zap, Star, ArrowRight, Sparkles, Users, BarChart3, Settings, Monitor, Database, Lock, FileText, CheckCircle2, Target, Layers, Award } from 'lucide-react';
+import { Check, X, ArrowLeft, GraduationCap, HeartPulse, Code, Globe, Shield, Clock, Headphones, Zap, ArrowRight, Sparkles, Users, BarChart3, Settings, Monitor, Database, Lock, FileText, CheckCircle2, Play, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 // ─── Feature data with icons ────────────────────────────────
 const serviceData = {
@@ -539,8 +543,25 @@ type ServiceKey = 'school' | 'hospital' | 'custom' | 'web';
 const ServiceDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { lang } = useLanguage();
+  const [demoOpen, setDemoOpen] = useState(false);
   const serviceKey = slug as ServiceKey;
   const data = serviceData[lang]?.[serviceKey];
+
+  const { data: settings = [] } = useQuery({
+    queryKey: ['site-settings-demo'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('site_settings').select('*');
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const getSetting = (key: string) => settings.find(s => s.key === key)?.value || '';
+  const demo = {
+    url: getSetting(`demo_url_${serviceKey}`) || '#',
+    username: getSetting(`demo_user_${serviceKey}`) || 'demo',
+    password: getSetting(`demo_pass_${serviceKey}`) || 'demo123',
+  };
 
   if (!data) {
     return (
@@ -609,11 +630,11 @@ const ServiceDetail = () => {
               <p className="text-[11px] sm:text-sm text-muted-foreground/70 leading-relaxed mb-4 sm:mb-8 max-w-xl hidden sm:block">{data.description}</p>
 
               <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
-                <Link to="/consultation" className="w-full sm:w-auto">
-                  <Button variant="hero" size="default" className="gap-2 w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12">
-                    {isBn ? 'ফ্রি কনসালটেশন নিন' : 'Get Free Consultation'} <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  </Button>
-                </Link>
+                <Button variant="hero" size="default" className="gap-2 w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12"
+                  onClick={() => setDemoOpen(true)}>
+                  <Play className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  {isBn ? 'ফ্রি ডেমো নিন' : 'Get Free Demo'}
+                </Button>
                 <Link to="/contact" className="w-full sm:w-auto">
                   <Button variant="heroOutline" size="default" className="w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12">
                     {isBn ? 'যোগাযোগ করুন' : 'Contact Us'}
@@ -924,6 +945,46 @@ const ServiceDetail = () => {
           </div>
         </div>
       </section>
+
+      {/* Demo Credentials Modal */}
+      <Dialog open={demoOpen} onOpenChange={setDemoOpen}>
+        <DialogContent className="max-w-sm rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-center text-lg font-bold">
+              {isBn ? '🎯 ফ্রি ডেমো অ্যাক্সেস' : '🎯 Free Demo Access'}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <p className="text-sm text-muted-foreground text-center">
+              {isBn ? 'নিচের তথ্য দিয়ে ডেমো সফটওয়্যারে লগইন করুন' : 'Use the credentials below to access the demo'}
+            </p>
+            <div className="bg-muted/50 rounded-xl p-4 space-y-3 border border-border">
+              <div>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+                  {isBn ? 'ইউজারনেম' : 'Username'}
+                </p>
+                <p className="text-sm font-bold text-foreground bg-background rounded-lg px-3 py-2 border border-border">
+                  {demo?.username}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+                  {isBn ? 'পাসওয়ার্ড' : 'Password'}
+                </p>
+                <p className="text-sm font-bold text-foreground bg-background rounded-lg px-3 py-2 border border-border">
+                  {demo?.password}
+                </p>
+              </div>
+            </div>
+            <a href={demo?.url || '#'} target="_blank" rel="noopener noreferrer" className="block">
+              <Button className="w-full gap-2 h-11 rounded-xl font-bold" variant="hero">
+                <Play className="h-4 w-4" />
+                {isBn ? 'ডেমো দেখুন' : 'Open Demo'}
+              </Button>
+            </a>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>

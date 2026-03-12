@@ -17,6 +17,18 @@ const settingsFields = [
   { key: 'years_experience', label: 'অভিজ্ঞতা (যেমন: 2+)' },
   { key: 'youtube_video_id', label: 'YouTube Video ID' },
   { key: 'whatsapp_number', label: 'WhatsApp নম্বর (যেমন: +8801XXXXXXXXX)' },
+  { key: 'demo_url_school', label: 'ডেমো লিংক - School Management' },
+  { key: 'demo_user_school', label: 'ডেমো ইউজারনেম - School' },
+  { key: 'demo_pass_school', label: 'ডেমো পাসওয়ার্ড - School' },
+  { key: 'demo_url_hospital', label: 'ডেমো লিংক - Hospital Management' },
+  { key: 'demo_user_hospital', label: 'ডেমো ইউজারনেম - Hospital' },
+  { key: 'demo_pass_hospital', label: 'ডেমো পাসওয়ার্ড - Hospital' },
+  { key: 'demo_url_custom', label: 'ডেমো লিংক - Custom Software' },
+  { key: 'demo_user_custom', label: 'ডেমো ইউজারনেম - Custom' },
+  { key: 'demo_pass_custom', label: 'ডেমো পাসওয়ার্ড - Custom' },
+  { key: 'demo_url_web', label: 'ডেমো লিংক - Web Application' },
+  { key: 'demo_user_web', label: 'ডেমো ইউজারনেম - Web' },
+  { key: 'demo_pass_web', label: 'ডেমো পাসওয়ার্ড - Web' },
 ];
 
 const SiteSettings = () => {
