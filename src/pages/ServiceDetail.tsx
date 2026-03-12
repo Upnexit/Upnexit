@@ -948,40 +948,78 @@ const ServiceDetail = () => {
 
       {/* Demo Credentials Modal */}
       <Dialog open={demoOpen} onOpenChange={setDemoOpen}>
-        <DialogContent className="max-w-sm rounded-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-center text-lg font-bold">
-              {isBn ? '🎯 ফ্রি ডেমো অ্যাক্সেস' : '🎯 Free Demo Access'}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 pt-2">
-            <p className="text-sm text-muted-foreground text-center">
-              {isBn ? 'নিচের তথ্য দিয়ে ডেমো সফটওয়্যারে লগইন করুন' : 'Use the credentials below to access the demo'}
-            </p>
-            <div className="bg-muted/50 rounded-xl p-4 space-y-3 border border-border">
-              <div>
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
-                  {isBn ? 'ইউজারনেম' : 'Username'}
-                </p>
-                <p className="text-sm font-bold text-foreground bg-background rounded-lg px-3 py-2 border border-border">
-                  {demo?.username}
-                </p>
+        <DialogContent className="max-w-[360px] sm:max-w-md rounded-3xl p-0 overflow-hidden border-0 shadow-xl">
+          {/* Gradient Header */}
+          <div className="relative px-6 pt-7 pb-5 text-center" style={{ background: 'var(--gradient-hero)' }}>
+            <div className="absolute inset-0 opacity-10" style={{
+              backgroundImage: 'radial-gradient(circle, hsl(0 0% 100%) 1px, transparent 1px)',
+              backgroundSize: '16px 16px',
+            }} />
+            <div className="relative z-10">
+              <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-3 border border-white/20">
+                <Play className="h-7 w-7 text-white" />
               </div>
-              <div>
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
-                  {isBn ? 'পাসওয়ার্ড' : 'Password'}
-                </p>
-                <p className="text-sm font-bold text-foreground bg-background rounded-lg px-3 py-2 border border-border">
-                  {demo?.password}
-                </p>
+              <DialogHeader>
+                <DialogTitle className="text-xl font-black text-white tracking-tight">
+                  {isBn ? 'ফ্রি ডেমো অ্যাক্সেস' : 'Free Demo Access'}
+                </DialogTitle>
+              </DialogHeader>
+              <p className="text-white/80 text-xs mt-1">
+                {isBn ? 'নিচের তথ্য দিয়ে ডেমো সফটওয়্যারে লগইন করুন' : 'Use these credentials to log in'}
+              </p>
+            </div>
+          </div>
+
+          {/* Credentials Body */}
+          <div className="px-6 py-5 space-y-4">
+            <div className="space-y-3">
+              {/* Username */}
+              <div className="group relative bg-muted/40 rounded-xl p-3.5 border border-border hover:border-primary/30 transition-colors">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                    {isBn ? 'ইউজারনেম' : 'Username'}
+                  </span>
+                  <button
+                    onClick={() => navigator.clipboard.writeText(demo?.username || '')}
+                    className="text-[10px] font-semibold text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+                  >
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                    {isBn ? 'কপি' : 'Copy'}
+                  </button>
+                </div>
+                <p className="text-sm font-bold text-foreground font-mono tracking-wide">{demo?.username}</p>
+              </div>
+
+              {/* Password */}
+              <div className="group relative bg-muted/40 rounded-xl p-3.5 border border-border hover:border-primary/30 transition-colors">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                    {isBn ? 'পাসওয়ার্ড' : 'Password'}
+                  </span>
+                  <button
+                    onClick={() => navigator.clipboard.writeText(demo?.password || '')}
+                    className="text-[10px] font-semibold text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+                  >
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                    {isBn ? 'কপি' : 'Copy'}
+                  </button>
+                </div>
+                <p className="text-sm font-bold text-foreground font-mono tracking-wide">{demo?.password}</p>
               </div>
             </div>
+
+            {/* CTA Button */}
             <a href={demo?.url || '#'} target="_blank" rel="noopener noreferrer" className="block">
-              <Button className="w-full gap-2 h-11 rounded-xl font-bold" variant="hero">
+              <Button className="w-full gap-2 h-12 rounded-xl font-bold text-sm shadow-lg" variant="hero">
                 <Play className="h-4 w-4" />
-                {isBn ? 'ডেমো দেখুন' : 'Open Demo'}
+                {isBn ? 'ডেমো সফটওয়্যার দেখুন' : 'Open Demo Software'}
+                <ArrowRight className="h-4 w-4" />
               </Button>
             </a>
+
+            <p className="text-[10px] text-muted-foreground text-center">
+              {isBn ? '* ডেমো ডেটা শুধুমাত্র পরীক্ষার জন্য' : '* Demo data is for testing purposes only'}
+            </p>
           </div>
         </DialogContent>
       </Dialog>
