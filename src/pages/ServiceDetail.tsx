@@ -540,20 +540,28 @@ const serviceData = {
 
 type ServiceKey = 'school' | 'hospital' | 'custom' | 'web';
 
-const demoDefaults: Record<ServiceKey, { url: string; username: string; password: string }> = {
-  school: { url: '#', username: 'demo@school.com', password: 'demo123' },
-  hospital: { url: '#', username: 'demo@hospital.com', password: 'demo123' },
-  custom: { url: '#', username: 'demo@custom.com', password: 'demo123' },
-  web: { url: '#', username: 'demo@web.com', password: 'demo123' },
-};
-
 const ServiceDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { lang } = useLanguage();
   const [demoOpen, setDemoOpen] = useState(false);
   const serviceKey = slug as ServiceKey;
   const data = serviceData[lang]?.[serviceKey];
-  const demo = demoDefaults[serviceKey];
+
+  const { data: settings = [] } = useQuery({
+    queryKey: ['site-settings-demo'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('site_settings').select('*');
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const getSetting = (key: string) => settings.find(s => s.key === key)?.value || '';
+  const demo = {
+    url: getSetting(`demo_url_${serviceKey}`) || '#',
+    username: getSetting(`demo_user_${serviceKey}`) || 'demo',
+    password: getSetting(`demo_pass_${serviceKey}`) || 'demo123',
+  };
 
   if (!data) {
     return (
