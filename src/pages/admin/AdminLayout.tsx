@@ -200,7 +200,7 @@ const NavItem = ({ item, currentPath }: { item: typeof navItems[0]; currentPath:
       {active && (
         <span
           className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full"
-          style={{ background: 'hsl(145, 65%, 55%)' }}
+          style={{ background: 'hsla(0, 0%, 100%, 0.7)' }}
         />
       )}
       <item.icon className={`h-[17px] w-[17px] transition-transform duration-200 ${active ? '' : 'group-hover:scale-110'}`} />
