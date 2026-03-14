@@ -819,10 +819,10 @@ const ServiceDetail = () => {
         </div>
         <div className="container mx-auto px-4 lg:px-8 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-7 sm:mb-14">
-            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3">
               {isBn ? 'সফটওয়্যারের প্যাকেজ ও মূল্য' : 'Software Packages & Pricing'}
             </h2>
-            <p className="text-[11px] sm:text-sm text-muted-foreground max-w-lg mx-auto mb-3 sm:mb-5">
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto mb-3 sm:mb-5">
               {isBn ? 'আপনার প্রতিষ্ঠানের চাহিদা অনুযায়ী সেরা প্ল্যান বেছে নিন' : 'Choose the best plan for your organization'}
             </p>
             {/* Decorative lines */}
