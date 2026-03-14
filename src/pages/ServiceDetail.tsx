@@ -771,7 +771,7 @@ const ServiceDetail = () => {
                     <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
                       <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
                     </div>
-                    <span className="text-[11px] sm:text-sm font-semibold text-foreground">{b}</span>
+                    <span className="text-xs sm:text-sm font-semibold text-foreground">{b}</span>
                   </motion.div>
                 ))}
               </div>
