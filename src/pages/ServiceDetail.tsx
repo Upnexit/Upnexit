@@ -753,11 +753,11 @@ const ServiceDetail = () => {
               <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-3 sm:mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
                 {isBn ? 'সুবিধাসমূহ' : 'Benefits'}
               </span>
-              <h2 className="text-xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-5 leading-tight text-foreground">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-5 leading-tight text-foreground">
                 {isBn ? 'কেন এই সফটওয়্যার' : 'Why Choose This'}{' '}
                 <span className="text-gradient">{isBn ? 'বেছে নেবেন?' : 'Software?'}</span>
               </h2>
-              <p className="text-[11px] sm:text-sm text-muted-foreground mb-4 sm:mb-8 leading-relaxed">
+              <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-8 leading-relaxed">
                 {isBn
                   ? 'আমাদের সফটওয়্যার ব্যবহার করে আপনার প্রতিষ্ঠানকে সম্পূর্ণ ডিজিটাল করুন এবং কাজের দক্ষতা বাড়ান।'
                   : 'Digitize your organization completely and increase efficiency with our software.'}
