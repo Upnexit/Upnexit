@@ -924,7 +924,7 @@ const ServiceDetail = () => {
                                 <X className="h-3 w-3 text-muted-foreground/40" />
                               </div>
                             )}
-                            <span className={`text-[11px] sm:text-sm ${f.included ? 'text-foreground' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
+                            <span className={`text-xs sm:text-sm ${f.included ? 'text-foreground' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
                           </div>
                         ))}
                       </div>
