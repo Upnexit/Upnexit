@@ -696,8 +696,8 @@ const ServiceDetail = () => {
                 <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-300">
                   <item.icon className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
                 </div>
-                <h4 className="font-bold text-xs sm:text-sm text-foreground mb-0.5">{item.title}</h4>
-                <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">{item.desc}</p>
+                <h4 className="font-bold text-sm sm:text-sm text-foreground mb-0.5">{item.title}</h4>
+                <p className="text-xs sm:text-xs text-muted-foreground leading-snug">{item.desc}</p>
               </motion.div>
             ))}
           </div>
