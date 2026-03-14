@@ -42,22 +42,22 @@ const AdminLayout = () => {
       <aside
         className="w-[270px] flex-col fixed h-full z-50 hidden lg:flex overflow-hidden"
         style={{
-          background: 'linear-gradient(165deg, hsl(152, 60%, 12%) 0%, hsl(145, 55%, 9%) 40%, hsl(160, 50%, 13%) 70%, hsl(140, 45%, 10%) 100%)',
+          background: 'linear-gradient(165deg, hsl(150, 45%, 22%) 0%, hsl(145, 40%, 18%) 40%, hsl(155, 42%, 20%) 70%, hsl(148, 38%, 17%) 100%)',
         }}
       >
         {/* Decorative glow */}
-        <div className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-[0.07] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(145, 70%, 50%), transparent 70%)' }} />
-        <div className="absolute bottom-20 left-0 w-32 h-32 rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(170, 60%, 45%), transparent 70%)' }} />
+        <div className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-[0.1] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(145, 60%, 55%), transparent 70%)' }} />
+        <div className="absolute bottom-20 left-0 w-32 h-32 rounded-full opacity-[0.08] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(170, 50%, 50%), transparent 70%)' }} />
         {/* Brand Header */}
         <div className="px-6 py-5 border-b" style={{ borderColor: 'hsla(145, 50%, 40%, 0.15)' }}>
           <div className="flex items-center gap-3">
             <div className="relative">
               <img src="/logo.png" alt="Logo" className="w-10 h-10 rounded-xl shadow-lg ring-2 ring-white/10" />
-              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-400 border-2" style={{ borderColor: 'hsl(145, 63%, 10%)' }} />
+              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-400 border-2" style={{ borderColor: 'hsl(150, 45%, 22%)' }} />
             </div>
             <div>
               <span className="font-bold text-white text-[15px] tracking-tight">Upnex IT</span>
-              <p className="text-[11px] font-medium" style={{ color: 'hsla(145, 60%, 65%, 0.7)' }}>Admin Dashboard</p>
+              <p className="text-[11px] font-medium" style={{ color: 'hsla(145, 50%, 80%, 0.8)' }}>Admin Dashboard</p>
             </div>
           </div>
         </div>
@@ -200,7 +200,7 @@ const NavItem = ({ item, currentPath }: { item: typeof navItems[0]; currentPath:
       {active && (
         <span
           className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full"
-          style={{ background: 'hsl(145, 65%, 55%)' }}
+          style={{ background: 'hsla(0, 0%, 100%, 0.7)' }}
         />
       )}
       <item.icon className={`h-[17px] w-[17px] transition-transform duration-200 ${active ? '' : 'group-hover:scale-110'}`} />
