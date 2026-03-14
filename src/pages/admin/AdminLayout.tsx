@@ -57,7 +57,7 @@ const AdminLayout = () => {
             </div>
             <div>
               <span className="font-bold text-white text-[15px] tracking-tight">Upnex IT</span>
-              <p className="text-[11px] font-medium" style={{ color: 'hsla(145, 60%, 65%, 0.7)' }}>Admin Dashboard</p>
+              <p className="text-[11px] font-medium" style={{ color: 'hsla(145, 50%, 80%, 0.8)' }}>Admin Dashboard</p>
             </div>
           </div>
         </div>
