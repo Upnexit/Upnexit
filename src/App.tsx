@@ -48,6 +48,8 @@ const AppRoutes = () => {
         <Route path="messages" element={<Messages />} />
         <Route path="services" element={<ServicesManagement />} />
         <Route path="reviews" element={<ClientReviewsManagement />} />
+        <Route path="orders" element={<OrdersManagement />} />
+        <Route path="demo-links" element={<DemoLinksManagement />} />
         <Route path="chatbot" element={<ChatbotManagement />} />
         <Route path="settings" element={<SiteSettings />} />
       </Route>
