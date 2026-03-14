@@ -46,8 +46,8 @@ const AdminLayout = () => {
         }}
       >
         {/* Decorative glow */}
-        <div className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-[0.07] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(145, 70%, 50%), transparent 70%)' }} />
-        <div className="absolute bottom-20 left-0 w-32 h-32 rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(170, 60%, 45%), transparent 70%)' }} />
+        <div className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-[0.1] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(145, 60%, 55%), transparent 70%)' }} />
+        <div className="absolute bottom-20 left-0 w-32 h-32 rounded-full opacity-[0.08] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(170, 50%, 50%), transparent 70%)' }} />
         {/* Brand Header */}
         <div className="px-6 py-5 border-b" style={{ borderColor: 'hsla(145, 50%, 40%, 0.15)' }}>
           <div className="flex items-center gap-3">
