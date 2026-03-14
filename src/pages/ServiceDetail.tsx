@@ -622,8 +622,9 @@ const ServiceDetail = () => {
                 <Sparkles className="h-3.5 w-3.5" /> {data.badge}
               </motion.span>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-2.5 sm:mb-4 tracking-tight text-foreground">
-                {data.title}{' '}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.15] mb-2.5 sm:mb-4 tracking-tight text-foreground">
+                {data.title}
+                <br className="sm:hidden" />{' '}
                 <span className="text-gradient">{data.titleHighlight}</span>
               </h1>
               <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-2 sm:mb-3 leading-relaxed">{data.subtitle}</p>
@@ -695,8 +696,8 @@ const ServiceDetail = () => {
                 <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-300">
                   <item.icon className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
                 </div>
-                <h4 className="font-bold text-xs sm:text-sm text-foreground mb-0.5">{item.title}</h4>
-                <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">{item.desc}</p>
+                <h4 className="font-bold text-sm sm:text-sm text-foreground mb-0.5">{item.title}</h4>
+                <p className="text-xs sm:text-xs text-muted-foreground leading-snug">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -735,8 +736,8 @@ const ServiceDetail = () => {
                 <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
                   <feature.icon className="h-4 w-4 sm:h-6 sm:w-6 text-primary" />
                 </div>
-                <h3 className="font-bold text-xs sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
-                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
+                <h3 className="font-bold text-sm sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
+                <p className="text-xs sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
                 {/* Bottom accent line */}
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary/0 group-hover:bg-primary/20 transition-all duration-500 rounded-b-3xl" />
               </motion.div>
@@ -757,7 +758,7 @@ const ServiceDetail = () => {
                 {isBn ? 'কেন এই সফটওয়্যার' : 'Why Choose This'}{' '}
                 <span className="text-gradient">{isBn ? 'বেছে নেবেন?' : 'Software?'}</span>
               </h2>
-              <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-8 leading-relaxed">
+              <p className="text-sm sm:text-sm text-muted-foreground mb-4 sm:mb-8 leading-relaxed">
                 {isBn
                   ? 'আমাদের সফটওয়্যার ব্যবহার করে আপনার প্রতিষ্ঠানকে সম্পূর্ণ ডিজিটাল করুন এবং কাজের দক্ষতা বাড়ান।'
                   : 'Digitize your organization completely and increase efficiency with our software.'}
@@ -771,7 +772,7 @@ const ServiceDetail = () => {
                     <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
                       <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
                     </div>
-                    <span className="text-xs sm:text-sm font-semibold text-foreground">{b}</span>
+                    <span className="text-sm sm:text-sm font-semibold text-foreground">{b}</span>
                   </motion.div>
                 ))}
               </div>
@@ -797,8 +798,8 @@ const ServiceDetail = () => {
                         {p.step}
                       </div>
                       <div>
-                        <h4 className="font-bold text-xs sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
-                         <p className="text-[10px] sm:text-xs text-muted-foreground">{p.desc}</p>
+                        <h4 className="font-bold text-sm sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
+                         <p className="text-xs sm:text-xs text-muted-foreground">{p.desc}</p>
                       </div>
                     </motion.div>
                   ))}
