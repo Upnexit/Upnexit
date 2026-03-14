@@ -833,7 +833,7 @@ const ServiceDetail = () => {
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-3 sm:gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8 max-w-5xl mx-auto">
             {/* Render pricing cards */}
             {[data.gold, data.silver].map((plan, planIdx) => {
               const hasCategories = 'categories' in plan && Array.isArray((plan as any).categories);
