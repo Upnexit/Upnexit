@@ -932,7 +932,7 @@ const ServiceDetail = () => {
 
                     <div className="mt-5 sm:mt-8">
                       <Link to={`/order?service=${slug}&plan=${planIdx === 0 ? 'gold' : 'silver'}`} className="block">
-                        <Button className="w-full rounded-xl text-[11px] sm:text-sm h-10 sm:h-12 font-bold text-primary-foreground shadow-md" size="lg"
+                        <Button className="w-full rounded-xl text-sm h-11 sm:h-12 font-bold text-primary-foreground shadow-md" size="lg"
                           style={{ background: planGradient }}>
                           {isBn ? 'অর্ডার করুন' : 'Order Now'} <ArrowRight className="h-4 w-4 ml-1" />
                         </Button>
