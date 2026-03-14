@@ -23,6 +23,8 @@ import ServicesManagement from "./pages/admin/ServicesManagement";
 import SiteSettings from "./pages/admin/SiteSettings";
 import ClientReviewsManagement from "./pages/admin/ClientReviewsManagement";
 import ChatbotManagement from "./pages/admin/ChatbotManagement";
+import OrdersManagement from "./pages/admin/OrdersManagement";
+import DemoLinksManagement from "./pages/admin/DemoLinksManagement";
 import ChatbotWidget from "./components/ChatbotWidget";
 import ScrollToTop from "./components/ScrollToTop";
 
