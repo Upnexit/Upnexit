@@ -714,10 +714,10 @@ const ServiceDetail = () => {
             <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-3 sm:mb-5">
               {isBn ? 'বৈশিষ্ট্যসমূহ' : 'Features'}
             </span>
-            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-3">
+             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-3">
               {isBn ? 'মূল বৈশিষ্ট্যসমূহ' : 'Key Features'}
             </h2>
-            <p className="text-[11px] sm:text-sm text-muted-foreground max-w-lg mx-auto">
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto">
               {isBn ? 'আমাদের সফটওয়্যারে যা যা পাবেন' : 'Everything included in our software'}
             </p>
           </motion.div>
