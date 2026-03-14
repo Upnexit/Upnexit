@@ -622,8 +622,9 @@ const ServiceDetail = () => {
                 <Sparkles className="h-3.5 w-3.5" /> {data.badge}
               </motion.span>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-2.5 sm:mb-4 tracking-tight text-foreground">
-                {data.title}{' '}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.15] mb-2.5 sm:mb-4 tracking-tight text-foreground">
+                {data.title}
+                <br className="sm:hidden" />{' '}
                 <span className="text-gradient">{data.titleHighlight}</span>
               </h1>
               <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-2 sm:mb-3 leading-relaxed">{data.subtitle}</p>
