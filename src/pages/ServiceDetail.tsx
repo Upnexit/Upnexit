@@ -904,7 +904,7 @@ const ServiceDetail = () => {
                               {cat.items.map((item: string, itemIdx: number) => (
                                 <li key={itemIdx} className="flex items-start gap-2 sm:gap-2.5">
                                   <span className="mt-1.5 w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full shrink-0" style={{ background: planGradient }} />
-                                  <span className="text-[11px] sm:text-sm text-foreground/80 leading-snug">{item}</span>
+                                  <span className="text-xs sm:text-sm text-foreground/80 leading-snug">{item}</span>
                                 </li>
                               ))}
                             </ul>
