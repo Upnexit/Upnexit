@@ -899,7 +899,7 @@ const ServiceDetail = () => {
                       <div className="space-y-5 sm:space-y-7">
                         {(plan as any).categories.map((cat: { title: string; items: string[] }, catIdx: number) => (
                           <div key={catIdx}>
-                            <h4 className="text-sm sm:text-base font-black text-foreground mb-2.5 sm:mb-3 border-b border-border pb-2">{cat.title}</h4>
+                            <h4 className="text-base sm:text-base font-black text-foreground mb-2.5 sm:mb-3 border-b border-border pb-2">{cat.title}</h4>
                             <ul className="space-y-1.5 sm:space-y-2">
                               {cat.items.map((item: string, itemIdx: number) => (
                                 <li key={itemIdx} className="flex items-start gap-2 sm:gap-2.5">
