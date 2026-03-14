@@ -53,7 +53,7 @@ const AdminLayout = () => {
           <div className="flex items-center gap-3">
             <div className="relative">
               <img src="/logo.png" alt="Logo" className="w-10 h-10 rounded-xl shadow-lg ring-2 ring-white/10" />
-              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-400 border-2" style={{ borderColor: 'hsl(145, 63%, 10%)' }} />
+              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-400 border-2" style={{ borderColor: 'hsl(150, 45%, 22%)' }} />
             </div>
             <div>
               <span className="font-bold text-white text-[15px] tracking-tight">Upnex IT</span>
