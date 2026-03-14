@@ -40,11 +40,14 @@ const AdminLayout = () => {
     <div className="min-h-screen bg-muted/30 flex">
       {/* Desktop Sidebar */}
       <aside
-        className="w-[270px] flex-col fixed h-full z-50 hidden lg:flex"
+        className="w-[270px] flex-col fixed h-full z-50 hidden lg:flex overflow-hidden"
         style={{
-          background: 'linear-gradient(180deg, hsl(145, 63%, 10%) 0%, hsl(145, 55%, 14%) 100%)',
+          background: 'linear-gradient(165deg, hsl(152, 60%, 12%) 0%, hsl(145, 55%, 9%) 40%, hsl(160, 50%, 13%) 70%, hsl(140, 45%, 10%) 100%)',
         }}
       >
+        {/* Decorative glow */}
+        <div className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-[0.07] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(145, 70%, 50%), transparent 70%)' }} />
+        <div className="absolute bottom-20 left-0 w-32 h-32 rounded-full opacity-[0.05] pointer-events-none" style={{ background: 'radial-gradient(circle, hsl(170, 60%, 45%), transparent 70%)' }} />
         {/* Brand Header */}
         <div className="px-6 py-5 border-b" style={{ borderColor: 'hsla(145, 50%, 40%, 0.15)' }}>
           <div className="flex items-center gap-3">
