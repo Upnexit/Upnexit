@@ -42,7 +42,7 @@ const AdminLayout = () => {
       <aside
         className="w-[270px] flex-col fixed h-full z-50 hidden lg:flex overflow-hidden"
         style={{
-          background: 'linear-gradient(165deg, hsl(152, 60%, 12%) 0%, hsl(145, 55%, 9%) 40%, hsl(160, 50%, 13%) 70%, hsl(140, 45%, 10%) 100%)',
+          background: 'linear-gradient(165deg, hsl(150, 45%, 22%) 0%, hsl(145, 40%, 18%) 40%, hsl(155, 42%, 20%) 70%, hsl(148, 38%, 17%) 100%)',
         }}
       >
         {/* Decorative glow */}
