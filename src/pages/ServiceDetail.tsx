@@ -622,12 +622,12 @@ const ServiceDetail = () => {
                 <Sparkles className="h-3.5 w-3.5" /> {data.badge}
               </motion.span>
 
-              <h1 className="text-[26px] sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-2.5 sm:mb-4 tracking-tight text-foreground">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-2.5 sm:mb-4 tracking-tight text-foreground">
                 {data.title}{' '}
                 <span className="text-gradient">{data.titleHighlight}</span>
               </h1>
-              <p className="text-[13px] sm:text-base md:text-lg text-muted-foreground mb-2 sm:mb-3 leading-relaxed">{data.subtitle}</p>
-              <p className="text-[11px] sm:text-sm text-muted-foreground/70 leading-relaxed mb-4 sm:mb-8 max-w-xl hidden sm:block">{data.description}</p>
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-2 sm:mb-3 leading-relaxed">{data.subtitle}</p>
+              <p className="text-xs sm:text-sm text-muted-foreground/70 leading-relaxed mb-4 sm:mb-8 max-w-xl hidden sm:block">{data.description}</p>
 
               <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
                 <Button variant="hero" size="default" className="gap-2 w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12"
@@ -695,8 +695,8 @@ const ServiceDetail = () => {
                 <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-300">
                   <item.icon className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
                 </div>
-                <h4 className="font-bold text-[11px] sm:text-sm text-foreground mb-0.5">{item.title}</h4>
-                <p className="text-[9px] sm:text-xs text-muted-foreground leading-snug">{item.desc}</p>
+                <h4 className="font-bold text-xs sm:text-sm text-foreground mb-0.5">{item.title}</h4>
+                <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -714,10 +714,10 @@ const ServiceDetail = () => {
             <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-3 sm:mb-5">
               {isBn ? 'বৈশিষ্ট্যসমূহ' : 'Features'}
             </span>
-            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-3">
+             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-3">
               {isBn ? 'মূল বৈশিষ্ট্যসমূহ' : 'Key Features'}
             </h2>
-            <p className="text-[11px] sm:text-sm text-muted-foreground max-w-lg mx-auto">
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto">
               {isBn ? 'আমাদের সফটওয়্যারে যা যা পাবেন' : 'Everything included in our software'}
             </p>
           </motion.div>
@@ -735,8 +735,8 @@ const ServiceDetail = () => {
                 <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
                   <feature.icon className="h-4 w-4 sm:h-6 sm:w-6 text-primary" />
                 </div>
-                <h3 className="font-bold text-[11px] sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
-                <p className="text-[9px] sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
+                <h3 className="font-bold text-xs sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
+                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
                 {/* Bottom accent line */}
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary/0 group-hover:bg-primary/20 transition-all duration-500 rounded-b-3xl" />
               </motion.div>
@@ -753,11 +753,11 @@ const ServiceDetail = () => {
               <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-3 sm:mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
                 {isBn ? 'সুবিধাসমূহ' : 'Benefits'}
               </span>
-              <h2 className="text-xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-5 leading-tight text-foreground">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-5 leading-tight text-foreground">
                 {isBn ? 'কেন এই সফটওয়্যার' : 'Why Choose This'}{' '}
                 <span className="text-gradient">{isBn ? 'বেছে নেবেন?' : 'Software?'}</span>
               </h2>
-              <p className="text-[11px] sm:text-sm text-muted-foreground mb-4 sm:mb-8 leading-relaxed">
+              <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-8 leading-relaxed">
                 {isBn
                   ? 'আমাদের সফটওয়্যার ব্যবহার করে আপনার প্রতিষ্ঠানকে সম্পূর্ণ ডিজিটাল করুন এবং কাজের দক্ষতা বাড়ান।'
                   : 'Digitize your organization completely and increase efficiency with our software.'}
@@ -771,7 +771,7 @@ const ServiceDetail = () => {
                     <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
                       <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
                     </div>
-                    <span className="text-[11px] sm:text-sm font-semibold text-foreground">{b}</span>
+                    <span className="text-xs sm:text-sm font-semibold text-foreground">{b}</span>
                   </motion.div>
                 ))}
               </div>
@@ -797,8 +797,8 @@ const ServiceDetail = () => {
                         {p.step}
                       </div>
                       <div>
-                        <h4 className="font-bold text-[11px] sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
-                        <p className="text-[9px] sm:text-xs text-muted-foreground">{p.desc}</p>
+                        <h4 className="font-bold text-xs sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
+                         <p className="text-[10px] sm:text-xs text-muted-foreground">{p.desc}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -819,10 +819,10 @@ const ServiceDetail = () => {
         </div>
         <div className="container mx-auto px-4 lg:px-8 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-7 sm:mb-14">
-            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3">
               {isBn ? 'সফটওয়্যারের প্যাকেজ ও মূল্য' : 'Software Packages & Pricing'}
             </h2>
-            <p className="text-[11px] sm:text-sm text-muted-foreground max-w-lg mx-auto mb-3 sm:mb-5">
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto mb-3 sm:mb-5">
               {isBn ? 'আপনার প্রতিষ্ঠানের চাহিদা অনুযায়ী সেরা প্ল্যান বেছে নিন' : 'Choose the best plan for your organization'}
             </p>
             {/* Decorative lines */}
@@ -833,7 +833,7 @@ const ServiceDetail = () => {
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-3 sm:gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8 max-w-5xl mx-auto">
             {/* Render pricing cards */}
             {[data.gold, data.silver].map((plan, planIdx) => {
               const hasCategories = 'categories' in plan && Array.isArray((plan as any).categories);
@@ -874,7 +874,7 @@ const ServiceDetail = () => {
                     <div className="absolute inset-0 flex flex-col items-center justify-start pt-7 sm:pt-9 md:pt-10 z-10">
                       <h3 className="text-xl sm:text-3xl md:text-4xl font-black text-white tracking-wider uppercase" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)', letterSpacing: '0.08em' }}>{plan.name}</h3>
                       {planSubtitle && (
-                        <p className="text-[10px] sm:text-base font-extrabold text-white tracking-wide mt-1 sm:mt-1.5" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}>{planSubtitle}</p>
+                        <p className="text-xs sm:text-base font-extrabold text-white tracking-wide mt-1 sm:mt-1.5" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}>{planSubtitle}</p>
                       )}
                     </div>
 
@@ -888,7 +888,7 @@ const ServiceDetail = () => {
                   </div>
                   {/* Period text - outside header in white area */}
                   {plan.period && (
-                    <p className="text-[10px] sm:text-sm font-bold text-foreground/70 text-center py-2">{plan.period}</p>
+                    <p className="text-xs sm:text-sm font-bold text-foreground/70 text-center py-2">{plan.period}</p>
                   )}
 
 
@@ -899,12 +899,12 @@ const ServiceDetail = () => {
                       <div className="space-y-5 sm:space-y-7">
                         {(plan as any).categories.map((cat: { title: string; items: string[] }, catIdx: number) => (
                           <div key={catIdx}>
-                            <h4 className="text-sm sm:text-base font-black text-foreground mb-2.5 sm:mb-3 border-b border-border pb-2">{cat.title}</h4>
+                            <h4 className="text-base sm:text-base font-black text-foreground mb-2.5 sm:mb-3 border-b border-border pb-2">{cat.title}</h4>
                             <ul className="space-y-1.5 sm:space-y-2">
                               {cat.items.map((item: string, itemIdx: number) => (
                                 <li key={itemIdx} className="flex items-start gap-2 sm:gap-2.5">
                                   <span className="mt-1.5 w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full shrink-0" style={{ background: planGradient }} />
-                                  <span className="text-[11px] sm:text-sm text-foreground/80 leading-snug">{item}</span>
+                                  <span className="text-xs sm:text-sm text-foreground/80 leading-snug">{item}</span>
                                 </li>
                               ))}
                             </ul>
@@ -924,7 +924,7 @@ const ServiceDetail = () => {
                                 <X className="h-3 w-3 text-muted-foreground/40" />
                               </div>
                             )}
-                            <span className={`text-[11px] sm:text-sm ${f.included ? 'text-foreground' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
+                            <span className={`text-xs sm:text-sm ${f.included ? 'text-foreground' : 'text-muted-foreground/50 line-through'}`}>{f.text}</span>
                           </div>
                         ))}
                       </div>
@@ -932,7 +932,7 @@ const ServiceDetail = () => {
 
                     <div className="mt-5 sm:mt-8">
                       <Link to={`/order?service=${slug}&plan=${planIdx === 0 ? 'gold' : 'silver'}`} className="block">
-                        <Button className="w-full rounded-xl text-[11px] sm:text-sm h-10 sm:h-12 font-bold text-primary-foreground shadow-md" size="lg"
+                        <Button className="w-full rounded-xl text-sm h-11 sm:h-12 font-bold text-primary-foreground shadow-md" size="lg"
                           style={{ background: planGradient }}>
                           {isBn ? 'অর্ডার করুন' : 'Order Now'} <ArrowRight className="h-4 w-4 ml-1" />
                         </Button>
