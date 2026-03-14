@@ -797,8 +797,8 @@ const ServiceDetail = () => {
                         {p.step}
                       </div>
                       <div>
-                        <h4 className="font-bold text-[11px] sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
-                        <p className="text-[9px] sm:text-xs text-muted-foreground">{p.desc}</p>
+                        <h4 className="font-bold text-xs sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
+                         <p className="text-[10px] sm:text-xs text-muted-foreground">{p.desc}</p>
                       </div>
                     </motion.div>
                   ))}
