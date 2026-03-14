@@ -736,8 +736,8 @@ const ServiceDetail = () => {
                 <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
                   <feature.icon className="h-4 w-4 sm:h-6 sm:w-6 text-primary" />
                 </div>
-                <h3 className="font-bold text-xs sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
-                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
+                <h3 className="font-bold text-sm sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
+                <p className="text-xs sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
                 {/* Bottom accent line */}
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary/0 group-hover:bg-primary/20 transition-all duration-500 rounded-b-3xl" />
               </motion.div>
