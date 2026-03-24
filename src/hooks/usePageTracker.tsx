@@ -15,6 +15,11 @@ export function usePageTracker() {
   const location = useLocation();
 
   useEffect(() => {
+    // Facebook Pixel - track page view on route change
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'PageView');
+    }
+
     const track = async () => {
       try {
         await supabase.functions.invoke('track-visit', {
