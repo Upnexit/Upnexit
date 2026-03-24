@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/hooks/useAuth";
 import { usePageTracker } from "@/hooks/usePageTracker";
+import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import About from "./pages/About";
@@ -70,6 +71,7 @@ const App = () => (
             <AppRoutes />
             <ChatbotWidget />
           </BrowserRouter>
+          <Analytics />
         </AuthProvider>
       </LanguageProvider>
     </TooltipProvider>
