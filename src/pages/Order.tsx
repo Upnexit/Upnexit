@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { orderFormSchema } from '@/lib/sanitize';
 import {
   CheckCircle2, ArrowRight, ArrowLeft, User, Phone, Mail,
   Building2, Package, CreditCard, Shield, Clock, Headphones,
@@ -55,17 +56,19 @@ const Order = () => {
   };
 
   const handleSubmit = async () => {
-    if (!form.name || !form.phone) {
-      toast({ title: isBn ? 'দয়া করে নাম ও ফোন নম্বর দিন' : 'Please provide name and phone', variant: 'destructive' });
+    const parsed = orderFormSchema.safeParse(form);
+    if (!parsed.success) {
+      toast({ title: isBn ? 'দয়া করে সঠিক তথ্য দিন' : 'Please provide valid info', description: parsed.error.errors[0]?.message, variant: 'destructive' });
       return;
     }
     setSubmitting(true);
     try {
+      const data = parsed.data;
       const { error } = await supabase.from('messages').insert({
-        name: form.name,
-        email: form.email || `${form.phone}@order.com`,
-        phone: form.phone,
-        message: `[ORDER] Service: ${info.name_en} | Plan: ${plan.toUpperCase()} | Institution: ${form.institution} | Address: ${form.address} | Details: ${form.details}`,
+        name: data.name,
+        email: data.email || `${data.phone}@order.com`,
+        phone: data.phone,
+        message: `[ORDER] Service: ${info.name_en} | Plan: ${plan.toUpperCase()} | Institution: ${data.institution || ''} | Address: ${data.address || ''} | Details: ${data.details || ''}`,
       });
       if (error) throw error;
       setSubmitted(true);

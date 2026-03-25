@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { Send, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { contactFormSchema } from '@/lib/sanitize';
 
 const ContactSection = () => {
   const { t } = useLanguage();
@@ -16,13 +17,21 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const parsed = contactFormSchema.safeParse(form);
+    if (!parsed.success) {
+      toast({ title: '❌', description: parsed.error.errors[0]?.message || 'ফর্ম সঠিকভাবে পূরণ করুন', variant: 'destructive' });
+      return;
+    }
+    
     setLoading(true);
+    const data = parsed.data;
     
     const { error } = await supabase.from('messages').insert({
-      name: form.name.trim(),
-      email: form.email.trim(),
-      phone: form.phone.trim() || null,
-      message: form.message.trim(),
+      name: data.name,
+      email: data.email,
+      phone: data.phone || null,
+      message: data.message,
     });
 
     setLoading(false);
