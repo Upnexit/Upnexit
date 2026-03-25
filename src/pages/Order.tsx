@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { orderFormSchema } from '@/lib/sanitize';
 import {
   CheckCircle2, ArrowRight, ArrowLeft, User, Phone, Mail,
   Building2, Package, CreditCard, Shield, Clock, Headphones,
