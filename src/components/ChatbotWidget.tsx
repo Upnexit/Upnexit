@@ -37,6 +37,8 @@ const ChatbotWidget = () => {
   const abortRef = useRef<AbortController | null>(null);
   const recognitionRef = useRef<any>(null);
   const isListeningRef = useRef(false);
+  const voiceDraftRef = useRef('');
+  const autoSendTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: settings = [] } = useQuery({
@@ -83,40 +85,67 @@ const ChatbotWidget = () => {
 
     const recognition = new SpeechRecognition();
     recognition.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
-    recognition.interimResults = false;
-    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.continuous = true;
+
+    if (autoSendTimeoutRef.current) {
+      clearTimeout(autoSendTimeoutRef.current);
+      autoSendTimeoutRef.current = null;
+    }
 
     recognition.onresult = (event: any) => {
-      const transcript = Array.from(event.results)
-        .map((r: any) => r[0].transcript)
-        .join('');
-      if (transcript.trim()) {
-        // Auto-send the voice message
+      let finalTranscript = '';
+      let interimTranscript = '';
+
+      for (let i = 0; i < event.results.length; i += 1) {
+        const transcript = event.results[i]?.[0]?.transcript ?? '';
+        if (event.results[i].isFinal) {
+          finalTranscript += `${transcript} `;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+
+      const combinedTranscript = `${finalTranscript}${interimTranscript}`.replace(/\s+/g, ' ').trim();
+      voiceDraftRef.current = combinedTranscript;
+      setInput(combinedTranscript);
+
+      const hasNewFinalChunk = Array.from(event.results)
+        .slice(event.resultIndex)
+        .some((result: any) => result.isFinal);
+
+      if (!hasNewFinalChunk || !combinedTranscript) return;
+
+      if (autoSendTimeoutRef.current) {
+        clearTimeout(autoSendTimeoutRef.current);
+      }
+
+      autoSendTimeoutRef.current = setTimeout(() => {
+        const finalText = voiceDraftRef.current.trim();
+        if (!finalText || isTyping) return;
+
         const userMsg: ChatMessage = {
           id: `user-${Date.now()}`,
-          text: transcript.trim(),
+          text: finalText,
           sender: 'user',
         };
+
         setMessages(prev => [...prev, userMsg]);
-        streamAiResponse(transcript.trim(), null);
-      }
+        setInput('');
+        voiceDraftRef.current = '';
+        autoSendTimeoutRef.current = null;
+        streamAiResponse(finalText, null);
+      }, 1600);
     };
 
     recognition.onend = () => {
-      // Auto-restart if still in listening mode
       if (recognitionRef.current && isListeningRef.current) {
         try { recognition.start(); } catch {}
       }
     };
 
     recognition.onerror = (e: any) => {
-      if (e.error === 'no-speech') {
-        // Restart on no-speech
-        if (isListeningRef.current) {
-          try { recognition.start(); } catch {}
-        }
-        return;
-      }
+      if (e.error === 'no-speech' || e.error === 'aborted') return;
       setIsListening(false);
       isListeningRef.current = false;
     };
@@ -125,12 +154,17 @@ const ChatbotWidget = () => {
     isListeningRef.current = true;
     recognition.start();
     setIsListening(true);
-  }, [lang]);
+  }, [lang, isTyping]);
 
   const stopListening = useCallback(() => {
     isListeningRef.current = false;
+    if (autoSendTimeoutRef.current) {
+      clearTimeout(autoSendTimeoutRef.current);
+      autoSendTimeoutRef.current = null;
+    }
     recognitionRef.current?.stop();
     recognitionRef.current = null;
+    voiceDraftRef.current = '';
     setIsListening(false);
   }, []);
 
@@ -269,15 +303,24 @@ const ChatbotWidget = () => {
 
   const handleSend = () => {
     if ((!input.trim() && !pendingImage) || isTyping) return;
-    const userMsg: ChatMessage = {
-      id: `user-${Date.now()}`,
-      text: input.trim() || (pendingImage ? '📷 ছবি পাঠানো হয়েছে' : ''),
-      sender: 'user',
-      imageUrl: pendingImage || undefined,
-    };
-    setMessages(prev => [...prev, userMsg]);
+
+    if (autoSendTimeoutRef.current) {
+      clearTimeout(autoSendTimeoutRef.current);
+      autoSendTimeoutRef.current = null;
+    }
+
     const text = input.trim();
     const img = pendingImage;
+    voiceDraftRef.current = '';
+
+    const userMsg: ChatMessage = {
+      id: `user-${Date.now()}`,
+      text: text || (img ? '📷 ছবি পাঠানো হয়েছে' : ''),
+      sender: 'user',
+      imageUrl: img || undefined,
+    };
+
+    setMessages(prev => [...prev, userMsg]);
     setInput('');
     setPendingImage(null);
     streamAiResponse(text, img);
@@ -305,7 +348,7 @@ const ChatbotWidget = () => {
   // Cleanup speech on unmount
   useEffect(() => {
     return () => {
-      window.speechSynthesis?.cancel();
+      if (autoSendTimeoutRef.current) clearTimeout(autoSendTimeoutRef.current);
       recognitionRef.current?.stop();
     };
   }, []);
