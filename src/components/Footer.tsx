@@ -10,11 +10,6 @@ const Footer = () => {
       {/* Top accent line */}
       <div className="h-1 gradient-accent" />
 
-      {/* Subtle dot texture overlay */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
-        backgroundSize: '24px 24px'
-      }} />
       
       <div className="container mx-auto px-4 lg:px-8 py-10 md:py-16 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
@@ -102,7 +97,7 @@ const Footer = () => {
             © {new Date().getFullYear()} Upnex It. {t.footer.rights}.
           </p>
           <div className="flex items-center gap-1 text-xs text-white/40">
-            Made with <span className="text-destructive mx-0.5">♥</span> in Bangladesh
+            Made with <span className="text-destructive mx-0.5">♥</span> in Upnex It
           </div>
         </div>
       </div>
