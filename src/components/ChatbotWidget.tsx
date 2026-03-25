@@ -387,13 +387,6 @@ const ChatbotWidget = () => {
                   <p className="text-[9px] opacity-80">{lang === 'bn' ? 'AI দ্বারা চালিত' : 'AI-powered'}</p>
                 </div>
               </div>
-              <button
-                onClick={() => setTtsEnabled(!ttsEnabled)}
-                className="p-1 rounded-full hover:bg-primary-foreground/10 transition-colors"
-                title={ttsEnabled ? 'ভয়েস বন্ধ করুন' : 'ভয়েস চালু করুন'}
-              >
-                {ttsEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
-              </button>
             </div>
 
             {/* Messages */}
