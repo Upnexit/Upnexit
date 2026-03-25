@@ -37,6 +37,7 @@ const ChatbotWidget = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const recognitionRef = useRef<any>(null);
+  const isListeningRef = useRef(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: settings = [] } = useQuery({
