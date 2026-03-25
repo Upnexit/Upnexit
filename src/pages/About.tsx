@@ -339,9 +339,16 @@ const About = () => {
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-5">
               {lang === 'bn' ? 'আমাদের টিম' : 'Our Team'}
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-foreground">
-              {lang === 'bn' ? 'দক্ষ পেশাদারদের দল' : 'Expert Professionals'}
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-foreground">
+              {lang === 'bn' ? 'আমাদের টিম মেম্বার' : 'Our Team Members'}
             </h2>
+            <div className="flex items-center justify-center gap-1.5 mt-2">
+              <span className="w-8 h-[2px] bg-primary/40 rounded-full" />
+              <span className="w-4 h-[2px] bg-primary rounded-full" />
+              <span className="w-12 h-[2px] bg-primary rounded-full" />
+              <span className="w-4 h-[2px] bg-primary rounded-full" />
+              <span className="w-8 h-[2px] bg-primary/40 rounded-full" />
+            </div>
           </motion.div>
 
           {teamMembers.length > 0 ? (
