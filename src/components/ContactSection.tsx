@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { Send, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { contactFormSchema } from '@/lib/sanitize';
 
 const ContactSection = () => {
   const { t } = useLanguage();
