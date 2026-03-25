@@ -348,7 +348,7 @@ const ChatbotWidget = () => {
   // Cleanup speech on unmount
   useEffect(() => {
     return () => {
-      window.speechSynthesis?.cancel();
+      if (autoSendTimeoutRef.current) clearTimeout(autoSendTimeoutRef.current);
       recognitionRef.current?.stop();
     };
   }, []);
