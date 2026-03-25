@@ -233,9 +233,6 @@ const ChatbotWidget = () => {
 
       setConversationHistory(prev => [...prev, { role: 'assistant', content: assistantText }]);
 
-      // Speak the response
-      if (assistantText) speakText(assistantText);
-
     } catch (err: any) {
       setIsTyping(false);
       if (err.name === 'AbortError') return;
