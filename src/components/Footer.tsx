@@ -96,8 +96,8 @@ const Footer = () => {
           <p className="text-xs text-white/40">
             © {new Date().getFullYear()} Upnex It. {t.footer.rights}.
           </p>
-          <div className="flex items-center gap-1 text-xs text-white/40">
-            Made with <span className="text-destructive mx-0.5">♥</span> in Upnex It
+          <div className="flex items-center gap-1 text-xs text-white/50">
+            Made in <span className="text-primary font-bold text-sm">Upnex It</span>
           </div>
         </div>
       </div>
