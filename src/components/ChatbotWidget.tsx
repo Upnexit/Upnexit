@@ -303,15 +303,24 @@ const ChatbotWidget = () => {
 
   const handleSend = () => {
     if ((!input.trim() && !pendingImage) || isTyping) return;
-    const userMsg: ChatMessage = {
-      id: `user-${Date.now()}`,
-      text: input.trim() || (pendingImage ? '📷 ছবি পাঠানো হয়েছে' : ''),
-      sender: 'user',
-      imageUrl: pendingImage || undefined,
-    };
-    setMessages(prev => [...prev, userMsg]);
+
+    if (autoSendTimeoutRef.current) {
+      clearTimeout(autoSendTimeoutRef.current);
+      autoSendTimeoutRef.current = null;
+    }
+
     const text = input.trim();
     const img = pendingImage;
+    voiceDraftRef.current = '';
+
+    const userMsg: ChatMessage = {
+      id: `user-${Date.now()}`,
+      text: text || (img ? '📷 ছবি পাঠানো হয়েছে' : ''),
+      sender: 'user',
+      imageUrl: img || undefined,
+    };
+
+    setMessages(prev => [...prev, userMsg]);
     setInput('');
     setPendingImage(null);
     streamAiResponse(text, img);
