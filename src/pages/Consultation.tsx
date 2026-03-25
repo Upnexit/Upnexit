@@ -33,16 +33,23 @@ const Consultation = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const parsed = consultationFormSchema.safeParse(form);
+    if (!parsed.success) {
+      toast({ title: '❌', description: parsed.error.errors[0]?.message || 'সঠিক তথ্য দিন', variant: 'destructive' });
+      return;
+    }
+
     setLoading(true);
+    const data = parsed.data;
 
     const serviceName = serviceOptions.find(s => s.id === selectedService);
     const subjectLabel = lang === 'bn' ? serviceName?.labelBn : serviceName?.labelEn;
-    const fullMessage = `[${subjectLabel}]\n\n${form.message.trim()}`;
+    const fullMessage = `[${subjectLabel}]\n\n${data.message || ''}`;
 
     const { error } = await supabase.from('messages').insert({
-      name: form.name.trim(),
-      email: form.email.trim(),
-      phone: form.phone.trim() || null,
+      name: data.name,
+      email: data.email,
+      phone: data.phone || null,
       message: fullMessage,
     });
 
