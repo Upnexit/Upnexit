@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -10,6 +10,10 @@ interface ChatMessage {
   text: string;
   sender: 'user' | 'bot';
 }
+
+type AiMsg = { role: 'user' | 'assistant'; content: string };
+
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
 
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
@@ -23,20 +27,10 @@ const ChatbotWidget = () => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [showHelpText, setShowHelpText] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [conversationHistory, setConversationHistory] = useState<AiMsg[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const { data: qaList = [] } = useQuery({
-    queryKey: ['chatbot-qa'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('chatbot_qa')
-        .select('*')
-        .eq('is_active', true)
-        .order('sort_order');
-      if (error) throw error;
-      return data;
-    },
-  });
+  const abortRef = useRef<AbortController | null>(null);
 
   const { data: settings = [] } = useQuery({
     queryKey: ['site-settings'],
@@ -68,60 +62,129 @@ const ChatbotWidget = () => {
       setMessages([{
         id: 'welcome',
         text: lang === 'bn'
-          ? 'আসসালামু আলাইকুম! 👋 আমি Upnex It এর সহকারী। আপনাকে কিভাবে সাহায্য করতে পারি?'
-          : 'Hello! 👋 I\'m the Upnex It assistant. How can I help you?',
+          ? 'আসসালামু আলাইকুম! 👋 আমি Upnex IT এর AI সহকারী। আপনাকে কিভাবে সাহায্য করতে পারি?'
+          : 'Hello! 👋 I\'m the Upnex IT AI Assistant. How can I help you?',
         sender: 'bot',
       }]);
     }
   }, [open, lang]);
 
-  const findAnswer = (userInput: string): string => {
-    const input = userInput.toLowerCase().trim();
-    for (const qa of qaList) {
-      const questionLower = qa.question.toLowerCase();
-      if (input.includes(questionLower) || questionLower.includes(input)) return qa.answer;
-      if (qa.keywords && qa.keywords.length > 0) {
-        const matched = qa.keywords.some((kw: string) => input.includes(kw.toLowerCase()));
-        if (matched) return qa.answer;
-      }
-    }
-    const inputWords = input.split(/\s+/).filter(w => w.length > 2);
-    for (const qa of qaList) {
-      const qaWords = [...qa.question.toLowerCase().split(/\s+/), ...(qa.keywords || []).map((k: string) => k.toLowerCase())];
-      const match = inputWords.some(w => qaWords.some(qw => qw.includes(w) || w.includes(qw)));
-      if (match) return qa.answer;
-    }
-    return lang === 'bn'
-      ? 'দুঃখিত, আমি এই প্রশ্নের উত্তর দিতে পারছি না। অনুগ্রহ করে আমাদের সাথে সরাসরি যোগাযোগ করুন।'
-      : 'Sorry, I couldn\'t find an answer. Please contact us directly for more help.';
-  };
+  const streamAiResponse = useCallback(async (userText: string) => {
+    const newHistory: AiMsg[] = [...conversationHistory, { role: 'user', content: userText }];
+    setConversationHistory(newHistory);
+    setIsTyping(true);
 
-  const [isTyping, setIsTyping] = useState(false);
+    const botMsgId = `bot-${Date.now()}`;
+    let assistantText = '';
+
+    try {
+      abortRef.current = new AbortController();
+      const resp = await fetch(CHAT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({ messages: newHistory }),
+        signal: abortRef.current.signal,
+      });
+
+      if (!resp.ok || !resp.body) {
+        const errorData = await resp.json().catch(() => ({}));
+        throw new Error(errorData.error || 'AI সার্ভিসে সমস্যা হয়েছে');
+      }
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = '';
+      let streamDone = false;
+
+      // Add empty bot message
+      setMessages(prev => [...prev, { id: botMsgId, text: '', sender: 'bot' }]);
+      setIsTyping(false);
+
+      while (!streamDone) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf('\n')) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+
+          if (line.endsWith('\r')) line = line.slice(0, -1);
+          if (line.startsWith(':') || line.trim() === '') continue;
+          if (!line.startsWith('data: ')) continue;
+
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === '[DONE]') { streamDone = true; break; }
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              assistantText += content;
+              const currentText = assistantText;
+              setMessages(prev =>
+                prev.map(m => m.id === botMsgId ? { ...m, text: currentText } : m)
+              );
+            }
+          } catch {
+            textBuffer = line + '\n' + textBuffer;
+            break;
+          }
+        }
+      }
+
+      // Final flush
+      if (textBuffer.trim()) {
+        for (let raw of textBuffer.split('\n')) {
+          if (!raw) continue;
+          if (raw.endsWith('\r')) raw = raw.slice(0, -1);
+          if (raw.startsWith(':') || raw.trim() === '') continue;
+          if (!raw.startsWith('data: ')) continue;
+          const jsonStr = raw.slice(6).trim();
+          if (jsonStr === '[DONE]') continue;
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              assistantText += content;
+              const currentText = assistantText;
+              setMessages(prev =>
+                prev.map(m => m.id === botMsgId ? { ...m, text: currentText } : m)
+              );
+            }
+          } catch { /* ignore */ }
+        }
+      }
+
+      setConversationHistory(prev => [...prev, { role: 'assistant', content: assistantText }]);
+
+    } catch (err: any) {
+      setIsTyping(false);
+      if (err.name === 'AbortError') return;
+      const fallback = lang === 'bn'
+        ? 'দুঃখিত, সাময়িক সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন অথবা সরাসরি যোগাযোগ করুন।'
+        : 'Sorry, something went wrong. Please try again or contact us directly.';
+      setMessages(prev => {
+        const existing = prev.find(m => m.id === botMsgId);
+        if (existing) {
+          return prev.map(m => m.id === botMsgId ? { ...m, text: fallback } : m);
+        }
+        return [...prev, { id: botMsgId, text: fallback, sender: 'bot' }];
+      });
+    }
+  }, [conversationHistory, lang]);
 
   const handleSend = () => {
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
     const userMsg: ChatMessage = { id: `user-${Date.now()}`, text: input.trim(), sender: 'user' };
     setMessages(prev => [...prev, userMsg]);
+    const text = input.trim();
     setInput('');
-    setIsTyping(true);
-    setTimeout(() => {
-      const answer = findAnswer(userMsg.text);
-      setIsTyping(false);
-      setMessages(prev => [...prev, { id: `bot-${Date.now()}`, text: answer, sender: 'bot' }]);
-    }, 1200);
-  };
-
-  const suggestedQuestions = qaList.slice(0, 3);
-
-  const handleSuggestionClick = (question: string) => {
-    const userMsg: ChatMessage = { id: `user-${Date.now()}`, text: question, sender: 'user' };
-    setMessages(prev => [...prev, userMsg]);
-    setIsTyping(true);
-    setTimeout(() => {
-      const answer = findAnswer(question);
-      setIsTyping(false);
-      setMessages(prev => [...prev, { id: `bot-${Date.now()}`, text: answer, sender: 'bot' }]);
-    }, 1200);
+    streamAiResponse(text);
   };
 
   const handleWhatsApp = () => {
@@ -145,7 +208,7 @@ const ChatbotWidget = () => {
 
   return (
     <>
-      {/* WhatsApp Button - always visible, opens WhatsApp when number is set */}
+      {/* WhatsApp Button */}
       <button
         onClick={handleWhatsApp}
         className="fixed bottom-[11rem] lg:bottom-[5.5rem] right-4 lg:right-6 z-[60] w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#25D366] text-white shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
@@ -206,8 +269,8 @@ const ChatbotWidget = () => {
                 <MessageCircle className="h-3.5 w-3.5" />
               </div>
               <div>
-                <p className="font-semibold text-[11px]">Upnex It</p>
-                <p className="text-[9px] opacity-80">{lang === 'bn' ? 'সাধারণত তাৎক্ষণিক উত্তর' : 'Usually replies instantly'}</p>
+                <p className="font-semibold text-[11px]">Upnex AI Assistant</p>
+                <p className="text-[9px] opacity-80">{lang === 'bn' ? 'AI দ্বারা চালিত সহকারী' : 'AI-powered assistant'}</p>
               </div>
             </div>
 
@@ -215,32 +278,22 @@ const ChatbotWidget = () => {
             <div className="flex-1 overflow-y-auto p-2 space-y-2">
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] px-2.5 py-1.5 rounded-2xl text-[11px] leading-relaxed ${
+                  <div className={`max-w-[85%] px-2.5 py-1.5 rounded-2xl text-[11px] leading-relaxed whitespace-pre-wrap ${
                     msg.sender === 'user'
                       ? 'bg-primary text-primary-foreground rounded-br-md'
                       : 'bg-muted text-foreground rounded-bl-md'
                   }`}>
                     {msg.text}
+                    {msg.sender === 'bot' && msg.text === '' && (
+                      <span className="inline-flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-foreground/40 animate-bounce [animation-delay:0ms]" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-foreground/40 animate-bounce [animation-delay:150ms]" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-foreground/40 animate-bounce [animation-delay:300ms]" />
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}
-
-              {messages.length === 1 && suggestedQuestions.length > 0 && (
-                <div className="space-y-1">
-                  <p className="text-[9px] text-muted-foreground px-1">
-                    {lang === 'bn' ? 'জনপ্রিয় প্রশ্ন:' : 'Popular questions:'}
-                  </p>
-                  {suggestedQuestions.map((qa) => (
-                    <button
-                      key={qa.id}
-                      onClick={() => handleSuggestionClick(qa.question)}
-                      className="block w-full text-left text-[10px] bg-primary/5 hover:bg-primary/10 text-primary border border-primary/15 rounded-xl px-2 py-1.5 transition-colors"
-                    >
-                      {qa.question}
-                    </button>
-                  ))}
-                </div>
-              )}
 
               {isTyping && (
                 <div className="flex justify-start">
@@ -265,10 +318,11 @@ const ChatbotWidget = () => {
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder={lang === 'bn' ? 'আপনার প্রশ্ন লিখুন...' : 'Type your question...'}
                   className="flex-1 h-8 px-2.5 rounded-xl bg-muted border-0 text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  disabled={isTyping}
                 />
                 <button
                   onClick={handleSend}
-                  disabled={!input.trim()}
+                  disabled={!input.trim() || isTyping}
                   className="w-8 h-8 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0 hover:bg-primary/90 disabled:opacity-40 transition-all"
                 >
                   <Send className="h-3 w-3" />
