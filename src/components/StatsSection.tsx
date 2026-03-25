@@ -14,10 +14,6 @@ const StatsSection = () => {
 
   return (
     <section className="py-12 md:py-24 lg:py-28 gradient-hero relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.06]" style={{
-        backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
-        backgroundSize: '28px 28px'
-      }} />
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {stats.map((s, i) => (
