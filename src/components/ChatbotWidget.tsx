@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { MessageCircle, X, Send, Mic, MicOff, Image, Volume2, VolumeX } from 'lucide-react';
+import { MessageCircle, X, Send, Mic, MicOff, Image } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ChatMessage {
@@ -32,11 +32,11 @@ const ChatbotWidget = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [conversationHistory, setConversationHistory] = useState<AiMsg[]>([]);
   const [isListening, setIsListening] = useState(false);
-  const [ttsEnabled, setTtsEnabled] = useState(true);
   const [pendingImage, setPendingImage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const recognitionRef = useRef<any>(null);
+  const isListeningRef = useRef(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: settings = [] } = useQuery({
@@ -76,46 +76,64 @@ const ChatbotWidget = () => {
     }
   }, [open, lang]);
 
-  // Speech-to-Text
+  // Speech-to-Text - continuous mode
   const startListening = useCallback(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) return;
 
     const recognition = new SpeechRecognition();
     recognition.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
-    recognition.interimResults = true;
+    recognition.interimResults = false;
     recognition.continuous = false;
 
     recognition.onresult = (event: any) => {
       const transcript = Array.from(event.results)
         .map((r: any) => r[0].transcript)
         .join('');
-      setInput(transcript);
+      if (transcript.trim()) {
+        // Auto-send the voice message
+        const userMsg: ChatMessage = {
+          id: `user-${Date.now()}`,
+          text: transcript.trim(),
+          sender: 'user',
+        };
+        setMessages(prev => [...prev, userMsg]);
+        streamAiResponse(transcript.trim(), null);
+      }
     };
 
-    recognition.onend = () => setIsListening(false);
-    recognition.onerror = () => setIsListening(false);
+    recognition.onend = () => {
+      // Auto-restart if still in listening mode
+      if (recognitionRef.current && isListeningRef.current) {
+        try { recognition.start(); } catch {}
+      }
+    };
+
+    recognition.onerror = (e: any) => {
+      if (e.error === 'no-speech') {
+        // Restart on no-speech
+        if (isListeningRef.current) {
+          try { recognition.start(); } catch {}
+        }
+        return;
+      }
+      setIsListening(false);
+      isListeningRef.current = false;
+    };
 
     recognitionRef.current = recognition;
+    isListeningRef.current = true;
     recognition.start();
     setIsListening(true);
   }, [lang]);
 
   const stopListening = useCallback(() => {
+    isListeningRef.current = false;
     recognitionRef.current?.stop();
+    recognitionRef.current = null;
     setIsListening(false);
   }, []);
 
-  // Text-to-Speech
-  const speakText = useCallback((text: string) => {
-    if (!ttsEnabled || !window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
-    window.speechSynthesis.speak(utterance);
-  }, [ttsEnabled, lang]);
 
   // Image handling
   const handleImageUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -247,7 +265,7 @@ const ChatbotWidget = () => {
         return [...prev, { id: botMsgId, text: fallback, sender: 'bot' }];
       });
     }
-  }, [conversationHistory, lang, speakText]);
+  }, [conversationHistory, lang]);
 
   const handleSend = () => {
     if ((!input.trim() && !pendingImage) || isTyping) return;
@@ -369,13 +387,6 @@ const ChatbotWidget = () => {
                   <p className="text-[9px] opacity-80">{lang === 'bn' ? 'AI দ্বারা চালিত' : 'AI-powered'}</p>
                 </div>
               </div>
-              <button
-                onClick={() => setTtsEnabled(!ttsEnabled)}
-                className="p-1 rounded-full hover:bg-primary-foreground/10 transition-colors"
-                title={ttsEnabled ? 'ভয়েস বন্ধ করুন' : 'ভয়েস চালু করুন'}
-              >
-                {ttsEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
-              </button>
             </div>
 
             {/* Messages */}
@@ -435,53 +446,52 @@ const ChatbotWidget = () => {
             )}
 
             {/* Input */}
-            <div className="border-t border-border p-2 shrink-0 space-y-1.5">
-              {/* Text input row */}
-              <div className="flex gap-1.5 items-center">
+            <div className="border-t border-border p-1.5 shrink-0">
+              <div className="flex gap-1 items-center bg-muted/50 rounded-full px-1 py-0.5 border border-border/30">
+                {/* Image button */}
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isTyping}
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 disabled:opacity-30 transition-all"
+                  title={lang === 'bn' ? 'ছবি পাঠান' : 'Send image'}
+                >
+                  <Image className="h-3.5 w-3.5" />
+                </button>
+
+                {/* Voice button */}
+                <button
+                  onClick={isListening ? stopListening : startListening}
+                  disabled={isTyping}
+                  className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
+                    isListening
+                      ? 'bg-destructive/15 text-destructive animate-pulse'
+                      : 'text-muted-foreground hover:text-primary hover:bg-primary/10'
+                  } disabled:opacity-30`}
+                  title={isListening ? 'বন্ধ করুন' : 'ভয়েস ইনপুট'}
+                >
+                  {isListening ? <MicOff className="h-3.5 w-3.5" /> : <Mic className="h-3.5 w-3.5" />}
+                </button>
+
+                {/* Text input */}
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder={lang === 'bn' ? 'আপনার প্রশ্ন লিখুন...' : 'Ask your question...'}
-                  className="flex-1 h-9 px-3 rounded-full bg-muted border border-border/50 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                  placeholder={isListening ? (lang === 'bn' ? '🎙 শুনছি...' : '🎙 Listening...') : (lang === 'bn' ? 'প্রশ্ন লিখুন...' : 'Ask question...')}
+                  className="flex-1 h-7 px-2 bg-transparent border-0 text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none"
                   disabled={isTyping}
                 />
+
+                {/* Send button */}
                 <motion.button
                   onClick={handleSend}
                   disabled={(!input.trim() && !pendingImage) || isTyping}
-                  className="w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 hover:bg-primary/90 disabled:opacity-30 transition-all shadow-sm"
+                  className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 hover:bg-primary/90 disabled:opacity-30 transition-all"
                   whileTap={{ scale: 0.9 }}
                 >
-                  <Send className="h-3.5 w-3.5" />
+                  <Send className="h-3 w-3" />
                 </motion.button>
-              </div>
-
-              {/* Action buttons row */}
-              <div className="flex items-center gap-1 px-1">
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={isTyping}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted/70 text-muted-foreground text-[10px] font-medium hover:bg-muted hover:text-foreground disabled:opacity-30 transition-all"
-                  title={lang === 'bn' ? 'ছবি পাঠান' : 'Send image'}
-                >
-                  <Image className="h-3 w-3" />
-                  <span>{lang === 'bn' ? 'ছবি' : 'Image'}</span>
-                </button>
-
-                <button
-                  onClick={isListening ? stopListening : startListening}
-                  disabled={isTyping}
-                  className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium transition-all ${
-                    isListening
-                      ? 'bg-destructive/15 text-destructive animate-pulse'
-                      : 'bg-muted/70 text-muted-foreground hover:bg-muted hover:text-foreground'
-                  } disabled:opacity-30`}
-                  title={isListening ? 'রেকর্ডিং বন্ধ' : 'ভয়েস ইনপুট'}
-                >
-                  {isListening ? <MicOff className="h-3 w-3" /> : <Mic className="h-3 w-3" />}
-                  <span>{isListening ? (lang === 'bn' ? 'বন্ধ করুন' : 'Stop') : (lang === 'bn' ? 'ভয়েস' : 'Voice')}</span>
-                </button>
               </div>
             </div>
           </motion.div>
