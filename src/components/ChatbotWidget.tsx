@@ -37,6 +37,8 @@ const ChatbotWidget = () => {
   const abortRef = useRef<AbortController | null>(null);
   const recognitionRef = useRef<any>(null);
   const isListeningRef = useRef(false);
+  const voiceDraftRef = useRef('');
+  const autoSendTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: settings = [] } = useQuery({
