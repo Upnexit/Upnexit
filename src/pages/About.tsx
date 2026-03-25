@@ -339,7 +339,7 @@ const About = () => {
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-5">
               {lang === 'bn' ? 'আমাদের টিম' : 'Our Team'}
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-2 text-foreground tracking-tight" style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}>
               {lang === 'bn' ? 'আমাদের টিম মেম্বার' : 'Our Team Members'}
             </h2>
             <div className="flex flex-col items-center mt-2 gap-[3px]">
