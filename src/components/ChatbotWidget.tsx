@@ -134,16 +134,6 @@ const ChatbotWidget = () => {
     setIsListening(false);
   }, []);
 
-  // Text-to-Speech
-  const speakText = useCallback((text: string) => {
-    if (!ttsEnabled || !window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
-    window.speechSynthesis.speak(utterance);
-  }, [ttsEnabled, lang]);
 
   // Image handling
   const handleImageUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
