@@ -265,7 +265,7 @@ const ChatbotWidget = () => {
         return [...prev, { id: botMsgId, text: fallback, sender: 'bot' }];
       });
     }
-  }, [conversationHistory, lang, speakText]);
+  }, [conversationHistory, lang]);
 
   const handleSend = () => {
     if ((!input.trim() && !pendingImage) || isTyping) return;
