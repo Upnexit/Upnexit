@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { MessageCircle, X, Send, Mic, MicOff, Image, Volume2, VolumeX } from 'lucide-react';
+import { MessageCircle, X, Send, Mic, MicOff, Image } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ChatMessage {
