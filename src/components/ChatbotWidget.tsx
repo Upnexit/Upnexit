@@ -76,33 +76,61 @@ const ChatbotWidget = () => {
     }
   }, [open, lang]);
 
-  // Speech-to-Text
+  // Speech-to-Text - continuous mode
   const startListening = useCallback(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) return;
 
     const recognition = new SpeechRecognition();
     recognition.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
-    recognition.interimResults = true;
+    recognition.interimResults = false;
     recognition.continuous = false;
 
     recognition.onresult = (event: any) => {
       const transcript = Array.from(event.results)
         .map((r: any) => r[0].transcript)
         .join('');
-      setInput(transcript);
+      if (transcript.trim()) {
+        // Auto-send the voice message
+        const userMsg: ChatMessage = {
+          id: `user-${Date.now()}`,
+          text: transcript.trim(),
+          sender: 'user',
+        };
+        setMessages(prev => [...prev, userMsg]);
+        streamAiResponse(transcript.trim(), null);
+      }
     };
 
-    recognition.onend = () => setIsListening(false);
-    recognition.onerror = () => setIsListening(false);
+    recognition.onend = () => {
+      // Auto-restart if still in listening mode
+      if (recognitionRef.current && isListeningRef.current) {
+        try { recognition.start(); } catch {}
+      }
+    };
+
+    recognition.onerror = (e: any) => {
+      if (e.error === 'no-speech') {
+        // Restart on no-speech
+        if (isListeningRef.current) {
+          try { recognition.start(); } catch {}
+        }
+        return;
+      }
+      setIsListening(false);
+      isListeningRef.current = false;
+    };
 
     recognitionRef.current = recognition;
+    isListeningRef.current = true;
     recognition.start();
     setIsListening(true);
   }, [lang]);
 
   const stopListening = useCallback(() => {
+    isListeningRef.current = false;
     recognitionRef.current?.stop();
+    recognitionRef.current = null;
     setIsListening(false);
   }, []);
 
