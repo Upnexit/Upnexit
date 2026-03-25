@@ -464,53 +464,52 @@ const ChatbotWidget = () => {
             )}
 
             {/* Input */}
-            <div className="border-t border-border p-2 shrink-0 space-y-1.5">
-              {/* Text input row */}
-              <div className="flex gap-1.5 items-center">
+            <div className="border-t border-border p-1.5 shrink-0">
+              <div className="flex gap-1 items-center bg-muted/50 rounded-full px-1 py-0.5 border border-border/30">
+                {/* Image button */}
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isTyping}
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 disabled:opacity-30 transition-all"
+                  title={lang === 'bn' ? 'ছবি পাঠান' : 'Send image'}
+                >
+                  <Image className="h-3.5 w-3.5" />
+                </button>
+
+                {/* Voice button */}
+                <button
+                  onClick={isListening ? stopListening : startListening}
+                  disabled={isTyping}
+                  className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
+                    isListening
+                      ? 'bg-destructive/15 text-destructive animate-pulse'
+                      : 'text-muted-foreground hover:text-primary hover:bg-primary/10'
+                  } disabled:opacity-30`}
+                  title={isListening ? 'বন্ধ করুন' : 'ভয়েস ইনপুট'}
+                >
+                  {isListening ? <MicOff className="h-3.5 w-3.5" /> : <Mic className="h-3.5 w-3.5" />}
+                </button>
+
+                {/* Text input */}
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder={lang === 'bn' ? 'আপনার প্রশ্ন লিখুন...' : 'Ask your question...'}
-                  className="flex-1 h-9 px-3 rounded-full bg-muted border border-border/50 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                  placeholder={isListening ? (lang === 'bn' ? '🎙 শুনছি...' : '🎙 Listening...') : (lang === 'bn' ? 'প্রশ্ন লিখুন...' : 'Ask question...')}
+                  className="flex-1 h-7 px-2 bg-transparent border-0 text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none"
                   disabled={isTyping}
                 />
+
+                {/* Send button */}
                 <motion.button
                   onClick={handleSend}
                   disabled={(!input.trim() && !pendingImage) || isTyping}
-                  className="w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 hover:bg-primary/90 disabled:opacity-30 transition-all shadow-sm"
+                  className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 hover:bg-primary/90 disabled:opacity-30 transition-all"
                   whileTap={{ scale: 0.9 }}
                 >
-                  <Send className="h-3.5 w-3.5" />
+                  <Send className="h-3 w-3" />
                 </motion.button>
-              </div>
-
-              {/* Action buttons row */}
-              <div className="flex items-center gap-1 px-1">
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={isTyping}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted/70 text-muted-foreground text-[10px] font-medium hover:bg-muted hover:text-foreground disabled:opacity-30 transition-all"
-                  title={lang === 'bn' ? 'ছবি পাঠান' : 'Send image'}
-                >
-                  <Image className="h-3 w-3" />
-                  <span>{lang === 'bn' ? 'ছবি' : 'Image'}</span>
-                </button>
-
-                <button
-                  onClick={isListening ? stopListening : startListening}
-                  disabled={isTyping}
-                  className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium transition-all ${
-                    isListening
-                      ? 'bg-destructive/15 text-destructive animate-pulse'
-                      : 'bg-muted/70 text-muted-foreground hover:bg-muted hover:text-foreground'
-                  } disabled:opacity-30`}
-                  title={isListening ? 'রেকর্ডিং বন্ধ' : 'ভয়েস ইনপুট'}
-                >
-                  {isListening ? <MicOff className="h-3 w-3" /> : <Mic className="h-3 w-3" />}
-                  <span>{isListening ? (lang === 'bn' ? 'বন্ধ করুন' : 'Stop') : (lang === 'bn' ? 'ভয়েস' : 'Voice')}</span>
-                </button>
               </div>
             </div>
           </motion.div>
