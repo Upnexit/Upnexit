@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, CheckCircle2, ArrowLeft, ArrowRight, Building2, GraduationCap, ShoppingCart, Globe, Cpu, HelpCircle, User, Mail, Phone, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { consultationFormSchema } from '@/lib/sanitize';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
