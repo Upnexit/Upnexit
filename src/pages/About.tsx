@@ -342,12 +342,21 @@ const About = () => {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-foreground">
               {lang === 'bn' ? 'আমাদের টিম মেম্বার' : 'Our Team Members'}
             </h2>
-            <div className="flex items-center justify-center gap-1.5 mt-2">
-              <span className="w-8 h-[2px] bg-primary/40 rounded-full" />
-              <span className="w-4 h-[2px] bg-primary rounded-full" />
-              <span className="w-12 h-[2px] bg-primary rounded-full" />
-              <span className="w-4 h-[2px] bg-primary rounded-full" />
-              <span className="w-8 h-[2px] bg-primary/40 rounded-full" />
+            <div className="flex flex-col items-center mt-2 gap-[3px]">
+              <motion.span
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                className="block w-48 sm:w-64 md:w-80 h-[3px] rounded-full bg-accent origin-center"
+              />
+              <motion.span
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
+                className="block w-36 sm:w-48 md:w-60 h-[2px] rounded-full bg-accent/60 origin-center"
+              />
             </div>
           </motion.div>
 
