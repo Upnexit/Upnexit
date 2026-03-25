@@ -2,16 +2,18 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { MessageCircle, X, Send } from 'lucide-react';
+import { MessageCircle, X, Send, Mic, MicOff, Image, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ChatMessage {
   id: string;
   text: string;
   sender: 'user' | 'bot';
+  imageUrl?: string;
 }
 
-type AiMsg = { role: 'user' | 'assistant'; content: string };
+type AiMsgContent = string | Array<{ type: 'text'; text: string } | { type: 'image_url'; image_url: { url: string } }>;
+type AiMsg = { role: 'user' | 'assistant'; content: AiMsgContent };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
 
@@ -29,8 +31,13 @@ const ChatbotWidget = () => {
   const [showHelpText, setShowHelpText] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [conversationHistory, setConversationHistory] = useState<AiMsg[]>([]);
+  const [isListening, setIsListening] = useState(false);
+  const [ttsEnabled, setTtsEnabled] = useState(true);
+  const [pendingImage, setPendingImage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const recognitionRef = useRef<any>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: settings = [] } = useQuery({
     queryKey: ['site-settings'],
@@ -63,14 +70,79 @@ const ChatbotWidget = () => {
         id: 'welcome',
         text: lang === 'bn'
           ? 'আসসালামু আলাইকুম! 👋 আমি Upnex IT এর AI সহকারী। আপনাকে কিভাবে সাহায্য করতে পারি?'
-          : 'Hello! 👋 I\'m the Upnex IT AI Assistant. How can I help you?',
+          : 'Assalamu Alaikum! 👋 I\'m the Upnex IT AI Assistant. How can I help you?',
         sender: 'bot',
       }]);
     }
   }, [open, lang]);
 
-  const streamAiResponse = useCallback(async (userText: string) => {
-    const newHistory: AiMsg[] = [...conversationHistory, { role: 'user', content: userText }];
+  // Speech-to-Text
+  const startListening = useCallback(() => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) return;
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
+    recognition.interimResults = true;
+    recognition.continuous = false;
+
+    recognition.onresult = (event: any) => {
+      const transcript = Array.from(event.results)
+        .map((r: any) => r[0].transcript)
+        .join('');
+      setInput(transcript);
+    };
+
+    recognition.onend = () => setIsListening(false);
+    recognition.onerror = () => setIsListening(false);
+
+    recognitionRef.current = recognition;
+    recognition.start();
+    setIsListening(true);
+  }, [lang]);
+
+  const stopListening = useCallback(() => {
+    recognitionRef.current?.stop();
+    setIsListening(false);
+  }, []);
+
+  // Text-to-Speech
+  const speakText = useCallback((text: string) => {
+    if (!ttsEnabled || !window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    window.speechSynthesis.speak(utterance);
+  }, [ttsEnabled, lang]);
+
+  // Image handling
+  const handleImageUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) return; // 5MB max
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPendingImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  }, []);
+
+  const streamAiResponse = useCallback(async (userText: string, imageBase64?: string | null) => {
+    let userContent: AiMsgContent;
+    if (imageBase64) {
+      userContent = [
+        { type: 'text', text: userText || 'এই ছবিটি বিশ্লেষণ করুন' },
+        { type: 'image_url', image_url: { url: imageBase64 } },
+      ];
+    } else {
+      userContent = userText;
+    }
+
+    const newHistory: AiMsg[] = [...conversationHistory, { role: 'user', content: userContent }];
     setConversationHistory(newHistory);
     setIsTyping(true);
 
@@ -99,7 +171,6 @@ const ChatbotWidget = () => {
       let textBuffer = '';
       let streamDone = false;
 
-      // Add empty bot message
       setMessages(prev => [...prev, { id: botMsgId, text: '', sender: 'bot' }]);
       setIsTyping(false);
 
@@ -162,12 +233,15 @@ const ChatbotWidget = () => {
 
       setConversationHistory(prev => [...prev, { role: 'assistant', content: assistantText }]);
 
+      // Speak the response
+      if (assistantText) speakText(assistantText);
+
     } catch (err: any) {
       setIsTyping(false);
       if (err.name === 'AbortError') return;
       const fallback = lang === 'bn'
-        ? 'দুঃখিত, সাময়িক সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন অথবা সরাসরি যোগাযোগ করুন।'
-        : 'Sorry, something went wrong. Please try again or contact us directly.';
+        ? 'দুঃখিত, সাময়িক সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।'
+        : 'Sorry, something went wrong. Please try again.';
       setMessages(prev => {
         const existing = prev.find(m => m.id === botMsgId);
         if (existing) {
@@ -176,15 +250,22 @@ const ChatbotWidget = () => {
         return [...prev, { id: botMsgId, text: fallback, sender: 'bot' }];
       });
     }
-  }, [conversationHistory, lang]);
+  }, [conversationHistory, lang, speakText]);
 
   const handleSend = () => {
-    if (!input.trim() || isTyping) return;
-    const userMsg: ChatMessage = { id: `user-${Date.now()}`, text: input.trim(), sender: 'user' };
+    if ((!input.trim() && !pendingImage) || isTyping) return;
+    const userMsg: ChatMessage = {
+      id: `user-${Date.now()}`,
+      text: input.trim() || (pendingImage ? '📷 ছবি পাঠানো হয়েছে' : ''),
+      sender: 'user',
+      imageUrl: pendingImage || undefined,
+    };
     setMessages(prev => [...prev, userMsg]);
     const text = input.trim();
+    const img = pendingImage;
     setInput('');
-    streamAiResponse(text);
+    setPendingImage(null);
+    streamAiResponse(text, img);
   };
 
   const handleWhatsApp = () => {
@@ -206,6 +287,14 @@ const ChatbotWidget = () => {
     return () => document.removeEventListener('mousedown', handler);
   }, [open]);
 
+  // Cleanup speech on unmount
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis?.cancel();
+      recognitionRef.current?.stop();
+    };
+  }, []);
+
   return (
     <>
       {/* WhatsApp Button */}
@@ -217,7 +306,7 @@ const ChatbotWidget = () => {
         <WhatsAppIcon />
       </button>
 
-      {/* Chatbot Toggle Button with Help Center text */}
+      {/* Chatbot Toggle */}
       <div className="fixed bottom-[7.5rem] lg:bottom-6 right-4 lg:right-6 z-[60] flex items-center gap-2">
         <AnimatePresence>
           {showHelpText && !open && (
@@ -252,6 +341,15 @@ const ChatbotWidget = () => {
         </motion.button>
       </div>
 
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleImageUpload}
+      />
+
       {/* Chat Window */}
       <AnimatePresence>
         {open && (
@@ -261,17 +359,26 @@ const ChatbotWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-36 lg:bottom-24 right-3 lg:right-6 z-[60] w-[calc(100vw-1.5rem)] max-w-[300px] sm:max-w-[340px] h-[320px] sm:h-[380px] bg-background border border-border rounded-2xl shadow-elevated flex flex-col overflow-hidden"
+            className="fixed bottom-36 lg:bottom-24 right-3 lg:right-6 z-[60] w-[calc(100vw-1.5rem)] max-w-[320px] sm:max-w-[360px] h-[360px] sm:h-[420px] bg-background border border-border rounded-2xl shadow-elevated flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-primary text-primary-foreground px-3 py-2 flex items-center gap-2 shrink-0">
-              <div className="w-7 h-7 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-                <MessageCircle className="h-3.5 w-3.5" />
+            <div className="bg-primary text-primary-foreground px-3 py-2 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full bg-primary-foreground/20 flex items-center justify-center">
+                  <MessageCircle className="h-3.5 w-3.5" />
+                </div>
+                <div>
+                  <p className="font-semibold text-[11px]">Upnex AI Assistant</p>
+                  <p className="text-[9px] opacity-80">{lang === 'bn' ? 'AI দ্বারা চালিত' : 'AI-powered'}</p>
+                </div>
               </div>
-              <div>
-                <p className="font-semibold text-[11px]">Upnex AI Assistant</p>
-                <p className="text-[9px] opacity-80">{lang === 'bn' ? 'AI দ্বারা চালিত সহকারী' : 'AI-powered assistant'}</p>
-              </div>
+              <button
+                onClick={() => setTtsEnabled(!ttsEnabled)}
+                className="p-1 rounded-full hover:bg-primary-foreground/10 transition-colors"
+                title={ttsEnabled ? 'ভয়েস বন্ধ করুন' : 'ভয়েস চালু করুন'}
+              >
+                {ttsEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
+              </button>
             </div>
 
             {/* Messages */}
@@ -283,6 +390,13 @@ const ChatbotWidget = () => {
                       ? 'bg-primary text-primary-foreground rounded-br-md'
                       : 'bg-muted text-foreground rounded-bl-md'
                   }`}>
+                    {msg.imageUrl && (
+                      <img
+                        src={msg.imageUrl}
+                        alt="uploaded"
+                        className="w-full max-w-[160px] h-auto rounded-lg mb-1"
+                      />
+                    )}
                     {msg.text}
                     {msg.sender === 'bot' && msg.text === '' && (
                       <span className="inline-flex items-center gap-1">
@@ -308,21 +422,61 @@ const ChatbotWidget = () => {
               <div ref={messagesEndRef} />
             </div>
 
+            {/* Pending image preview */}
+            {pendingImage && (
+              <div className="px-2 py-1 border-t border-border">
+                <div className="relative inline-block">
+                  <img src={pendingImage} alt="preview" className="h-12 w-auto rounded-lg" />
+                  <button
+                    onClick={() => setPendingImage(null)}
+                    className="absolute -top-1 -right-1 w-4 h-4 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center text-[8px]"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Input */}
             <div className="border-t border-border p-2 shrink-0">
-              <div className="flex gap-1.5">
+              <div className="flex gap-1">
+                {/* Image upload */}
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isTyping}
+                  className="w-7 h-8 rounded-lg bg-muted text-muted-foreground flex items-center justify-center shrink-0 hover:bg-muted/80 disabled:opacity-40 transition-all"
+                  title="ছবি পাঠান"
+                >
+                  <Image className="h-3 w-3" />
+                </button>
+
+                {/* Voice input */}
+                <button
+                  onClick={isListening ? stopListening : startListening}
+                  disabled={isTyping}
+                  className={`w-7 h-8 rounded-lg flex items-center justify-center shrink-0 transition-all ${
+                    isListening
+                      ? 'bg-destructive text-destructive-foreground animate-pulse'
+                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  } disabled:opacity-40`}
+                  title={isListening ? 'রেকর্ডিং বন্ধ' : 'ভয়েস ইনপুট'}
+                >
+                  {isListening ? <MicOff className="h-3 w-3" /> : <Mic className="h-3 w-3" />}
+                </button>
+
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder={lang === 'bn' ? 'আপনার প্রশ্ন লিখুন...' : 'Type your question...'}
-                  className="flex-1 h-8 px-2.5 rounded-xl bg-muted border-0 text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  placeholder={lang === 'bn' ? 'প্রশ্ন লিখুন...' : 'Type your question...'}
+                  className="flex-1 h-8 px-2 rounded-xl bg-muted border-0 text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
                   disabled={isTyping}
                 />
+
                 <button
                   onClick={handleSend}
-                  disabled={!input.trim() || isTyping}
+                  disabled={(!input.trim() && !pendingImage) || isTyping}
                   className="w-8 h-8 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0 hover:bg-primary/90 disabled:opacity-40 transition-all"
                 >
                   <Send className="h-3 w-3" />
