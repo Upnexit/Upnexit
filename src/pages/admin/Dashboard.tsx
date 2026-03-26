@@ -182,15 +182,8 @@ const Dashboard = () => {
     return 'hsl(145,68%,26%)';
   };
 
-  const getBdDistrictColor = (name: string) => {
-    const n = name.toLowerCase();
-    const count = bdCitySet[n] || 0;
-    if (count === 0) return 'hsl(145,20%,88%)';
-    if (count < 3) return 'hsl(145,50%,68%)';
-    if (count < 10) return 'hsl(145,58%,50%)';
-    if (count < 25) return 'hsl(145,62%,38%)';
-    return 'hsl(145,68%,26%)';
-  };
+
+
 
   const mapCenter: [number, number] = selectedCountry && countryFocus[selectedCountry]
     ? countryFocus[selectedCountry].center
