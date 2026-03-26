@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Users, MessageSquare, Eye, Globe, TrendingUp, BarChart3, Activity, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Users, MessageSquare, Eye, Globe, TrendingUp, BarChart3, Activity, ArrowUpRight, Search, X, MapPin } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+const bdDistrictGeoUrl = "https://raw.githubusercontent.com/nishatsalsabil/Bangladesh-geojson/master/bd-districts.json";
 
 const countryNames: Record<string, string> = {
   BD: 'Bangladesh', US: 'United States', IN: 'India', GB: 'United Kingdom', CA: 'Canada',
@@ -24,11 +25,44 @@ const alpha2ToNumeric: Record<string, string> = {
   PH: '608', VN: '704', NG: '566', ZA: '710', KE: '404', GH: '288', ET: '231',
 };
 
+// Country centers for zoom [lng, lat, zoom]
+const countryFocus: Record<string, { center: [number, number]; zoom: number }> = {
+  BD: { center: [90.35, 23.7], zoom: 18 },
+  US: { center: [-97, 38], zoom: 3.5 },
+  IN: { center: [79, 22], zoom: 5 },
+  GB: { center: [-2, 54], zoom: 12 },
+  CA: { center: [-96, 56], zoom: 2.5 },
+  AU: { center: [134, -25], zoom: 3.5 },
+  DE: { center: [10, 51], zoom: 12 },
+  FR: { center: [2.5, 46.5], zoom: 10 },
+  JP: { center: [138, 36], zoom: 8 },
+  CN: { center: [104, 35], zoom: 3.5 },
+  BR: { center: [-52, -14], zoom: 3 },
+  SA: { center: [45, 24], zoom: 7 },
+  AE: { center: [54, 24], zoom: 14 },
+  PK: { center: [69, 30], zoom: 7 },
+  NP: { center: [84, 28], zoom: 14 },
+  MY: { center: [109, 4], zoom: 7 },
+  SG: { center: [103.8, 1.35], zoom: 60 },
+  KR: { center: [127.5, 36], zoom: 14 },
+  IT: { center: [12.5, 42], zoom: 8 },
+  ES: { center: [-3.7, 40], zoom: 8 },
+  RU: { center: [90, 60], zoom: 2 },
+  MX: { center: [-102, 23], zoom: 4 },
+  EG: { center: [30, 27], zoom: 8 },
+  TR: { center: [35, 39], zoom: 7 },
+  TH: { center: [101, 13], zoom: 8 },
+  ID: { center: [118, -2], zoom: 3.5 },
+};
+
 const PIE_COLORS = ['hsl(145,63%,38%)', 'hsl(200,70%,50%)', 'hsl(46,92%,55%)', 'hsl(340,60%,55%)', 'hsl(270,50%,55%)', 'hsl(20,75%,55%)'];
 
 const Dashboard = () => {
   const [tooltipContent, setTooltipContent] = useState('');
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const { data: teamCount } = useQuery({
     queryKey: ['team-count'],
@@ -38,26 +72,10 @@ const Dashboard = () => {
     },
   });
 
-  const { data: msgCount } = useQuery({
-    queryKey: ['msg-count'],
-    queryFn: async () => {
-      const { count } = await supabase.from('messages').select('*', { count: 'exact', head: true });
-      return count ?? 0;
-    },
-  });
-
   const { data: unreadCount } = useQuery({
     queryKey: ['unread-count'],
     queryFn: async () => {
       const { count } = await supabase.from('messages').select('*', { count: 'exact', head: true }).eq('is_read', false);
-      return count ?? 0;
-    },
-  });
-
-  const { data: serviceCount } = useQuery({
-    queryKey: ['service-count'],
-    queryFn: async () => {
-      const { count } = await supabase.from('services').select('*', { count: 'exact', head: true });
       return count ?? 0;
     },
   });
@@ -104,11 +122,50 @@ const Dashboard = () => {
     return map;
   }, [countryData]);
 
+  // City/district data for selected country
+  const cityData = useMemo(() => {
+    if (!selectedCountry) return [];
+    const counts: Record<string, number> = {};
+    pageViews.forEach(v => {
+      if (v.country_code === selectedCountry && v.city) {
+        counts[v.city] = (counts[v.city] || 0) + 1;
+      }
+    });
+    return Object.entries(counts).map(([city, count]) => ({ city, count })).sort((a, b) => b.count - a.count);
+  }, [pageViews, selectedCountry]);
+
+  // City set for BD district coloring
+  const bdCitySet = useMemo(() => {
+    const map: Record<string, number> = {};
+    pageViews.forEach(v => {
+      if (v.country_code === 'BD' && v.city) {
+        const c = v.city.toLowerCase();
+        map[c] = (map[c] || 0) + 1;
+      }
+    });
+    return map;
+  }, [pageViews]);
+
   const pageData = useMemo(() => {
     const counts: Record<string, number> = {};
     pageViews.forEach(v => { const p = v.page_path || '/'; counts[p] = (counts[p] || 0) + 1; });
     return Object.entries(counts).map(([page, count]) => ({ page, count })).sort((a, b) => b.count - a.count).slice(0, 5);
   }, [pageViews]);
+
+  // Filtered countries for search
+  const allCountries = useMemo(() => {
+    const set = new Set<string>();
+    pageViews.forEach(v => { if (v.country_code) set.add(v.country_code); });
+    // Also include common countries
+    Object.keys(countryNames).forEach(c => set.add(c));
+    return Array.from(set).map(code => ({ code, name: countryNames[code] || code })).sort((a, b) => a.name.localeCompare(b.name));
+  }, [pageViews]);
+
+  const filteredCountries = useMemo(() => {
+    if (!searchQuery) return allCountries;
+    const q = searchQuery.toLowerCase();
+    return allCountries.filter(c => c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q));
+  }, [allCountries, searchQuery]);
 
   const cards = [
     { label: 'আজকের ভিজিটর', value: todayViews, icon: Eye, accent: 'hsl(145,63%,38%)', bg: 'hsl(145,50%,96%)' },
@@ -118,12 +175,33 @@ const Dashboard = () => {
   ];
 
   const getColor = (count: number) => {
-    if (count === 0) return 'hsl(220,15%,94%)';
-    if (count < 5) return 'hsl(145,45%,82%)';
-    if (count < 20) return 'hsl(145,55%,62%)';
-    if (count < 50) return 'hsl(145,60%,45%)';
-    return 'hsl(145,65%,32%)';
+    if (count === 0) return 'hsl(220,12%,92%)';
+    if (count < 5) return 'hsl(145,50%,72%)';
+    if (count < 20) return 'hsl(145,58%,50%)';
+    if (count < 50) return 'hsl(145,62%,38%)';
+    return 'hsl(145,68%,26%)';
   };
+
+  const getBdDistrictColor = (name: string) => {
+    const n = name.toLowerCase();
+    const count = bdCitySet[n] || 0;
+    if (count === 0) return 'hsl(145,20%,88%)';
+    if (count < 3) return 'hsl(145,50%,68%)';
+    if (count < 10) return 'hsl(145,58%,50%)';
+    if (count < 25) return 'hsl(145,62%,38%)';
+    return 'hsl(145,68%,26%)';
+  };
+
+  const mapCenter: [number, number] = selectedCountry && countryFocus[selectedCountry]
+    ? countryFocus[selectedCountry].center
+    : [0, 20];
+  const mapZoom = selectedCountry && countryFocus[selectedCountry]
+    ? countryFocus[selectedCountry].zoom
+    : 1;
+
+  const handleTooltip = useCallback((name: string, count: number) => {
+    setTooltipContent(`${name}: ${count} ভিজিট`);
+  }, []);
 
   return (
     <div className="space-y-5">
@@ -200,7 +278,7 @@ const Dashboard = () => {
         </div>
       </motion.div>
 
-      {/* World Map + Country Table */}
+      {/* World Map + Country/City Data */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -208,52 +286,136 @@ const Dashboard = () => {
           transition={{ delay: 0.3 }}
           className="lg:col-span-2 bg-white rounded-2xl border border-[hsl(220,14%,92%)] overflow-hidden hover:shadow-sm transition-shadow"
         >
-          <div className="flex items-center justify-between p-5 pb-0">
+          {/* Map Header with Search */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 pb-2">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                 <Globe className="h-4 w-4 text-blue-500" />
               </div>
               <div>
-                <h2 className="font-semibold text-foreground text-sm">বিশ্ব ট্রাফিক ম্যাপ</h2>
-                <p className="text-[10px] text-muted-foreground">দেশ অনুযায়ী ভিজিটর বিতরণ</p>
+                <h2 className="font-semibold text-foreground text-sm">
+                  {selectedCountry ? `${countryNames[selectedCountry] || selectedCountry} ম্যাপ` : 'বিশ্ব ট্রাফিক ম্যাপ'}
+                </h2>
+                <p className="text-[10px] text-muted-foreground">
+                  {selectedCountry ? 'জেলা/শহর অনুযায়ী ভিজিটর' : 'দেশ অনুযায়ী ভিজিটর বিতরণ'}
+                </p>
               </div>
             </div>
-          </div>
-          <div className="relative p-3 md:p-4">
-            <ComposableMap
-              projectionConfig={{ scale: 147, center: [0, 20] }}
-              style={{ width: '100%', height: 'auto' }}
-            >
-              <ZoomableGroup>
-                <Geographies geography={geoUrl}>
-                  {({ geographies }) =>
-                    geographies.map(geo => {
-                      const count = countryNumericSet[geo.id] || 0;
+
+            {/* Country Search/Select */}
+            <div className="relative">
+              <div className="flex items-center gap-1.5">
+                <div className="relative">
+                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder="দেশ খুঁজুন..."
+                    value={searchQuery}
+                    onChange={e => { setSearchQuery(e.target.value); setShowDropdown(true); }}
+                    onFocus={() => setShowDropdown(true)}
+                    className="pl-8 pr-3 py-2 text-xs rounded-xl border border-[hsl(220,14%,90%)] bg-[hsl(220,14%,97%)] focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 w-44 transition-all"
+                  />
+                </div>
+                {selectedCountry && (
+                  <button
+                    onClick={() => { setSelectedCountry(null); setSearchQuery(''); }}
+                    className="p-2 rounded-xl border border-[hsl(220,14%,90%)] bg-[hsl(220,14%,97%)] hover:bg-red-50 hover:border-red-200 transition-colors"
+                    title="বিশ্ব ম্যাপে ফিরুন"
+                  >
+                    <X className="h-3.5 w-3.5 text-muted-foreground" />
+                  </button>
+                )}
+              </div>
+
+              {/* Dropdown */}
+              <AnimatePresence>
+                {showDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    className="absolute right-0 top-full mt-1 w-52 max-h-56 overflow-y-auto bg-white border border-[hsl(220,14%,90%)] rounded-xl shadow-lg z-50"
+                  >
+                    {/* World option */}
+                    <button
+                      onClick={() => { setSelectedCountry(null); setSearchQuery(''); setShowDropdown(false); }}
+                      className={`w-full text-left px-3 py-2 text-xs hover:bg-primary/5 transition-colors flex items-center gap-2 ${!selectedCountry ? 'bg-primary/5 text-primary font-semibold' : 'text-foreground'}`}
+                    >
+                      <Globe className="h-3.5 w-3.5" /> বিশ্ব ম্যাপ
+                    </button>
+                    <div className="border-t border-[hsl(220,14%,94%)]" />
+                    {filteredCountries.map(c => {
+                      const countForC = countryData.find(cd => cd.code === c.code)?.count || 0;
                       return (
-                        <Geography
-                          key={geo.rsmKey}
-                          geography={geo}
-                          fill={getColor(count)}
-                          stroke="hsl(220,14%,86%)"
-                          strokeWidth={0.5}
-                          style={{
-                            default: { outline: 'none', transition: 'fill 0.2s' },
-                            hover: { outline: 'none', fill: count > 0 ? 'hsl(145,63%,38%)' : 'hsl(220,14%,88%)', cursor: 'pointer', strokeWidth: 0.8, stroke: 'hsl(220,14%,75%)' },
-                            pressed: { outline: 'none' },
-                          }}
-                          onMouseEnter={() => setTooltipContent(`${geo.properties.name || 'Unknown'}: ${count} ভিজিট`)}
-                          onMouseLeave={() => setTooltipContent('')}
-                          onMouseMove={e => {
-                            const rect = (e.target as SVGElement).closest('svg')?.getBoundingClientRect();
-                            if (rect) setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top - 40 });
-                          }}
-                        />
+                        <button
+                          key={c.code}
+                          onClick={() => { setSelectedCountry(c.code); setSearchQuery(''); setShowDropdown(false); }}
+                          className={`w-full text-left px-3 py-2 text-xs hover:bg-primary/5 transition-colors flex items-center justify-between ${selectedCountry === c.code ? 'bg-primary/5 text-primary font-semibold' : 'text-foreground'}`}
+                        >
+                          <span>{c.name}</span>
+                          {countForC > 0 && (
+                            <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-primary/10 text-primary">{countForC}</span>
+                          )}
+                        </button>
                       );
-                    })
-                  }
-                </Geographies>
-              </ZoomableGroup>
-            </ComposableMap>
+                    })}
+                    {filteredCountries.length === 0 && (
+                      <p className="text-xs text-muted-foreground text-center py-3">কোনো দেশ পাওয়া যায়নি</p>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Map */}
+          <div className="relative p-3 md:p-4" onClick={() => setShowDropdown(false)}>
+            {/* Show BD district map when Bangladesh is selected */}
+            {selectedCountry === 'BD' ? (
+              <BdDistrictMap
+                bdCitySet={bdCitySet}
+                getBdDistrictColor={getBdDistrictColor}
+                setTooltipContent={setTooltipContent}
+                setTooltipPos={setTooltipPos}
+              />
+            ) : (
+              <ComposableMap
+                projectionConfig={{ scale: 147, center: selectedCountry ? mapCenter : [0, 20] as [number, number] }}
+                style={{ width: '100%', height: 'auto' }}
+              >
+                <ZoomableGroup center={mapCenter} zoom={mapZoom} minZoom={0.8} maxZoom={50}>
+                  <Geographies geography={geoUrl}>
+                    {({ geographies }) =>
+                      geographies.map(geo => {
+                        const count = countryNumericSet[geo.id] || 0;
+                        const isSelected = selectedCountry && alpha2ToNumeric[selectedCountry] === geo.id;
+                        return (
+                          <Geography
+                            key={geo.rsmKey}
+                            geography={geo}
+                            fill={isSelected ? 'hsl(145,60%,42%)' : getColor(count)}
+                            stroke="hsl(220,10%,75%)"
+                            strokeWidth={isSelected ? 1.2 : 0.6}
+                            style={{
+                              default: { outline: 'none', transition: 'fill 0.2s' },
+                              hover: { outline: 'none', fill: count > 0 ? 'hsl(145,63%,35%)' : 'hsl(220,12%,85%)', cursor: 'pointer', strokeWidth: 1, stroke: 'hsl(220,10%,65%)' },
+                              pressed: { outline: 'none' },
+                            }}
+                            onMouseEnter={() => handleTooltip(geo.properties.name || 'Unknown', count)}
+                            onMouseLeave={() => setTooltipContent('')}
+                            onMouseMove={e => {
+                              const rect = (e.target as SVGElement).closest('svg')?.getBoundingClientRect();
+                              if (rect) setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top - 40 });
+                            }}
+                          />
+                        );
+                      })
+                    }
+                  </Geographies>
+                </ZoomableGroup>
+              </ComposableMap>
+            )}
+
             {tooltipContent && (
               <div
                 className="absolute pointer-events-none z-50 px-3 py-1.5 rounded-lg text-[11px] font-semibold shadow-lg whitespace-nowrap"
@@ -263,59 +425,106 @@ const Dashboard = () => {
               </div>
             )}
           </div>
+
           {/* Legend */}
           <div className="flex flex-wrap items-center gap-3 px-5 pb-4 text-[10px] text-muted-foreground">
             {[
-              { color: 'hsl(220,15%,94%)', label: '0' },
-              { color: 'hsl(145,45%,82%)', label: '1-4' },
-              { color: 'hsl(145,55%,62%)', label: '5-19' },
-              { color: 'hsl(145,60%,45%)', label: '20-49' },
-              { color: 'hsl(145,65%,32%)', label: '50+' },
+              { color: 'hsl(220,12%,92%)', label: '0' },
+              { color: 'hsl(145,50%,72%)', label: '1-4' },
+              { color: 'hsl(145,58%,50%)', label: '5-19' },
+              { color: 'hsl(145,62%,38%)', label: '20-49' },
+              { color: 'hsl(145,68%,26%)', label: '50+' },
             ].map((l, i) => (
               <span key={i} className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded inline-block border border-[hsl(220,14%,90%)]" style={{ background: l.color }} />
+                <span className="w-3 h-3 rounded inline-block border border-[hsl(220,14%,88%)]" style={{ background: l.color }} />
                 {l.label}
               </span>
             ))}
           </div>
         </motion.div>
 
-        {/* Country List */}
+        {/* Country List / City List */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35 }}
           className="bg-white rounded-2xl border border-[hsl(220,14%,92%)] p-5 hover:shadow-sm transition-shadow"
         >
-          <h3 className="font-semibold text-foreground text-sm mb-4">দেশভিত্তিক ট্রাফিক</h3>
-          {countryData.length === 0 ? (
-            <p className="text-muted-foreground text-xs text-center py-8">এখনো কোনো ডাটা নেই</p>
-          ) : (
-            <div className="space-y-3.5 max-h-80 overflow-y-auto pr-1">
-              {countryData.slice(0, 15).map((c, i) => {
-                const maxCount = countryData[0]?.count || 1;
-                const pct = Math.round((c.count / maxCount) * 100);
-                return (
-                  <div key={c.code} className="space-y-1.5">
-                    <div className="flex justify-between items-center text-xs">
-                      <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-md bg-muted flex items-center justify-center text-[9px] font-bold text-muted-foreground">{i + 1}</span>
-                        <span className="font-medium text-foreground">{c.name}</span>
+          <h3 className="font-semibold text-foreground text-sm mb-4 flex items-center gap-2">
+            {selectedCountry ? (
+              <>
+                <MapPin className="h-4 w-4 text-primary" />
+                {countryNames[selectedCountry] || selectedCountry} — জেলা/শহর
+              </>
+            ) : 'দেশভিত্তিক ট্রাফিক'}
+          </h3>
+
+          {selectedCountry ? (
+            /* City/District list */
+            cityData.length === 0 ? (
+              <p className="text-muted-foreground text-xs text-center py-8">এই দেশ থেকে কোনো শহর/জেলার ডাটা নেই</p>
+            ) : (
+              <div className="space-y-3 max-h-80 overflow-y-auto pr-1">
+                {cityData.slice(0, 20).map((c, i) => {
+                  const maxCount = cityData[0]?.count || 1;
+                  const pct = Math.round((c.count / maxCount) * 100);
+                  return (
+                    <div key={c.city} className="space-y-1.5">
+                      <div className="flex justify-between items-center text-xs">
+                        <div className="flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center text-[9px] font-bold text-primary">{i + 1}</span>
+                          <span className="font-medium text-foreground">{c.city}</span>
+                        </div>
+                        <span className="text-muted-foreground font-semibold">{c.count}</span>
                       </div>
-                      <span className="text-muted-foreground font-semibold">{c.count}</span>
+                      <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${pct}%` }}
+                          transition={{ duration: 0.6, delay: i * 0.04 }}
+                          className="h-full rounded-full bg-primary"
+                        />
+                      </div>
                     </div>
-                    <div className="h-1.5 rounded-full bg-muted overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${pct}%` }}
-                        transition={{ duration: 0.6, delay: i * 0.05 }}
-                        className="h-full rounded-full bg-primary"
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )
+          ) : (
+            /* Country list */
+            countryData.length === 0 ? (
+              <p className="text-muted-foreground text-xs text-center py-8">এখনো কোনো ডাটা নেই</p>
+            ) : (
+              <div className="space-y-3.5 max-h-80 overflow-y-auto pr-1">
+                {countryData.slice(0, 15).map((c, i) => {
+                  const maxCount = countryData[0]?.count || 1;
+                  const pct = Math.round((c.count / maxCount) * 100);
+                  return (
+                    <button
+                      key={c.code}
+                      onClick={() => setSelectedCountry(c.code)}
+                      className="w-full space-y-1.5 text-left hover:bg-primary/[0.03] rounded-lg p-1 -m-1 transition-colors"
+                    >
+                      <div className="flex justify-between items-center text-xs">
+                        <div className="flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-md bg-muted flex items-center justify-center text-[9px] font-bold text-muted-foreground">{i + 1}</span>
+                          <span className="font-medium text-foreground">{c.name}</span>
+                        </div>
+                        <span className="text-muted-foreground font-semibold">{c.count}</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${pct}%` }}
+                          transition={{ duration: 0.6, delay: i * 0.05 }}
+                          className="h-full rounded-full bg-primary"
+                        />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )
           )}
         </motion.div>
       </div>
@@ -382,6 +591,57 @@ const Dashboard = () => {
         </motion.div>
       </div>
     </div>
+  );
+};
+
+/* ──── Bangladesh District Map Component ──── */
+const BdDistrictMap = ({
+  bdCitySet,
+  getBdDistrictColor,
+  setTooltipContent,
+  setTooltipPos,
+}: {
+  bdCitySet: Record<string, number>;
+  getBdDistrictColor: (name: string) => string;
+  setTooltipContent: (s: string) => void;
+  setTooltipPos: (p: { x: number; y: number }) => void;
+}) => {
+  return (
+    <ComposableMap
+      projectionConfig={{ scale: 4500, center: [90.35, 23.7] }}
+      style={{ width: '100%', height: 'auto' }}
+      width={500}
+      height={550}
+    >
+      <Geographies geography={bdDistrictGeoUrl}>
+        {({ geographies }) =>
+          geographies.map(geo => {
+            const districtName = geo.properties?.NAME_2 || geo.properties?.name || geo.properties?.NAME || '';
+            const count = bdCitySet[districtName.toLowerCase()] || 0;
+            return (
+              <Geography
+                key={geo.rsmKey}
+                geography={geo}
+                fill={getBdDistrictColor(districtName)}
+                stroke="hsl(145,30%,45%)"
+                strokeWidth={0.8}
+                style={{
+                  default: { outline: 'none', transition: 'fill 0.2s' },
+                  hover: { outline: 'none', fill: 'hsl(145,63%,38%)', cursor: 'pointer', strokeWidth: 1.2, stroke: 'hsl(145,40%,35%)' },
+                  pressed: { outline: 'none' },
+                }}
+                onMouseEnter={() => setTooltipContent(`${districtName}: ${count} ভিজিট`)}
+                onMouseLeave={() => setTooltipContent('')}
+                onMouseMove={e => {
+                  const rect = (e.target as SVGElement).closest('svg')?.getBoundingClientRect();
+                  if (rect) setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top - 40 });
+                }}
+              />
+            );
+          })
+        }
+      </Geographies>
+    </ComposableMap>
   );
 };
 
