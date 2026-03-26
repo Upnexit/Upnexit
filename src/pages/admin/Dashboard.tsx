@@ -594,18 +594,42 @@ const Dashboard = () => {
   );
 };
 
+/* Division color palette for visual distinction */
+const divisionColors: Record<string, string> = {
+  'Barisal': 'hsl(145,50%,78%)',
+  'Chittagong': 'hsl(175,45%,75%)',
+  'Dhaka': 'hsl(200,50%,78%)',
+  'Khulna': 'hsl(80,40%,78%)',
+  'Mymensingh': 'hsl(30,50%,80%)',
+  'Rajshahi': 'hsl(280,35%,80%)',
+  'Rangpur': 'hsl(340,40%,82%)',
+  'Sylhet': 'hsl(50,50%,78%)',
+};
+
 /* ──── Bangladesh District Map Component ──── */
 const BdDistrictMap = ({
   bdCitySet,
-  getBdDistrictColor,
   setTooltipContent,
   setTooltipPos,
 }: {
   bdCitySet: Record<string, number>;
-  getBdDistrictColor: (name: string) => string;
   setTooltipContent: (s: string) => void;
   setTooltipPos: (p: { x: number; y: number }) => void;
 }) => {
+  const getDistrictFill = (districtName: string, divisionName: string) => {
+    const n = districtName.toLowerCase();
+    const count = bdCitySet[n] || 0;
+    if (count > 0) {
+      // Visited districts get deeper green shades
+      if (count < 3) return 'hsl(145,55%,60%)';
+      if (count < 10) return 'hsl(145,60%,45%)';
+      if (count < 25) return 'hsl(145,65%,35%)';
+      return 'hsl(145,70%,25%)';
+    }
+    // Non-visited: color by division for visual distinction
+    return divisionColors[divisionName] || 'hsl(220,12%,90%)';
+  };
+
   return (
     <ComposableMap
       projectionConfig={{ scale: 4500, center: [90.35, 23.7] }}
@@ -616,21 +640,22 @@ const BdDistrictMap = ({
       <Geographies geography={bdDistrictGeoUrl}>
         {({ geographies }) =>
           geographies.map(geo => {
-            const districtName = geo.properties?.NAME_2 || geo.properties?.name || geo.properties?.NAME || '';
+            const districtName = geo.properties?.NAME_2 || '';
+            const divisionName = geo.properties?.NAME_1 || '';
             const count = bdCitySet[districtName.toLowerCase()] || 0;
             return (
               <Geography
                 key={geo.rsmKey}
                 geography={geo}
-                fill={getBdDistrictColor(districtName)}
-                stroke="hsl(145,30%,45%)"
-                strokeWidth={0.8}
+                fill={getDistrictFill(districtName, divisionName)}
+                stroke="hsl(220,15%,65%)"
+                strokeWidth={0.6}
                 style={{
                   default: { outline: 'none', transition: 'fill 0.2s' },
-                  hover: { outline: 'none', fill: 'hsl(145,63%,38%)', cursor: 'pointer', strokeWidth: 1.2, stroke: 'hsl(145,40%,35%)' },
+                  hover: { outline: 'none', fill: 'hsl(145,63%,40%)', cursor: 'pointer', strokeWidth: 1, stroke: 'hsl(220,15%,50%)' },
                   pressed: { outline: 'none' },
                 }}
-                onMouseEnter={() => setTooltipContent(`${districtName}: ${count} ভিজিট`)}
+                onMouseEnter={() => setTooltipContent(`${districtName} (${divisionName}): ${count} ভিজিট`)}
                 onMouseLeave={() => setTooltipContent('')}
                 onMouseMove={e => {
                   const rect = (e.target as SVGElement).closest('svg')?.getBoundingClientRect();
