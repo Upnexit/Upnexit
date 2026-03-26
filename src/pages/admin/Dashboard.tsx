@@ -608,12 +608,19 @@ const BdDistrictMap = ({
   setTooltipContent: (s: string) => void;
   setTooltipPos: (p: { x: number; y: number }) => void;
 }) => {
-  const getDistrictFill = (districtName: string, divisionName: string) => {
+  const [selectedDistrict, setSelectedDistrict] = useState<{
+    name: string;
+    division: string;
+    count: number;
+    geo: any;
+  } | null>(null);
+
+  const getDistrictFill = (districtName: string, divisionName: string, isSelected: boolean) => {
+    if (isSelected) return 'hsl(200,70%,50%)';
     const n = districtName.toLowerCase();
     const count = bdCitySet[n] || 0;
     const baseColor = divisionColors[divisionName] || 'hsl(220,12%,85%)';
     if (count > 0) {
-      // Darken the division color based on visitor density
       if (count < 3) return 'hsl(145,55%,55%)';
       if (count < 10) return 'hsl(145,62%,42%)';
       if (count < 25) return 'hsl(145,68%,32%)';
@@ -622,47 +629,175 @@ const BdDistrictMap = ({
     return baseColor;
   };
 
+  // Upazilas data per district (key districts with known upazilas)
+  const districtUpazilas: Record<string, string[]> = {
+    'dhaka': ['ধানমন্ডি', 'গুলশান', 'মিরপুর', 'মোহাম্মদপুর', 'উত্তরা', 'সাভার', 'দোহার', 'নবাবগঞ্জ', 'কেরানীগঞ্জ'],
+    'chittagong': ['পটিয়া', 'সীতাকুণ্ড', 'মিরসরাই', 'হাটহাজারী', 'সন্দ্বীপ', 'আনোয়ারা', 'বাঁশখালী', 'চন্দনাইশ', 'রাঙ্গুনিয়া'],
+    'sylhet': ['বিয়ানীবাজার', 'গোলাপগঞ্জ', 'জৈন্তাপুর', 'কানাইঘাট', 'কোম্পানীগঞ্জ', 'দক্ষিণ সুরমা', 'বালাগঞ্জ'],
+    'rajshahi': ['পবা', 'বাগমারা', 'চারঘাট', 'দুর্গাপুর', 'গোদাগাড়ী', 'মোহনপুর', 'পুঠিয়া', 'তানোর'],
+    'khulna': ['দাকোপ', 'ডুমুরিয়া', 'কয়রা', 'পাইকগাছা', 'ফুলতলা', 'তেরখাদা', 'দিঘলিয়া', 'বটিয়াঘাটা'],
+    'barisal': ['বাকেরগঞ্জ', 'বাবুগঞ্জ', 'বানারীপাড়া', 'গৌরনদী', 'আগৈলঝাড়া', 'মুলাদী', 'মেহেন্দিগঞ্জ', 'হিজলা', 'উজিরপুর'],
+    'rangpur': ['পীরগঞ্জ', 'গঙ্গাচড়া', 'তারাগঞ্জ', 'কাউনিয়া', 'বদরগঞ্জ', 'মিঠাপুকুর', 'পীরগাছা'],
+    'mymensingh': ['ত্রিশাল', 'ভালুকা', 'ফুলপুর', 'হালুয়াঘাট', 'ঈশ্বরগঞ্জ', 'গফরগাঁও', 'নান্দাইল', 'ধোবাউড়া'],
+    'comilla': ['দেবীদ্বার', 'বরুড়া', 'চান্দিনা', 'চৌদ্দগ্রাম', 'দাউদকান্দি', 'হোমনা', 'লাকসাম', 'মুরাদনগর', 'নাঙ্গলকোট'],
+    'gazipur': ['কালীগঞ্জ', 'কালিয়াকৈর', 'কাপাসিয়া', 'শ্রীপুর', 'টঙ্গী'],
+    'narayanganj': ['আড়াইহাজার', 'বন্দর', 'রূপগঞ্জ', 'সোনারগাঁও'],
+    'cox\'s bazar': ['চকরিয়া', 'কুতুবদিয়া', 'মহেশখালী', 'পেকুয়া', 'রামু', 'টেকনাফ', 'উখিয়া'],
+    'jessore': ['অভয়নগর', 'বাঘারপাড়া', 'চৌগাছা', 'ঝিকরগাছা', 'কেশবপুর', 'মণিরামপুর', 'শার্শা'],
+    'bogra': ['আদমদিঘী', 'ধুনট', 'দুপচাঁচিয়া', 'গাবতলী', 'কাহালু', 'নন্দীগ্রাম', 'শাজাহানপুর', 'শেরপুর', 'শিবগঞ্জ', 'সোনাতলা', 'সারিয়াকান্দি'],
+    'tangail': ['বাসাইল', 'ভূঞাপুর', 'দেলদুয়ার', 'ঘাটাইল', 'গোপালপুর', 'কালিহাতী', 'মধুপুর', 'মির্জাপুর', 'নাগরপুর', 'সখিপুর', 'ধনবাড়ী'],
+  };
+
   return (
-    <div className="flex flex-col items-center">
-      <ComposableMap
-        projectionConfig={{ scale: 4800, center: [90.35, 23.7] }}
-        style={{ width: '100%', height: 'auto', maxHeight: '420px' }}
-        width={500}
-        height={580}
-      >
-        <Geographies geography={bdDistrictGeoUrl}>
-          {({ geographies }) =>
-            geographies.map(geo => {
-              const districtName = geo.properties?.NAME_2 || '';
-              const divisionName = geo.properties?.NAME_1 || '';
-              const count = bdCitySet[districtName.toLowerCase()] || 0;
-              return (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill={getDistrictFill(districtName, divisionName)}
-                  stroke="hsl(220,20%,40%)"
-                  strokeWidth={0.5}
-                  style={{
-                    default: { outline: 'none', transition: 'fill 0.25s ease' },
-                    hover: { outline: 'none', fill: 'hsl(200,70%,50%)', cursor: 'pointer', strokeWidth: 0.8, stroke: 'hsl(220,20%,30%)' },
-                    pressed: { outline: 'none' },
-                  }}
-                  onMouseEnter={() => setTooltipContent(`${districtName} (${divisionName} বিভাগ): ${count} ভিজিট`)}
-                  onMouseLeave={() => setTooltipContent('')}
-                  onMouseMove={e => {
-                    const rect = (e.target as SVGElement).closest('svg')?.getBoundingClientRect();
-                    if (rect) setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top - 40 });
-                  }}
-                />
-              );
-            })
-          }
-        </Geographies>
-      </ComposableMap>
+    <div className="flex flex-col">
+      <div className="flex gap-0">
+        {/* Left: Main BD Map */}
+        <div className={`transition-all duration-300 ${selectedDistrict ? 'w-[58%]' : 'w-full'} flex justify-center`}>
+          <ComposableMap
+            projectionConfig={{ scale: 4800, center: [90.35, 23.7] }}
+            style={{ width: '100%', height: 'auto', maxHeight: '440px' }}
+            width={500}
+            height={600}
+          >
+            <Geographies geography={bdDistrictGeoUrl}>
+              {({ geographies }) =>
+                geographies.map(geo => {
+                  const districtName = geo.properties?.NAME_2 || '';
+                  const divisionName = geo.properties?.NAME_1 || '';
+                  const count = bdCitySet[districtName.toLowerCase()] || 0;
+                  const isSelected = selectedDistrict?.name === districtName;
+                  return (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill={getDistrictFill(districtName, divisionName, isSelected)}
+                      stroke="hsl(220,20%,40%)"
+                      strokeWidth={isSelected ? 1.2 : 0.5}
+                      style={{
+                        default: { outline: 'none', transition: 'fill 0.25s ease' },
+                        hover: { outline: 'none', fill: 'hsl(200,65%,55%)', cursor: 'pointer', strokeWidth: 0.8, stroke: 'hsl(220,20%,30%)' },
+                        pressed: { outline: 'none' },
+                      }}
+                      onClick={() => setSelectedDistrict({ name: districtName, division: divisionName, count, geo })}
+                      onMouseEnter={() => setTooltipContent(`${districtName} (${divisionName}): ${count} ভিজিট`)}
+                      onMouseLeave={() => setTooltipContent('')}
+                      onMouseMove={e => {
+                        const rect = (e.target as SVGElement).closest('svg')?.getBoundingClientRect();
+                        if (rect) setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top - 40 });
+                      }}
+                    />
+                  );
+                })
+              }
+            </Geographies>
+          </ComposableMap>
+        </div>
+
+        {/* Right: Selected District Detail */}
+        <AnimatePresence>
+          {selectedDistrict && (
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              animate={{ opacity: 1, width: '42%' }}
+              exit={{ opacity: 0, width: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden border-l border-[hsl(220,14%,90%)]"
+            >
+              <div className="p-3 h-full flex flex-col">
+                {/* District Header */}
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <h3 className="text-sm font-bold text-foreground">{selectedDistrict.name}</h3>
+                    <p className="text-[10px] text-muted-foreground">{selectedDistrict.division} বিভাগ</p>
+                  </div>
+                  <button
+                    onClick={() => setSelectedDistrict(null)}
+                    className="p-1.5 rounded-lg hover:bg-red-50 transition-colors"
+                  >
+                    <X className="h-3.5 w-3.5 text-muted-foreground" />
+                  </button>
+                </div>
+
+                {/* Zoomed District Map */}
+                <div className="bg-[hsl(220,14%,97%)] rounded-xl border border-[hsl(220,14%,90%)] overflow-hidden mb-3">
+                  <ComposableMap
+                    projectionConfig={{
+                      scale: 28000,
+                      center: selectedDistrict.geo?.geometry
+                        ? getGeoCentroid(selectedDistrict.geo.geometry)
+                        : [90.35, 23.7],
+                    }}
+                    style={{ width: '100%', height: 'auto' }}
+                    width={300}
+                    height={260}
+                  >
+                    <Geographies geography={bdDistrictGeoUrl}>
+                      {({ geographies }) =>
+                        geographies
+                          .filter(geo => geo.properties?.NAME_2 === selectedDistrict.name)
+                          .map(geo => (
+                            <Geography
+                              key={geo.rsmKey}
+                              geography={geo}
+                              fill={divisionColors[selectedDistrict.division] || 'hsl(200,60%,55%)'}
+                              stroke="hsl(220,20%,35%)"
+                              strokeWidth={1}
+                              style={{
+                                default: { outline: 'none' },
+                                hover: { outline: 'none' },
+                                pressed: { outline: 'none' },
+                              }}
+                            />
+                          ))
+                      }
+                    </Geographies>
+                  </ComposableMap>
+                </div>
+
+                {/* District Stats */}
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-primary/5 rounded-lg p-2.5 text-center">
+                    <p className="text-lg font-bold text-primary">{selectedDistrict.count}</p>
+                    <p className="text-[9px] text-muted-foreground font-medium">মোট ভিজিটর</p>
+                  </div>
+                  <div className="bg-blue-50 rounded-lg p-2.5 text-center">
+                    <p className="text-lg font-bold text-blue-600">
+                      {districtUpazilas[selectedDistrict.name.toLowerCase()]?.length || '—'}
+                    </p>
+                    <p className="text-[9px] text-muted-foreground font-medium">উপজেলা</p>
+                  </div>
+                </div>
+
+                {/* Upazilas List */}
+                <div className="flex-1 overflow-y-auto">
+                  <p className="text-[10px] font-semibold text-muted-foreground mb-2 uppercase tracking-wider">উপজেলাসমূহ</p>
+                  {districtUpazilas[selectedDistrict.name.toLowerCase()] ? (
+                    <div className="space-y-1">
+                      {districtUpazilas[selectedDistrict.name.toLowerCase()]!.map((upazila, i) => (
+                        <motion.div
+                          key={upazila}
+                          initial={{ opacity: 0, x: 10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.03 }}
+                          className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white border border-[hsl(220,14%,92%)] hover:border-primary/30 transition-colors text-xs"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full" style={{ background: divisionColors[selectedDistrict.division] || 'hsl(200,60%,55%)' }} />
+                          <span className="text-foreground font-medium">{upazila}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-[10px] text-muted-foreground text-center py-4">উপজেলার তথ্য শীঘ্রই আসছে</p>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* Division Legend */}
-      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 mt-2 text-[10px] text-muted-foreground">
+      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 mt-2 px-4 pb-2 text-[10px] text-muted-foreground">
         {Object.entries(divisionColors).map(([division, color]) => (
           <span key={division} className="flex items-center gap-1.5">
             <span className="w-3 h-3 rounded-sm inline-block border border-black/10" style={{ background: color }} />
@@ -673,5 +808,23 @@ const BdDistrictMap = ({
     </div>
   );
 };
+
+/* Helper: compute centroid of a GeoJSON geometry */
+function getGeoCentroid(geometry: any): [number, number] {
+  try {
+    const coords: number[][] = [];
+    const extract = (c: any) => {
+      if (typeof c[0] === 'number') coords.push(c);
+      else c.forEach(extract);
+    };
+    extract(geometry.coordinates);
+    if (coords.length === 0) return [90.35, 23.7];
+    const lng = coords.reduce((s, c) => s + c[0], 0) / coords.length;
+    const lat = coords.reduce((s, c) => s + c[1], 0) / coords.length;
+    return [lng, lat];
+  } catch {
+    return [90.35, 23.7];
+  }
+}
 
 export default Dashboard;
