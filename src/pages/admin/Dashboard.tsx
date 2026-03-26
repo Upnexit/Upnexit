@@ -374,7 +374,6 @@ const Dashboard = () => {
             {selectedCountry === 'BD' ? (
               <BdDistrictMap
                 bdCitySet={bdCitySet}
-                getBdDistrictColor={getBdDistrictColor}
                 setTooltipContent={setTooltipContent}
                 setTooltipPos={setTooltipPos}
               />
