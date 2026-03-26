@@ -7,7 +7,7 @@ import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simp
 import { motion, AnimatePresence } from 'framer-motion';
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
-const bdDistrictGeoUrl = "https://raw.githubusercontent.com/nishatsalsabil/Bangladesh-geojson/master/bd-districts.json";
+const bdDistrictGeoUrl = "/bd-districts.json";
 
 const countryNames: Record<string, string> = {
   BD: 'Bangladesh', US: 'United States', IN: 'India', GB: 'United Kingdom', CA: 'Canada',
