@@ -586,16 +586,16 @@ const Dashboard = () => {
   );
 };
 
-/* Division color palette for visual distinction */
+/* Division color palette – matches reference image with bold, distinct colors */
 const divisionColors: Record<string, string> = {
-  'Barisal': 'hsl(145,50%,78%)',
-  'Chittagong': 'hsl(175,45%,75%)',
-  'Dhaka': 'hsl(200,50%,78%)',
-  'Khulna': 'hsl(80,40%,78%)',
-  'Mymensingh': 'hsl(30,50%,80%)',
-  'Rajshahi': 'hsl(280,35%,80%)',
-  'Rangpur': 'hsl(340,40%,82%)',
-  'Sylhet': 'hsl(50,50%,78%)',
+  'Barisal': 'hsl(168,55%,48%)',
+  'Chittagong': 'hsl(24,78%,58%)',
+  'Dhaka': 'hsl(200,65%,52%)',
+  'Khulna': 'hsl(145,55%,45%)',
+  'Mymensingh': 'hsl(280,45%,58%)',
+  'Rajshahi': 'hsl(46,80%,55%)',
+  'Rangpur': 'hsl(340,55%,55%)',
+  'Sylhet': 'hsl(95,45%,50%)',
 };
 
 /* ──── Bangladesh District Map Component ──── */
@@ -611,54 +611,66 @@ const BdDistrictMap = ({
   const getDistrictFill = (districtName: string, divisionName: string) => {
     const n = districtName.toLowerCase();
     const count = bdCitySet[n] || 0;
+    const baseColor = divisionColors[divisionName] || 'hsl(220,12%,85%)';
     if (count > 0) {
-      // Visited districts get deeper green shades
-      if (count < 3) return 'hsl(145,55%,60%)';
-      if (count < 10) return 'hsl(145,60%,45%)';
-      if (count < 25) return 'hsl(145,65%,35%)';
-      return 'hsl(145,70%,25%)';
+      // Darken the division color based on visitor density
+      if (count < 3) return 'hsl(145,55%,55%)';
+      if (count < 10) return 'hsl(145,62%,42%)';
+      if (count < 25) return 'hsl(145,68%,32%)';
+      return 'hsl(145,72%,22%)';
     }
-    // Non-visited: color by division for visual distinction
-    return divisionColors[divisionName] || 'hsl(220,12%,90%)';
+    return baseColor;
   };
 
   return (
-    <ComposableMap
-      projectionConfig={{ scale: 4500, center: [90.35, 23.7] }}
-      style={{ width: '100%', height: 'auto' }}
-      width={500}
-      height={550}
-    >
-      <Geographies geography={bdDistrictGeoUrl}>
-        {({ geographies }) =>
-          geographies.map(geo => {
-            const districtName = geo.properties?.NAME_2 || '';
-            const divisionName = geo.properties?.NAME_1 || '';
-            const count = bdCitySet[districtName.toLowerCase()] || 0;
-            return (
-              <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                fill={getDistrictFill(districtName, divisionName)}
-                stroke="hsl(220,15%,65%)"
-                strokeWidth={0.6}
-                style={{
-                  default: { outline: 'none', transition: 'fill 0.2s' },
-                  hover: { outline: 'none', fill: 'hsl(145,63%,40%)', cursor: 'pointer', strokeWidth: 1, stroke: 'hsl(220,15%,50%)' },
-                  pressed: { outline: 'none' },
-                }}
-                onMouseEnter={() => setTooltipContent(`${districtName} (${divisionName}): ${count} ভিজিট`)}
-                onMouseLeave={() => setTooltipContent('')}
-                onMouseMove={e => {
-                  const rect = (e.target as SVGElement).closest('svg')?.getBoundingClientRect();
-                  if (rect) setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top - 40 });
-                }}
-              />
-            );
-          })
-        }
-      </Geographies>
-    </ComposableMap>
+    <div className="flex flex-col items-center">
+      <ComposableMap
+        projectionConfig={{ scale: 4800, center: [90.35, 23.7] }}
+        style={{ width: '100%', height: 'auto', maxHeight: '420px' }}
+        width={500}
+        height={580}
+      >
+        <Geographies geography={bdDistrictGeoUrl}>
+          {({ geographies }) =>
+            geographies.map(geo => {
+              const districtName = geo.properties?.NAME_2 || '';
+              const divisionName = geo.properties?.NAME_1 || '';
+              const count = bdCitySet[districtName.toLowerCase()] || 0;
+              return (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  fill={getDistrictFill(districtName, divisionName)}
+                  stroke="hsl(220,20%,40%)"
+                  strokeWidth={0.5}
+                  style={{
+                    default: { outline: 'none', transition: 'fill 0.25s ease' },
+                    hover: { outline: 'none', fill: 'hsl(200,70%,50%)', cursor: 'pointer', strokeWidth: 0.8, stroke: 'hsl(220,20%,30%)' },
+                    pressed: { outline: 'none' },
+                  }}
+                  onMouseEnter={() => setTooltipContent(`${districtName} (${divisionName} বিভাগ): ${count} ভিজিট`)}
+                  onMouseLeave={() => setTooltipContent('')}
+                  onMouseMove={e => {
+                    const rect = (e.target as SVGElement).closest('svg')?.getBoundingClientRect();
+                    if (rect) setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top - 40 });
+                  }}
+                />
+              );
+            })
+          }
+        </Geographies>
+      </ComposableMap>
+
+      {/* Division Legend */}
+      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 mt-2 text-[10px] text-muted-foreground">
+        {Object.entries(divisionColors).map(([division, color]) => (
+          <span key={division} className="flex items-center gap-1.5">
+            <span className="w-3 h-3 rounded-sm inline-block border border-black/10" style={{ background: color }} />
+            {division}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 };
 
