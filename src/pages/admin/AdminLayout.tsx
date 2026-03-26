@@ -52,39 +52,47 @@ const AdminLayout = () => {
   const mainML = collapsed ? 'lg:ml-[72px]' : 'lg:ml-[260px]';
 
   return (
-    <div className="min-h-screen bg-[hsl(220,14%,96%)] flex">
+    <div className="min-h-screen bg-[hsl(140,8%,96%)] flex">
       {/* ──── Desktop Sidebar ──── */}
       <motion.aside
         layout
         className={`${sidebarW} flex-col fixed h-full z-50 hidden lg:flex overflow-hidden transition-all duration-300`}
-        style={{ background: 'hsl(220, 20%, 14%)' }}
+        style={{
+          background: 'linear-gradient(170deg, hsl(145,55%,28%) 0%, hsl(150,50%,22%) 40%, hsl(148,45%,18%) 100%)',
+        }}
       >
+        {/* Decorative glow overlays */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-[0.08]" style={{ background: 'radial-gradient(circle, hsl(145,70%,65%), transparent 70%)' }} />
+          <div className="absolute bottom-10 -left-10 w-40 h-40 rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, hsl(170,60%,55%), transparent 70%)' }} />
+        </div>
+
         {/* Brand */}
-        <div className="px-4 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid hsla(220,20%,25%,0.6)' }}>
+        <div className="relative px-4 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid hsla(145,40%,50%,0.15)' }}>
           <div className="flex items-center gap-2.5 overflow-hidden">
             <div className="relative shrink-0">
-              <img src="/logo.png" alt="Logo" className="w-9 h-9 rounded-xl ring-1 ring-white/10" />
-              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[hsl(220,20%,14%)]" />
+              <img src="/logo.png" alt="Logo" className="w-9 h-9 rounded-xl shadow-md ring-1 ring-white/20" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-300 border-2 border-[hsl(148,45%,18%)]" />
             </div>
             <AnimatePresence>
               {!collapsed && (
                 <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} className="overflow-hidden whitespace-nowrap">
                   <span className="font-bold text-white text-sm tracking-tight">Upnex IT</span>
-                  <p className="text-[10px] text-[hsla(220,15%,60%,0.9)]">Admin Panel</p>
+                  <p className="text-[10px] text-white/50">Admin Panel</p>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
           <button
             onClick={() => setCollapsed(c => !c)}
-            className="p-1.5 rounded-lg hover:bg-white/5 transition-colors text-[hsla(220,15%,55%,0.8)]"
+            className="p-1.5 rounded-lg transition-colors text-white/50 hover:text-white/80 hover:bg-white/[0.08]"
           >
             {collapsed ? <PanelLeft className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
           </button>
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 px-2.5 py-3 space-y-4 overflow-y-auto scrollbar-thin">
+        <nav className="relative flex-1 px-2.5 py-3 space-y-4 overflow-y-auto">
           {sections.map((sec, si) => (
             <div key={si}>
               <AnimatePresence>
@@ -93,7 +101,7 @@ const AdminLayout = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="px-3 pb-1.5 text-[9px] font-semibold uppercase tracking-[0.15em] text-[hsla(220,15%,48%,0.7)]"
+                    className="px-3 pb-1.5 text-[9px] font-semibold uppercase tracking-[0.15em] text-white/30"
                   >
                     {sec.title}
                   </motion.p>
@@ -109,13 +117,14 @@ const AdminLayout = () => {
         </nav>
 
         {/* Footer */}
-        <div className="px-2.5 py-3 space-y-0.5" style={{ borderTop: '1px solid hsla(220,20%,25%,0.6)' }}>
+        <div className="relative px-2.5 py-3 space-y-0.5" style={{ borderTop: '1px solid hsla(145,40%,50%,0.15)' }}>
           <SidebarFooterLink to="/" icon={ArrowLeft} label="ওয়েবসাইটে ফিরুন" collapsed={collapsed} />
           <button
             onClick={() => signOut()}
             className={`flex items-center gap-2.5 w-full rounded-xl text-[13px] font-medium transition-all duration-200 group
               ${collapsed ? 'px-0 py-2.5 justify-center' : 'px-3 py-2.5'}
-              text-red-400/80 hover:bg-red-500/10 hover:text-red-400`}
+              text-red-300/80 hover:text-red-300 hover:bg-red-400/10`}
+            style={{ backdropFilter: 'blur(4px)' }}
           >
             <LogOut className="h-4 w-4 shrink-0 group-hover:translate-x-0.5 transition-transform" />
             <AnimatePresence>
@@ -128,17 +137,23 @@ const AdminLayout = () => {
       </motion.aside>
 
       {/* ──── Mobile Top Header ──── */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 px-4 py-3" style={{ background: 'hsla(220,20%,10%,0.97)', backdropFilter: 'blur(16px)' }}>
+      <div
+        className="lg:hidden fixed top-0 left-0 right-0 z-50 px-4 py-3"
+        style={{
+          background: 'linear-gradient(135deg, hsla(145,55%,25%,0.97), hsla(150,50%,20%,0.97))',
+          backdropFilter: 'blur(16px)',
+        }}
+      >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="Logo" className="w-8 h-8 rounded-lg ring-1 ring-white/10" />
+            <img src="/logo.png" alt="Logo" className="w-8 h-8 rounded-lg ring-1 ring-white/20" />
             <span className="font-bold text-sm text-white tracking-tight">Admin Panel</span>
           </div>
           <div className="flex items-center gap-1">
             <Link to="/" className="p-2 rounded-lg text-white/60 hover:text-white/90 transition-colors">
               <ArrowLeft className="h-4 w-4" />
             </Link>
-            <button onClick={() => signOut()} className="p-2 rounded-lg text-red-400/80 hover:text-red-400 transition-colors">
+            <button onClick={() => signOut()} className="p-2 rounded-lg text-red-300/80 hover:text-red-300 transition-colors">
               <LogOut className="h-4 w-4" />
             </button>
           </div>
@@ -149,16 +164,23 @@ const AdminLayout = () => {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 px-3 pb-3 pt-1">
         <div
           className="rounded-2xl shadow-xl px-1 py-2 flex items-center justify-around overflow-x-auto"
-          style={{ background: 'hsla(220,20%,10%,0.97)', backdropFilter: 'blur(16px)', border: '1px solid hsla(220,20%,25%,0.4)' }}
+          style={{
+            background: 'linear-gradient(135deg, hsla(145,55%,22%,0.97), hsla(150,50%,18%,0.97))',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid hsla(145,40%,50%,0.15)',
+          }}
         >
           {navItems.slice(0, 7).map(item => {
             const active = location.pathname === item.path;
             return (
               <Link key={item.path} to={item.path} className="flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-xl min-w-0">
-                <div className={`p-1.5 rounded-lg transition-all ${active ? 'bg-primary/20' : ''}`}>
-                  <item.icon className="h-4 w-4" style={{ color: active ? 'hsl(145, 70%, 55%)' : 'hsla(220, 15%, 55%, 0.7)' }} />
+                <div
+                  className="p-1.5 rounded-lg transition-all"
+                  style={active ? { background: 'hsla(0,0%,100%,0.15)', backdropFilter: 'blur(8px)' } : {}}
+                >
+                  <item.icon className="h-4 w-4" style={{ color: active ? 'white' : 'hsla(145,30%,80%,0.5)' }} />
                 </div>
-                <span className="text-[9px] font-medium leading-none" style={{ color: active ? 'white' : 'hsla(220, 15%, 55%, 0.7)' }}>
+                <span className="text-[9px] font-medium leading-none" style={{ color: active ? 'white' : 'hsla(145,30%,80%,0.5)' }}>
                   {item.shortLabel}
                 </span>
               </Link>
@@ -177,42 +199,61 @@ const AdminLayout = () => {
   );
 };
 
-/* ──── Sidebar Nav Item ──── */
+/* ──── Sidebar Nav Item with glass effect ──── */
 const SidebarNavItem = ({ item, currentPath, collapsed }: { item: typeof navItems[0]; currentPath: string; collapsed: boolean }) => {
   const active = currentPath === item.path;
   return (
     <Link
       to={item.path}
       className={`relative flex items-center gap-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 group
-        ${collapsed ? 'px-0 py-2.5 justify-center' : 'px-3 py-2.5'}
-        ${active
-          ? 'bg-primary/15 text-white shadow-[0_2px_8px_hsla(145,60%,30%,0.15)]'
-          : 'text-[hsla(220,15%,65%,0.85)] hover:bg-white/[0.04] hover:text-white/90'
-        }`}
+        ${collapsed ? 'px-0 py-2.5 justify-center' : 'px-3 py-2.5'}`}
+      style={
+        active
+          ? {
+              background: 'hsla(0,0%,100%,0.15)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              color: 'white',
+              boxShadow: '0 2px 12px hsla(145,60%,20%,0.25), inset 0 1px 0 hsla(0,0%,100%,0.1)',
+            }
+          : { color: 'hsla(145,30%,85%,0.75)' }
+      }
+      onMouseEnter={(e) => {
+        if (!active) {
+          e.currentTarget.style.background = 'hsla(0,0%,100%,0.08)';
+          e.currentTarget.style.backdropFilter = 'blur(8px)';
+          e.currentTarget.style.color = 'white';
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (!active) {
+          e.currentTarget.style.background = 'transparent';
+          e.currentTarget.style.backdropFilter = 'none';
+          e.currentTarget.style.color = 'hsla(145,30%,85%,0.75)';
+        }
+      }}
     >
       {active && (
         <motion.span
-          layoutId="sidebar-active"
-          className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-primary"
+          layoutId="sidebar-active-pill"
+          className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-white/80"
           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         />
       )}
       <item.icon className={`h-[17px] w-[17px] shrink-0 transition-transform duration-200 ${!active ? 'group-hover:scale-110' : ''}`} />
       <AnimatePresence>
         {!collapsed && (
-          <motion.span
-            initial={{ opacity: 0, x: -6 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -6 }}
-            className="flex-1 truncate"
-          >
+          <motion.span initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} className="flex-1 truncate">
             {item.label}
           </motion.span>
         )}
       </AnimatePresence>
-      {!collapsed && active && <ChevronRight className="h-3.5 w-3.5 opacity-50 shrink-0" />}
+      {!collapsed && active && <ChevronRight className="h-3.5 w-3.5 opacity-60 shrink-0" />}
       {collapsed && (
-        <div className="absolute left-full ml-2 px-2.5 py-1 rounded-lg bg-[hsl(220,20%,20%)] text-white text-xs font-medium whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity shadow-lg z-50">
+        <div
+          className="absolute left-full ml-2 px-2.5 py-1.5 rounded-lg text-white text-xs font-medium whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity shadow-lg z-50"
+          style={{ background: 'hsla(145,50%,22%,0.95)', backdropFilter: 'blur(8px)', border: '1px solid hsla(145,40%,50%,0.2)' }}
+        >
           {item.label}
         </div>
       )}
@@ -226,7 +267,9 @@ const SidebarFooterLink = ({ to, icon: Icon, label, collapsed }: { to: string; i
     to={to}
     className={`flex items-center gap-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 group
       ${collapsed ? 'px-0 py-2.5 justify-center' : 'px-3 py-2.5'}
-      text-[hsla(220,15%,60%,0.8)] hover:bg-white/[0.04] hover:text-white/80`}
+      text-white/50 hover:text-white/80`}
+    onMouseEnter={(e) => { e.currentTarget.style.background = 'hsla(0,0%,100%,0.06)'; e.currentTarget.style.backdropFilter = 'blur(6px)'; }}
+    onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.backdropFilter = 'none'; }}
   >
     <Icon className="h-4 w-4 shrink-0 group-hover:-translate-x-0.5 transition-transform" />
     <AnimatePresence>
