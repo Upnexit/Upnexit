@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -27,6 +28,15 @@ const Order = () => {
   const { lang } = useLanguage();
   const isBn = lang === 'bn';
   const [searchParams] = useSearchParams();
+  const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate(`/login?redirect=${encodeURIComponent('/order?' + searchParams.toString())}`);
+    }
+  }, [user, authLoading, navigate, searchParams]);
   const { toast } = useToast();
 
   const service = searchParams.get('service') || 'school';
