@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import { Menu, Globe, Home, Briefcase, Users, MessageSquare, User, LogIn } from 'lucide-react';
+import { Menu, Globe, Home, Briefcase, Users, MessageSquare, User, LogIn, LayoutDashboard } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
@@ -32,6 +32,16 @@ const Navbar = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  // Bottom nav: 2 left, center dashboard, 2 right
+  const leftNav = [
+    { label: 'Home', href: '/', icon: Home },
+    { label: 'Services', href: '/services', icon: Briefcase },
+  ];
+  const rightNav = [
+    { label: 'About', href: '/about', icon: Users },
+    { label: 'Contact', href: '/contact', icon: MessageSquare },
+  ];
 
   return (
     <>
@@ -133,6 +143,24 @@ const Navbar = () => {
                   {l.label}
                 </Link>
               ))}
+
+              {/* Dashboard link in sidebar */}
+              <Link
+                to={user ? '/dashboard' : '/login'}
+                onClick={() => setOpen(false)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                  isActive('/dashboard')
+                    ? 'text-primary bg-primary/10 font-semibold'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                }`}
+              >
+                <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
+                  isActive('/dashboard') ? 'bg-primary/15' : 'bg-muted'
+                }`}>
+                  <LayoutDashboard className={`h-4 w-4 ${isActive('/dashboard') ? 'text-primary' : 'text-muted-foreground'}`} />
+                </div>
+                {lang === 'bn' ? 'ড্যাশবোর্ড' : 'Dashboard'}
+              </Link>
             </nav>
 
             <div className="p-4 border-t border-border">
@@ -146,7 +174,7 @@ const Navbar = () => {
         </SheetContent>
       </Sheet>
 
-      {/* Floating Mobile Bottom Navigation Bar */}
+      {/* Floating Mobile Bottom Navigation Bar with Center Dashboard Button */}
       <div className="lg:hidden fixed inset-x-0 bottom-4 z-50 px-4">
         <div
           className="mx-auto w-full max-w-md rounded-[28px] p-1.5"
@@ -158,46 +186,67 @@ const Navbar = () => {
           }}
         >
           <div className="flex items-center justify-around rounded-[22px] py-1.5 px-1" style={{ background: 'hsl(var(--background) / 0.85)' }}>
-            {links.map((l) => {
+            {/* Left 2 items */}
+            {leftNav.map((l) => {
               const active = isActive(l.href);
-              const englishLabels: Record<string, string> = {
-                '/': 'Home',
-                '/services': 'Services',
-                '/about': 'About',
-                '/contact': 'Contact',
-              };
               return (
-                <Link
-                  key={l.href}
-                  to={l.href}
-                  className="relative flex flex-col items-center gap-0.5 py-1.5 px-3 flex-1"
-                >
-                  <motion.div
-                    className="relative z-10 flex flex-col items-center gap-0.5 w-full"
-                    whileTap={{ scale: 0.85 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  >
+                <Link key={l.href} to={l.href} className="relative flex flex-col items-center gap-0.5 py-1.5 px-2 flex-1">
+                  <motion.div className="relative z-10 flex flex-col items-center gap-0.5 w-full" whileTap={{ scale: 0.85 }} transition={{ type: 'spring', stiffness: 400, damping: 15 }}>
                     {active && (
-                      <motion.div
-                        layoutId="bottomNavIndicator"
-                        className="absolute -inset-x-1 -inset-y-1 rounded-2xl"
-                        style={{ background: 'hsl(var(--primary) / 0.12)' }}
-                        transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-                      />
+                      <motion.div layoutId="bottomNavIndicator" className="absolute -inset-x-1 -inset-y-1 rounded-2xl" style={{ background: 'hsl(var(--primary) / 0.12)' }} transition={{ type: 'spring', stiffness: 350, damping: 25 }} />
                     )}
                     <div className="relative z-10">
-                      <motion.div
-                        animate={active ? { y: -2, scale: 1.15 } : { y: 0, scale: 1 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                      >
-                        <l.icon className={`h-[22px] w-[22px] transition-colors duration-200 ${active ? 'text-primary' : 'text-muted-foreground'}`} />
+                      <motion.div animate={active ? { y: -2, scale: 1.15 } : { y: 0, scale: 1 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+                        <l.icon className={`h-[20px] w-[20px] transition-colors duration-200 ${active ? 'text-primary' : 'text-muted-foreground'}`} />
                       </motion.div>
                     </div>
-                    <motion.span
-                      animate={active ? { opacity: 1, y: 0 } : { opacity: 0.6, y: 0 }}
-                      className={`text-[9px] font-semibold relative z-10 ${active ? 'text-primary' : 'text-muted-foreground'}`}
-                    >
-                      {englishLabels[l.href]}
+                    <motion.span animate={active ? { opacity: 1 } : { opacity: 0.6 }} className={`text-[9px] font-semibold relative z-10 ${active ? 'text-primary' : 'text-muted-foreground'}`}>
+                      {l.label}
+                    </motion.span>
+                  </motion.div>
+                </Link>
+              );
+            })}
+
+            {/* Center Dashboard Button - highlighted circle */}
+            <Link
+              to={user ? '/dashboard' : '/login'}
+              className="relative flex items-center justify-center -mt-6 mx-1"
+            >
+              <motion.div
+                whileTap={{ scale: 0.9 }}
+                className={`w-14 h-14 rounded-full flex items-center justify-center shadow-glow transition-all ${
+                  isActive('/dashboard')
+                    ? 'gradient-accent'
+                    : 'gradient-accent opacity-90 hover:opacity-100'
+                }`}
+                style={{
+                  boxShadow: '0 4px 20px hsl(var(--primary) / 0.35), 0 0 0 3px hsl(var(--background) / 0.9)',
+                }}
+              >
+                <LayoutDashboard className="h-6 w-6 text-primary-foreground" />
+              </motion.div>
+              <span className="absolute -bottom-4 text-[8px] font-bold text-primary whitespace-nowrap">
+                {user ? (lang === 'bn' ? 'প্যানেল' : 'Panel') : (lang === 'bn' ? 'লগইন' : 'Login')}
+              </span>
+            </Link>
+
+            {/* Right 2 items */}
+            {rightNav.map((l) => {
+              const active = isActive(l.href);
+              return (
+                <Link key={l.href} to={l.href} className="relative flex flex-col items-center gap-0.5 py-1.5 px-2 flex-1">
+                  <motion.div className="relative z-10 flex flex-col items-center gap-0.5 w-full" whileTap={{ scale: 0.85 }} transition={{ type: 'spring', stiffness: 400, damping: 15 }}>
+                    {active && (
+                      <motion.div layoutId="bottomNavIndicator" className="absolute -inset-x-1 -inset-y-1 rounded-2xl" style={{ background: 'hsl(var(--primary) / 0.12)' }} transition={{ type: 'spring', stiffness: 350, damping: 25 }} />
+                    )}
+                    <div className="relative z-10">
+                      <motion.div animate={active ? { y: -2, scale: 1.15 } : { y: 0, scale: 1 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+                        <l.icon className={`h-[20px] w-[20px] transition-colors duration-200 ${active ? 'text-primary' : 'text-muted-foreground'}`} />
+                      </motion.div>
+                    </div>
+                    <motion.span animate={active ? { opacity: 1 } : { opacity: 0.6 }} className={`text-[9px] font-semibold relative z-10 ${active ? 'text-primary' : 'text-muted-foreground'}`}>
+                      {l.label}
                     </motion.span>
                   </motion.div>
                 </Link>
