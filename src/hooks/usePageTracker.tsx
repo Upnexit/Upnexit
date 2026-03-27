@@ -2,13 +2,27 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
-function getVisitorId() {
-  let id = localStorage.getItem('_vid');
-  if (!id) {
-    id = crypto.randomUUID();
-    localStorage.setItem('_vid', id);
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
   }
-  return id;
+}
+
+function getVisitorId() {
+  if (typeof window === 'undefined') {
+    return 'server-render';
+  }
+
+  try {
+    let id = window.localStorage.getItem('_vid');
+    if (!id) {
+      id = window.crypto?.randomUUID?.() ?? `visitor-${Date.now()}`;
+      window.localStorage.setItem('_vid', id);
+    }
+    return id;
+  } catch {
+    return window.crypto?.randomUUID?.() ?? `visitor-${Date.now()}`;
+  }
 }
 
 export function usePageTracker() {
@@ -16,8 +30,8 @@ export function usePageTracker() {
 
   useEffect(() => {
     // Facebook Pixel - track page view on route change
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'PageView');
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'PageView');
     }
 
     const track = async () => {
@@ -26,7 +40,7 @@ export function usePageTracker() {
           body: {
             page_path: location.pathname,
             visitor_id: getVisitorId(),
-            referrer: document.referrer || null,
+            referrer: typeof document !== 'undefined' ? document.referrer || null : null,
           },
         });
       } catch {
