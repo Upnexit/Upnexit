@@ -15,6 +15,8 @@ import NotFound from "./pages/NotFound";
 import ServiceDetail from "./pages/ServiceDetail";
 import Order from "./pages/Order";
 import AdminLogin from "./pages/AdminLogin";
+import UserLogin from "./pages/UserLogin";
+import UserDashboard from "./pages/UserDashboard";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import TeamManagement from "./pages/admin/TeamManagement";
@@ -41,6 +43,8 @@ const AppRoutes = () => {
       <Route path="/consultation" element={<Consultation />} />
       <Route path="/services/:slug" element={<ServiceDetail />} />
       <Route path="/order" element={<Order />} />
+      <Route path="/login" element={<UserLogin />} />
+      <Route path="/dashboard" element={<UserDashboard />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />

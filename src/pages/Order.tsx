@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -28,6 +29,14 @@ const Order = () => {
   const isBn = lang === 'bn';
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate(`/login?redirect=${encodeURIComponent('/order?' + searchParams.toString())}`);
+    }
+  }, [user, authLoading, navigate, searchParams]);
 
   const service = searchParams.get('service') || 'school';
   const plan = searchParams.get('plan') || 'gold';
@@ -69,6 +78,7 @@ const Order = () => {
         email: data.email || `${data.phone}@order.com`,
         phone: data.phone,
         message: `[ORDER] Service: ${info.name_en} | Plan: ${plan.toUpperCase()} | Institution: ${data.institution || ''} | Address: ${data.address || ''} | Details: ${data.details || ''}`,
+        user_id: user?.id || null,
       });
       if (error) throw error;
       setSubmitted(true);

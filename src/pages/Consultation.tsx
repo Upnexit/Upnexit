@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,7 +9,7 @@ import { Send, CheckCircle2, ArrowLeft, ArrowRight, Building2, GraduationCap, Sh
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { consultationFormSchema } from '@/lib/sanitize';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -24,6 +25,14 @@ const serviceOptions = [
 const Consultation = () => {
   const { lang } = useLanguage();
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/login?redirect=/consultation');
+    }
+  }, [user, authLoading, navigate]);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [step, setStep] = useState(1);
@@ -51,6 +60,7 @@ const Consultation = () => {
       email: data.email,
       phone: data.phone || null,
       message: fullMessage,
+      user_id: user?.id || null,
     });
 
     supabase.functions.invoke('send-notification', {

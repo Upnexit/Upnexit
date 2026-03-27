@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import { Menu, Globe, Home, Briefcase, Users, MessageSquare } from 'lucide-react';
+import { Menu, Globe, Home, Briefcase, Users, MessageSquare, User, LogIn } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 
 const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -65,6 +67,21 @@ const Navbar = () => {
               <Globe className="h-4 w-4" />
               {lang === 'bn' ? 'EN' : 'বাং'}
             </button>
+            {user ? (
+              <Link to="/dashboard">
+                <Button variant="outline" size="default" className="rounded-xl gap-1.5 px-4">
+                  <User className="h-4 w-4" />
+                  {lang === 'bn' ? 'ড্যাশবোর্ড' : 'Dashboard'}
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <Button variant="outline" size="default" className="rounded-xl gap-1.5 px-4">
+                  <LogIn className="h-4 w-4" />
+                  {lang === 'bn' ? 'লগইন' : 'Login'}
+                </Button>
+              </Link>
+            )}
             <Link to="/consultation">
               <Button variant="hero" size="default" className="px-6">
                 {t.hero.cta1}
