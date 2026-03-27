@@ -37,7 +37,6 @@ const Order = () => {
       navigate(`/login?redirect=${encodeURIComponent('/order?' + searchParams.toString())}`);
     }
   }, [user, authLoading, navigate, searchParams]);
-  const { toast } = useToast();
 
   const service = searchParams.get('service') || 'school';
   const plan = searchParams.get('plan') || 'gold';
