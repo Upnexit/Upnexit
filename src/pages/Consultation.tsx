@@ -25,6 +25,14 @@ const serviceOptions = [
 const Consultation = () => {
   const { lang } = useLanguage();
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/login?redirect=/consultation');
+    }
+  }, [user, authLoading, navigate]);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [step, setStep] = useState(1);
