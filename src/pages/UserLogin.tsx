@@ -6,7 +6,7 @@ import { lovable } from '@/integrations/lovable/index';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Mail, Lock, Eye, EyeOff, User, ArrowRight, Sparkles } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Shield, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -25,27 +25,26 @@ const UserLogin = () => {
   const [name, setName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<'google' | 'apple' | null>(null);
 
-  // If already logged in, redirect
   if (user) {
     navigate(redirect, { replace: true });
     return null;
   }
 
-  const handleGoogleLogin = async () => {
-    setGoogleLoading(true);
+  const handleSocialLogin = async (provider: 'google' | 'apple') => {
+    setSocialLoading(provider);
     try {
-      const { error } = await lovable.auth.signInWithOAuth('google', {
+      const { error } = await lovable.auth.signInWithOAuth(provider, {
         redirect_uri: window.location.origin,
       });
       if (error) {
-        toast({ title: isBn ? 'Google লগইন ব্যর্থ' : 'Google login failed', variant: 'destructive' });
+        toast({ title: isBn ? `${provider === 'google' ? 'Google' : 'Apple'} লগইন ব্যর্থ` : `${provider === 'google' ? 'Google' : 'Apple'} login failed`, variant: 'destructive' });
       }
     } catch {
       toast({ title: isBn ? 'কিছু ভুল হয়েছে' : 'Something went wrong', variant: 'destructive' });
     } finally {
-      setGoogleLoading(false);
+      setSocialLoading(null);
     }
   };
 
@@ -88,184 +87,296 @@ const UserLogin = () => {
     }
   };
 
+  const trustPoints = isBn
+    ? ['নিরাপদ ও এনক্রিপ্টেড', 'দ্রুত সেটআপ', '২৪/৭ সাপোর্ট']
+    : ['Secure & Encrypted', 'Quick Setup', '24/7 Support'];
+
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0" style={{
-        background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 30%, hsl(46 80% 96%) 60%, hsl(145 45% 94%) 100%)'
-      }} />
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: `linear-gradient(hsl(145 63% 32%) 1px, transparent 1px), linear-gradient(90deg, hsl(145 63% 32%) 1px, transparent 1px)`,
-        backgroundSize: '40px 40px'
-      }} />
+    <div className="min-h-screen flex relative overflow-hidden">
+      {/* ===== LEFT PANEL — Brand / Info (Desktop only) ===== */}
+      <div className="hidden lg:flex lg:w-[45%] xl:w-[42%] relative flex-col justify-between p-10 xl:p-14 overflow-hidden"
+        style={{ background: 'var(--gradient-hero)' }}>
+        {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.06]" style={{
+          backgroundImage: `linear-gradient(hsl(0 0% 100%) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100%) 1px, transparent 1px)`,
+          backgroundSize: '50px 50px'
+        }} />
 
-      {/* Decorative blobs */}
-      <motion.div
-        animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-20 right-[10%] w-48 h-48 sm:w-72 sm:h-72 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, hsl(145 63% 42% / 0.08), transparent 70%)' }}
-      />
-      <motion.div
-        animate={{ y: [0, 15, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        className="absolute bottom-20 left-[5%] w-40 h-40 sm:w-64 sm:h-64 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, hsl(46 92% 55% / 0.1), transparent 70%)' }}
-      />
+        {/* Top — Logo */}
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+          className="relative z-10">
+          <Link to="/" className="flex items-center gap-3">
+            <img src="/logo.png" alt="Upnex It" className="w-11 h-11 rounded-xl object-contain bg-white/10 p-1" />
+            <span className="text-2xl font-extrabold text-white tracking-tight">
+              Upnex <span className="opacity-80">It</span>
+            </span>
+          </Link>
+        </motion.div>
 
-      {/* Login Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="w-full max-w-sm sm:max-w-md relative z-10"
-      >
-        <div className="bg-background/80 backdrop-blur-xl rounded-3xl border border-border shadow-elevated p-6 sm:p-10 relative overflow-hidden">
-          {/* Top accent */}
-          <div className="absolute top-0 left-0 right-0 h-1.5 rounded-t-3xl" style={{ background: 'var(--gradient-hero)' }} />
-
-          {/* Header */}
-          <div className="text-center mb-6">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-              className="relative mx-auto mb-4"
-            >
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto shadow-glow">
-                <User className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
-              </div>
-            </motion.div>
-            <h1 className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
-              {mode === 'login'
-                ? (isBn ? 'আপনার অ্যাকাউন্টে প্রবেশ করুন' : 'Sign in to your account')
-                : (isBn ? 'নতুন অ্যাকাউন্ট তৈরি করুন' : 'Create a new account')
-              }
-            </h1>
-            <p className="text-muted-foreground text-xs sm:text-sm mt-1.5">
-              {isBn ? 'অর্ডার ও কনসালটেশন পরিচালনা করতে লগইন করুন' : 'Login to manage orders & consultations'}
-            </p>
-          </div>
-
-          {/* Google Button */}
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleGoogleLogin}
-            disabled={googleLoading}
-            className="w-full h-12 rounded-xl font-semibold text-sm mb-4 gap-3 border-border/60 hover:bg-muted/60 transition-all"
-          >
-            {googleLoading ? (
-              <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                className="w-5 h-5 border-2 border-muted-foreground/30 border-t-primary rounded-full" />
+        {/* Center — Headline */}
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+          className="relative z-10 space-y-6">
+          <h2 className="text-3xl xl:text-4xl font-black text-white leading-tight">
+            {isBn ? (
+              <>আপনার ব্যবসাকে<br /><span className="text-secondary">ডিজিটাল</span> করুন</>
             ) : (
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-              </svg>
+              <>Transform Your<br />Business <span className="text-secondary">Digitally</span></>
             )}
-            {isBn ? 'Google দিয়ে চালিয়ে যান' : 'Continue with Google'}
-          </Button>
+          </h2>
+          <p className="text-white/70 text-sm xl:text-base leading-relaxed max-w-sm">
+            {isBn
+              ? 'আমরা আপনার প্রতিষ্ঠানের জন্য মানসম্মত সফটওয়্যার সলিউশন প্রদান করি। লগইন করুন এবং আপনার প্রজেক্ট পরিচালনা করুন।'
+              : 'We provide quality software solutions for your organization. Login and manage your projects seamlessly.'}
+          </p>
 
-          {/* Divider */}
-          <div className="flex items-center gap-3 my-4">
-            <div className="flex-1 h-px bg-border" />
-            <span className="text-xs text-muted-foreground font-medium">{isBn ? 'অথবা' : 'or'}</span>
-            <div className="flex-1 h-px bg-border" />
+          {/* Trust badges */}
+          <div className="flex flex-col gap-2.5 pt-2">
+            {trustPoints.map((point, i) => (
+              <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 + i * 0.1 }}
+                className="flex items-center gap-2.5 text-white/80 text-sm">
+                <div className="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="h-3 w-3 text-secondary" />
+                </div>
+                {point}
+              </motion.div>
+            ))}
           </div>
+        </motion.div>
 
-          {/* Email Form */}
-          <form onSubmit={handleEmailAuth} className="space-y-3">
-            {mode === 'signup' && (
-              <div className="relative">
-                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder={isBn ? 'আপনার নাম' : 'Your name'}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className="pl-10 h-12 rounded-xl bg-muted/50 border-border/60 focus:bg-background focus:border-primary/40 transition-all text-sm"
-                />
+        {/* Bottom — Copyright */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
+          className="relative z-10">
+          <p className="text-white/40 text-xs">
+            © {new Date().getFullYear()} Upnex It. {isBn ? 'সর্বস্বত্ব সংরক্ষিত' : 'All rights reserved'}
+          </p>
+        </motion.div>
+
+        {/* Decorative floating shapes */}
+        <motion.div animate={{ y: [0, -25, 0], rotate: [0, 8, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, hsl(46 92% 55% / 0.12), transparent 70%)' }}
+        />
+        <motion.div animate={{ y: [0, 20, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+          className="absolute top-20 -right-10 w-40 h-40 rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, hsl(0 0% 100% / 0.06), transparent 70%)' }}
+        />
+      </div>
+
+      {/* ===== RIGHT PANEL — Login Form ===== */}
+      <div className="flex-1 flex flex-col">
+        {/* Mobile brand bar */}
+        <div className="lg:hidden flex items-center justify-between px-5 py-4 border-b border-border bg-background">
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/logo.png" alt="Upnex It" className="w-8 h-8 rounded-lg object-contain" />
+            <span className="text-lg font-extrabold text-foreground tracking-tight">
+              Upnex <span className="text-gradient">It</span>
+            </span>
+          </Link>
+          <span className="text-[10px] text-muted-foreground font-medium px-2 py-1 bg-muted rounded-full">
+            {isBn ? 'নিরাপদ লগইন' : 'Secure Login'}
+          </span>
+        </div>
+
+        {/* Form area */}
+        <div className="flex-1 flex items-center justify-center px-5 py-8 sm:py-12 bg-background relative">
+          {/* Subtle background texture */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 0.5px, transparent 0)`,
+            backgroundSize: '24px 24px'
+          }} />
+
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="w-full max-w-[400px] relative z-10"
+          >
+            {/* Header */}
+            <div className="text-center mb-7">
+              {/* Mobile-only icon */}
+              <div className="lg:hidden mb-4">
+                <div className="w-14 h-14 rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mx-auto">
+                  <Shield className="h-7 w-7 text-primary" />
+                </div>
               </div>
-            )}
 
-            <div className="relative">
-              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="email"
-                placeholder={isBn ? 'ইমেইল অ্যাড্রেস' : 'Email address'}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="pl-10 h-12 rounded-xl bg-muted/50 border-border/60 focus:bg-background focus:border-primary/40 transition-all text-sm"
-              />
+              <h1 className="text-2xl sm:text-[28px] font-black text-foreground tracking-tight leading-tight">
+                {mode === 'login'
+                  ? (isBn ? 'আপনার অ্যাকাউন্টে প্রবেশ করুন' : 'Welcome back')
+                  : (isBn ? 'নতুন অ্যাকাউন্ট তৈরি করুন' : 'Create your account')
+                }
+              </h1>
+              <p className="text-muted-foreground text-sm mt-2">
+                {mode === 'login'
+                  ? (isBn ? 'আপনার অর্ডার ও প্রজেক্ট পরিচালনা করতে লগইন করুন' : 'Sign in to manage your orders & projects')
+                  : (isBn ? 'আপনার তথ্য দিয়ে অ্যাকাউন্ট তৈরি করুন' : 'Fill in your details to get started')
+                }
+              </p>
             </div>
 
-            <div className="relative">
-              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                type={showPassword ? 'text' : 'password'}
-                placeholder={isBn ? 'পাসওয়ার্ড' : 'Password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-                className="pl-10 pr-10 h-12 rounded-xl bg-muted/50 border-border/60 focus:bg-background focus:border-primary/40 transition-all text-sm"
-              />
+            {/* Social Buttons */}
+            <div className="space-y-2.5 mb-5">
+              {/* Google */}
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => handleSocialLogin('google')}
+                disabled={!!socialLoading}
+                className="w-full h-[50px] rounded-xl border border-border bg-background hover:bg-muted/50 transition-all flex items-center justify-center gap-3 text-sm font-semibold text-foreground disabled:opacity-50 group"
               >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {socialLoading === 'google' ? (
+                  <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                    className="w-5 h-5 border-2 border-muted-foreground/30 border-t-primary rounded-full" />
+                ) : (
+                  <svg className="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                  </svg>
+                )}
+                {isBn ? 'Google দিয়ে চালিয়ে যান' : 'Continue with Google'}
+              </button>
+
+              {/* Apple */}
+              <button
+                type="button"
+                onClick={() => handleSocialLogin('apple')}
+                disabled={!!socialLoading}
+                className="w-full h-[50px] rounded-xl border border-foreground/90 bg-foreground text-background hover:bg-foreground/90 transition-all flex items-center justify-center gap-3 text-sm font-semibold disabled:opacity-50 group"
+              >
+                {socialLoading === 'apple' ? (
+                  <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                    className="w-5 h-5 border-2 border-background/30 border-t-background rounded-full" />
+                ) : (
+                  <svg className="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                  </svg>
+                )}
+                {isBn ? 'Apple দিয়ে চালিয়ে যান' : 'Continue with Apple'}
               </button>
             </div>
 
-            <Button
-              type="submit"
-              disabled={loading}
-              variant="hero"
-              className="w-full h-12 rounded-xl font-bold text-sm mt-1 gap-2"
-            >
-              {loading ? (
-                <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                  className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full" />
-              ) : (
-                <>
-                  {mode === 'login' ? (isBn ? 'লগইন করুন' : 'Sign In') : (isBn ? 'অ্যাকাউন্ট তৈরি করুন' : 'Create Account')}
-                  <ArrowRight className="h-4 w-4" />
-                </>
+            {/* Divider */}
+            <div className="flex items-center gap-4 my-5">
+              <div className="flex-1 h-px bg-border" />
+              <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
+                {isBn ? 'অথবা ইমেইল দিয়ে' : 'or with email'}
+              </span>
+              <div className="flex-1 h-px bg-border" />
+            </div>
+
+            {/* Email Form */}
+            <form onSubmit={handleEmailAuth} className="space-y-3.5">
+              {mode === 'signup' && (
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1.5 ml-0.5">
+                    {isBn ? 'আপনার নাম' : 'Full Name'}
+                  </label>
+                  <Input
+                    type="text"
+                    placeholder={isBn ? 'আপনার পূর্ণ নাম' : 'John Doe'}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="h-[50px] rounded-xl bg-muted/40 border-border/60 focus:bg-background focus:border-primary/40 transition-all text-sm px-4"
+                  />
+                </div>
               )}
-            </Button>
-          </form>
 
-          {/* Toggle mode */}
-          <p className="text-center text-xs sm:text-sm text-muted-foreground mt-5">
-            {mode === 'login'
-              ? (isBn ? 'অ্যাকাউন্ট নেই?' : "Don't have an account?")
-              : (isBn ? 'ইতিমধ্যে অ্যাকাউন্ট আছে?' : 'Already have an account?')
-            }{' '}
-            <button
-              type="button"
-              onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
-              className="text-primary font-bold hover:underline"
-            >
-              {mode === 'login' ? (isBn ? 'রেজিস্টার করুন' : 'Sign Up') : (isBn ? 'লগইন করুন' : 'Sign In')}
-            </button>
-          </p>
+              <div>
+                <label className="block text-xs font-semibold text-foreground mb-1.5 ml-0.5">
+                  {isBn ? 'ইমেইল অ্যাড্রেস' : 'Email Address'}
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="email"
+                    placeholder={isBn ? 'name@example.com' : 'name@example.com'}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="pl-11 h-[50px] rounded-xl bg-muted/40 border-border/60 focus:bg-background focus:border-primary/40 transition-all text-sm"
+                  />
+                </div>
+              </div>
 
-          {/* Back to home */}
-          <div className="text-center mt-4">
-            <Link to="/" className="text-xs text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1">
-              <Sparkles className="h-3 w-3" />
-              {isBn ? 'হোমপেজে ফিরে যান' : 'Back to Homepage'}
-            </Link>
-          </div>
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-semibold text-foreground ml-0.5">
+                    {isBn ? 'পাসওয়ার্ড' : 'Password'}
+                  </label>
+                  {mode === 'login' && (
+                    <button type="button" className="text-xs text-primary hover:underline font-medium">
+                      {isBn ? 'ভুলে গেছেন?' : 'Forgot?'}
+                    </button>
+                  )}
+                </div>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    minLength={6}
+                    className="pl-11 pr-11 h-[50px] rounded-xl bg-muted/40 border-border/60 focus:bg-background focus:border-primary/40 transition-all text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                disabled={loading}
+                variant="hero"
+                className="w-full h-[50px] rounded-xl font-bold text-sm mt-1.5 gap-2"
+              >
+                {loading ? (
+                  <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                    className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full" />
+                ) : (
+                  <>
+                    {mode === 'login' ? (isBn ? 'লগইন করুন' : 'Sign In') : (isBn ? 'অ্যাকাউন্ট তৈরি করুন' : 'Create Account')}
+                    <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
+              </Button>
+            </form>
+
+            {/* Toggle mode */}
+            <p className="text-center text-sm text-muted-foreground mt-6">
+              {mode === 'login'
+                ? (isBn ? 'অ্যাকাউন্ট নেই?' : "Don't have an account?")
+                : (isBn ? 'ইতিমধ্যে অ্যাকাউন্ট আছে?' : 'Already have an account?')
+              }{' '}
+              <button
+                type="button"
+                onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
+                className="text-primary font-bold hover:underline"
+              >
+                {mode === 'login' ? (isBn ? 'রেজিস্টার করুন' : 'Sign Up') : (isBn ? 'লগইন করুন' : 'Sign In')}
+              </button>
+            </p>
+
+            {/* Terms */}
+            <p className="text-center text-[10px] text-muted-foreground mt-4 leading-relaxed">
+              {isBn
+                ? 'লগইন করে আপনি আমাদের শর্তাবলী ও গোপনীয়তা নীতি মেনে নিচ্ছেন।'
+                : 'By signing in, you agree to our Terms of Service & Privacy Policy.'}
+            </p>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
