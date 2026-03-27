@@ -60,6 +60,7 @@ const Consultation = () => {
       email: data.email,
       phone: data.phone || null,
       message: fullMessage,
+      user_id: user?.id || null,
     });
 
     supabase.functions.invoke('send-notification', {
