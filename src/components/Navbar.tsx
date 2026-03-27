@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import { Menu, Globe, Home, Briefcase, Users, MessageSquare } from 'lucide-react';
+import { Menu, Globe, Home, Briefcase, Users, MessageSquare, User, LogIn } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 
 const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
