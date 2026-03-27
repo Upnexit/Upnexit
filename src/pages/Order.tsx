@@ -78,6 +78,7 @@ const Order = () => {
         email: data.email || `${data.phone}@order.com`,
         phone: data.phone,
         message: `[ORDER] Service: ${info.name_en} | Plan: ${plan.toUpperCase()} | Institution: ${data.institution || ''} | Address: ${data.address || ''} | Details: ${data.details || ''}`,
+        user_id: user?.id || null,
       });
       if (error) throw error;
       setSubmitted(true);
