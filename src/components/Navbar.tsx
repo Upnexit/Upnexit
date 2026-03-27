@@ -67,6 +67,21 @@ const Navbar = () => {
               <Globe className="h-4 w-4" />
               {lang === 'bn' ? 'EN' : 'বাং'}
             </button>
+            {user ? (
+              <Link to="/dashboard">
+                <Button variant="outline" size="default" className="rounded-xl gap-1.5 px-4">
+                  <User className="h-4 w-4" />
+                  {lang === 'bn' ? 'ড্যাশবোর্ড' : 'Dashboard'}
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <Button variant="outline" size="default" className="rounded-xl gap-1.5 px-4">
+                  <LogIn className="h-4 w-4" />
+                  {lang === 'bn' ? 'লগইন' : 'Login'}
+                </Button>
+              </Link>
+            )}
             <Link to="/consultation">
               <Button variant="hero" size="default" className="px-6">
                 {t.hero.cta1}
