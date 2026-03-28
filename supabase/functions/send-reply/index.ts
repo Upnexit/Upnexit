@@ -24,14 +24,12 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const token = authHeader.replace('Bearer ', '');
-    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
-    if (claimsError || !claimsData?.claims) {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
     }
 
-    const userId = claimsData.claims.sub;
-    const { data: roleData } = await supabase.rpc('has_role', { _user_id: userId, _role: 'admin' });
+    const { data: roleData } = await supabase.rpc('has_role', { _user_id: user.id, _role: 'admin' });
     if (!roleData) {
       return new Response(JSON.stringify({ error: 'Forbidden: admin only' }), { status: 403, headers: corsHeaders });
     }
@@ -46,21 +44,35 @@ serve(async (req) => {
     }
 
     const html = `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;">
-        <div style="background:linear-gradient(135deg,#16a34a,#15803d);padding:30px 24px;border-radius:12px 12px 0 0;text-align:center;">
-          <h1 style="color:#ffffff;margin:0;font-size:24px;font-weight:700;">UpnexIT</h1>
-          <p style="color:rgba(255,255,255,0.85);margin:6px 0 0;font-size:13px;">আপনার ডিজিটাল সমাধানের অংশীদার</p>
+      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+        <!-- Header -->
+        <div style="background:linear-gradient(135deg,#16a34a 0%,#0d9488 50%,#0891b2 100%);padding:36px 32px;text-align:center;">
+          <h1 style="color:#ffffff;margin:0;font-size:26px;font-weight:800;letter-spacing:-0.5px;">UpnexIT</h1>
+          <p style="color:rgba(255,255,255,0.9);margin:8px 0 0;font-size:13px;font-weight:500;">আপনার ডিজিটাল ট্রান্সফর্মেশন পার্টনার</p>
         </div>
-        <div style="padding:28px 24px;">
-          <p style="margin:0 0 20px;white-space:pre-wrap;line-height:1.7;font-size:15px;color:#1f2937;">${body}</p>
+        
+        <!-- Body -->
+        <div style="padding:32px;">
+          <p style="margin:0 0 24px;white-space:pre-wrap;line-height:1.8;font-size:15px;color:#1f2937;">${body}</p>
+          
           ${demoLink ? `
-          <div style="text-align:center;margin:28px 0;">
-            <a href="${demoLink}" style="display:inline-block;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:14px 36px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;box-shadow:0 4px 14px rgba(22,163,74,0.3);">🔗 ডেমো দেখুন</a>
-            <p style="margin-top:10px;color:#9ca3af;font-size:12px;">${demoLink}</p>
+          <div style="text-align:center;margin:32px 0;">
+            <div style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0;border-radius:14px;padding:24px;">
+              <p style="margin:0 0 16px;font-size:14px;font-weight:600;color:#166534;">🎯 আপনার ডেমো প্রস্তুত!</p>
+              <a href="${demoLink}" style="display:inline-block;background:linear-gradient(135deg,#16a34a,#0d9488);color:#fff;padding:14px 40px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 4px 16px rgba(22,163,74,0.35);letter-spacing:0.3px;">ডেমো দেখুন →</a>
+              <p style="margin-top:12px;color:#6b7280;font-size:11px;word-break:break-all;">${demoLink}</p>
+            </div>
           </div>` : ''}
         </div>
-        <div style="background:#f9fafb;padding:20px 24px;border-radius:0 0 12px 12px;border-top:1px solid #e5e7eb;text-align:center;">
-          <p style="color:#6b7280;font-size:12px;margin:0;">© ${new Date().getFullYear()} UpnexIT — Software Solutions<br/>📧 ${GMAIL_USER}</p>
+        
+        <!-- Divider -->
+        <div style="margin:0 32px;border-top:1px solid #e5e7eb;"></div>
+        
+        <!-- Footer -->
+        <div style="padding:24px 32px;text-align:center;">
+          <p style="color:#6b7280;font-size:12px;margin:0 0 4px;font-weight:600;">UpnexIT — Professional Software Solutions</p>
+          <p style="color:#9ca3af;font-size:11px;margin:0;">📧 ${GMAIL_USER} | 🌐 upnexit.com</p>
+          <p style="color:#d1d5db;font-size:10px;margin:12px 0 0;">© ${new Date().getFullYear()} UpnexIT. All rights reserved.</p>
         </div>
       </div>`;
 
