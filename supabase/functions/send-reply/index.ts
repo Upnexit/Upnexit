@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { SmtpClient } from "https://deno.land/x/smtp@v0.7.0/mod.ts";
+import nodemailer from "npm:nodemailer@6.9.10";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -13,7 +13,6 @@ serve(async (req) => {
   }
 
   try {
-    // Validate JWT
     const authHeader = req.headers.get('Authorization');
     if (!authHeader?.startsWith('Bearer ')) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
@@ -39,59 +38,45 @@ serve(async (req) => {
 
     const GMAIL_USER = Deno.env.get('GMAIL_USER');
     const GMAIL_APP_PASSWORD = Deno.env.get('GMAIL_APP_PASSWORD');
-    if (!GMAIL_USER || !GMAIL_APP_PASSWORD) {
-      throw new Error('Gmail credentials not configured');
-    }
+    if (!GMAIL_USER || !GMAIL_APP_PASSWORD) throw new Error('Gmail credentials not configured');
 
     const { to, subject, body, demoLink } = await req.json();
-
     if (!to || !body) {
       return new Response(JSON.stringify({ error: 'Missing required fields: to, body' }), { status: 400, headers: corsHeaders });
     }
 
     const html = `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;padding:0;background:#ffffff;">
+      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;">
         <div style="background:linear-gradient(135deg,#16a34a,#15803d);padding:30px 24px;border-radius:12px 12px 0 0;text-align:center;">
           <h1 style="color:#ffffff;margin:0;font-size:24px;font-weight:700;">UpnexIT</h1>
           <p style="color:rgba(255,255,255,0.85);margin:6px 0 0;font-size:13px;">আপনার ডিজিটাল সমাধানের অংশীদার</p>
         </div>
-        <div style="padding:28px 24px;background:#ffffff;">
+        <div style="padding:28px 24px;">
           <p style="margin:0 0 20px;white-space:pre-wrap;line-height:1.7;font-size:15px;color:#1f2937;">${body}</p>
           ${demoLink ? `
           <div style="text-align:center;margin:28px 0;">
-            <a href="${demoLink}" style="display:inline-block;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:14px 36px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;box-shadow:0 4px 14px rgba(22,163,74,0.3);">
-              🔗 ডেমো দেখুন
-            </a>
+            <a href="${demoLink}" style="display:inline-block;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:14px 36px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;box-shadow:0 4px 14px rgba(22,163,74,0.3);">🔗 ডেমো দেখুন</a>
             <p style="margin-top:10px;color:#9ca3af;font-size:12px;">${demoLink}</p>
-          </div>
-          ` : ''}
+          </div>` : ''}
         </div>
         <div style="background:#f9fafb;padding:20px 24px;border-radius:0 0 12px 12px;border-top:1px solid #e5e7eb;text-align:center;">
-          <p style="color:#6b7280;font-size:12px;margin:0;">
-            © ${new Date().getFullYear()} UpnexIT — Software Solutions<br/>
-            📧 ${GMAIL_USER}
-          </p>
+          <p style="color:#6b7280;font-size:12px;margin:0;">© ${new Date().getFullYear()} UpnexIT — Software Solutions<br/>📧 ${GMAIL_USER}</p>
         </div>
-      </div>
-    `;
+      </div>`;
 
-    const client = new SmtpClient();
-    await client.connectTLS({
-      hostname: "smtp.gmail.com",
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
       port: 465,
-      username: GMAIL_USER,
-      password: GMAIL_APP_PASSWORD,
+      secure: true,
+      auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
     });
 
-    await client.send({
-      from: GMAIL_USER,
-      to: to,
+    await transporter.sendMail({
+      from: `UpnexIT <${GMAIL_USER}>`,
+      to,
       subject: subject || 'UpnexIT থেকে বার্তা',
-      content: "This email requires HTML support.",
-      html: html,
+      html,
     });
-
-    await client.close();
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -99,8 +84,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Reply send error:', error);
     return new Response(JSON.stringify({ success: false, error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 });
