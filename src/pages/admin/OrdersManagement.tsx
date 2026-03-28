@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Trash2, MailOpen, Send, X, ShoppingCart, Package, Building2, Calendar, Search, Filter, Eye, EyeOff, Inbox } from 'lucide-react';
+import { Trash2, MailOpen, Send, X, ShoppingCart, Package, Building2, Calendar, Search, Filter, Eye, EyeOff, Inbox, Zap, CheckCircle2, Clock, XCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { formatDistanceToNow } from 'date-fns';
@@ -11,11 +11,18 @@ import { bn } from 'date-fns/locale';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 
+const QUICK_REPLIES = [
+  { label: '📦 অর্ডার গ্রহণ', body: 'আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে। আমরা শীঘ্রই কাজ শুরু করব এবং আপনাকে আপডেট জানাব।\n\nধন্যবাদ,\nUpnexIT টিম' },
+  { label: '🔄 কাজ চলছে', body: 'আপনার প্রজেক্টে কাজ চলছে। আমাদের ডেভেলপমেন্ট টিম সক্রিয়ভাবে কাজ করছে। শীঘ্রই একটি ডেমো লিংক পাঠানো হবে।\n\nধন্যবাদ,\nUpnexIT টিম' },
+  { label: '✅ সম্পন্ন', body: 'আপনার প্রজেক্ট সফলভাবে সম্পন্ন হয়েছে! নিচের ডেমো লিংকে ক্লিক করে দেখতে পারেন। কোনো পরিবর্তন প্রয়োজন হলে জানান।\n\nধন্যবাদ,\nUpnexIT টিম' },
+  { label: '💬 তথ্য প্রয়োজন', body: 'আপনার অর্ডার সম্পর্কে কিছু অতিরিক্ত তথ্য প্রয়োজন। অনুগ্রহ করে আমাদের সাথে যোগাযোগ করুন অথবা এই ইমেইলে রিপ্লাই দিন।\n\nধন্যবাদ,\nUpnexIT টিম' },
+];
+
 const OrdersManagement = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [replyTo, setReplyTo] = useState<{ id: string; email: string; name: string } | null>(null);
-  const [replyForm, setReplyForm] = useState({ subject: '', body: '' });
+  const [replyForm, setReplyForm] = useState({ subject: '', body: '', demoLink: '' });
   const [sending, setSending] = useState(false);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<'all' | 'unread' | 'read'>('all');
@@ -56,12 +63,17 @@ const OrdersManagement = () => {
     setSending(true);
     try {
       const { error } = await supabase.functions.invoke('send-reply', {
-        body: { to: replyTo.email, subject: replyForm.subject || 'UpnexIT — অর্ডার আপডেট', body: replyForm.body },
+        body: {
+          to: replyTo.email,
+          subject: replyForm.subject || `UpnexIT — অর্ডার আপডেট: ${replyTo.name}`,
+          body: replyForm.body,
+          demoLink: replyForm.demoLink || undefined,
+        },
       });
       if (error) throw error;
       toast({ title: '✅', description: `${replyTo.email} তে ইমেইল পাঠানো হয়েছে` });
       setReplyTo(null);
-      setReplyForm({ subject: '', body: '' });
+      setReplyForm({ subject: '', body: '', demoLink: '' });
     } catch {
       toast({ title: '❌', description: 'ইমেইল পাঠাতে ব্যর্থ', variant: 'destructive' });
     } finally {
@@ -109,7 +121,6 @@ const OrdersManagement = () => {
           </div>
         </div>
 
-        {/* Stats badges */}
         <div className="flex gap-2">
           <div className="px-3 py-2 rounded-xl bg-primary/5 border border-primary/10">
             <span className="text-lg font-bold text-primary">{orders.length}</span>
@@ -168,7 +179,7 @@ const OrdersManagement = () => {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-background rounded-2xl border border-border shadow-xl w-full max-w-lg p-6 space-y-4"
+              className="bg-background rounded-2xl border border-border shadow-xl w-full max-w-lg p-6 space-y-4 max-h-[90vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-bold text-foreground">📧 রিপ্লাই: {replyTo.name}</h2>
@@ -177,6 +188,25 @@ const OrdersManagement = () => {
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground">প্রাপক: {replyTo.email}</p>
+
+              {/* Quick Reply Templates */}
+              <div>
+                <p className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-1.5">
+                  <Zap className="h-3 w-3" /> দ্রুত রিপ্লাই
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {QUICK_REPLIES.map((qr) => (
+                    <button
+                      key={qr.label}
+                      onClick={() => setReplyForm({ ...replyForm, body: qr.body })}
+                      className="px-3 py-1.5 text-xs rounded-lg border border-border bg-muted/50 hover:bg-primary/10 hover:border-primary/20 hover:text-primary transition-all font-medium"
+                    >
+                      {qr.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <Input
                 placeholder="বিষয়"
                 value={replyForm.subject}
@@ -185,10 +215,16 @@ const OrdersManagement = () => {
               />
               <Textarea
                 placeholder="আপনার বার্তা লিখুন..."
-                rows={4}
+                rows={5}
                 value={replyForm.body}
                 onChange={(e) => setReplyForm({ ...replyForm, body: e.target.value })}
                 className="bg-muted/50 resize-none"
+              />
+              <Input
+                placeholder="ডেমো লিংক (ঐচ্ছিক) — যেমন: https://demo.upnexit.com/hospital"
+                value={replyForm.demoLink}
+                onChange={(e) => setReplyForm({ ...replyForm, demoLink: e.target.value })}
+                className="bg-muted/50"
               />
               <div className="flex justify-end gap-2">
                 <Button variant="outline" onClick={() => setReplyTo(null)}>বাতিল</Button>
@@ -248,7 +284,6 @@ const OrdersManagement = () => {
               >
                 <div className="p-4 md:p-5">
                   <div className="flex items-start gap-3">
-                    {/* Avatar */}
                     <div
                       className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-sm font-bold ${
                         order.is_read ? 'bg-muted text-muted-foreground' : 'bg-primary/10 text-primary'
@@ -257,7 +292,6 @@ const OrdersManagement = () => {
                       {order.name.charAt(0).toUpperCase()}
                     </div>
 
-                    {/* Info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         {!order.is_read && <span className="w-2 h-2 rounded-full bg-primary animate-pulse shrink-0" />}
@@ -272,7 +306,6 @@ const OrdersManagement = () => {
                         {order.email} {order.phone && `• ${order.phone}`}
                       </p>
 
-                      {/* Order detail badges */}
                       <div className="flex flex-wrap gap-2 mb-2">
                         {details.service && (
                           <Badge variant="default" className="gap-1 bg-primary/10 text-primary border-primary/20 hover:bg-primary/15">
@@ -291,13 +324,11 @@ const OrdersManagement = () => {
                         )}
                       </div>
 
-                      {/* Mobile time */}
                       <p className="text-[10px] text-muted-foreground sm:hidden flex items-center gap-1 mb-2">
                         <Calendar className="h-3 w-3" />
                         {formatDistanceToNow(new Date(order.created_at!), { addSuffix: true, locale: bn })}
                       </p>
 
-                      {/* Expandable message */}
                       <button
                         onClick={() => setExpandedId(isExpanded ? null : order.id)}
                         className="text-[11px] text-primary/70 hover:text-primary font-medium transition-colors"
@@ -320,13 +351,13 @@ const OrdersManagement = () => {
                       </AnimatePresence>
                     </div>
 
-                    {/* Actions */}
                     <div className="flex flex-col sm:flex-row gap-1 shrink-0">
                       <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => {
                           setReplyTo({ id: order.id, email: order.email, name: order.name });
+                          setReplyForm({ subject: '', body: '', demoLink: '' });
                           if (!order.is_read) markRead.mutate(order.id);
                         }}
                         title="রিপ্লাই"
