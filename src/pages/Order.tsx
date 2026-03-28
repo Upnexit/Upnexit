@@ -73,14 +73,29 @@ const Order = () => {
     setSubmitting(true);
     try {
       const data = parsed.data;
+      const customerEmail = data.email || `${data.phone}@order.com`;
       const { error } = await supabase.from('messages').insert({
         name: data.name,
-        email: data.email || `${data.phone}@order.com`,
+        email: customerEmail,
         phone: data.phone,
         message: `[ORDER] Service: ${info.name_en} | Plan: ${plan.toUpperCase()} | Institution: ${data.institution || ''} | Address: ${data.address || ''} | Details: ${data.details || ''}`,
         user_id: user?.id || null,
       });
       if (error) throw error;
+
+      // Send auto confirmation email (non-blocking)
+      if (data.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        supabase.functions.invoke('send-order-confirmation', {
+          body: {
+            name: data.name,
+            email: data.email,
+            service: isBn ? info.name_bn : info.name_en,
+            plan: plan.toUpperCase(),
+            institution: data.institution || '',
+          },
+        }).catch(() => {});
+      }
+
       setSubmitted(true);
     } catch {
       toast({ title: isBn ? 'কিছু সমস্যা হয়েছে, আবার চেষ্টা করুন' : 'Something went wrong', variant: 'destructive' });
