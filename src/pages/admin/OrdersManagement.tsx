@@ -58,8 +58,14 @@ const OrdersManagement = () => {
     },
   });
 
+  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   const handleReply = async () => {
     if (!replyTo || !replyForm.body.trim()) return;
+    if (!isValidEmail(replyTo.email)) {
+      toast({ title: '❌', description: 'এই অর্ডারে কোনো বৈধ ইমেইল নেই', variant: 'destructive' });
+      return;
+    }
     setSending(true);
     try {
       const { error } = await supabase.functions.invoke('send-reply', {
