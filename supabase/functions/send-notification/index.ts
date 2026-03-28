@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { SmtpClient } from "https://deno.land/x/smtp@v0.7.0/mod.ts";
+import nodemailer from "npm:nodemailer@6.9.10";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -14,20 +14,18 @@ serve(async (req) => {
   try {
     const GMAIL_USER = Deno.env.get('GMAIL_USER');
     const GMAIL_APP_PASSWORD = Deno.env.get('GMAIL_APP_PASSWORD');
-    if (!GMAIL_USER || !GMAIL_APP_PASSWORD) {
-      throw new Error('Gmail credentials not configured');
-    }
+    if (!GMAIL_USER || !GMAIL_APP_PASSWORD) throw new Error('Gmail credentials not configured');
 
     const { name, email, phone, message, service } = await req.json();
 
     const html = `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;padding:0;background:#ffffff;">
+      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;">
         <div style="background:linear-gradient(135deg,#16a34a,#15803d);padding:30px 24px;border-radius:12px 12px 0 0;text-align:center;">
           <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;">📩 নতুন কনসালটেশন রিকোয়েস্ট</h1>
         </div>
         <div style="padding:24px;">
           <table style="width:100%;border-collapse:collapse;">
-            <tr><td style="padding:12px 16px;font-weight:600;color:#374151;background:#f9fafb;border-radius:8px 0 0 0;width:100px;">বিষয়</td><td style="padding:12px 16px;color:#1f2937;background:#f9fafb;border-radius:0 8px 0 0;">${service}</td></tr>
+            <tr><td style="padding:12px 16px;font-weight:600;color:#374151;background:#f9fafb;width:100px;">বিষয়</td><td style="padding:12px 16px;color:#1f2937;background:#f9fafb;">${service}</td></tr>
             <tr><td style="padding:12px 16px;font-weight:600;color:#374151;">নাম</td><td style="padding:12px 16px;color:#1f2937;">${name}</td></tr>
             <tr><td style="padding:12px 16px;font-weight:600;color:#374151;background:#f9fafb;">ইমেইল</td><td style="padding:12px 16px;color:#1f2937;background:#f9fafb;">${email}</td></tr>
             <tr><td style="padding:12px 16px;font-weight:600;color:#374151;">ফোন</td><td style="padding:12px 16px;color:#1f2937;">${phone || 'দেওয়া হয়নি'}</td></tr>
@@ -40,29 +38,22 @@ serve(async (req) => {
         <div style="background:#f9fafb;padding:16px 24px;border-radius:0 0 12px 12px;border-top:1px solid #e5e7eb;text-align:center;">
           <p style="color:#9ca3af;font-size:11px;margin:0;">UpnexIT Consultation System — © ${new Date().getFullYear()}</p>
         </div>
-      </div>
-    `;
+      </div>`;
 
-    const client = new SmtpClient();
-    await client.connectTLS({
-      hostname: "smtp.gmail.com",
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
       port: 465,
-      username: GMAIL_USER,
-      password: GMAIL_APP_PASSWORD,
+      secure: true,
+      auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
     });
 
-    await client.send({
-      from: GMAIL_USER,
+    await transporter.sendMail({
+      from: `UpnexIT <${GMAIL_USER}>`,
       to: GMAIL_USER,
+      replyTo: email,
       subject: `নতুন কনসালটেশন রিকোয়েস্ট: ${service}`,
-      content: "This email requires HTML support.",
-      html: html,
-      headers: {
-        "Reply-To": email,
-      },
+      html,
     });
-
-    await client.close();
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -70,8 +61,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Email send error:', error);
     return new Response(JSON.stringify({ success: false, error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 });
