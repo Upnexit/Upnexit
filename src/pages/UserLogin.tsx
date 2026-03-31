@@ -221,11 +221,10 @@ const UserLogin = () => {
             </div>
 
             {/* Social Buttons */}
-            <div className="space-y-2.5 mb-5">
-              {/* Google */}
+            <div className="mb-5">
               <button
                 type="button"
-                onClick={() => handleSocialLogin('google')}
+                onClick={handleGoogleLogin}
                 disabled={!!socialLoading}
                 className="w-full h-[50px] rounded-xl border border-border bg-background hover:bg-muted/50 transition-all flex items-center justify-center gap-3 text-sm font-semibold text-foreground disabled:opacity-50 group"
               >
@@ -241,24 +240,6 @@ const UserLogin = () => {
                   </svg>
                 )}
                 {isBn ? 'Google দিয়ে চালিয়ে যান' : 'Continue with Google'}
-              </button>
-
-              {/* Apple */}
-              <button
-                type="button"
-                onClick={() => handleSocialLogin('apple')}
-                disabled={!!socialLoading}
-                className="w-full h-[50px] rounded-xl border border-foreground/90 bg-foreground text-background hover:bg-foreground/90 transition-all flex items-center justify-center gap-3 text-sm font-semibold disabled:opacity-50 group"
-              >
-                {socialLoading === 'apple' ? (
-                  <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                    className="w-5 h-5 border-2 border-background/30 border-t-background rounded-full" />
-                ) : (
-                  <svg className="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                  </svg>
-                )}
-                {isBn ? 'Apple দিয়ে চালিয়ে যান' : 'Continue with Apple'}
               </button>
             </div>
 
