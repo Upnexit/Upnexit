@@ -32,14 +32,17 @@ const UserLogin = () => {
     return null;
   }
 
-  const handleSocialLogin = async (provider: 'google' | 'apple') => {
-    setSocialLoading(provider);
+  const handleGoogleLogin = async () => {
+    setSocialLoading('google');
     try {
-      const { error } = await lovable.auth.signInWithOAuth(provider, {
-        redirect_uri: window.location.origin,
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + redirect,
+        },
       });
       if (error) {
-        toast({ title: isBn ? `${provider === 'google' ? 'Google' : 'Apple'} লগইন ব্যর্থ` : `${provider === 'google' ? 'Google' : 'Apple'} login failed`, variant: 'destructive' });
+        toast({ title: isBn ? 'Google লগইন ব্যর্থ' : 'Google login failed', variant: 'destructive' });
       }
     } catch {
       toast({ title: isBn ? 'কিছু ভুল হয়েছে' : 'Something went wrong', variant: 'destructive' });
