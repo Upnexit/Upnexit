@@ -45,6 +45,8 @@ const AppRoutes = () => {
       <Route path="/consultation" element={<Consultation />} />
       <Route path="/services/:slug" element={<ServiceDetail />} />
       <Route path="/order" element={<Order />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/login" element={<UserLogin />} />
       <Route path="/dashboard" element={<UserDashboard />} />
       <Route path="/admin/login" element={<AdminLogin />} />
