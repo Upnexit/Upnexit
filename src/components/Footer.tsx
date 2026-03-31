@@ -96,8 +96,16 @@ const Footer = () => {
           <p className="text-xs text-white/40">
             © {new Date().getFullYear()} Upnex It. {t.footer.rights}.
           </p>
-          <div className="flex items-center gap-1 text-xs text-white/50">
-            Made in <span className="text-primary font-bold text-sm">Upnex It</span>
+          <div className="flex items-center gap-4">
+            <Link to="/privacy-policy" className="text-xs text-white/40 hover:text-white/70 transition-colors">
+              {lang === 'bn' ? 'গোপনীয়তা নীতি' : 'Privacy Policy'}
+            </Link>
+            <Link to="/terms-of-service" className="text-xs text-white/40 hover:text-white/70 transition-colors">
+              {lang === 'bn' ? 'শর্তাবলী' : 'Terms of Service'}
+            </Link>
+            <span className="text-xs text-white/50 flex items-center gap-1">
+              Made in <span className="text-primary font-bold text-sm">Upnex It</span>
+            </span>
           </div>
         </div>
       </div>
