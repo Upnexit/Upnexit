@@ -3,7 +3,7 @@ import { Facebook, Twitter, Linkedin, Instagram, ArrowRight, Mail, Phone, MapPin
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <footer className="gradient-dark text-white relative overflow-hidden pb-20 lg:pb-0">
