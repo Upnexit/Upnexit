@@ -354,9 +354,15 @@ const UserLogin = () => {
 
             {/* Terms */}
             <p className="text-center text-[10px] text-muted-foreground mt-4 leading-relaxed">
-              {isBn
-                ? 'লগইন করে আপনি আমাদের শর্তাবলী ও গোপনীয়তা নীতি মেনে নিচ্ছেন।'
-                : 'By signing in, you agree to our Terms of Service & Privacy Policy.'}
+              {isBn ? 'লগইন করে আপনি আমাদের ' : 'By signing in, you agree to our '}
+              <Link to="/terms-of-service" className="text-primary hover:underline">
+                {isBn ? 'শর্তাবলী' : 'Terms of Service'}
+              </Link>
+              {isBn ? ' ও ' : ' & '}
+              <Link to="/privacy-policy" className="text-primary hover:underline">
+                {isBn ? 'গোপনীয়তা নীতি' : 'Privacy Policy'}
+              </Link>
+              {isBn ? ' মেনে নিচ্ছেন।' : '.'}
             </p>
           </motion.div>
         </div>

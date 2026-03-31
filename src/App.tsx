@@ -14,6 +14,8 @@ import Consultation from "./pages/Consultation";
 import NotFound from "./pages/NotFound";
 import ServiceDetail from "./pages/ServiceDetail";
 import Order from "./pages/Order";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import AdminLogin from "./pages/AdminLogin";
 import UserLogin from "./pages/UserLogin";
 import UserDashboard from "./pages/UserDashboard";
@@ -43,6 +45,8 @@ const AppRoutes = () => {
       <Route path="/consultation" element={<Consultation />} />
       <Route path="/services/:slug" element={<ServiceDetail />} />
       <Route path="/order" element={<Order />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/login" element={<UserLogin />} />
       <Route path="/dashboard" element={<UserDashboard />} />
       <Route path="/admin/login" element={<AdminLogin />} />
