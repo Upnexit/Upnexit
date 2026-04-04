@@ -1,3 +1,4 @@
+import SEOHead from '@/components/SEOHead';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
