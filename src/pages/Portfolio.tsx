@@ -8,7 +8,7 @@ import { ExternalLink, Layers } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Portfolio = () => {
-  const { language } = useLanguage();
+  const { lang } = useLanguage();
 
   const { data: items, isLoading } = useQuery({
     queryKey: ['portfolio-items'],

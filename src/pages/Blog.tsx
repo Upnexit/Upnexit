@@ -9,7 +9,7 @@ import { Calendar, ArrowRight, Tag } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Blog = () => {
-  const { language } = useLanguage();
+  const { lang } = useLanguage();
 
   const { data: posts, isLoading } = useQuery({
     queryKey: ['blog-posts'],
