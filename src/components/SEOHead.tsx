@@ -7,6 +7,7 @@ interface SEOHeadProps {
   ogImage?: string;
   type?: string;
   noindex?: boolean;
+  keywords?: string;
 }
 
 const DEFAULT_OG_IMAGE = 'https://upnexit.pro.bd/og-image.jpg';
@@ -18,6 +19,7 @@ const SEOHead = ({
   ogImage = DEFAULT_OG_IMAGE,
   type = 'website',
   noindex = false,
+  keywords,
 }: SEOHeadProps) => {
   useEffect(() => {
     // Title
@@ -35,6 +37,10 @@ const SEOHead = ({
     };
 
     setMeta('name', 'description', description);
+
+    if (keywords) {
+      setMeta('name', 'keywords', keywords);
+    }
 
     if (noindex) {
       setMeta('name', 'robots', 'noindex, nofollow');
@@ -73,7 +79,7 @@ const SEOHead = ({
       const link = document.querySelector('link[rel="canonical"]');
       if (link) link.remove();
     };
-  }, [title, description, canonical, ogImage, type, noindex]);
+  }, [title, description, canonical, ogImage, type, noindex, keywords]);
 
   return null;
 };

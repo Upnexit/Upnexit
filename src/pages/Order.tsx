@@ -139,9 +139,10 @@ const Order = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Place Order - Upnex It | অর্ডার করুন"
-        description="Place your software order with Upnex It. Get professional custom software solutions for your business."
+        title="Place Order - Upnex It | সফটওয়্যার অর্ডার করুন"
+        description="Order custom software from Upnex It. School Management, Hospital Management, Custom Software & Web Applications. Affordable pricing, fast delivery."
         canonical="https://upnexit.pro.bd/order"
+        keywords="order software bangladesh, buy school management software, buy hospital software, সফটওয়্যার অর্ডার, সফটওয়্যার কিনুন, software price bangladesh, affordable software order bd"
       />
       <Navbar />
 

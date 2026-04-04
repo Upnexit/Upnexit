@@ -13,9 +13,10 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
       <SEOHead
-        title="Upnex It - Custom Software Solutions | কাস্টম সফটওয়্যার সমাধান"
-        description="Upnex It provides professional custom software solutions including School Management, Hospital Management, Web Development and more for businesses in Bangladesh."
+        title="Upnex It - Best Software Company in Bangladesh | সেরা সফটওয়্যার কোম্পানি"
+        description="Upnex It is a leading software company in Bangladesh providing School Management Software, Hospital Management System, Custom Software Development & Web Applications at affordable prices."
         canonical="https://upnexit.pro.bd/"
+        keywords="software company bangladesh, best software company in bangladesh, custom software development, school management software bangladesh, hospital management software, web development company bangladesh, IT company naogaon, সফটওয়্যার কোম্পানি বাংলাদেশ, স্কুল ম্যানেজমেন্ট সফটওয়্যার, হসপিটাল ম্যানেজমেন্ট সফটওয়্যার, কাস্টম সফটওয়্যার, ওয়েব ডেভেলপমেন্ট বাংলাদেশ, upnex it, upnexit, সফটওয়্যার কোম্পানি নওগাঁ, best IT company bangladesh, affordable software bangladesh, ERP software bangladesh, software development company bd"
       />
       {/* JSON-LD Organization Schema */}
       <script

@@ -64,6 +64,7 @@ const Services = () => {
         title="Software Services - Upnex It | সফটওয়্যার সেবাসমূহ"
         description="Upnex It offers School Management Software, Hospital Management Software, Custom Software Development & Web Applications in Bangladesh. Get a free demo today."
         canonical="https://upnexit.pro.bd/services"
+        keywords="software services bangladesh, school management system, hospital management system, custom software development, web application development, ERP software bd, school ERP bangladesh, HMS software, clinic management software, e-commerce development bangladesh, সফটওয়্যার সেবা বাংলাদেশ, স্কুল ম্যানেজমেন্ট সিস্টেম, হসপিটাল ম্যানেজমেন্ট, কাস্টম সফটওয়্যার ডেভেলপমেন্ট"
       />
       {/* JSON-LD Service Schema */}
       <script

@@ -31,6 +31,7 @@ const Contact = () => {
         title="Contact Upnex It - Get Free Consultation | যোগাযোগ করুন"
         description="Contact Upnex It for custom software solutions in Bangladesh. Email: upnex360@gmail.com, Phone: +880 1628112731. Office: Sapahar, Naogaon. Free consultation available."
         canonical="https://upnexit.pro.bd/contact"
+        keywords="contact upnex it, software company contact bangladesh, free consultation software, সফটওয়্যার কোম্পানি যোগাযোগ, ফ্রি কনসালটেশন, software company naogaon contact, IT support bangladesh"
       />
       {/* JSON-LD LocalBusiness Schema */}
       <script
