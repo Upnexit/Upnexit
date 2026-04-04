@@ -30,7 +30,7 @@ const Contact = () => {
       <SEOHead
         title="Contact Us - Upnex It | যোগাযোগ করুন"
         description="Get in touch with Upnex It for custom software solutions. Contact us via email, phone or visit our office in Naogaon, Bangladesh."
-        canonical="https://upnexit.com/contact"
+        canonical="https://upnexit.pro.bd/contact"
       />
       <Navbar />
 

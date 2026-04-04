@@ -583,7 +583,7 @@ const ServiceDetail = () => {
       <SEOHead
         title={`${data.title} ${data.titleHighlight} - Upnex It`}
         description={data.subtitle}
-        canonical={`https://upnexit.com/services/${slug}`}
+        canonical={`https://upnexit.pro.bd/services/${slug}`}
       />
       <Navbar />
 

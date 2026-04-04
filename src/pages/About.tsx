@@ -53,7 +53,7 @@ const About = () => {
       <SEOHead
         title="About Us - Upnex It | আমাদের সম্পর্কে"
         description="Learn about Upnex It, a leading software agency in Bangladesh providing innovative digital solutions. Meet our expert team and discover our mission."
-        canonical="https://upnexit.com/about"
+        canonical="https://upnexit.pro.bd/about"
       />
       <Navbar />
 
