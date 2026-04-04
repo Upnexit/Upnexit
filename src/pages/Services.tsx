@@ -60,6 +60,11 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
+      <SEOHead
+        title="Services - Upnex It | আমাদের সেবাসমূহ"
+        description="Explore Upnex It's professional software services: School Management, Hospital Management, Custom Software Development and Web Applications."
+        canonical="https://upnexit.com/services"
+      />
       <Navbar />
 
       {/* Hero Banner */}

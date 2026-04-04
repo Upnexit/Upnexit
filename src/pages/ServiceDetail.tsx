@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import SEOHead from '@/components/SEOHead';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useQuery } from '@tanstack/react-query';

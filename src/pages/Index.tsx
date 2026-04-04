@@ -12,6 +12,11 @@ import Footer from '@/components/Footer';
 const Index = () => {
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
+      <SEOHead
+        title="Upnex It - Custom Software Solutions | কাস্টম সফটওয়্যার সমাধান"
+        description="Upnex It provides professional custom software solutions including School Management, Hospital Management, Web Development and more for businesses in Bangladesh."
+        canonical="https://upnexit.com/"
+      />
       <Navbar />
       <HeroSection />
       <VideoSection />

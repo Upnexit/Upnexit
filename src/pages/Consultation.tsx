@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SEOHead from '@/components/SEOHead';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
