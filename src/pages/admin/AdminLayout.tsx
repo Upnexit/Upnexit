@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import {
   Users, MessageSquare, Settings, LayoutDashboard, Wrench, LogOut, ArrowLeft,
   Star, MessageCircle, ShoppingCart, Link2, ChevronRight, PanelLeftClose, PanelLeft,
+  FileText, Briefcase,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
