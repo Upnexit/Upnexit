@@ -52,6 +52,9 @@ const AppRoutes = () => {
       <Route path="/order" element={<Order />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/login" element={<UserLogin />} />
       <Route path="/dashboard" element={<UserDashboard />} />
       <Route path="/admin/login" element={<AdminLogin />} />
