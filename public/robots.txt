@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://upnexit.com/sitemap.xml
+Sitemap: https://upnexit.pro.bd/sitemap.xml
