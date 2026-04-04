@@ -135,9 +135,10 @@ const Consultation = () => {
   return (
     <>
       <SEOHead
-        title="Free Consultation - Upnex It | ফ্রি কনসালটেশন"
-        description="Book a free consultation with Upnex It. Discuss your software project requirements with our expert team."
+        title="Free Consultation - Upnex It | ফ্রি কনসালটেশন নিন"
+        description="Book a free consultation with Upnex It. Discuss your software project requirements with our expert team. No obligation, get expert advice today."
         canonical="https://upnexit.pro.bd/consultation"
+        keywords="free software consultation bangladesh, software project discussion, ফ্রি কনসালটেশন, সফটওয়্যার পরামর্শ, book consultation software company, IT consultation bd"
       />
       <Navbar />
       <div className="min-h-screen pt-24 pb-32 px-4 relative overflow-hidden">
