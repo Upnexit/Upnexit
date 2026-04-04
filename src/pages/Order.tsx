@@ -138,6 +138,11 @@ const Order = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Place Order - Upnex It | অর্ডার করুন"
+        description="Place your software order with Upnex It. Get professional custom software solutions for your business."
+        canonical="https://upnexit.com/order"
+      />
       <Navbar />
 
       {/* Hero header */}

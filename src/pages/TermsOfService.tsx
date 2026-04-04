@@ -193,6 +193,11 @@ const TermsOfService = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Terms of Service - Upnex It | সেবার শর্তাবলী"
+        description="Read Upnex It's terms of service. Understand the rules and guidelines for using our software services."
+        canonical="https://upnexit.com/terms-of-service"
+      />
       <Navbar />
 
       {/* Hero */}

@@ -134,6 +134,11 @@ const Consultation = () => {
 
   return (
     <>
+      <SEOHead
+        title="Free Consultation - Upnex It | ফ্রি কনসালটেশন"
+        description="Book a free consultation with Upnex It. Discuss your software project requirements with our expert team."
+        canonical="https://upnexit.com/consultation"
+      />
       <Navbar />
       <div className="min-h-screen pt-24 pb-32 px-4 relative overflow-hidden">
         {/* Background */}
