@@ -19,6 +19,9 @@ import TermsOfService from "./pages/TermsOfService";
 import AdminLogin from "./pages/AdminLogin";
 import UserLogin from "./pages/UserLogin";
 import UserDashboard from "./pages/UserDashboard";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import Portfolio from "./pages/Portfolio";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import TeamManagement from "./pages/admin/TeamManagement";
@@ -29,6 +32,8 @@ import ClientReviewsManagement from "./pages/admin/ClientReviewsManagement";
 import ChatbotManagement from "./pages/admin/ChatbotManagement";
 import OrdersManagement from "./pages/admin/OrdersManagement";
 import DemoLinksManagement from "./pages/admin/DemoLinksManagement";
+import BlogManagement from "./pages/admin/BlogManagement";
+import PortfolioManagement from "./pages/admin/PortfolioManagement";
 import ChatbotWidget from "./components/ChatbotWidget";
 import ScrollToTop from "./components/ScrollToTop";
 
