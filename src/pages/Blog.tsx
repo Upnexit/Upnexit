@@ -42,10 +42,10 @@ const Blog = () => {
             className="text-center mb-12"
           >
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              {language === 'bn' ? 'আমাদের ব্লগ' : 'Our Blog'}
+              {lang === "bn" ? 'আমাদের ব্লগ' : 'Our Blog'}
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              {language === 'bn'
+              {lang === "bn"
                 ? 'সফটওয়্যার ডেভেলপমেন্ট, টেকনোলজি এবং ব্যবসায়িক সমাধান সম্পর্কিত আর্টিকেল'
                 : 'Articles about software development, technology and business solutions'}
             </p>
@@ -102,7 +102,7 @@ const Blog = () => {
                           {post.published_at ? new Date(post.published_at).toLocaleDateString('bn-BD') : ''}
                         </span>
                         <span className="text-xs font-medium text-primary flex items-center gap-1 group-hover:gap-2 transition-all">
-                          {language === 'bn' ? 'পড়ুন' : 'Read'}
+                          {lang === "bn" ? 'পড়ুন' : 'Read'}
                           <ArrowRight className="h-3 w-3" />
                         </span>
                       </div>
@@ -114,7 +114,7 @@ const Blog = () => {
           ) : (
             <div className="text-center py-20">
               <p className="text-muted-foreground text-lg">
-                {language === 'bn' ? 'শীঘ্রই আর্টিকেল আসছে...' : 'Articles coming soon...'}
+                {lang === "bn" ? 'শীঘ্রই আর্টিকেল আসছে...' : 'Articles coming soon...'}
               </p>
             </div>
           )}

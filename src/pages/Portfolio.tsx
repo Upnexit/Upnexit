@@ -37,10 +37,10 @@ const Portfolio = () => {
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              {language === 'bn' ? 'আমাদের পোর্টফোলিও' : 'Our Portfolio'}
+              {lang === "bn" ? 'আমাদের পোর্টফোলিও' : 'Our Portfolio'}
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              {language === 'bn'
+              {lang === "bn"
                 ? 'আমাদের সফলভাবে সম্পন্ন করা কিছু প্রজেক্ট দেখুন'
                 : 'See some of our successfully completed projects'}
             </p>
@@ -81,7 +81,7 @@ const Portfolio = () => {
                     <h2 className="text-xl font-bold text-foreground mb-2">{item.title}</h2>
                     {item.client_name && (
                       <p className="text-sm text-muted-foreground mb-2">
-                        {language === 'bn' ? 'ক্লায়েন্ট:' : 'Client:'} {item.client_name}
+                        {lang === "bn" ? 'ক্লায়েন্ট:' : 'Client:'} {item.client_name}
                       </p>
                     )}
                     {item.description && (
@@ -104,7 +104,7 @@ const Portfolio = () => {
                         className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
-                        {language === 'bn' ? 'লাইভ দেখুন' : 'View Live'}
+                        {lang === "bn" ? 'লাইভ দেখুন' : 'View Live'}
                       </a>
                     )}
                   </div>
@@ -114,7 +114,7 @@ const Portfolio = () => {
           ) : (
             <div className="text-center py-20">
               <p className="text-muted-foreground text-lg">
-                {language === 'bn' ? 'শীঘ্রই প্রজেক্ট আসছে...' : 'Projects coming soon...'}
+                {lang === "bn" ? 'শীঘ্রই প্রজেক্ট আসছে...' : 'Projects coming soon...'}
               </p>
             </div>
           )}
