@@ -581,9 +581,18 @@ const ServiceDetail = () => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <SEOHead
-        title={`${data.title} ${data.titleHighlight} - Upnex It`}
-        description={data.subtitle}
+        title={`${data.title} ${data.titleHighlight} - Upnex It | Best ${serviceKey === 'school' ? 'School ERP' : serviceKey === 'hospital' ? 'HMS' : serviceKey === 'web' ? 'Web Development' : 'Custom Software'} Bangladesh`}
+        description={data.description}
         canonical={`https://upnexit.pro.bd/services/${slug}`}
+        keywords={
+          serviceKey === 'school'
+            ? 'school management software bangladesh, school ERP system, student management system, digital school bangladesh, online result system, school fee collection software, attendance management system, স্কুল ম্যানেজমেন্ট সফটওয়্যার, ডিজিটাল স্কুল, অনলাইন রেজাল্ট সিস্টেম, ফি কালেকশন সফটওয়্যার, school software price bangladesh, best school management system bd'
+            : serviceKey === 'hospital'
+            ? 'hospital management software bangladesh, HMS software, patient management system, clinic management software, pharmacy management system, doctor appointment system, hospital billing software, হসপিটাল ম্যানেজমেন্ট সফটওয়্যার, রোগী ব্যবস্থাপনা, ক্লিনিক সফটওয়্যার, ফার্মেসি ম্যানেজমেন্ট, best hospital software bd'
+            : serviceKey === 'custom'
+            ? 'custom software development bangladesh, ERP software bd, CRM software, inventory management software, e-commerce development, business automation software, কাস্টম সফটওয়্যার, ই-আরপি সফটওয়্যার, ইনভেন্টরি ম্যানেজমেন্ট, ব্যবসা অটোমেশন, best custom software company bangladesh'
+            : 'web development bangladesh, web application development, React development, responsive website design, website development company bd, progressive web app, ওয়েব ডেভেলপমেন্ট বাংলাদেশ, ওয়েবসাইট তৈরি, রেসপন্সিভ ওয়েবসাইট, best web developer bangladesh'
+        }
       />
       <Navbar />
 
