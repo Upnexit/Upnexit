@@ -61,9 +61,26 @@ const Services = () => {
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
       <SEOHead
-        title="Services - Upnex It | আমাদের সেবাসমূহ"
-        description="Explore Upnex It's professional software services: School Management, Hospital Management, Custom Software Development and Web Applications."
+        title="Software Services - Upnex It | সফটওয়্যার সেবাসমূহ"
+        description="Upnex It offers School Management Software, Hospital Management Software, Custom Software Development & Web Applications in Bangladesh. Get a free demo today."
         canonical="https://upnexit.pro.bd/services"
+      />
+      {/* JSON-LD Service Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Upnex It Software Services",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "School Management Software", "url": "https://upnexit.pro.bd/services/school" },
+              { "@type": "ListItem", "position": 2, "name": "Hospital Management Software", "url": "https://upnexit.pro.bd/services/hospital" },
+              { "@type": "ListItem", "position": 3, "name": "Custom Software Development", "url": "https://upnexit.pro.bd/services/custom" },
+              { "@type": "ListItem", "position": 4, "name": "Web Application Development", "url": "https://upnexit.pro.bd/services/web" }
+            ]
+          })
+        }}
       />
       <Navbar />
 

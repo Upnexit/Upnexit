@@ -9,7 +9,7 @@ interface SEOHeadProps {
   noindex?: boolean;
 }
 
-const DEFAULT_OG_IMAGE = 'https://storage.googleapis.com/gpt-engineer-file-uploads/qLxyw6tnIAM6QXsjrmnv3cCNQmm2/social-images/social-1774413804952-upnexit.vercel.app__(2).webp';
+const DEFAULT_OG_IMAGE = 'https://upnexit.pro.bd/og-image.jpg';
 
 const SEOHead = ({
   title,

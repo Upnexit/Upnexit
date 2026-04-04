@@ -51,8 +51,8 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
       <SEOHead
-        title="About Us - Upnex It | আমাদের সম্পর্কে"
-        description="Learn about Upnex It, a leading software agency in Bangladesh providing innovative digital solutions. Meet our expert team and discover our mission."
+        title="About Upnex It - Software Company Bangladesh | আমাদের সম্পর্কে"
+        description="Upnex It is a leading software company in Naogaon, Bangladesh. We provide School Management, Hospital Management & Custom Software solutions with expert team."
         canonical="https://upnexit.pro.bd/about"
       />
       <Navbar />
