@@ -1,3 +1,4 @@
+import SEOHead from '@/components/SEOHead';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -148,9 +149,12 @@ const PrivacyPolicy = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Privacy Policy - Upnex It | গোপনীয়তা নীতি"
+        description="Read Upnex It's privacy policy. Learn how we collect, use, and protect your personal information."
+        canonical="https://upnexit.com/privacy-policy"
+      />
       <Navbar />
-
-      {/* Hero */}
       <section className="relative pt-28 pb-16 overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
         <div className="absolute inset-0 opacity-[0.05]" style={{
           backgroundImage: `linear-gradient(hsl(0 0% 100%) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100%) 1px, transparent 1px)`,

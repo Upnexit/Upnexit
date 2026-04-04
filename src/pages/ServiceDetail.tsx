@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import SEOHead from '@/components/SEOHead';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useQuery } from '@tanstack/react-query';
@@ -579,6 +580,11 @@ const ServiceDetail = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
+      <SEOHead
+        title={`${data.title} ${data.titleHighlight} - Upnex It`}
+        description={data.subtitle}
+        canonical={`https://upnexit.com/services/${slug}`}
+      />
       <Navbar />
 
       {/* ═══════════════════ HERO ═══════════════════ */}

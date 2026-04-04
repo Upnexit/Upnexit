@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import SEOHead from '@/components/SEOHead';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -26,6 +27,11 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
+      <SEOHead
+        title="Contact Us - Upnex It | যোগাযোগ করুন"
+        description="Get in touch with Upnex It for custom software solutions. Contact us via email, phone or visit our office in Naogaon, Bangladesh."
+        canonical="https://upnexit.com/contact"
+      />
       <Navbar />
 
       {/* Hero Banner */}

@@ -1,3 +1,4 @@
+import SEOHead from '@/components/SEOHead';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import TeamSlider from '@/components/TeamSlider';
@@ -49,6 +50,11 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
+      <SEOHead
+        title="About Us - Upnex It | আমাদের সম্পর্কে"
+        description="Learn about Upnex It, a leading software agency in Bangladesh providing innovative digital solutions. Meet our expert team and discover our mission."
+        canonical="https://upnexit.com/about"
+      />
       <Navbar />
 
       {/* Hero Banner */}
