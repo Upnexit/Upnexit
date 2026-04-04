@@ -16,14 +16,16 @@ const navItems = [
   { label: 'সার্ভিস সমূহ', shortLabel: 'Service', icon: Wrench, path: '/admin/services' },
   { label: 'ক্লায়েন্ট রিভিউ', shortLabel: 'Review', icon: Star, path: '/admin/reviews' },
   { label: 'ডেমো লিংক', shortLabel: 'Demo', icon: Link2, path: '/admin/demo-links' },
+  { label: 'ব্লগ ম্যানেজমেন্ট', shortLabel: 'Blog', icon: FileText, path: '/admin/blog' },
+  { label: 'পোর্টফোলিও', shortLabel: 'Portfolio', icon: Briefcase, path: '/admin/portfolio' },
   { label: 'চ্যাটবট সেটআপ', shortLabel: 'Chatbot', icon: MessageCircle, path: '/admin/chatbot' },
   { label: 'সাইট সেটিংস', shortLabel: 'Settings', icon: Settings, path: '/admin/settings' },
 ];
 
 const sections = [
   { title: 'প্রধান মেনু', items: navItems.slice(0, 3) },
-  { title: 'কন্টেন্ট ম্যানেজমেন্ট', items: navItems.slice(3, 7) },
-  { title: 'কনফিগারেশন', items: navItems.slice(7) },
+  { title: 'কন্টেন্ট ম্যানেজমেন্ট', items: navItems.slice(3, 9) },
+  { title: 'কনফিগারেশন', items: navItems.slice(9) },
 ];
 
 const AdminLayout = () => {
