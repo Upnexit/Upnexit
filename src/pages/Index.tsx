@@ -15,7 +15,7 @@ const Index = () => {
       <SEOHead
         title="Upnex It - Custom Software Solutions | কাস্টম সফটওয়্যার সমাধান"
         description="Upnex It provides professional custom software solutions including School Management, Hospital Management, Web Development and more for businesses in Bangladesh."
-        canonical="https://upnexit.com/"
+        canonical="https://upnexit.pro.bd/"
       />
       {/* JSON-LD Organization Schema */}
       <script
@@ -25,8 +25,8 @@ const Index = () => {
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Upnex It",
-            "url": "https://upnexit.com",
-            "logo": "https://upnexit.com/logo.png",
+            "url": "https://upnexit.pro.bd",
+            "logo": "https://upnexit.pro.bd/logo.png",
             "description": "Professional custom software solutions for businesses in Bangladesh",
             "address": {
               "@type": "PostalAddress",

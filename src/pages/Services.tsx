@@ -63,7 +63,7 @@ const Services = () => {
       <SEOHead
         title="Services - Upnex It | আমাদের সেবাসমূহ"
         description="Explore Upnex It's professional software services: School Management, Hospital Management, Custom Software Development and Web Applications."
-        canonical="https://upnexit.com/services"
+        canonical="https://upnexit.pro.bd/services"
       />
       <Navbar />
 

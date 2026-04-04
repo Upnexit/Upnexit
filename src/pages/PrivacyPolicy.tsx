@@ -152,7 +152,7 @@ const PrivacyPolicy = () => {
       <SEOHead
         title="Privacy Policy - Upnex It | গোপনীয়তা নীতি"
         description="Read Upnex It's privacy policy. Learn how we collect, use, and protect your personal information."
-        canonical="https://upnexit.com/privacy-policy"
+        canonical="https://upnexit.pro.bd/privacy-policy"
       />
       <Navbar />
       <section className="relative pt-28 pb-16 overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>

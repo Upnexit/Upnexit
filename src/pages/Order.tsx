@@ -141,7 +141,7 @@ const Order = () => {
       <SEOHead
         title="Place Order - Upnex It | অর্ডার করুন"
         description="Place your software order with Upnex It. Get professional custom software solutions for your business."
-        canonical="https://upnexit.com/order"
+        canonical="https://upnexit.pro.bd/order"
       />
       <Navbar />
 
