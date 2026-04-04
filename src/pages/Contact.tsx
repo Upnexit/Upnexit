@@ -28,9 +28,37 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
       <SEOHead
-        title="Contact Us - Upnex It | যোগাযোগ করুন"
-        description="Get in touch with Upnex It for custom software solutions. Contact us via email, phone or visit our office in Naogaon, Bangladesh."
+        title="Contact Upnex It - Get Free Consultation | যোগাযোগ করুন"
+        description="Contact Upnex It for custom software solutions in Bangladesh. Email: upnex360@gmail.com, Phone: +880 1628112731. Office: Sapahar, Naogaon. Free consultation available."
         canonical="https://upnexit.pro.bd/contact"
+      />
+      {/* JSON-LD LocalBusiness Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Upnex It",
+            "image": "https://upnexit.pro.bd/og-image.jpg",
+            "telephone": "+880-1628112731",
+            "email": "upnex360@gmail.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Sapahar",
+              "addressLocality": "Naogaon",
+              "addressRegion": "Rajshahi",
+              "addressCountry": "BD"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "25.034",
+              "longitude": "88.585"
+            },
+            "openingHours": "Sa-Th 09:00-21:00",
+            "url": "https://upnexit.pro.bd/contact"
+          })
+        }}
       />
       <Navbar />
 

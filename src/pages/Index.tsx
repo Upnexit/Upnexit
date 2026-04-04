@@ -25,21 +25,51 @@ const Index = () => {
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Upnex It",
+            "alternateName": "আপনেক্স আইটি",
             "url": "https://upnexit.pro.bd",
             "logo": "https://upnexit.pro.bd/logo.png",
-            "description": "Professional custom software solutions for businesses in Bangladesh",
+            "image": "https://upnexit.pro.bd/og-image.jpg",
+            "description": "Professional custom software solutions for businesses in Bangladesh. School Management, Hospital Management, Web Development.",
             "address": {
               "@type": "PostalAddress",
-              "addressLocality": "Sapahar, Naogaon",
+              "streetAddress": "Sapahar",
+              "addressLocality": "Naogaon",
+              "addressRegion": "Rajshahi",
               "addressCountry": "BD"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "25.034",
+              "longitude": "88.585"
             },
             "contactPoint": {
               "@type": "ContactPoint",
               "telephone": "+880-1628112731",
               "contactType": "customer service",
-              "email": "upnex360@gmail.com"
+              "email": "upnex360@gmail.com",
+              "availableLanguage": ["Bengali", "English"]
             },
+            "foundingDate": "2023",
+            "areaServed": "BD",
+            "knowsAbout": ["School Management Software", "Hospital Management Software", "Custom Software Development", "Web Application Development"],
             "sameAs": []
+          })
+        }}
+      />
+      {/* JSON-LD WebSite Schema for Sitelinks Search */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Upnex It",
+            "url": "https://upnexit.pro.bd",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://upnexit.pro.bd/services?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
           })
         }}
       />
