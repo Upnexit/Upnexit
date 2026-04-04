@@ -19,6 +19,9 @@ import TermsOfService from "./pages/TermsOfService";
 import AdminLogin from "./pages/AdminLogin";
 import UserLogin from "./pages/UserLogin";
 import UserDashboard from "./pages/UserDashboard";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import Portfolio from "./pages/Portfolio";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import TeamManagement from "./pages/admin/TeamManagement";
@@ -29,6 +32,8 @@ import ClientReviewsManagement from "./pages/admin/ClientReviewsManagement";
 import ChatbotManagement from "./pages/admin/ChatbotManagement";
 import OrdersManagement from "./pages/admin/OrdersManagement";
 import DemoLinksManagement from "./pages/admin/DemoLinksManagement";
+import BlogManagement from "./pages/admin/BlogManagement";
+import PortfolioManagement from "./pages/admin/PortfolioManagement";
 import ChatbotWidget from "./components/ChatbotWidget";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -47,6 +52,9 @@ const AppRoutes = () => {
       <Route path="/order" element={<Order />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/login" element={<UserLogin />} />
       <Route path="/dashboard" element={<UserDashboard />} />
       <Route path="/admin/login" element={<AdminLogin />} />
@@ -59,6 +67,8 @@ const AppRoutes = () => {
         <Route path="orders" element={<OrdersManagement />} />
         <Route path="demo-links" element={<DemoLinksManagement />} />
         <Route path="chatbot" element={<ChatbotManagement />} />
+        <Route path="blog" element={<BlogManagement />} />
+        <Route path="portfolio" element={<PortfolioManagement />} />
         <Route path="settings" element={<SiteSettings />} />
       </Route>
       <Route path="*" element={<NotFound />} />
