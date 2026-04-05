@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 type Lang = 'bn' | 'en';
-
 const translations = {
   bn: {
     nav: { home: 'হোম', services: 'সেবাসমূহ', about: 'আমাদের সম্পর্কে', contact: 'যোগাযোগ', portfolio: 'পোর্টফোলিও' },
@@ -111,9 +111,42 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLang] = useState<Lang>('bn');
+  const [detected, setDetected] = useState(false);
+
+  useEffect(() => {
+    // Check if user manually set language before
+    const saved = localStorage.getItem('preferred_lang') as Lang | null;
+    if (saved) {
+      setLang(saved);
+      setDetected(true);
+      return;
+    }
+
+    // Auto-detect country via edge function
+    const detect = async () => {
+      try {
+        const { data } = await supabase.functions.invoke('detect-country');
+        const code = data?.country_code;
+        // Bangladesh = 'bn', everywhere else = 'en'
+        const detectedLang: Lang = code === 'BD' ? 'bn' : 'en';
+        setLang(detectedLang);
+      } catch {
+        // Default to 'bn' on failure
+      } finally {
+        setDetected(true);
+      }
+    };
+    detect();
+  }, []);
+
+  const handleSetLang = (newLang: Lang) => {
+    setLang(newLang);
+    localStorage.setItem('preferred_lang', newLang);
+  };
+
   const t = translations[lang];
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t }}>
+    <LanguageContext.Provider value={{ lang, setLang: handleSetLang, t }}>
       {children}
     </LanguageContext.Provider>
   );
