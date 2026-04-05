@@ -60,10 +60,10 @@ const Navbar = () => {
               <Link
                 key={l.href}
                 to={l.href}
-                className={`px-4 py-2.5 text-[15px] font-medium rounded-lg transition-all ${
+                className={`px-4 py-2.5 text-base font-bold rounded-lg transition-all ${
                   isActive(l.href)
-                    ? 'text-primary bg-primary/8 font-semibold'
-                    : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
+                    ? 'text-primary bg-primary/8'
+                    : 'text-foreground hover:text-primary hover:bg-primary/5'
                 }`}
               >
                 {l.label}
