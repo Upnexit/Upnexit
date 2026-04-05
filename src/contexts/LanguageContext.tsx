@@ -111,29 +111,26 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLang] = useState<Lang>('bn');
-  const [detected, setDetected] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Check if user manually set language before
     const saved = localStorage.getItem('preferred_lang') as Lang | null;
     if (saved) {
       setLang(saved);
-      setDetected(true);
+      setIsReady(true);
       return;
     }
 
-    // Auto-detect country via edge function
     const detect = async () => {
       try {
         const { data } = await supabase.functions.invoke('detect-country');
         const code = data?.country_code;
-        // Bangladesh = 'bn', everywhere else = 'en'
         const detectedLang: Lang = code === 'BD' ? 'bn' : 'en';
         setLang(detectedLang);
       } catch {
         // Default to 'bn' on failure
       } finally {
-        setDetected(true);
+        setIsReady(true);
       }
     };
     detect();
@@ -145,6 +142,18 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const t = translations[lang];
+
+  // Show a minimal loading screen until language is detected
+  if (!isReady) {
+    return (
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <LanguageContext.Provider value={{ lang, setLang: handleSetLang, t }}>
       {children}
