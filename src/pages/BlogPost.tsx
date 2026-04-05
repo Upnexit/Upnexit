@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import SEOHead from '@/components/SEOHead';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Calendar, User, ArrowLeft, Tag, Clock, Star, Send, MessageCircle } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Tag, Clock, Star, Send, MessageCircle, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
