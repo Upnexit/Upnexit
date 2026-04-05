@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import { Menu, Globe, Home, Briefcase, Users, MessageSquare, User, LogIn, LayoutDashboard } from 'lucide-react';
+import { Menu, Globe, Home, Briefcase, Users, MessageSquare, User, LogIn, LayoutDashboard, BookOpen, FolderOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
@@ -27,6 +27,8 @@ const Navbar = () => {
   const links = [
     { label: t.nav.home, href: '/', icon: Home },
     { label: t.nav.services, href: '/services', icon: Briefcase },
+    { label: lang === 'bn' ? 'পোর্টফোলিও' : 'Portfolio', href: '/portfolio', icon: FolderOpen },
+    { label: lang === 'bn' ? 'ব্লগ' : 'Blog', href: '/blog', icon: BookOpen },
     { label: t.nav.about, href: '/about', icon: Users },
     { label: t.nav.contact, href: '/contact', icon: MessageSquare },
   ];
