@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 type Lang = 'bn' | 'en';
-
 const translations = {
   bn: {
     nav: { home: 'হোম', services: 'সেবাসমূহ', about: 'আমাদের সম্পর্কে', contact: 'যোগাযোগ', portfolio: 'পোর্টফোলিও' },
