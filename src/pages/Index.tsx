@@ -1,13 +1,16 @@
+import { lazy, Suspense } from 'react';
 import SEOHead from '@/components/SEOHead';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
-import VideoSection from '@/components/VideoSection';
-import ServicesSection from '@/components/ServicesSection';
-import StatsSection from '@/components/StatsSection';
-import AboutSection from '@/components/AboutSection';
-import ClientReviewsSection from '@/components/ClientReviewsSection';
-import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+
+// Lazy load below-the-fold sections
+const VideoSection = lazy(() => import('@/components/VideoSection'));
+const ServicesSection = lazy(() => import('@/components/ServicesSection'));
+const StatsSection = lazy(() => import('@/components/StatsSection'));
+const AboutSection = lazy(() => import('@/components/AboutSection'));
+const ClientReviewsSection = lazy(() => import('@/components/ClientReviewsSection'));
+const ContactSection = lazy(() => import('@/components/ContactSection'));
 
 const Index = () => {
   return (
@@ -76,12 +79,14 @@ const Index = () => {
       />
       <Navbar />
       <HeroSection />
-      <VideoSection />
-      <ServicesSection />
-      <StatsSection />
-      <AboutSection />
-      <ClientReviewsSection />
-      <ContactSection />
+      <Suspense fallback={<div className="min-h-[200px]" />}>
+        <VideoSection />
+        <ServicesSection />
+        <StatsSection />
+        <AboutSection />
+        <ClientReviewsSection />
+        <ContactSection />
+      </Suspense>
       <Footer />
     </div>
   );

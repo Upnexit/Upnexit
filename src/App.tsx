@@ -6,73 +6,88 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/hooks/useAuth";
 import { usePageTracker } from "@/hooks/usePageTracker";
-import Index from "./pages/Index";
-import Services from "./pages/Services";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Consultation from "./pages/Consultation";
-import NotFound from "./pages/NotFound";
-import ServiceDetail from "./pages/ServiceDetail";
-import Order from "./pages/Order";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsOfService from "./pages/TermsOfService";
-import AdminLogin from "./pages/AdminLogin";
-import UserLogin from "./pages/UserLogin";
-import UserDashboard from "./pages/UserDashboard";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import Portfolio from "./pages/Portfolio";
-import AdminLayout from "./pages/admin/AdminLayout";
-import Dashboard from "./pages/admin/Dashboard";
-import TeamManagement from "./pages/admin/TeamManagement";
-import Messages from "./pages/admin/Messages";
-import ServicesManagement from "./pages/admin/ServicesManagement";
-import SiteSettings from "./pages/admin/SiteSettings";
-import ClientReviewsManagement from "./pages/admin/ClientReviewsManagement";
-import ChatbotManagement from "./pages/admin/ChatbotManagement";
-import OrdersManagement from "./pages/admin/OrdersManagement";
-import DemoLinksManagement from "./pages/admin/DemoLinksManagement";
-import BlogManagement from "./pages/admin/BlogManagement";
-import PortfolioManagement from "./pages/admin/PortfolioManagement";
-import ChatbotWidget from "./components/ChatbotWidget";
+import { lazy, Suspense } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 
+// Eagerly load Index (homepage) for fastest FCP
+import Index from "./pages/Index";
+
+// Lazy load all other routes
+const Services = lazy(() => import("./pages/Services"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Consultation = lazy(() => import("./pages/Consultation"));
+const ServiceDetail = lazy(() => import("./pages/ServiceDetail"));
+const Order = lazy(() => import("./pages/Order"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
+const UserLogin = lazy(() => import("./pages/UserLogin"));
+const UserDashboard = lazy(() => import("./pages/UserDashboard"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
+const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
+const TeamManagement = lazy(() => import("./pages/admin/TeamManagement"));
+const Messages = lazy(() => import("./pages/admin/Messages"));
+const ServicesManagement = lazy(() => import("./pages/admin/ServicesManagement"));
+const SiteSettings = lazy(() => import("./pages/admin/SiteSettings"));
+const ClientReviewsManagement = lazy(() => import("./pages/admin/ClientReviewsManagement"));
+const ChatbotManagement = lazy(() => import("./pages/admin/ChatbotManagement"));
+const OrdersManagement = lazy(() => import("./pages/admin/OrdersManagement"));
+const DemoLinksManagement = lazy(() => import("./pages/admin/DemoLinksManagement"));
+const BlogManagement = lazy(() => import("./pages/admin/BlogManagement"));
+const PortfolioManagement = lazy(() => import("./pages/admin/PortfolioManagement"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+// Lazy load heavy widgets
+const ChatbotWidget = lazy(() => import("./components/ChatbotWidget"));
+
 const queryClient = new QueryClient();
+
+const PageFallback = () => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 
 const AppRoutes = () => {
   usePageTracker();
   return (
-    <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/services" element={<Services />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/consultation" element={<Consultation />} />
-      <Route path="/services/:slug" element={<ServiceDetail />} />
-      <Route path="/order" element={<Order />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/terms-of-service" element={<TermsOfService />} />
-      <Route path="/blog" element={<Blog />} />
-      <Route path="/blog/:slug" element={<BlogPost />} />
-      <Route path="/portfolio" element={<Portfolio />} />
-      <Route path="/login" element={<UserLogin />} />
-      <Route path="/dashboard" element={<UserDashboard />} />
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="team" element={<TeamManagement />} />
-        <Route path="messages" element={<Messages />} />
-        <Route path="services" element={<ServicesManagement />} />
-        <Route path="reviews" element={<ClientReviewsManagement />} />
-        <Route path="orders" element={<OrdersManagement />} />
-        <Route path="demo-links" element={<DemoLinksManagement />} />
-        <Route path="chatbot" element={<ChatbotManagement />} />
-        <Route path="blog" element={<BlogManagement />} />
-        <Route path="portfolio" element={<PortfolioManagement />} />
-        <Route path="settings" element={<SiteSettings />} />
-      </Route>
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <Suspense fallback={<PageFallback />}>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/consultation" element={<Consultation />} />
+        <Route path="/services/:slug" element={<ServiceDetail />} />
+        <Route path="/order" element={<Order />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/login" element={<UserLogin />} />
+        <Route path="/dashboard" element={<UserDashboard />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="team" element={<TeamManagement />} />
+          <Route path="messages" element={<Messages />} />
+          <Route path="services" element={<ServicesManagement />} />
+          <Route path="reviews" element={<ClientReviewsManagement />} />
+          <Route path="orders" element={<OrdersManagement />} />
+          <Route path="demo-links" element={<DemoLinksManagement />} />
+          <Route path="chatbot" element={<ChatbotManagement />} />
+          <Route path="blog" element={<BlogManagement />} />
+          <Route path="portfolio" element={<PortfolioManagement />} />
+          <Route path="settings" element={<SiteSettings />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   );
 };
 
@@ -86,7 +101,9 @@ const App = () => (
           <BrowserRouter>
             <ScrollToTop />
             <AppRoutes />
-            <ChatbotWidget />
+            <Suspense fallback={null}>
+              <ChatbotWidget />
+            </Suspense>
           </BrowserRouter>
         </AuthProvider>
       </LanguageProvider>
