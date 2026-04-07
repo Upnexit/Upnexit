@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { ThreeDotsLoader } from '@/components/ui/3-dots-loader';
 
 type Lang = 'bn' | 'en';
 const translations = {
@@ -147,9 +148,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   if (!isReady) {
     return (
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-        </div>
+        <ThreeDotsLoader />
       </div>
     );
   }
