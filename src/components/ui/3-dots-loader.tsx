@@ -2,14 +2,22 @@ import { cn } from "@/lib/utils";
 
 export const ThreeDotsLoader = () => {
   return (
-    <>
+    <div className="relative flex flex-col items-center gap-6">
+      {/* Company Logo */}
+      <img 
+        src="/logo.png" 
+        alt="Upnex It" 
+        className="w-16 h-16 object-contain"
+      />
+      
+      {/* Dots Animation */}
       <div className="dots-container">
         <div className="dot dot-1"></div>
         <div className="dot dot-2"></div>
         <div className="dot dot-3"></div>
       </div>
 
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="absolute w-0 h-0">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" className="absolute w-0 h-0 overflow-hidden">
         <defs>
           <filter id="goo">
             <feGaussianBlur result="blur" stdDeviation="10" in="SourceGraphic" />
@@ -21,6 +29,6 @@ export const ThreeDotsLoader = () => {
           </filter>
         </defs>
       </svg>
-    </>
+    </div>
   );
 };
