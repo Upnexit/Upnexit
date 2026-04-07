@@ -1,11 +1,31 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Play } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 
 const VideoSection = () => {
   const { lang } = useLanguage();
+  const [isVisible, setIsVisible] = useState(false);
+  const [loadIframe, setLoadIframe] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section id="video-section" className="relative bg-muted/50">
+    <section id="video-section" className="relative bg-muted/50" ref={sectionRef}>
       {/* Top decorative wave separator */}
       <div className="absolute top-0 left-0 right-0 -translate-y-[99%]">
         <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
@@ -29,13 +49,34 @@ const VideoSection = () => {
         </div>
         <div className="max-w-3xl lg:max-w-6xl mx-auto">
           <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-elevated ring-1 ring-border/30" style={{ paddingBottom: '56.25%' }}>
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/GuXDGUQbawI"
-              title="Company Introduction"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+            {isVisible && !loadIframe ? (
+              <button
+                onClick={() => setLoadIframe(true)}
+                className="absolute inset-0 w-full h-full bg-gradient-to-br from-foreground/5 to-foreground/10 flex items-center justify-center group cursor-pointer"
+                aria-label="Play video"
+              >
+                {/* YouTube thumbnail as lightweight image */}
+                <img
+                  src="https://img.youtube.com/vi/GuXDGUQbawI/hqdefault.jpg"
+                  alt="Video thumbnail"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <Play className="w-7 h-7 md:w-9 md:h-9 text-primary-foreground ml-1" />
+                </div>
+              </button>
+            ) : loadIframe ? (
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/GuXDGUQbawI?autoplay=1"
+                title="Company Introduction"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <div className="absolute inset-0 w-full h-full bg-muted animate-pulse" />
+            )}
           </div>
         </div>
       </div>
