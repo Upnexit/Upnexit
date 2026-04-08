@@ -131,15 +131,15 @@
 /* 3-dots-loader */
 .dots-container {
   position: relative;
-  width: 64px;
-  height: 64px;
+  width: 100px;
+  height: 100px;
   filter: url(#goo);
 }
 
 .dot {
   position: absolute;
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: hsl(var(--primary));
   top: 50%;
@@ -165,8 +165,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: hsl(var(--primary));
   animation: rotate-move 2s ease infinite;
