@@ -1,16 +1,6 @@
-import { cn } from "@/lib/utils";
-
 export const ThreeDotsLoader = () => {
   return (
-    <div className="relative flex flex-col items-center gap-6">
-      {/* Company Logo */}
-      <img 
-        src="/logo.png" 
-        alt="Upnex It" 
-        className="w-16 h-16 object-contain"
-      />
-      
-      {/* Dots Animation */}
+    <>
       <div className="dots-container">
         <div className="dot dot-1"></div>
         <div className="dot dot-2"></div>
@@ -29,6 +19,6 @@ export const ThreeDotsLoader = () => {
           </filter>
         </defs>
       </svg>
-    </div>
+    </>
   );
 };
