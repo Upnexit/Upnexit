@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import { ExternalLink, Layers, FolderOpen, Code2, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import InternalLinks from '@/components/InternalLinks';
 
 const Portfolio = () => {
   const { lang } = useLanguage();
@@ -208,6 +209,7 @@ const Portfolio = () => {
         </div>
       </section>
 
+      <InternalLinks exclude="/portfolio" />
       <Footer />
     </div>
   );

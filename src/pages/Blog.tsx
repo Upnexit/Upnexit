@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import { Calendar, ArrowRight, Tag, BookOpen, Search, User, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import InternalLinks from '@/components/InternalLinks';
 
 const Blog = () => {
   const { lang } = useLanguage();
@@ -250,6 +251,7 @@ const Blog = () => {
         </div>
       </section>
 
+      <InternalLinks exclude="/blog" />
       <Footer />
     </div>
   );

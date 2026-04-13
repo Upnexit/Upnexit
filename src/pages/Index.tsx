@@ -3,6 +3,7 @@ import SEOHead from '@/components/SEOHead';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import Footer from '@/components/Footer';
+import InternalLinks from '@/components/InternalLinks';
 
 // Lazy load below-the-fold sections
 const VideoSection = lazy(() => import('@/components/VideoSection'));
@@ -87,6 +88,7 @@ const Index = () => {
         <ClientReviewsSection />
         <ContactSection />
       </Suspense>
+      <InternalLinks exclude="/" />
       <Footer />
     </div>
   );

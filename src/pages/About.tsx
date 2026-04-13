@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, Zap, Shield, Clock, Heart, Users, Code2, Award, Target, Eye, Sparkles, ArrowRight, Star, TrendingUp, Lightbulb, Handshake } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import InternalLinks from '@/components/InternalLinks';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -416,6 +417,7 @@ const About = () => {
         </div>
       </section>
 
+      <InternalLinks exclude="/about" />
       <Footer />
     </div>
   );
