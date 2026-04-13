@@ -407,11 +407,11 @@ const About = () => {
               <p className="text-primary-foreground/80 mb-8 max-w-lg mx-auto text-sm md:text-base">
                 {lang === 'bn' ? 'আপনার আইডিয়া বাস্তবে রূপ দিতে আমরা প্রস্তুত' : 'We are ready to bring your ideas to life'}
               </p>
-              <a href="tel:+8801234567890">
+              <Link to="/contact">
                 <Button size="lg" className="bg-background text-foreground hover:bg-background/90 font-bold px-8 gap-2 rounded-xl shadow-elevated">
                   {lang === 'bn' ? 'যোগাযোগ করুন' : 'Contact Us'} <ArrowRight className="h-4 w-4" />
                 </Button>
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>
