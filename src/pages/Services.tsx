@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { GraduationCap, HeartPulse, Code, Globe, ArrowUpRight, CheckCircle2, Layers, Monitor, Smartphone, Database, Cloud, Shield, ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import InternalLinks from '@/components/InternalLinks';
 
 const Services = () => {
   const { t, lang } = useLanguage();
@@ -334,6 +335,7 @@ const Services = () => {
         </div>
       </section>
 
+      <InternalLinks exclude="/services" />
       <Footer />
     </div>
   );

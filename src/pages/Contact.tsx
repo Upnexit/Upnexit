@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import { Send, Mail, Phone, MapPin, MessageCircle, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { contactFormSchema } from '@/lib/sanitize';
+import InternalLinks from '@/components/InternalLinks';
 
 const Contact = () => {
   const { t, lang } = useLanguage();
@@ -173,6 +174,7 @@ const Contact = () => {
         </div>
       </section>
 
+      <InternalLinks exclude="/contact" />
       <Footer />
     </div>
   );
