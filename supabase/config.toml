@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.send-reply]
 verify_jwt = false
+
+[functions.seo-rank-check]
+verify_jwt = false

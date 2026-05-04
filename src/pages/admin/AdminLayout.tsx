@@ -4,7 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import {
   Users, MessageSquare, Settings, LayoutDashboard, Wrench, LogOut, ArrowLeft,
   Star, MessageCircle, ShoppingCart, Link2, ChevronRight, PanelLeftClose, PanelLeft,
-  FileText, Briefcase,
+  FileText, Briefcase, TrendingUp,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -18,6 +18,7 @@ const navItems = [
   { label: 'ডেমো লিংক', shortLabel: 'Demo', icon: Link2, path: '/admin/demo-links' },
   { label: 'ব্লগ ম্যানেজমেন্ট', shortLabel: 'Blog', icon: FileText, path: '/admin/blog' },
   { label: 'পোর্টফোলিও', shortLabel: 'Portfolio', icon: Briefcase, path: '/admin/portfolio' },
+  { label: 'SEO র‍্যাঙ্কিং', shortLabel: 'SEO', icon: TrendingUp, path: '/admin/seo' },
   { label: 'চ্যাটবট সেটআপ', shortLabel: 'Chatbot', icon: MessageCircle, path: '/admin/chatbot' },
   { label: 'সাইট সেটিংস', shortLabel: 'Settings', icon: Settings, path: '/admin/settings' },
 ];
@@ -25,7 +26,8 @@ const navItems = [
 const sections = [
   { title: 'প্রধান মেনু', items: navItems.slice(0, 3) },
   { title: 'কন্টেন্ট ম্যানেজমেন্ট', items: navItems.slice(3, 9) },
-  { title: 'কনফিগারেশন', items: navItems.slice(9) },
+  { title: 'মার্কেটিং', items: navItems.slice(9, 10) },
+  { title: 'কনফিগারেশন', items: navItems.slice(10) },
 ];
 
 const AdminLayout = () => {

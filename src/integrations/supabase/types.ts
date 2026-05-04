@@ -354,6 +354,65 @@ export type Database = {
         }
         Relationships: []
       }
+      seo_keywords: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          keyword: string
+          target_domain: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          keyword: string
+          target_domain?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          keyword?: string
+          target_domain?: string
+        }
+        Relationships: []
+      }
+      seo_rank_history: {
+        Row: {
+          checked_at: string
+          engine: string
+          found_url: string | null
+          id: string
+          keyword_id: string
+          position: number | null
+        }
+        Insert: {
+          checked_at?: string
+          engine?: string
+          found_url?: string | null
+          id?: string
+          keyword_id: string
+          position?: number | null
+        }
+        Update: {
+          checked_at?: string
+          engine?: string
+          found_url?: string | null
+          id?: string
+          keyword_id?: string
+          position?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_rank_history_keyword_id_fkey"
+            columns: ["keyword_id"]
+            isOneToOne: false
+            referencedRelation: "seo_keywords"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       services: {
         Row: {
           created_at: string | null
