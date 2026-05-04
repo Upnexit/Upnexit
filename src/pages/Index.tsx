@@ -90,6 +90,49 @@ const Index = () => {
           })
         }}
       />
+      {/* JSON-LD LocalBusiness for richer local SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "@id": "https://upnexit.pro.bd/#localbusiness",
+            "name": "Upnex It",
+            "image": "https://upnexit.pro.bd/logo.png",
+            "url": "https://upnexit.pro.bd",
+            "telephone": "+880-1628112731",
+            "priceRange": "৳৳",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Sapahar",
+              "addressLocality": "Naogaon",
+              "addressRegion": "Rajshahi",
+              "addressCountry": "BD"
+            },
+            "geo": { "@type": "GeoCoordinates", "latitude": 25.034, "longitude": 88.585 },
+            "openingHoursSpecification": [{
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Saturday","Sunday"],
+              "opens": "09:00",
+              "closes": "21:00"
+            }]
+          })
+        }}
+      />
+      {/* BreadcrumbList */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://upnexit.pro.bd/" }
+            ]
+          })
+        }}
+      />
       <Navbar />
       <HeroSection />
       <Suspense fallback={<div className="min-h-[200px]" />}>
