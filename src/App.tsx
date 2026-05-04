@@ -39,6 +39,7 @@ const OrdersManagement = lazy(() => import("./pages/admin/OrdersManagement"));
 const DemoLinksManagement = lazy(() => import("./pages/admin/DemoLinksManagement"));
 const BlogManagement = lazy(() => import("./pages/admin/BlogManagement"));
 const PortfolioManagement = lazy(() => import("./pages/admin/PortfolioManagement"));
+const SeoRankings = lazy(() => import("./pages/admin/SeoRankings"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Lazy load heavy widgets
@@ -83,6 +84,7 @@ const AppRoutes = () => {
           <Route path="chatbot" element={<ChatbotManagement />} />
           <Route path="blog" element={<BlogManagement />} />
           <Route path="portfolio" element={<PortfolioManagement />} />
+          <Route path="seo" element={<SeoRankings />} />
           <Route path="settings" element={<SiteSettings />} />
         </Route>
         <Route path="*" element={<NotFound />} />
