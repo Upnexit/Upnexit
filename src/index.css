@@ -1,8 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Hind+Siliguri:wght@300;400;500;600;700&family=Great+Vibes&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Signature-style display font for founder profiles */
+.signature-name {
+  font-family: 'Great Vibes', 'Brush Script MT', cursive;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+}
 
 @layer base {
   :root {
