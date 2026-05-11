@@ -122,6 +122,15 @@ const FounderProfile = () => {
   const story = isBn ? founder.storyBn : founder.story;
   const expertise = isBn ? founder.expertiseBn : founder.expertise;
 
+  // Per-founder location chip
+  const isMehedi = founder.slug === 'mehedi-hasan';
+  const locationChip = isMehedi
+    ? (isBn ? 'সাপাহার, নওগাঁ' : 'Sapahar, Naogaon')
+    : (isBn ? 'নিয়ামতপুর, নওগাঁ' : 'Niamatpur, Naogaon');
+  const roleChip = founder.role.includes('CEO')
+    ? (isBn ? 'প্রতিষ্ঠানের CEO' : 'CEO of the Company')
+    : (isBn ? 'প্রতিষ্ঠানের পরিচালক' : 'Director of the Company');
+
   // JSON-LD Person schema for SEO
   const personSchema = {
     '@context': 'https://schema.org',
@@ -136,7 +145,13 @@ const FounderProfile = () => {
       name: 'Upnex It',
       url: 'https://upnexit.pro.bd',
     },
-    address: {
+    address: isMehedi ? {
+      '@type': 'PostalAddress',
+      addressLocality: 'Sapahar',
+      addressRegion: 'Naogaon, Rajshahi',
+      addressCountry: 'BD',
+      streetAddress: 'Sonaranga Village, Sapahar Upazila',
+    } : {
       '@type': 'PostalAddress',
       addressLocality: 'Niamatpur',
       addressRegion: 'Naogaon, Rajshahi',
@@ -213,7 +228,7 @@ const FounderProfile = () => {
                 />
               </div>
               <div className="absolute -bottom-3 -right-3 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-bold shadow-glow">
-                ✓ {isBn ? 'যাচাইকৃত' : 'Verified'}
+                ★ {roleChip}
               </div>
             </motion.div>
 
@@ -228,6 +243,12 @@ const FounderProfile = () => {
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground leading-tight mb-3">
                 {name}
               </h1>
+              <p
+                aria-hidden="true"
+                className="signature-name text-4xl sm:text-5xl md:text-6xl text-primary mb-1 -mt-1"
+              >
+                {founder.name}
+              </p>
               <p className="text-base md:text-lg font-semibold text-primary mb-4">{role}</p>
               <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6 max-w-2xl">
                 {bio}
@@ -235,10 +256,10 @@ const FounderProfile = () => {
 
               <div className="flex flex-wrap gap-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-background border border-border text-xs font-medium text-foreground">
-                  <MapPin className="h-3.5 w-3.5 text-primary" /> {isBn ? 'নিয়ামতপুর, নওগাঁ' : 'Niamatpur, Naogaon'}
+                  <MapPin className="h-3.5 w-3.5 text-primary" /> {locationChip}
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-background border border-border text-xs font-medium text-foreground">
-                  <GraduationCap className="h-3.5 w-3.5 text-primary" /> SSC 2025
+                  <GraduationCap className="h-3.5 w-3.5 text-primary" /> {founder.educationBadge || 'SSC 2025'}
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-background border border-border text-xs font-medium text-foreground">
                   <Briefcase className="h-3.5 w-3.5 text-primary" /> Upnex It
