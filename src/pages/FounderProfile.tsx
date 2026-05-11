@@ -20,6 +20,8 @@ type FounderInfo = {
   address: string;
   addressBn: string;
   education: { year: string; title: string; titleBn: string; place: string; placeBn: string }[];
+  educationBadge?: string;
+  educationBadgeBn?: string;
   expertise: string[];
   expertiseBn: string[];
   story: string;
@@ -40,23 +42,39 @@ const FOUNDERS: Record<string, FounderInfo> = {
       'Skilled Electrical Engineer, IT expert and server specialist. Co-founder & CEO of Upnex It — leading custom software, school & hospital management solutions across Bangladesh.',
     shortBioBn:
       'দক্ষ ইলেকট্রিক্যাল ইঞ্জিনিয়ার, আইটি বিশেষজ্ঞ এবং সার্ভার এক্সপার্ট। আপনেক্স আইটি-এর সহ-প্রতিষ্ঠাতা ও সিইও।',
-    address: 'Nidpur, Niamatpur Upazila, Naogaon District, Rajshahi Division, Bangladesh',
-    addressBn: 'নিদপুর, নিয়ামতপুর উপজেলা, নওগাঁ জেলা, রাজশাহী বিভাগ, বাংলাদেশ',
+    address: 'Sonaranga Village, Sapahar Upazila, Naogaon District, Rajshahi Division, Bangladesh',
+    addressBn: 'সোনারাঙ্গা গ্রাম, সাপাহার উপজেলা, নওগাঁ জেলা, রাজশাহী বিভাগ, বাংলাদেশ',
+    educationBadge: 'Diploma in EEE (ongoing)',
+    educationBadgeBn: 'ডিপ্লোমা EEE (চলমান)',
     education: [
       {
+        year: 'Present',
+        title: 'Diploma in Electrical Engineering (Ongoing)',
+        titleBn: 'ডিপ্লোমা ইন ইলেকট্রিক্যাল ইঞ্জিনিয়ারিং (চলমান)',
+        place: 'Bangladesh Polytechnic Institute, Rajshahi',
+        placeBn: 'বাংলাদেশ পলিটেকনিক ইনস্টিটিউট, রাজশাহী',
+      },
+      {
         year: '2025',
-        title: 'SSC (Secondary School Certificate)',
-        titleBn: 'এসএসসি (মাধ্যমিক)',
-        place: 'Alil Al Islami Academy & College',
-        placeBn: 'আলিল আল ইসলামি একাডেমি অ্যান্ড কলেজ',
+        title: 'SSC — Science Group',
+        titleBn: 'এসএসসি — বিজ্ঞান বিভাগ',
+        place: 'Al Hilal Islami Academy & College',
+        placeBn: 'আল হিলাল ইসলামি একাডেমি অ্যান্ড কলেজ',
+      },
+      {
+        year: 'Primary',
+        title: 'Primary Education (Foundation)',
+        titleBn: 'প্রাথমিক শিক্ষা (হাতেখড়ি)',
+        place: 'Sonaranga Sarkarpara Government Primary School',
+        placeBn: 'সোনারাঙ্গা সরকারপাড়া সরকারি প্রাথমিক বিদ্যালয়',
       },
     ],
-    expertise: ['Electrical Engineering', 'Server Management', 'Cloud Infrastructure', 'Custom Software Architecture', 'Team Leadership'],
-    expertiseBn: ['ইলেকট্রিক্যাল ইঞ্জিনিয়ারিং', 'সার্ভার ম্যানেজমেন্ট', 'ক্লাউড ইনফ্রাস্ট্রাকচার', 'কাস্টম সফটওয়্যার আর্কিটেকচার', 'টিম লিডারশিপ'],
+    expertise: ['Electrical Engineering', 'Server Management', 'Cloud Infrastructure', 'Custom Software Architecture', 'IT Consulting', 'Team Leadership', 'Entrepreneurship'],
+    expertiseBn: ['ইলেকট্রিক্যাল ইঞ্জিনিয়ারিং', 'সার্ভার ম্যানেজমেন্ট', 'ক্লাউড ইনফ্রাস্ট্রাকচার', 'কাস্টম সফটওয়্যার আর্কিটেকচার', 'আইটি কনসাল্টিং', 'টিম লিডারশিপ', 'উদ্যোক্তা'],
     story:
-      'MD. Mehedi Hasan founded Upnex It with a vision to bring world-class custom software to organizations in Bangladesh. From a small village in Niamatpur, he combined deep technical expertise in electrical and server engineering with entrepreneurial drive to build a trusted IT brand serving schools, hospitals and businesses nationwide.',
+      'MD. Mehedi Hasan was born and raised in Sonaranga village, Sapahar Upazila, Naogaon. His learning journey began at Sonaranga Sarkarpara Government Primary School, where his curiosity for technology took root. He completed his SSC in 2025 from Al Hilal Islami Academy & College in the Science group, and is currently pursuing a Diploma in Electrical Engineering at Bangladesh Polytechnic Institute, Rajshahi. Combining hands-on electrical and server engineering with entrepreneurial vision, he founded Upnex It to deliver world-class custom software, school management and hospital management solutions across Bangladesh.',
     storyBn:
-      'এম.ডি. মেহেদী হাসান আপনেক্স আইটি প্রতিষ্ঠা করেছেন বাংলাদেশের প্রতিষ্ঠানগুলোর জন্য বিশ্বমানের কাস্টম সফটওয়্যার পৌঁছে দেওয়ার লক্ষ্যে। নিয়ামতপুরের ছোট গ্রাম থেকে শুরু করে আজ তিনি একটি বিশ্বস্ত আইটি ব্র্যান্ড গড়ে তুলেছেন।',
+      'এম.ডি. মেহেদী হাসানের জন্ম ও বেড়ে ওঠা নওগাঁ জেলার সাপাহার উপজেলার সোনারাঙ্গা গ্রামে। তাঁর শিক্ষাজীবনের হাতেখড়ি হয় সোনারাঙ্গা সরকারপাড়া সরকারি প্রাথমিক বিদ্যালয় থেকে। ২০২৫ সালে আল হিলাল ইসলামি একাডেমি অ্যান্ড কলেজ থেকে বিজ্ঞান বিভাগে এসএসসি সম্পন্ন করেন এবং বর্তমানে বাংলাদেশ পলিটেকনিক ইনস্টিটিউট, রাজশাহী-তে ইলেকট্রিক্যাল ইঞ্জিনিয়ারিং-এ ডিপ্লোমা অধ্যয়নরত। ইলেকট্রিক্যাল ও সার্ভার ইঞ্জিনিয়ারিং দক্ষতার সাথে উদ্যোক্তা মনোভাব মিশিয়ে তিনি আপনেক্স আইটি প্রতিষ্ঠা করেছেন।',
   },
   'arafat-rahman': {
     slug: 'arafat-rahman',
