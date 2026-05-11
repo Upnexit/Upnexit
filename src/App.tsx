@@ -15,6 +15,7 @@ import Index from "./pages/Index";
 // Lazy load all other routes
 const Services = lazy(() => import("./pages/Services"));
 const About = lazy(() => import("./pages/About"));
+const FounderProfile = lazy(() => import("./pages/FounderProfile"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Consultation = lazy(() => import("./pages/Consultation"));
 const ServiceDetail = lazy(() => import("./pages/ServiceDetail"));
@@ -61,6 +62,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Index />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
+        <Route path="/about/:slug" element={<FounderProfile />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/consultation" element={<Consultation />} />
         <Route path="/services/:slug" element={<ServiceDetail />} />

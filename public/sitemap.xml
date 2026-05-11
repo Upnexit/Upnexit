@@ -45,6 +45,18 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Founder Profiles -->
+  <url>
+    <loc>https://upnexit.pro.bd/about/mehedi-hasan</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://upnexit.pro.bd/about/arafat-rahman</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Contact -->
   <url>
     <loc>https://upnexit.pro.bd/contact</loc>
