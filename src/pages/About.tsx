@@ -312,10 +312,17 @@ const About = () => {
                 whileHover={{ y: -6 }}
                 className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all group relative overflow-hidden"
               >
-                <div className="relative h-56 sm:h-72 md:h-80 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                <Link
+                  to={`/about/${leader.name.toLowerCase().includes('mehedi') ? 'mehedi-hasan' : 'arafat-rahman'}`}
+                  className="block"
+                  aria-label={`View profile of ${leader.name}`}
+                >
+                <div className="relative h-56 sm:h-72 md:h-80 overflow-hidden rounded-t-2xl sm:rounded-t-3xl cursor-pointer">
                   <img
                     src={leader.image_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'}
-                    alt={leader.name}
+                    alt={`${leader.name} - ${leader.role} of Upnex It, Naogaon Bangladesh`}
+                    title={`${leader.name} - ${leader.role}`}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
@@ -327,8 +334,13 @@ const About = () => {
                   </div>
                 </div>
                 <div className="p-3 sm:p-5 md:p-6">
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{leader.bio || ''}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3">{leader.bio || ''}</p>
+                  <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-primary group-hover:gap-2 transition-all">
+                    {lang === 'bn' ? 'বিস্তারিত প্রোফাইল দেখুন' : 'View full profile'}
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
                 </div>
+                </Link>
               </motion.div>
             ))}
           </div>
