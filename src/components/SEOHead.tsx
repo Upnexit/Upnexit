@@ -54,14 +54,22 @@ const SEOHead = ({
     setMeta('property', 'og:description', description);
     setMeta('property', 'og:type', type);
     setMeta('property', 'og:image', ogImage);
+    setMeta('property', 'og:image:width', '1200');
+    setMeta('property', 'og:image:height', '630');
+    setMeta('property', 'og:image:alt', title);
+    setMeta('property', 'og:site_name', 'Upnex It');
+    setMeta('property', 'og:locale', 'en_US');
+    setMeta('property', 'og:locale:alternate', 'bn_BD');
     if (canonical) {
       setMeta('property', 'og:url', canonical);
     }
 
     // Twitter
+    setMeta('name', 'twitter:card', 'summary_large_image');
     setMeta('name', 'twitter:title', title);
     setMeta('name', 'twitter:description', description);
     setMeta('name', 'twitter:image', ogImage);
+    setMeta('name', 'twitter:image:alt', title);
 
     // Canonical link
     if (canonical) {
