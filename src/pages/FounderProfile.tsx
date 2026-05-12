@@ -129,6 +129,8 @@ const FounderProfile = () => {
   const role = isBn ? founder.roleBn : founder.role;
   const bio = isBn ? founder.shortBioBn : founder.shortBio;
   const address = isBn ? founder.addressBn : founder.address;
+  const addressCurrent = isBn ? founder.addressCurrentBn : founder.addressCurrent;
+  const roleDetail = isBn ? founder.roleDetailBn : founder.roleDetail;
   const story = isBn ? founder.storyBn : founder.story;
   const expertise = isBn ? founder.expertiseBn : founder.expertise;
 
@@ -250,15 +252,13 @@ const FounderProfile = () => {
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary mb-4">
                 <Sparkles className="h-3.5 w-3.5" /> {isBn ? 'প্রতিষ্ঠাতা প্রোফাইল' : 'Founder Profile'}
               </span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground leading-tight mb-3">
-                {name}
-              </h1>
-              <p
-                aria-hidden="true"
-                className="signature-name text-4xl sm:text-5xl md:text-6xl text-primary mb-1 -mt-1"
+              <h1
+                className="signature-name text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground mb-3 leading-[1.05]"
+                aria-label={founder.name}
               >
                 {founder.name}
-              </p>
+              </h1>
+              <span className="sr-only">{founder.nameBn}</span>
               <p className="text-base md:text-lg font-semibold text-primary mb-4">{role}</p>
               <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6 max-w-2xl">
                 {bio}
@@ -295,7 +295,18 @@ const FounderProfile = () => {
                 <MapPin className="h-5 w-5 text-primary" />
               </div>
               <h3 className="font-bold text-foreground text-base mb-2">{isBn ? 'ঠিকানা' : 'Address'}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{address}</p>
+              <p className="text-xs font-bold text-primary uppercase tracking-wider mb-1">
+                {isBn ? 'স্থায়ী ঠিকানা' : 'Permanent Address'}
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">{address}</p>
+              {addressCurrent && (
+                <>
+                  <p className="text-xs font-bold text-primary uppercase tracking-wider mb-1">
+                    {isBn ? 'বর্তমান ঠিকানা' : 'Current Address'}
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{addressCurrent}</p>
+                </>
+              )}
             </motion.div>
 
             {/* Education */}
@@ -335,7 +346,10 @@ const FounderProfile = () => {
                 <Award className="h-5 w-5 text-primary" />
               </div>
               <h3 className="font-bold text-foreground text-base mb-2">{isBn ? 'বর্তমান ভূমিকা' : 'Current Role'}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{role}</p>
+              <p className="text-sm font-semibold text-foreground leading-relaxed">{role}</p>
+              {roleDetail && (
+                <p className="text-sm text-muted-foreground leading-relaxed mt-2">{roleDetail}</p>
+              )}
               <p className="text-xs text-muted-foreground mt-2">
                 {isBn ? 'কোম্পানি: ' : 'Company: '}
                 <Link to="/" className="text-primary font-semibold hover:underline">Upnex It</Link>
@@ -379,7 +393,11 @@ const FounderProfile = () => {
             <h3 className="font-bold text-foreground text-lg md:text-xl mb-3">
               {isBn ? 'যাত্রার গল্প' : 'The Journey'}
             </h3>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{story}</p>
+            <div className="text-sm md:text-base text-muted-foreground leading-relaxed space-y-4">
+              {story.split('\n\n').map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
           </motion.div>
 
           {/* CTA */}
