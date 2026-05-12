@@ -231,8 +231,8 @@ const FounderProfile = () => {
               <div className="relative aspect-square w-56 sm:w-64 md:w-full max-w-[340px] rounded-3xl overflow-hidden border-4 border-background shadow-elevated">
                 <img
                   src={founder.image}
-                  alt={`${founder.name} - ${founder.role} of Upnex It, based in Niamatpur, Naogaon, Bangladesh`}
-                  title={`${founder.name} - ${founder.role}`}
+                  alt={`${founder.name} - ${founder.role} of Upnex It, from ${locationChip}, Bangladesh`}
+                  title={`${founder.name} - ${founder.role} | ${locationChip}`}
                   loading="eager"
                   width={340}
                   height={340}
