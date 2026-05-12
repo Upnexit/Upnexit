@@ -19,6 +19,10 @@ type FounderInfo = {
   shortBioBn: string;
   address: string;
   addressBn: string;
+  addressCurrent?: string;
+  addressCurrentBn?: string;
+  roleDetail?: string;
+  roleDetailBn?: string;
   education: { year: string; title: string; titleBn: string; place: string; placeBn: string }[];
   educationBadge?: string;
   educationBadgeBn?: string;
@@ -42,8 +46,14 @@ const FOUNDERS: Record<string, FounderInfo> = {
       'Skilled Electrical Engineer, IT expert and server specialist. Co-founder & CEO of Upnex It — leading custom software, school & hospital management solutions across Bangladesh.',
     shortBioBn:
       'দক্ষ ইলেকট্রিক্যাল ইঞ্জিনিয়ার, আইটি বিশেষজ্ঞ এবং সার্ভার এক্সপার্ট। আপনেক্স আইটি-এর সহ-প্রতিষ্ঠাতা ও সিইও।',
-    address: 'Sonaranga Village, Sapahar Upazila, Naogaon District, Rajshahi Division, Bangladesh',
-    addressBn: 'সোনারাঙ্গা গ্রাম, সাপাহার উপজেলা, নওগাঁ জেলা, রাজশাহী বিভাগ, বাংলাদেশ',
+    address: 'Sonadanga, Gopalpur, Sapahar Upazila, Naogaon District, Rajshahi Division, Bangladesh',
+    addressBn: 'সোনাডাঙ্গা, গোপালপুর, সাপাহার উপজেলা, নওগাঁ জেলা, রাজশাহী বিভাগ, বাংলাদেশ',
+    addressCurrent: 'Rajshahi City, Rajshahi Division, Bangladesh (currently studying & working from here)',
+    addressCurrentBn: 'রাজশাহী শহর, রাজশাহী বিভাগ, বাংলাদেশ (বর্তমানে এখান থেকেই পড়াশোনা ও কাজ পরিচালনা)',
+    roleDetail:
+      'As the CEO & Founder of Upnex It, MD. Mehedi Hasan leads end-to-end product strategy, technical architecture and business operations. He directly oversees custom software development, school & hospital management systems, secure server and cloud infrastructure, client consulting and the engineering team — driving the company\'s mission to deliver world-class IT solutions across Bangladesh.',
+    roleDetailBn:
+      'আপনেক্স আইটি-এর সিইও ও প্রতিষ্ঠাতা হিসেবে এম.ডি. মেহেদী হাসান প্রোডাক্ট স্ট্র্যাটেজি, টেকনিক্যাল আর্কিটেকচার এবং ব্যবসায়িক পরিচালনার সম্পূর্ণ দায়িত্ব পালন করেন। তিনি কাস্টম সফটওয়্যার ডেভেলপমেন্ট, স্কুল ও হাসপাতাল ম্যানেজমেন্ট সিস্টেম, সিকিউর সার্ভার ও ক্লাউড ইনফ্রাস্ট্রাকচার, ক্লায়েন্ট কনসাল্টিং এবং পুরো ইঞ্জিনিয়ারিং টিমকে সরাসরি নেতৃত্ব দেন — পুরো বাংলাদেশে বিশ্বমানের আইটি সমাধান পৌঁছে দেওয়ার লক্ষ্যে।',
     educationBadge: 'Diploma in EEE (ongoing)',
     educationBadgeBn: 'ডিপ্লোমা EEE (চলমান)',
     education: [
@@ -58,23 +68,23 @@ const FOUNDERS: Record<string, FounderInfo> = {
         year: '2025',
         title: 'SSC — Science Group',
         titleBn: 'এসএসসি — বিজ্ঞান বিভাগ',
-        place: 'Al Hilal Islami Academy & College',
-        placeBn: 'আল হিলাল ইসলামি একাডেমি অ্যান্ড কলেজ',
+        place: 'Al Hilal Islami Academy & College, Sapahar, Naogaon',
+        placeBn: 'আল হিলাল ইসলামি একাডেমি অ্যান্ড কলেজ, সাপাহার, নওগাঁ',
       },
       {
         year: 'Primary',
         title: 'Primary Education (Foundation)',
         titleBn: 'প্রাথমিক শিক্ষা (হাতেখড়ি)',
-        place: 'Sonaranga Sarkarpara Government Primary School',
-        placeBn: 'সোনারাঙ্গা সরকারপাড়া সরকারি প্রাথমিক বিদ্যালয়',
+        place: 'Sonadanga Sarkarpara Government Primary School, Gopalpur, Sapahar',
+        placeBn: 'সোনাডাঙ্গা সরকারপাড়া সরকারি প্রাথমিক বিদ্যালয়, গোপালপুর, সাপাহার',
       },
     ],
     expertise: ['Electrical Engineering', 'Server Management', 'Cloud Infrastructure', 'Custom Software Architecture', 'IT Consulting', 'Team Leadership', 'Entrepreneurship'],
     expertiseBn: ['ইলেকট্রিক্যাল ইঞ্জিনিয়ারিং', 'সার্ভার ম্যানেজমেন্ট', 'ক্লাউড ইনফ্রাস্ট্রাকচার', 'কাস্টম সফটওয়্যার আর্কিটেকচার', 'আইটি কনসাল্টিং', 'টিম লিডারশিপ', 'উদ্যোক্তা'],
     story:
-      'MD. Mehedi Hasan was born and raised in Sonaranga village, Sapahar Upazila, Naogaon. His learning journey began at Sonaranga Sarkarpara Government Primary School, where his curiosity for technology took root. He completed his SSC in 2025 from Al Hilal Islami Academy & College in the Science group, and is currently pursuing a Diploma in Electrical Engineering at Bangladesh Polytechnic Institute, Rajshahi. Combining hands-on electrical and server engineering with entrepreneurial vision, he founded Upnex It to deliver world-class custom software, school management and hospital management solutions across Bangladesh.',
+      'MD. Mehedi Hasan was born and raised in Sonadanga, Gopalpur — a small village under Sapahar Upazila of Naogaon District in northern Bangladesh. His learning journey started at Sonadanga Sarkarpara Government Primary School, where his teachers first noticed his unusual curiosity for machines, electronics and computers. From a young age he would dismantle small electrical devices just to understand how they worked, and that simple curiosity slowly grew into a serious passion for technology and problem solving.\n\nHe completed his SSC in 2025 from Al Hilal Islami Academy & College, Sapahar in the Science group with strong results. While still in school, he was already self-learning programming, networking, server administration and digital design through online resources — turning every free hour into practice. Right after SSC he moved to Rajshahi and enrolled in a Diploma in Electrical Engineering at Bangladesh Polytechnic Institute, Rajshahi, where he is currently studying.\n\nAlongside his studies, he co-founded Upnex It with the vision of building a truly Bangladeshi IT brand that delivers world-class custom software, school management systems, hospital management systems, e-commerce platforms, secure cloud and server solutions for businesses and institutions across the country. Today, as CEO & Founder of Upnex It, he leads the technical strategy, server infrastructure, product architecture and the engineering team — combining village-rooted discipline with global engineering standards.',
     storyBn:
-      'এম.ডি. মেহেদী হাসানের জন্ম ও বেড়ে ওঠা নওগাঁ জেলার সাপাহার উপজেলার সোনারাঙ্গা গ্রামে। তাঁর শিক্ষাজীবনের হাতেখড়ি হয় সোনারাঙ্গা সরকারপাড়া সরকারি প্রাথমিক বিদ্যালয় থেকে। ২০২৫ সালে আল হিলাল ইসলামি একাডেমি অ্যান্ড কলেজ থেকে বিজ্ঞান বিভাগে এসএসসি সম্পন্ন করেন এবং বর্তমানে বাংলাদেশ পলিটেকনিক ইনস্টিটিউট, রাজশাহী-তে ইলেকট্রিক্যাল ইঞ্জিনিয়ারিং-এ ডিপ্লোমা অধ্যয়নরত। ইলেকট্রিক্যাল ও সার্ভার ইঞ্জিনিয়ারিং দক্ষতার সাথে উদ্যোক্তা মনোভাব মিশিয়ে তিনি আপনেক্স আইটি প্রতিষ্ঠা করেছেন।',
+      'এম.ডি. মেহেদী হাসানের জন্ম ও বেড়ে ওঠা নওগাঁ জেলার সাপাহার উপজেলার গোপালপুর ইউনিয়নের সোনাডাঙ্গা গ্রামে — উত্তর বাংলাদেশের একটি ছোট্ট গ্রাম। তাঁর শিক্ষাজীবনের হাতেখড়ি হয় সোনাডাঙ্গা সরকারপাড়া সরকারি প্রাথমিক বিদ্যালয় থেকে, যেখানে শিক্ষকরা প্রথম তাঁর যন্ত্রপাতি, ইলেকট্রনিক্স ও কম্পিউটারের প্রতি আলাদা কৌতূহল লক্ষ্য করেন। ছোটবেলা থেকেই তিনি ছোটখাট ইলেকট্রিক ডিভাইস খুলে বুঝতে চাইতেন কীভাবে কাজ করে — এই কৌতূহলই ধীরে ধীরে প্রযুক্তি ও সমস্যা সমাধানের প্রতি গভীর ভালোবাসায় রূপ নেয়।\n\n২০২৫ সালে আল হিলাল ইসলামি একাডেমি অ্যান্ড কলেজ, সাপাহার থেকে বিজ্ঞান বিভাগে এসএসসি সম্পন্ন করেন ভালো ফলাফলসহ। স্কুলে থাকা অবস্থাতেই তিনি প্রোগ্রামিং, নেটওয়ার্কিং, সার্ভার অ্যাডমিনিস্ট্রেশন এবং ডিজিটাল ডিজাইন নিজে নিজে শেখা শুরু করেন — অনলাইন রিসোর্স ব্যবহার করে প্রতিটি অবসর সময়কে অনুশীলনে রূপান্তর করেন। এসএসসি-র পরপরই রাজশাহীতে চলে আসেন এবং বাংলাদেশ পলিটেকনিক ইনস্টিটিউট, রাজশাহী-তে ইলেকট্রিক্যাল ইঞ্জিনিয়ারিং ডিপ্লোমাতে ভর্তি হন, যেখানে বর্তমানে অধ্যয়নরত।\n\nপড়াশোনার পাশাপাশি তিনি আপনেক্স আইটি সহ-প্রতিষ্ঠা করেন এই স্বপ্ন নিয়ে — একটি সত্যিকারের বাংলাদেশি আইটি ব্র্যান্ড গড়ে তোলা, যা পুরো দেশে বিশ্বমানের কাস্টম সফটওয়্যার, স্কুল ম্যানেজমেন্ট সিস্টেম, হাসপাতাল ম্যানেজমেন্ট সিস্টেম, ই-কমার্স প্ল্যাটফর্ম এবং সিকিউর ক্লাউড ও সার্ভার সমাধান পৌঁছে দেবে। বর্তমানে আপনেক্স আইটি-এর সিইও ও প্রতিষ্ঠাতা হিসেবে তিনি টেকনিক্যাল স্ট্র্যাটেজি, সার্ভার ইনফ্রাস্ট্রাকচার, প্রোডাক্ট আর্কিটেকচার এবং সম্পূর্ণ ইঞ্জিনিয়ারিং টিমকে নেতৃত্ব দিচ্ছেন — গ্রামীণ শৃঙ্খলা ও বৈশ্বিক ইঞ্জিনিয়ারিং মান একসঙ্গে মিশিয়ে।',
   },
   'arafat-rahman': {
     slug: 'arafat-rahman',
@@ -119,6 +129,8 @@ const FounderProfile = () => {
   const role = isBn ? founder.roleBn : founder.role;
   const bio = isBn ? founder.shortBioBn : founder.shortBio;
   const address = isBn ? founder.addressBn : founder.address;
+  const addressCurrent = isBn ? founder.addressCurrentBn : founder.addressCurrent;
+  const roleDetail = isBn ? founder.roleDetailBn : founder.roleDetail;
   const story = isBn ? founder.storyBn : founder.story;
   const expertise = isBn ? founder.expertiseBn : founder.expertise;
 
@@ -219,8 +231,8 @@ const FounderProfile = () => {
               <div className="relative aspect-square w-56 sm:w-64 md:w-full max-w-[340px] rounded-3xl overflow-hidden border-4 border-background shadow-elevated">
                 <img
                   src={founder.image}
-                  alt={`${founder.name} - ${founder.role} of Upnex It, based in Niamatpur, Naogaon, Bangladesh`}
-                  title={`${founder.name} - ${founder.role}`}
+                  alt={`${founder.name} - ${founder.role} of Upnex It, from ${locationChip}, Bangladesh`}
+                  title={`${founder.name} - ${founder.role} | ${locationChip}`}
                   loading="eager"
                   width={340}
                   height={340}
@@ -240,15 +252,13 @@ const FounderProfile = () => {
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary mb-4">
                 <Sparkles className="h-3.5 w-3.5" /> {isBn ? 'প্রতিষ্ঠাতা প্রোফাইল' : 'Founder Profile'}
               </span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground leading-tight mb-3">
-                {name}
-              </h1>
-              <p
-                aria-hidden="true"
-                className="signature-name text-4xl sm:text-5xl md:text-6xl text-primary mb-1 -mt-1"
+              <h1
+                className="signature-name text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground mb-3 leading-[1.05]"
+                aria-label={founder.name}
               >
                 {founder.name}
-              </p>
+              </h1>
+              <span className="sr-only">{founder.nameBn}</span>
               <p className="text-base md:text-lg font-semibold text-primary mb-4">{role}</p>
               <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6 max-w-2xl">
                 {bio}
@@ -285,7 +295,18 @@ const FounderProfile = () => {
                 <MapPin className="h-5 w-5 text-primary" />
               </div>
               <h3 className="font-bold text-foreground text-base mb-2">{isBn ? 'ঠিকানা' : 'Address'}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{address}</p>
+              <p className="text-xs font-bold text-primary uppercase tracking-wider mb-1">
+                {isBn ? 'স্থায়ী ঠিকানা' : 'Permanent Address'}
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">{address}</p>
+              {addressCurrent && (
+                <>
+                  <p className="text-xs font-bold text-primary uppercase tracking-wider mb-1">
+                    {isBn ? 'বর্তমান ঠিকানা' : 'Current Address'}
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{addressCurrent}</p>
+                </>
+              )}
             </motion.div>
 
             {/* Education */}
@@ -325,7 +346,10 @@ const FounderProfile = () => {
                 <Award className="h-5 w-5 text-primary" />
               </div>
               <h3 className="font-bold text-foreground text-base mb-2">{isBn ? 'বর্তমান ভূমিকা' : 'Current Role'}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{role}</p>
+              <p className="text-sm font-semibold text-foreground leading-relaxed">{role}</p>
+              {roleDetail && (
+                <p className="text-sm text-muted-foreground leading-relaxed mt-2">{roleDetail}</p>
+              )}
               <p className="text-xs text-muted-foreground mt-2">
                 {isBn ? 'কোম্পানি: ' : 'Company: '}
                 <Link to="/" className="text-primary font-semibold hover:underline">Upnex It</Link>
@@ -369,7 +393,11 @@ const FounderProfile = () => {
             <h3 className="font-bold text-foreground text-lg md:text-xl mb-3">
               {isBn ? 'যাত্রার গল্প' : 'The Journey'}
             </h3>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{story}</p>
+            <div className="text-sm md:text-base text-muted-foreground leading-relaxed space-y-4">
+              {story.split('\n\n').map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
           </motion.div>
 
           {/* CTA */}
