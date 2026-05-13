@@ -26,11 +26,14 @@ const Footer = () => {
                 { Icon: Twitter, href: '#' },
                 { Icon: Linkedin, href: '#' },
                 { Icon: Instagram, href: 'https://www.instagram.com/upnexit/?hl=en' },
-              ].map((item, i) => (
-                <a key={i} href={item.href} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent/20 hover:border-accent/40 transition-all duration-300 group">
-                  <item.Icon className="h-4 w-4 text-white/60 group-hover:text-accent transition-colors duration-300" />
-                </a>
-              ))}
+              ].map((item, i) => {
+                const labels = ['Facebook', 'Twitter', 'LinkedIn', 'Instagram'];
+                return (
+                  <a key={i} href={item.href} target="_blank" rel="noopener noreferrer" aria-label={`Upnex It on ${labels[i]}`} className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent/20 hover:border-accent/40 transition-all duration-300 group">
+                    <item.Icon className="h-4 w-4 text-white/60 group-hover:text-accent transition-colors duration-300" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -79,12 +82,15 @@ const Footer = () => {
             <h4 className="font-bold mb-3 text-white tracking-wide text-sm uppercase">Newsletter</h4>
             <p className="text-sm text-white/60 mb-4 leading-relaxed">Stay updated with our latest news.</p>
             <div className="flex gap-2">
+              <label htmlFor="footer-newsletter-email" className="sr-only">Email address for newsletter</label>
               <input
+                id="footer-newsletter-email"
                 type="email"
                 placeholder="Email"
+                aria-label="Email address for newsletter"
                 className="flex-1 h-10 px-4 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-primary/40 focus:bg-white/[0.07] transition-all"
               />
-              <button className="h-10 px-4 rounded-lg gradient-accent text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+              <button type="submit" aria-label="Subscribe to newsletter" className="h-10 px-4 rounded-lg gradient-accent text-white text-sm font-semibold hover:opacity-90 transition-opacity">
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>
