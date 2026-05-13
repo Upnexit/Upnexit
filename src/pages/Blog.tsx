@@ -100,8 +100,11 @@ const Blog = () => {
 
               <div className="max-w-md mx-auto relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <label htmlFor="blog-search" className="sr-only">{lang === 'bn' ? 'আর্টিকেল খুঁজুন' : 'Search articles'}</label>
                 <input
-                  type="text"
+                  id="blog-search"
+                  type="search"
+                  aria-label={lang === 'bn' ? 'আর্টিকেল খুঁজুন' : 'Search articles'}
                   placeholder={lang === 'bn' ? 'আর্টিকেল খুঁজুন...' : 'Search articles...'}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
