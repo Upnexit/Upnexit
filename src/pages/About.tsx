@@ -52,8 +52,8 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
       <SEOHead
-        title="About Upnex It - Best Software Company Naogaon Bangladesh | আমাদের সম্পর্কে"
-        description="Upnex It is a leading software company in Naogaon, Bangladesh. We provide School Management, Hospital Management & Custom Software solutions with an expert developer team."
+        title="About Upnex It — Software Company in Naogaon"
+        description="Learn about Upnex It — a Naogaon-based software company building School, Hospital, and Custom Software solutions across Bangladesh."
         canonical="https://upnexit.pro.bd/about"
         keywords="about upnex it, software company naogaon, IT company rajshahi, software developer bangladesh, tech startup bangladesh, আপনেক্স আইটি, সফটওয়্যার কোম্পানি নওগাঁ, আইটি কোম্পানি রাজশাহী, best software company rajshahi division"
       />
@@ -129,9 +129,9 @@ const About = () => {
               <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center mb-3 sm:mb-5">
                 <Target className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />
               </div>
-              <h3 className="text-sm sm:text-xl md:text-2xl font-bold text-foreground mb-2 sm:mb-3">
+              <h2 className="text-sm sm:text-xl md:text-2xl font-bold text-foreground mb-2 sm:mb-3">
                 {lang === 'bn' ? 'আমাদের মিশন' : 'Our Mission'}
-              </h3>
+              </h2>
               <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm md:text-base">
                 {lang === 'bn'
                   ? 'প্রযুক্তির মাধ্যমে বাংলাদেশের প্রতিষ্ঠানগুলোকে ডিজিটাল রূপান্তরে সহায়তা করা এবং সাশ্রয়ী মূল্যে মানসম্মত সফটওয়্যার প্রদান করা।'
@@ -151,9 +151,9 @@ const About = () => {
               <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-secondary/15 flex items-center justify-center mb-3 sm:mb-5">
                 <Eye className="h-5 w-5 sm:h-7 sm:w-7 text-secondary" />
               </div>
-              <h3 className="text-sm sm:text-xl md:text-2xl font-bold text-foreground mb-2 sm:mb-3">
+              <h2 className="text-sm sm:text-xl md:text-2xl font-bold text-foreground mb-2 sm:mb-3">
                 {lang === 'bn' ? 'আমাদের ভিশন' : 'Our Vision'}
-              </h3>
+              </h2>
               <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm md:text-base">
                 {lang === 'bn'
                   ? 'বাংলাদেশের শীর্ষস্থানীয় সফটওয়্যার কোম্পানি হিসেবে প্রতিষ্ঠিত হওয়া এবং আন্তর্জাতিক মানের সেবা প্রদান করা।'
