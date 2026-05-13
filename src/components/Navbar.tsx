@@ -74,6 +74,7 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center gap-3">
             <button
               onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')}
+              aria-label={lang === 'bn' ? 'Switch to English' : 'বাংলায় পরিবর্তন করুন'}
               className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary/5"
             >
               <Globe className="h-4 w-4" />
@@ -103,10 +104,10 @@ const Navbar = () => {
 
           {/* Mobile toggle */}
           <div className="flex lg:hidden items-center gap-1">
-            <button onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')} className="p-2.5 text-muted-foreground hover:text-primary rounded-lg hover:bg-primary/5 transition-colors">
+            <button onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')} aria-label={lang === 'bn' ? 'Switch to English' : 'বাংলায় পরিবর্তন করুন'} className="p-2.5 text-muted-foreground hover:text-primary rounded-lg hover:bg-primary/5 transition-colors">
               <Globe className="h-5 w-5" />
             </button>
-            <button onClick={() => setOpen(true)} className="p-2.5 text-foreground rounded-lg hover:bg-muted transition-colors">
+            <button onClick={() => setOpen(true)} aria-label="Open navigation menu" className="p-2.5 text-foreground rounded-lg hover:bg-muted transition-colors">
               <Menu className="h-5 w-5" />
             </button>
           </div>

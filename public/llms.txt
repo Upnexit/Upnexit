@@ -1,0 +1,25 @@
+# Upnex It
+
+> Upnex It is a software company in Naogaon, Bangladesh building School Management Software, Hospital Management Systems, custom software, and web applications for businesses across Bangladesh.
+
+## Pages
+
+- [Home](/): Overview of Upnex It and our software services.
+- [About](/about): Company story, mission, vision, values, and leadership.
+- [Mehedi Hasan — Founder & CEO](/about/mehedi-hasan): Background, education, and journey of co-founder Mehedi Hasan.
+- [Arafat Rahman — Co-founder](/about/arafat-rahman): Background, education, and journey of co-founder Arafat Rahman.
+- [Services](/services): All software services we provide.
+- [School Management Software](/services/school): Digital school operations: admissions, results, fees, attendance, parent portal.
+- [Hospital Management Software](/services/hospital): HMS for clinics and hospitals: patients, appointments, pharmacy, billing.
+- [Custom Software Development](/services/custom): Tailor-made business software (ERP, CRM, inventory, e-commerce).
+- [Web Development](/services/web): Modern responsive websites and web applications.
+- [Portfolio](/portfolio): Selected projects we have delivered.
+- [Blog](/blog): Articles on software, technology, and business.
+- [Contact](/contact): Get in touch with the Upnex It team.
+- [Consultation](/consultation): Request a free project consultation.
+- [Order](/order): Place an order for an Upnex It service.
+
+## Optional
+
+- [Privacy Policy](/privacy-policy)
+- [Terms of Service](/terms-of-service)

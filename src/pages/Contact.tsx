@@ -122,11 +122,11 @@ const Contact = () => {
                 <span className="font-semibold text-foreground">{t.contact.send}</span>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
-                <Input placeholder={t.contact.name} required className="bg-muted/50 border-border h-12 rounded-xl focus:border-primary" />
-                <Input type="email" placeholder={t.contact.email} required className="bg-muted/50 border-border h-12 rounded-xl focus:border-primary" />
+                <Input aria-label={t.contact.name} placeholder={t.contact.name} required className="bg-muted/50 border-border h-12 rounded-xl focus:border-primary" />
+                <Input aria-label={t.contact.email} type="email" placeholder={t.contact.email} required className="bg-muted/50 border-border h-12 rounded-xl focus:border-primary" />
               </div>
-              <Input placeholder={t.contact.phone} className="bg-muted/50 border-border h-12 rounded-xl focus:border-primary" />
-              <Textarea placeholder={t.contact.message} rows={5} required className="bg-muted/50 border-border rounded-xl focus:border-primary resize-none" />
+              <Input aria-label={t.contact.phone} placeholder={t.contact.phone} className="bg-muted/50 border-border h-12 rounded-xl focus:border-primary" />
+              <Textarea aria-label={t.contact.message} placeholder={t.contact.message} rows={5} required className="bg-muted/50 border-border rounded-xl focus:border-primary resize-none" />
               <Button variant="hero" size="lg" type="submit" disabled={loading} className="gap-2 w-full">
                 <Send className="h-4 w-4" /> {t.contact.send}
               </Button>
