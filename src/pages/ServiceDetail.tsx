@@ -594,6 +594,37 @@ const ServiceDetail = () => {
             : 'web development bangladesh, web application development, React development, responsive website design, website development company bd, progressive web app, ওয়েব ডেভেলপমেন্ট বাংলাদেশ, ওয়েবসাইট তৈরি, রেসপন্সিভ ওয়েবসাইট, best web developer bangladesh'
         }
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": `${data.title} ${data.titleHighlight}`,
+            "description": data.description,
+            "brand": { "@type": "Brand", "name": "Upnex It" },
+            "url": `https://upnexit.pro.bd/services/${slug}`,
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": (data as any).gold?.name || "Gold",
+                "price": String((data as any).gold?.price || "").replace(/[^\d.]/g, "") || "0",
+                "priceCurrency": "BDT",
+                "availability": "https://schema.org/InStock",
+                "url": `https://upnexit.pro.bd/services/${slug}`
+              },
+              {
+                "@type": "Offer",
+                "name": (data as any).silver?.name || "Silver",
+                "price": String((data as any).silver?.price || "").replace(/[^\d.]/g, "") || "0",
+                "priceCurrency": "BDT",
+                "availability": "https://schema.org/InStock",
+                "url": `https://upnexit.pro.bd/services/${slug}`
+              }
+            ]
+          })
+        }}
+      />
       <Navbar />
 
       {/* ═══════════════════ HERO ═══════════════════ */}
