@@ -302,11 +302,12 @@ const Consultation = () => {
 
                   <div className="space-y-4">
                     <div>
-                      <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                      <label htmlFor="cons-name" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
                         <User className="h-4 w-4 text-primary" />
                         {lang === 'bn' ? 'আপনার নাম *' : 'Your Name *'}
                       </label>
                       <Input
+                        id="cons-name"
                         required
                         placeholder={lang === 'bn' ? 'নাম লিখুন' : 'Enter your name'}
                         className="bg-muted/40 border-border h-12 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -315,11 +316,12 @@ const Consultation = () => {
                       />
                     </div>
                     <div>
-                      <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                      <label htmlFor="cons-email" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
                         <Mail className="h-4 w-4 text-primary" />
                         {lang === 'bn' ? 'ইমেইল *' : 'Email *'}
                       </label>
                       <Input
+                        id="cons-email"
                         type="email"
                         required
                         placeholder={lang === 'bn' ? 'ইমেইল লিখুন' : 'Enter your email'}
@@ -329,11 +331,12 @@ const Consultation = () => {
                       />
                     </div>
                     <div>
-                      <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+                      <label htmlFor="cons-phone" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
                         <Phone className="h-4 w-4 text-primary" />
                         {lang === 'bn' ? 'ফোন নম্বর (ঐচ্ছিক)' : 'Phone Number (optional)'}
                       </label>
                       <Input
+                        id="cons-phone"
                         placeholder={lang === 'bn' ? 'ফোন নম্বর লিখুন' : 'Enter phone number'}
                         className="bg-muted/40 border-border h-12 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20"
                         value={form.phone}
@@ -396,6 +399,8 @@ const Consultation = () => {
 
                   <form onSubmit={handleSubmit}>
                     <Textarea
+                      id="cons-message"
+                      aria-label={lang === 'bn' ? 'প্রজেক্ট বিবরণ' : 'Project description'}
                       required
                       rows={6}
                       placeholder={lang === 'bn' ? 'আপনার প্রজেক্ট সম্পর্কে বিস্তারিত লিখুন...\n\nযেমন:\n• কী ধরনের ফিচার চান?\n• কতজন ইউজার ব্যবহার করবে?\n• কোনো রেফারেন্স ওয়েবসাইট আছে?' : 'Describe your project in detail...\n\nFor example:\n• What features do you need?\n• How many users will use it?\n• Any reference websites?'}
