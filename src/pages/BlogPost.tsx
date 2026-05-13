@@ -248,11 +248,13 @@ const BlogPost = () => {
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Input
+                      aria-label="আপনার নাম"
                       placeholder="আপনার নাম *"
                       value={commentForm.name}
                       onChange={e => setCommentForm(f => ({ ...f, name: e.target.value }))}
                     />
                     <Input
+                      aria-label="আপনার ইমেইল"
                       placeholder="আপনার ইমেইল *"
                       type="email"
                       value={commentForm.email}
@@ -267,6 +269,7 @@ const BlogPost = () => {
                         <button
                           key={star}
                           type="button"
+                          aria-label={`${star} star${star > 1 ? 's' : ''}`}
                           onClick={() => setCommentForm(f => ({ ...f, rating: star }))}
                           className="transition-transform hover:scale-110"
                         >
@@ -276,6 +279,7 @@ const BlogPost = () => {
                     </div>
                   </div>
                   <Textarea
+                    aria-label="আপনার মন্তব্য"
                     placeholder="আপনার মন্তব্য লিখুন... *"
                     rows={4}
                     value={commentForm.comment}
