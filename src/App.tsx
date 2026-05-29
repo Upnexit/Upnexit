@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/hooks/useAuth";
 import { usePageTracker } from "@/hooks/usePageTracker";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 
 // Eagerly load Index (homepage) for fastest FCP
@@ -43,8 +43,45 @@ const PortfolioManagement = lazy(() => import("./pages/admin/PortfolioManagement
 const SeoRankings = lazy(() => import("./pages/admin/SeoRankings"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-// Lazy load heavy widgets
+// Lazy load heavy widgets — deferred until idle/interaction to protect LCP
 const ChatbotWidget = lazy(() => import("./components/ChatbotWidget"));
+
+const DeferredChatbot = () => {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    let triggered = false;
+    const trigger = () => {
+      if (triggered) return;
+      triggered = true;
+      setShow(true);
+    };
+    const idle =
+      (window as any).requestIdleCallback ||
+      ((cb: () => void) => setTimeout(cb, 1));
+    const idleId = idle(trigger, { timeout: 4000 });
+    const events: Array<keyof WindowEventMap> = [
+      "scroll",
+      "mousemove",
+      "touchstart",
+      "keydown",
+    ];
+    events.forEach((ev) =>
+      window.addEventListener(ev, trigger, { once: true, passive: true })
+    );
+    return () => {
+      if ((window as any).cancelIdleCallback) {
+        (window as any).cancelIdleCallback(idleId);
+      }
+      events.forEach((ev) => window.removeEventListener(ev, trigger));
+    };
+  }, []);
+  if (!show) return null;
+  return (
+    <Suspense fallback={null}>
+      <ChatbotWidget />
+    </Suspense>
+  );
+};
 
 const queryClient = new QueryClient();
 
@@ -105,9 +142,7 @@ const App = () => (
           <BrowserRouter>
             <ScrollToTop />
             <AppRoutes />
-            <Suspense fallback={null}>
-              <ChatbotWidget />
-            </Suspense>
+            <DeferredChatbot />
           </BrowserRouter>
         </AuthProvider>
       </LanguageProvider>
