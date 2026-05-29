@@ -126,7 +126,7 @@ const UserLogin = () => {
               <>Transform Your<br />Business <span className="text-secondary">Digitally</span></>
             )}
           </h2>
-          <p className="text-white/70 text-sm xl:text-base leading-relaxed max-w-sm">
+          <p className="text-white/90 text-sm xl:text-base leading-relaxed max-w-sm">
             {isBn
               ? 'আমরা আপনার প্রতিষ্ঠানের জন্য মানসম্মত সফটওয়্যার সলিউশন প্রদান করি। লগইন করুন এবং আপনার প্রজেক্ট পরিচালনা করুন।'
               : 'We provide quality software solutions for your organization. Login and manage your projects seamlessly.'}
@@ -137,7 +137,7 @@ const UserLogin = () => {
             {trustPoints.map((point, i) => (
               <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6 + i * 0.1 }}
-                className="flex items-center gap-2.5 text-white/80 text-sm">
+                className="flex items-center gap-2.5 text-white/95 text-sm">
                 <div className="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center shrink-0">
                   <CheckCircle2 className="h-3 w-3 text-secondary" />
                 </div>
@@ -150,7 +150,7 @@ const UserLogin = () => {
         {/* Bottom — Copyright */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
           className="relative z-10">
-          <p className="text-white/40 text-xs">
+          <p className="text-white/75 text-xs">
             © {new Date().getFullYear()} Upnex It. {isBn ? 'সর্বস্বত্ব সংরক্ষিত' : 'All rights reserved'}
           </p>
         </motion.div>
