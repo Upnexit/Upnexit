@@ -217,7 +217,7 @@ const TermsOfService = () => {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4">
               {isBn ? 'সেবার শর্তাবলী' : 'Terms of Service'}
             </h1>
-            <p className="text-white/60 text-sm md:text-base max-w-xl mx-auto">
+            <p className="text-white/85 text-sm md:text-base max-w-xl mx-auto">
               {isBn
                 ? `সর্বশেষ আপডেট: ${lastUpdated}`
                 : `Last updated: ${lastUpdated}`}

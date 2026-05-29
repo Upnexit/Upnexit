@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://upnexit.pro.bd/sitemap.xml
+Sitemap: https://up-test1.lovable.app/sitemap.xml

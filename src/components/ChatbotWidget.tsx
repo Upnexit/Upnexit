@@ -444,7 +444,7 @@ const ChatbotWidget = () => {
                     {msg.imageUrl && (
                       <img
                         src={msg.imageUrl}
-                        alt="uploaded"
+                        alt="Uploaded chat image"
                         className="w-full max-w-[160px] h-auto rounded-lg mb-1"
                       />
                     )}
@@ -477,7 +477,7 @@ const ChatbotWidget = () => {
             {pendingImage && (
               <div className="px-2 py-1 border-t border-border">
                 <div className="relative inline-block">
-                  <img src={pendingImage} alt="preview" className="h-12 w-auto rounded-lg" />
+                  <img src={pendingImage} alt="Uploaded image preview" className="h-12 w-auto rounded-lg" />
                   <button
                     onClick={() => setPendingImage(null)}
                     className="absolute -top-1 -right-1 w-4 h-4 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center text-[8px]"
