@@ -29,7 +29,7 @@ const StatsSection = () => {
                 <s.icon className="h-6 w-6 text-white" />
               </div>
               <div className="text-3xl md:text-4xl font-black text-white mb-1">{s.value}</div>
-              <div className="text-xs md:text-sm text-white/70 font-medium">{s.label}</div>
+              <div className="text-xs md:text-sm text-white/85 font-medium">{s.label}</div>
             </motion.div>
           ))}
         </div>
