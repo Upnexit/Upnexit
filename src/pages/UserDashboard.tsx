@@ -167,7 +167,7 @@ const UserDashboard = () => {
                   <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-primary-foreground truncate">
                     {isBn ? 'স্বাগতম,' : 'Welcome,'} {displayName}
                   </h1>
-                  <p className="text-xs sm:text-sm text-primary-foreground/70 mt-0.5 truncate">
+                  <p className="text-xs sm:text-sm text-primary-foreground/90 mt-0.5 truncate">
                     {user.email}
                   </p>
                 </div>
