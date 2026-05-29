@@ -30,7 +30,7 @@ const Contact = () => {
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
       <SEOHead
         title="Contact Upnex It - Get Free Consultation | যোগাযোগ করুন"
-        description="Contact Upnex It for custom software solutions in Bangladesh. Email: upnex360@gmail.com, Phone: +880 1628112731. Office: Sapahar, Naogaon. Free consultation available."
+        description="Contact Upnex It for custom software in Bangladesh. Email upnex360@gmail.com or call +880 1628112731 for a free consultation."
         canonical="https://upnexit.pro.bd/contact"
         keywords="contact upnex it, software company contact bangladesh, free consultation software, সফটওয়্যার কোম্পানি যোগাযোগ, ফ্রি কনসালটেশন, software company naogaon contact, IT support bangladesh"
       />
