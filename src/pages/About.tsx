@@ -305,8 +305,6 @@ const About = () => {
             {founders.map((leader, i) => {
               const isMehedi = leader.name.toLowerCase().includes('mehedi');
               const profileUrl = isMehedi ? 'https://mehedihassan.iam.bd/' : `/about/${isMehedi ? 'mehedi-hasan' : 'arafat-rahman'}`;
-              const LinkWrapper = isMehedi ? 'a' : Link;
-              const linkProps = isMehedi ? { href: profileUrl, target: '_blank', rel: 'noopener noreferrer' } : { to: profileUrl };
 
               return (
                 <motion.div
