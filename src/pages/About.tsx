@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import TeamSlider from '@/components/TeamSlider';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Zap, Shield, Clock, Heart, Users, Code2, Award, Target, Eye, Sparkles, ArrowRight, Star, TrendingUp, Lightbulb, Handshake } from 'lucide-react';
+import { CheckCircle2, Zap, Shield, Clock, Heart, Users, Code2, Award, Target, Eye, Sparkles, ArrowRight, Star, TrendingUp, Lightbulb, Handshake, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import InternalLinks from '@/components/InternalLinks';
