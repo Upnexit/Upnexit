@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import TeamSlider from '@/components/TeamSlider';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Zap, Shield, Clock, Heart, Users, Code2, Award, Target, Eye, Sparkles, ArrowRight, Star, TrendingUp, Lightbulb, Handshake } from 'lucide-react';
+import { CheckCircle2, Zap, Shield, Clock, Heart, Users, Code2, Award, Target, Eye, Sparkles, ArrowRight, Star, TrendingUp, Lightbulb, Handshake, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import InternalLinks from '@/components/InternalLinks';
@@ -302,47 +302,92 @@ const About = () => {
           </motion.div>
 
           <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-2xl mx-auto">
-            {founders.map((leader, i) => (
-              <motion.div
-                key={leader.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                whileHover={{ y: -6 }}
-                className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all group relative overflow-hidden"
-              >
-                <Link
-                  to={`/about/${leader.name.toLowerCase().includes('mehedi') ? 'mehedi-hasan' : 'arafat-rahman'}`}
-                  className="block"
-                  aria-label={`View profile of ${leader.name}`}
+            {founders.map((leader, i) => {
+              const isMehedi = leader.name.toLowerCase().includes('mehedi');
+              const profileUrl = isMehedi ? 'https://mehedihassan.iam.bd/' : `/about/${isMehedi ? 'mehedi-hasan' : 'arafat-rahman'}`;
+
+              return (
+                <motion.div
+                  key={leader.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 }}
+                  whileHover={{ y: -6 }}
+                  className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all group relative overflow-hidden flex flex-col"
                 >
-                <div className="relative h-56 sm:h-72 md:h-80 overflow-hidden rounded-t-2xl sm:rounded-t-3xl cursor-pointer">
-                  <img
-                    src={leader.image_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'}
-                    alt={`${leader.name} - ${leader.role} of Upnex It, Naogaon Bangladesh`}
-                    title={`${leader.name} - ${leader.role}`}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-2 sm:bottom-4 left-3 sm:left-5 right-3 sm:right-5">
-                    <h3 className="font-bold text-sm sm:text-lg text-primary-foreground">{leader.name}</h3>
-                    <span className="inline-block mt-0.5 sm:mt-1 px-2 sm:px-3 py-0.5 rounded-full text-[8px] sm:text-[10px] font-bold uppercase tracking-wider bg-primary/80 text-primary-foreground">
-                      {leader.role}
-                    </span>
-                  </div>
-                </div>
-                <div className="p-3 sm:p-5 md:p-6">
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3">{leader.bio || ''}</p>
-                  <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-primary group-hover:gap-2 transition-all">
-                    {lang === 'bn' ? 'বিস্তারিত প্রোফাইল দেখুন' : 'View full profile'}
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </span>
-                </div>
-                </Link>
-              </motion.div>
-            ))}
+                {isMehedi ? (
+                  <a href={profileUrl} target="_blank" rel="noopener noreferrer" className="block" aria-label={`View profile of ${leader.name}`}>
+                    <div className="relative h-56 sm:h-72 md:h-80 overflow-hidden rounded-t-2xl sm:rounded-t-3xl cursor-pointer">
+                      <img
+                        src={leader.image_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'}
+                        alt={`${leader.name} - ${leader.role} of Upnex It, Naogaon Bangladesh`}
+                        title={`${leader.name} - ${leader.role}`}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+                      <div className="absolute bottom-2 sm:bottom-4 left-3 sm:left-5 right-3 sm:right-5">
+                        <h3 className="font-bold text-sm sm:text-lg text-primary-foreground">{leader.name}</h3>
+                        <span className="inline-block mt-0.5 sm:mt-1 px-2 sm:px-3 py-0.5 rounded-full text-[8px] sm:text-[10px] font-bold uppercase tracking-wider bg-primary/80 text-primary-foreground">
+                          {leader.role}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="p-3 sm:p-5 md:p-6">
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3">{leader.bio || ''}</p>
+                      <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-primary group-hover:gap-2 transition-all">
+                        {lang === 'bn' ? 'বিস্তারিত প্রোফাইল দেখুন' : 'View full profile'}
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </span>
+                    </div>
+                  </a>
+                ) : (
+                  <Link to={profileUrl} className="block" aria-label={`View profile of ${leader.name}`}>
+                    <div className="relative h-56 sm:h-72 md:h-80 overflow-hidden rounded-t-2xl sm:rounded-t-3xl cursor-pointer">
+                      <img
+                        src={leader.image_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'}
+                        alt={`${leader.name} - ${leader.role} of Upnex It, Naogaon Bangladesh`}
+                        title={`${leader.name} - ${leader.role}`}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+                      <div className="absolute bottom-2 sm:bottom-4 left-3 sm:left-5 right-3 sm:right-5">
+                        <h3 className="font-bold text-sm sm:text-lg text-primary-foreground">{leader.name}</h3>
+                        <span className="inline-block mt-0.5 sm:mt-1 px-2 sm:px-3 py-0.5 rounded-full text-[8px] sm:text-[10px] font-bold uppercase tracking-wider bg-primary/80 text-primary-foreground">
+                          {leader.role}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="p-3 sm:p-5 md:p-6">
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3">{leader.bio || ''}</p>
+                      <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-primary group-hover:gap-2 transition-all">
+                        {lang === 'bn' ? 'বিস্তারিত প্রোফাইল দেখুন' : 'View full profile'}
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </span>
+                    </div>
+                  </Link>
+                )}
+
+                  {/* Portfolio button for Mehedi Hasan */}
+                  {isMehedi && (
+                    <div className="px-3 sm:px-5 md:px-6 pb-3 sm:pb-5 md:pb-6 mt-auto">
+                      <a
+                        href="https://mehedihassan.iam.bd/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 w-full py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-primary to-primary/80 text-primary-foreground text-xs sm:text-sm font-semibold shadow-sm hover:shadow-md hover:from-primary/90 hover:to-primary transition-all duration-300 group/btn"
+                      >
+                        <Briefcase className="h-3.5 w-3.5 sm:h-4 sm:w-4 group-hover/btn:scale-110 transition-transform" />
+                        {lang === 'bn' ? 'পার্সোনাল পোর্টফোলিও' : 'Personal Portfolio'}
+                        <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                      </a>
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
