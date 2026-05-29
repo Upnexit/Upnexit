@@ -1,6 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, GraduationCap, MapPin, Briefcase, Calendar, Award, Code2, Mail, Phone, Sparkles } from 'lucide-react';
+import { ArrowLeft, GraduationCap, MapPin, Briefcase, Calendar, Award, Code2, Mail, Phone, Sparkles, ArrowRight, ExternalLink } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -136,6 +136,7 @@ const FounderProfile = () => {
 
   // Per-founder location chip
   const isMehedi = founder.slug === 'mehedi-hasan';
+  const portfolioUrl = isMehedi ? 'https://mehedihassan.iam.bd/' : null;
   const locationChip = isMehedi
     ? (isBn ? 'সাপাহার, নওগাঁ' : 'Sapahar, Naogaon')
     : (isBn ? 'নিয়ামতপুর, নওগাঁ' : 'Niamatpur, Naogaon');
@@ -228,17 +229,42 @@ const FounderProfile = () => {
               className="relative mx-auto md:mx-0"
             >
               <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-primary/30 to-secondary/30 blur-2xl opacity-50" />
-              <div className="relative aspect-square w-56 sm:w-64 md:w-full max-w-[340px] rounded-3xl overflow-hidden border-4 border-background shadow-elevated">
-                <img
-                  src={founder.image}
-                  alt={`${founder.name} - ${founder.role} of Upnex It, from ${locationChip}, Bangladesh`}
-                  title={`${founder.name} - ${founder.role} | ${locationChip}`}
-                  loading="eager"
-                  width={340}
-                  height={340}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              {portfolioUrl ? (
+                <a
+                  href={portfolioUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${founder.name}'s personal portfolio`}
+                  className="relative block aspect-square w-56 sm:w-64 md:w-full max-w-[340px] rounded-3xl overflow-hidden border-4 border-background shadow-elevated group cursor-pointer"
+                >
+                  <img
+                    src={founder.image}
+                    alt={`${founder.name} - ${founder.role} of Upnex It, from ${locationChip}, Bangladesh`}
+                    title={`${founder.name} - Visit Personal Portfolio`}
+                    loading="eager"
+                    width={340}
+                    height={340}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/0 to-foreground/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/95 text-primary-foreground text-[10px] sm:text-xs font-bold opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 backdrop-blur-sm">
+                    <ExternalLink className="h-3 w-3" />
+                    {isBn ? 'পোর্টফোলিও দেখুন' : 'Visit Portfolio'}
+                  </div>
+                </a>
+              ) : (
+                <div className="relative aspect-square w-56 sm:w-64 md:w-full max-w-[340px] rounded-3xl overflow-hidden border-4 border-background shadow-elevated">
+                  <img
+                    src={founder.image}
+                    alt={`${founder.name} - ${founder.role} of Upnex It, from ${locationChip}, Bangladesh`}
+                    title={`${founder.name} - ${founder.role} | ${locationChip}`}
+                    loading="eager"
+                    width={340}
+                    height={340}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
               <div className="absolute -bottom-3 -right-3 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-bold shadow-glow">
                 ★ {roleChip}
               </div>
@@ -252,17 +278,47 @@ const FounderProfile = () => {
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary mb-4">
                 <Sparkles className="h-3.5 w-3.5" /> {isBn ? 'প্রতিষ্ঠাতা প্রোফাইল' : 'Founder Profile'}
               </span>
-              <h1
-                className="signature-name text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground mb-3 leading-[1.05]"
-                aria-label={founder.name}
-              >
-                {founder.name}
-              </h1>
+              {portfolioUrl ? (
+                <a
+                  href={portfolioUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${founder.name}'s personal portfolio`}
+                  className="inline-block group"
+                >
+                  <h1
+                    className="signature-name text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground mb-3 leading-[1.05] transition-colors duration-300 group-hover:text-primary"
+                    aria-label={founder.name}
+                  >
+                    {founder.name}
+                  </h1>
+                </a>
+              ) : (
+                <h1
+                  className="signature-name text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground mb-3 leading-[1.05]"
+                  aria-label={founder.name}
+                >
+                  {founder.name}
+                </h1>
+              )}
               <span className="sr-only">{founder.nameBn}</span>
               <p className="text-base md:text-lg font-semibold text-primary mb-4">{role}</p>
               <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6 max-w-2xl">
                 {bio}
               </p>
+
+              {portfolioUrl && (
+                <a
+                  href={portfolioUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 mb-5 rounded-xl bg-gradient-to-r from-primary to-primary/80 text-primary-foreground text-sm font-semibold shadow-sm hover:shadow-md hover:from-primary/90 hover:to-primary transition-all duration-300 group"
+                >
+                  <Briefcase className="h-4 w-4 group-hover:scale-110 transition-transform" />
+                  {isBn ? 'পার্সোনাল পোর্টফোলিও দেখুন' : 'Visit Personal Portfolio'}
+                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+              )}
 
               <div className="flex flex-wrap gap-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-background border border-border text-xs font-medium text-foreground">
