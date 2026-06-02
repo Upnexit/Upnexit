@@ -1,8 +1,41 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Play, Github, Figma, Code2, FileCode, Braces, Database, Cpu, Palette } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+const techBadges = [
+  { Icon: Github, label: 'GitHub', color: '#24292e', className: 'top-[12%] left-[6%] hidden md:flex', delay: 0, dur: 7 },
+  { Icon: Figma, label: 'Figma', color: '#a259ff', className: 'top-[22%] right-[5%] hidden md:flex', delay: 0.4, dur: 8 },
+  { Icon: FileCode, label: 'HTML5', color: '#e34f26', className: 'top-[55%] left-[3%] hidden lg:flex', delay: 0.8, dur: 9 },
+  { Icon: Braces, label: 'JavaScript', color: '#f7df1e', className: 'bottom-[18%] right-[7%] hidden md:flex', delay: 1.2, dur: 7.5 },
+  { Icon: Code2, label: 'React', color: '#61dafb', className: 'top-[40%] right-[12%] hidden xl:flex', delay: 0.6, dur: 8.5 },
+  { Icon: Palette, label: 'Tailwind', color: '#38bdf8', className: 'bottom-[28%] left-[10%] hidden lg:flex', delay: 1.0, dur: 8 },
+  { Icon: Database, label: 'Supabase', color: '#3ecf8e', className: 'top-[68%] right-[3%] hidden lg:flex', delay: 1.4, dur: 9.5 },
+  { Icon: Cpu, label: 'Node.js', color: '#539e43', className: 'top-[8%] right-[22%] hidden xl:flex', delay: 0.3, dur: 7 },
+];
+
+const FloatingTechBadges = () => (
+  <div className="absolute inset-0 pointer-events-none z-[1]" aria-hidden="true">
+    {techBadges.map(({ Icon, label, color, className, delay, dur }) => (
+      <motion.div
+        key={label}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: [0, -14, 0], rotate: [0, 4, -4, 0] }}
+        transition={{
+          opacity: { duration: 0.8, delay },
+          y: { duration: dur, repeat: Infinity, ease: 'easeInOut', delay },
+          rotate: { duration: dur * 1.6, repeat: Infinity, ease: 'easeInOut', delay },
+        }}
+        className={`absolute ${className} items-center gap-2 px-3 py-2 rounded-2xl bg-white/85 backdrop-blur-md border border-border shadow-elevated`}
+        style={{ willChange: 'transform' }}
+      >
+        <Icon className="h-5 w-5" style={{ color }} strokeWidth={2.2} />
+        <span className="text-xs font-bold text-foreground/80">{label}</span>
+      </motion.div>
+    ))}
+  </div>
+);
 
 const HeroSection = () => {
   const { t, lang } = useLanguage();
@@ -65,6 +98,9 @@ const HeroSection = () => {
         <div className="absolute top-0 left-1/4 w-px h-48 bg-gradient-to-b from-transparent via-primary/12 to-transparent" />
         <div className="absolute top-0 right-1/3 w-px h-64 bg-gradient-to-b from-transparent via-secondary/10 to-transparent" />
       </div>
+
+      {/* Floating tech-stack badges — hidden on small mobile to keep perf high */}
+      <FloatingTechBadges />
 
       <div className="container mx-auto px-4 lg:px-8 pt-28 sm:pt-44 pb-20 sm:pb-32 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
