@@ -1,7 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Play, Github, Figma, Code2, FileCode, Braces, Database, Cpu, Palette } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
@@ -65,6 +65,9 @@ const HeroSection = () => {
         <div className="absolute top-0 left-1/4 w-px h-48 bg-gradient-to-b from-transparent via-primary/12 to-transparent" />
         <div className="absolute top-0 right-1/3 w-px h-64 bg-gradient-to-b from-transparent via-secondary/10 to-transparent" />
       </div>
+
+      {/* Floating tech-stack badges — hidden on small mobile to keep perf high */}
+      <FloatingTechBadges />
 
       <div className="container mx-auto px-4 lg:px-8 pt-28 sm:pt-44 pb-20 sm:pb-32 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
