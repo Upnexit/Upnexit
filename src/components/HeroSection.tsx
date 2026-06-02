@@ -4,6 +4,39 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Play, Github, Figma, Code2, FileCode, Braces, Database, Cpu, Palette } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const techBadges = [
+  { Icon: Github, label: 'GitHub', color: '#24292e', className: 'top-[12%] left-[6%] hidden md:flex', delay: 0, dur: 7 },
+  { Icon: Figma, label: 'Figma', color: '#a259ff', className: 'top-[22%] right-[5%] hidden md:flex', delay: 0.4, dur: 8 },
+  { Icon: FileCode, label: 'HTML5', color: '#e34f26', className: 'top-[55%] left-[3%] hidden lg:flex', delay: 0.8, dur: 9 },
+  { Icon: Braces, label: 'JavaScript', color: '#f7df1e', className: 'bottom-[18%] right-[7%] hidden md:flex', delay: 1.2, dur: 7.5 },
+  { Icon: Code2, label: 'React', color: '#61dafb', className: 'top-[40%] right-[12%] hidden xl:flex', delay: 0.6, dur: 8.5 },
+  { Icon: Palette, label: 'Tailwind', color: '#38bdf8', className: 'bottom-[28%] left-[10%] hidden lg:flex', delay: 1.0, dur: 8 },
+  { Icon: Database, label: 'Supabase', color: '#3ecf8e', className: 'top-[68%] right-[3%] hidden lg:flex', delay: 1.4, dur: 9.5 },
+  { Icon: Cpu, label: 'Node.js', color: '#539e43', className: 'top-[8%] right-[22%] hidden xl:flex', delay: 0.3, dur: 7 },
+];
+
+const FloatingTechBadges = () => (
+  <div className="absolute inset-0 pointer-events-none z-[1]" aria-hidden="true">
+    {techBadges.map(({ Icon, label, color, className, delay, dur }) => (
+      <motion.div
+        key={label}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: [0, -14, 0], rotate: [0, 4, -4, 0] }}
+        transition={{
+          opacity: { duration: 0.8, delay },
+          y: { duration: dur, repeat: Infinity, ease: 'easeInOut', delay },
+          rotate: { duration: dur * 1.6, repeat: Infinity, ease: 'easeInOut', delay },
+        }}
+        className={`absolute ${className} items-center gap-2 px-3 py-2 rounded-2xl bg-white/85 backdrop-blur-md border border-border shadow-elevated`}
+        style={{ willChange: 'transform' }}
+      >
+        <Icon className="h-5 w-5" style={{ color }} strokeWidth={2.2} />
+        <span className="text-xs font-bold text-foreground/80">{label}</span>
+      </motion.div>
+    ))}
+  </div>
+);
+
 const HeroSection = () => {
   const { t, lang } = useLanguage();
 
