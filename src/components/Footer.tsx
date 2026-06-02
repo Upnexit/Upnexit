@@ -114,6 +114,21 @@ const Footer = () => {
             </span>
           </div>
         </div>
+
+        {/* SEO: local service-area text (visible, crawler-friendly) */}
+        <div className="mt-6 text-[11px] leading-relaxed text-white/55 max-w-5xl mx-auto text-center">
+          <p>
+            Upnex It — best software &amp; IT company in Naogaon, Bangladesh. Custom software,
+            school &amp; hospital management, ERP, website &amp; mobile app development serving
+            Naogaon Sadar, Atrai, Badalgachhi, Dhamoirhat, Manda, Mahadebpur, Niamatpur,
+            Patnitala, Porsha, Raninagar &amp; Sapahar.
+          </p>
+          <p className="mt-1" lang="bn">
+            নওগাঁর সেরা আইটি ও সফটওয়্যার প্রতিষ্ঠান — নওগাঁ সদর, আত্রাই, বদলগাছী, ধামইরহাট,
+            মান্দা, মহাদেবপুর, নিয়ামতপুর, পত্নীতলা, পোরশা, রাণীনগর ও সাপাহার সহ সারা
+            বাংলাদেশে কাস্টম সফটওয়্যার, ওয়েবসাইট ও মোবাইল অ্যাপ ডেভেলপমেন্ট সেবা।
+          </p>
+        </div>
       </div>
     </footer>
   );
