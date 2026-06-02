@@ -142,6 +142,13 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('preferred_lang', newLang);
   };
 
+  // Reflect current language on <html lang> so CSS :lang() rules (e.g. Bengali font weight boost) apply
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+    }
+  }, [lang]);
+
   const t = translations[lang];
 
   // Show a minimal loading screen until language is detected

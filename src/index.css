@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Hind+Siliguri:wght@400;600&family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Hind+Siliguri:wght@400;600;700&family=Great+Vibes&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -86,6 +86,22 @@
     font-family: 'Inter', 'Hind Siliguri', system-ui, sans-serif;
     letter-spacing: -0.02em;
   }
+}
+
+/* Bengali text weight boost — Hind Siliguri appears lighter than Inter at the same numeric weight, so bump it visually */
+:lang(bn),
+[lang="bn"] {
+  font-family: 'Hind Siliguri', 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+}
+
+:lang(bn) h1, [lang="bn"] h1,
+:lang(bn) h2, [lang="bn"] h2,
+:lang(bn) h3, [lang="bn"] h3,
+:lang(bn) h4, [lang="bn"] h4,
+:lang(bn) h5, [lang="bn"] h5,
+:lang(bn) h6, [lang="bn"] h6 {
+  font-weight: 700;
 }
 
 @layer utilities {
