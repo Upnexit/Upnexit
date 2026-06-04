@@ -115,8 +115,8 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* SEO: local service-area text (visible, crawler-friendly) */}
-        <div className="mt-6 text-[11px] leading-relaxed text-white/55 max-w-5xl mx-auto text-center">
+        {/* SEO: local service-area text (hidden visually, crawler-friendly) */}
+        <div className="sr-only">
           <p>
             Upnex It — best software &amp; IT company in Naogaon, Bangladesh. Custom software,
             school &amp; hospital management, ERP, website &amp; mobile app development serving
