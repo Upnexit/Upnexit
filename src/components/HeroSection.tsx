@@ -43,21 +43,22 @@ type LogoKey = keyof typeof Logos;
 
 // 10 logos arranged in a rough circle around the hero headline.
 const orbitLogos: Array<{ key: LogoKey; pos: string; size: string; delay: number; dur: number; rot: number }> = [
-  // True circular orbit around the headline — 7 logos, kept clear of the navbar (top ≥ 30%) and the wave (bottom ≥ 28%).
-  // Top arc (safely below the header)
-  { key: 'Figma',      pos: 'top-[30%] left-[22%]',   size: 'w-12 h-12', delay: 0.1, dur: 7.5, rot: -6 },
-  { key: 'React',      pos: 'top-[30%] right-[22%]',  size: 'w-14 h-14', delay: 0.3, dur: 8.5, rot: 0 },
-  // Mid sides (flanking the "Custom Software" headline)
-  { key: 'GitHub',     pos: 'top-[48%] left-[6%]',    size: 'w-12 h-12', delay: 0.5, dur: 7.8, rot: 6 },
-  { key: 'TypeScript', pos: 'top-[48%] right-[6%]',   size: 'w-12 h-12', delay: 0.7, dur: 8.2, rot: 4 },
-  // Bottom arc (above the wave)
-  { key: 'NodeJS',     pos: 'bottom-[30%] right-[20%]', size: 'w-12 h-12', delay: 0.9, dur: 7.6, rot: 5 },
-  { key: 'Tailwind',   pos: 'bottom-[30%] left-[20%]',  size: 'w-12 h-12', delay: 1.1, dur: 9.0, rot: -4 },
-  { key: 'JavaScript', pos: 'bottom-[18%] left-1/2 -translate-x-1/2', size: 'w-11 h-11', delay: 1.3, dur: 8.0, rot: -5 },
+  // Circular orbit around the headline. Top logos sit high (just under the navbar) so they
+  // don't push down onto the headline text. Slight overlap with the header is acceptable.
+  // Top arc — high, well clear of headline
+  { key: 'Figma',      pos: 'top-[14%] sm:top-[16%] left-[14%] sm:left-[22%]',  size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.1, dur: 7.5, rot: -6 },
+  { key: 'React',      pos: 'top-[14%] sm:top-[16%] right-[14%] sm:right-[22%]', size: 'w-11 h-11 sm:w-14 sm:h-14', delay: 0.3, dur: 8.5, rot: 0 },
+  // Mid sides — flank the headline
+  { key: 'GitHub',     pos: 'top-[46%] left-[4%] sm:left-[6%]',   size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.5, dur: 7.8, rot: 6 },
+  { key: 'TypeScript', pos: 'top-[46%] right-[4%] sm:right-[6%]', size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.7, dur: 8.2, rot: 4 },
+  // Bottom arc — above the wave
+  { key: 'Tailwind',   pos: 'bottom-[26%] sm:bottom-[28%] left-[14%] sm:left-[20%]',  size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 1.1, dur: 9.0, rot: -4 },
+  { key: 'NodeJS',     pos: 'bottom-[26%] sm:bottom-[28%] right-[14%] sm:right-[20%]', size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.9, dur: 7.6, rot: 5 },
+  { key: 'JavaScript', pos: 'bottom-[14%] sm:bottom-[16%] left-1/2 -translate-x-1/2', size: 'w-9 h-9 sm:w-11 sm:h-11', delay: 1.3, dur: 8.0, rot: -5 },
 ];
 
 const FloatingTechBadges = () => (
-  <div className="absolute inset-0 pointer-events-none z-[2] hidden sm:block" aria-hidden="true">
+  <div className="absolute inset-0 pointer-events-none z-[2]" aria-hidden="true">
     {orbitLogos.map(({ key, pos, size, delay, dur, rot }) => (
       <motion.div
         key={key}
