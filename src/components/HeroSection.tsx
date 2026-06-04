@@ -52,9 +52,9 @@ const orbitLogos: Array<{ key: LogoKey; pos: string; size: string; delay: number
   { key: 'GitHub',     pos: 'top-[46%] left-[4%] sm:left-[6%]',   size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.5, dur: 7.8, rot: 6 },
   { key: 'TypeScript', pos: 'top-[46%] right-[4%] sm:right-[6%]', size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.7, dur: 8.2, rot: 4 },
   // Bottom arc — above the wave
-  { key: 'Tailwind',   pos: 'bottom-[26%] sm:bottom-[28%] left-[14%] sm:left-[20%]',  size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 1.1, dur: 9.0, rot: -4 },
-  { key: 'NodeJS',     pos: 'bottom-[26%] sm:bottom-[28%] right-[14%] sm:right-[20%]', size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.9, dur: 7.6, rot: 5 },
-  { key: 'JavaScript', pos: 'bottom-[14%] sm:bottom-[16%] left-1/2 -translate-x-1/2', size: 'w-9 h-9 sm:w-11 sm:h-11', delay: 1.3, dur: 8.0, rot: -5 },
+  { key: 'Tailwind',   pos: 'bottom-[18%] sm:bottom-[20%] left-[10%] sm:left-[16%]',  size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 1.1, dur: 9.0, rot: -4 },
+  { key: 'NodeJS',     pos: 'bottom-[18%] sm:bottom-[20%] right-[10%] sm:right-[16%]', size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.9, dur: 7.6, rot: 5 },
+  { key: 'JavaScript', pos: 'bottom-[5%] sm:bottom-[7%] left-[28%] sm:left-[36%]', size: 'w-9 h-9 sm:w-11 sm:h-11', delay: 1.3, dur: 8.0, rot: -5 },
 ];
 
 const FloatingTechBadges = () => (
