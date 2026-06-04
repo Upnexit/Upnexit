@@ -43,16 +43,19 @@ type LogoKey = keyof typeof Logos;
 
 // 10 logos arranged in a rough circle around the hero headline.
 const orbitLogos: Array<{ key: LogoKey; pos: string; size: string; delay: number; dur: number; rot: number }> = [
-  { key: 'GitHub',     pos: 'top-[14%] left-[8%]',    size: 'w-12 h-12',  delay: 0.0, dur: 7.0, rot: 6 },
-  { key: 'Figma',      pos: 'top-[10%] left-[28%]',   size: 'w-10 h-10',  delay: 0.3, dur: 8.0, rot: -5 },
-  { key: 'React',      pos: 'top-[8%] right-[28%]',   size: 'w-14 h-14',  delay: 0.6, dur: 9.0, rot: 0 },
-  { key: 'TypeScript', pos: 'top-[16%] right-[8%]',   size: 'w-11 h-11',  delay: 0.9, dur: 7.5, rot: 4 },
-  { key: 'JavaScript', pos: 'top-[44%] right-[4%]',   size: 'w-12 h-12',  delay: 1.2, dur: 8.5, rot: -6 },
-  { key: 'NodeJS',     pos: 'bottom-[22%] right-[10%]', size: 'w-12 h-12', delay: 1.5, dur: 7.8, rot: 5 },
-  { key: 'Tailwind',   pos: 'bottom-[14%] right-[30%]', size: 'w-12 h-12', delay: 1.8, dur: 9.2, rot: -4 },
-  { key: 'Supabase',   pos: 'bottom-[16%] left-[30%]',  size: 'w-11 h-11', delay: 2.1, dur: 8.2, rot: 6 },
-  { key: 'CSS3',       pos: 'bottom-[26%] left-[8%]',   size: 'w-11 h-11', delay: 2.4, dur: 7.6, rot: -5 },
-  { key: 'HTML5',      pos: 'top-[42%] left-[3%]',    size: 'w-12 h-12',  delay: 2.7, dur: 8.8, rot: 4 },
+  // Top arc — pushed well below the navbar (top ~22–28%)
+  { key: 'GitHub',     pos: 'top-[26%] left-[6%]',     size: 'w-12 h-12', delay: 0.0, dur: 7.0, rot: 6 },
+  { key: 'Figma',      pos: 'top-[22%] left-[24%]',    size: 'w-10 h-10', delay: 0.3, dur: 8.0, rot: -5 },
+  { key: 'React',      pos: 'top-[22%] right-[24%]',   size: 'w-14 h-14', delay: 0.6, dur: 9.0, rot: 0 },
+  { key: 'TypeScript', pos: 'top-[26%] right-[6%]',    size: 'w-11 h-11', delay: 0.9, dur: 7.5, rot: 4 },
+  // Middle — flanking the headline ("Custom Software …")
+  { key: 'HTML5',      pos: 'top-[46%] left-[3%]',     size: 'w-12 h-12', delay: 2.7, dur: 8.8, rot: 4 },
+  { key: 'CSS3',       pos: 'top-[46%] left-[16%]',    size: 'w-11 h-11', delay: 2.4, dur: 7.6, rot: -5 },
+  { key: 'Supabase',   pos: 'top-[46%] right-[16%]',   size: 'w-11 h-11', delay: 2.1, dur: 8.2, rot: 6 },
+  { key: 'JavaScript', pos: 'top-[46%] right-[3%]',    size: 'w-12 h-12', delay: 1.2, dur: 8.5, rot: -6 },
+  // Bottom arc — lifted above the wave (bottom ~30–34%)
+  { key: 'NodeJS',     pos: 'bottom-[32%] right-[10%]', size: 'w-12 h-12', delay: 1.5, dur: 7.8, rot: 5 },
+  { key: 'Tailwind',   pos: 'bottom-[32%] left-[10%]',  size: 'w-12 h-12', delay: 1.8, dur: 9.2, rot: -4 },
 ];
 
 const FloatingTechBadges = () => (
