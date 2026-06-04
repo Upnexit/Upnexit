@@ -43,19 +43,17 @@ type LogoKey = keyof typeof Logos;
 
 // 10 logos arranged in a rough circle around the hero headline.
 const orbitLogos: Array<{ key: LogoKey; pos: string; size: string; delay: number; dur: number; rot: number }> = [
-  // Top arc — pushed well below the navbar (top ~22–28%)
-  { key: 'GitHub',     pos: 'top-[26%] left-[6%]',     size: 'w-12 h-12', delay: 0.0, dur: 7.0, rot: 6 },
-  { key: 'Figma',      pos: 'top-[22%] left-[24%]',    size: 'w-10 h-10', delay: 0.3, dur: 8.0, rot: -5 },
-  { key: 'React',      pos: 'top-[22%] right-[24%]',   size: 'w-14 h-14', delay: 0.6, dur: 9.0, rot: 0 },
-  { key: 'TypeScript', pos: 'top-[26%] right-[6%]',    size: 'w-11 h-11', delay: 0.9, dur: 7.5, rot: 4 },
-  // Middle — flanking the headline ("Custom Software …")
-  { key: 'HTML5',      pos: 'top-[46%] left-[3%]',     size: 'w-12 h-12', delay: 2.7, dur: 8.8, rot: 4 },
-  { key: 'CSS3',       pos: 'top-[46%] left-[16%]',    size: 'w-11 h-11', delay: 2.4, dur: 7.6, rot: -5 },
-  { key: 'Supabase',   pos: 'top-[46%] right-[16%]',   size: 'w-11 h-11', delay: 2.1, dur: 8.2, rot: 6 },
-  { key: 'JavaScript', pos: 'top-[46%] right-[3%]',    size: 'w-12 h-12', delay: 1.2, dur: 8.5, rot: -6 },
-  // Bottom arc — lifted above the wave (bottom ~30–34%)
-  { key: 'NodeJS',     pos: 'bottom-[32%] right-[10%]', size: 'w-12 h-12', delay: 1.5, dur: 7.8, rot: 5 },
-  { key: 'Tailwind',   pos: 'bottom-[32%] left-[10%]',  size: 'w-12 h-12', delay: 1.8, dur: 9.2, rot: -4 },
+  // True circular orbit around the headline — 7 logos, kept clear of the navbar (top ≥ 30%) and the wave (bottom ≥ 28%).
+  // Top arc (safely below the header)
+  { key: 'Figma',      pos: 'top-[30%] left-[22%]',   size: 'w-12 h-12', delay: 0.1, dur: 7.5, rot: -6 },
+  { key: 'React',      pos: 'top-[30%] right-[22%]',  size: 'w-14 h-14', delay: 0.3, dur: 8.5, rot: 0 },
+  // Mid sides (flanking the "Custom Software" headline)
+  { key: 'GitHub',     pos: 'top-[48%] left-[6%]',    size: 'w-12 h-12', delay: 0.5, dur: 7.8, rot: 6 },
+  { key: 'TypeScript', pos: 'top-[48%] right-[6%]',   size: 'w-12 h-12', delay: 0.7, dur: 8.2, rot: 4 },
+  // Bottom arc (above the wave)
+  { key: 'NodeJS',     pos: 'bottom-[30%] right-[20%]', size: 'w-12 h-12', delay: 0.9, dur: 7.6, rot: 5 },
+  { key: 'Tailwind',   pos: 'bottom-[30%] left-[20%]',  size: 'w-12 h-12', delay: 1.1, dur: 9.0, rot: -4 },
+  { key: 'JavaScript', pos: 'bottom-[18%] left-1/2 -translate-x-1/2', size: 'w-11 h-11', delay: 1.3, dur: 8.0, rot: -5 },
 ];
 
 const FloatingTechBadges = () => (
@@ -63,21 +61,22 @@ const FloatingTechBadges = () => (
     {orbitLogos.map(({ key, pos, size, delay, dur, rot }) => (
       <motion.div
         key={key}
-        initial={{ opacity: 0, scale: 0.6, y: 16 }}
+        initial={{ opacity: 0, scale: 0.5, y: 20 }}
         animate={{
           opacity: 1,
           scale: 1,
-          y: [0, -12, 0],
+          y: [0, -14, 0],
           rotate: [-rot, rot, -rot],
         }}
         transition={{
-          opacity: { duration: 0.7, delay: delay * 0.25 },
-          scale: { duration: 0.7, delay: delay * 0.25 },
+          opacity: { duration: 0.8, delay: 0.2 + delay * 0.15, ease: 'easeOut' },
+          scale: { duration: 0.8, delay: 0.2 + delay * 0.15, ease: [0.16, 1, 0.3, 1] },
           y: { duration: dur, repeat: Infinity, ease: 'easeInOut', delay },
-          rotate: { duration: dur * 1.4, repeat: Infinity, ease: 'easeInOut', delay },
+          rotate: { duration: dur * 1.5, repeat: Infinity, ease: 'easeInOut', delay },
         }}
-        className={`absolute ${pos} ${size} drop-shadow-[0_8px_20px_rgba(0,0,0,0.12)]`}
-        style={{ willChange: 'transform' }}
+        whileHover={{ scale: 1.15 }}
+        className={`absolute ${pos} ${size} drop-shadow-[0_10px_24px_rgba(0,0,0,0.18)]`}
+        style={{ willChange: 'transform', filter: 'saturate(1.15) contrast(1.05)' }}
       >
         <div className="w-full h-full [&>svg]:w-full [&>svg]:h-full">{Logos[key]}</div>
       </motion.div>
