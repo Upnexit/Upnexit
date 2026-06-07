@@ -144,26 +144,58 @@ const FounderProfile = () => {
     ? (isBn ? 'প্রতিষ্ঠানের CEO' : 'CEO of the Company')
     : (isBn ? 'প্রতিষ্ঠানের পরিচালক' : 'Director of the Company');
 
-  // JSON-LD Person schema for SEO
+  // Build rich alternate-name list so name searches in any form hit this page
+  const nameVariants = isMehedi
+    ? [
+        'Mehedi Hasan', 'Mehedi Hassan', 'MD Mehedi Hasan', 'MD. Mehedi Hasan',
+        'Md Mehedi Hasan', 'মেহেদী হাসান', 'এম.ডি. মেহেদী হাসান', 'মেহেদি হাসান',
+        'Mehedi Hasan Upnex', 'Mehedi Hasan CEO', 'Mehedi Hasan Naogaon',
+        'Mehedi Hasan Sapahar', 'Upnex It Founder', 'Upnex It CEO',
+      ]
+    : [
+        'Arafat Rahman', 'AR Arafat Rahman', 'AR. Arafat Rahman',
+        'আরাফাত রহমান', 'এ.আর. আরাফাত রহমান', 'Arafat Rahman Upnex',
+        'Arafat Rahman Co-founder', 'Arafat Rahman Niamatpur', 'Arafat Rahman Naogaon',
+      ];
+
+  const profileUrl = `https://upnexit.pro.bd/about/${founder.slug}`;
+
+  // JSON-LD Person schema – enriched for "name search" ranking
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': `${profileUrl}#person`,
     name: founder.name,
-    alternateName: [founder.nameBn, founder.name.replace(/\./g, ''), founder.name.split(' ').slice(-2).join(' ')],
+    givenName: isMehedi ? 'Mehedi' : 'Arafat',
+    familyName: isMehedi ? 'Hasan' : 'Rahman',
+    additionalName: isMehedi ? 'MD' : 'AR',
+    alternateName: nameVariants,
+    description: founder.shortBio,
     jobTitle: founder.role,
-    image: founder.image,
-    url: `https://upnexit.pro.bd/about/${founder.slug}`,
+    image: {
+      '@type': 'ImageObject',
+      url: founder.image,
+      width: 800,
+      height: 800,
+      caption: `${founder.name} — ${founder.role}`,
+    },
+    url: profileUrl,
+    mainEntityOfPage: profileUrl,
     worksFor: {
       '@type': 'Organization',
       name: 'Upnex It',
       url: 'https://upnexit.pro.bd',
+      logo: 'https://upnexit.pro.bd/logo.png',
     },
+    birthPlace: isMehedi
+      ? { '@type': 'Place', name: 'Sapahar, Naogaon, Bangladesh' }
+      : { '@type': 'Place', name: 'Niamatpur, Naogaon, Bangladesh' },
     address: isMehedi ? {
       '@type': 'PostalAddress',
       addressLocality: 'Sapahar',
       addressRegion: 'Naogaon, Rajshahi',
       addressCountry: 'BD',
-      streetAddress: 'Sonaranga Village, Sapahar Upazila',
+      streetAddress: 'Sonadanga, Gopalpur, Sapahar Upazila',
     } : {
       '@type': 'PostalAddress',
       addressLocality: 'Niamatpur',
@@ -176,23 +208,79 @@ const FounderProfile = () => {
       name: e.place,
     })),
     knowsAbout: founder.expertise,
-    nationality: 'Bangladeshi',
+    knowsLanguage: ['Bengali', 'English'],
+    nationality: { '@type': 'Country', name: 'Bangladesh' },
+    gender: 'Male',
+    sameAs: [
+      'https://upnexit.pro.bd',
+      'https://www.facebook.com/share/1BGxtCwBud/',
+      'https://www.instagram.com/upnexit/?hl=en',
+      ...(isMehedi && portfolioUrl ? [portfolioUrl] : []),
+    ],
+  };
+
+  const profilePageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    '@id': profileUrl,
+    url: profileUrl,
+    name: `${founder.name} — ${founder.role}`,
+    description: founder.shortBio,
+    inLanguage: ['en', 'bn'],
+    mainEntity: { '@id': `${profileUrl}#person` },
+    image: founder.image,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Upnex It',
+      url: 'https://upnexit.pro.bd',
+    },
+  };
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://upnexit.pro.bd' },
+      { '@type': 'ListItem', position: 2, name: 'About', item: 'https://upnexit.pro.bd/about' },
+      { '@type': 'ListItem', position: 3, name: founder.name, item: profileUrl },
+    ],
   };
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <SEOHead
-        title={`${founder.name} - ${founder.role} | Upnex It`}
-        description={`${founder.name} (${founder.nameBn}) — ${founder.role}. ${founder.shortBio}`}
-        canonical={`https://upnexit.pro.bd/about/${founder.slug}`}
+        title={isMehedi
+          ? `Mehedi Hasan — CEO & Founder of Upnex It | মেহেদী হাসান`
+          : `${founder.name} — ${founder.role} | Upnex It`}
+        description={isMehedi
+          ? `Mehedi Hasan (MD. Mehedi Hasan / মেহেদী হাসান) — CEO & Founder of Upnex It. Electrical engineer, server & IT expert from Sapahar, Naogaon, Bangladesh. Leading custom software, school & hospital management solutions.`
+          : `${founder.name} (${founder.nameBn}) — ${founder.role}. ${founder.shortBio}`}
+        canonical={profileUrl}
         ogImage={founder.image}
         type="profile"
-        keywords={`${founder.name}, ${founder.nameBn}, ${founder.role}, Upnex It founder, Upnex It CEO, Upnex It director, Naogaon software developer, Niamatpur IT expert, ${founder.name.toLowerCase()}, ${founder.name.replace(/[.,]/g, '')}`}
+        keywords={[...nameVariants, founder.role, 'Upnex It', 'Naogaon IT', 'Bangladesh software founder', 'Sapahar', 'Niamatpur'].join(', ')}
       />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {/* SR-only name variants — helps name-based search */}
+      <div className="sr-only">
+        <h2>{nameVariants.join(' · ')}</h2>
+        <p>
+          {founder.name} ({founder.nameBn}) — {founder.role} at Upnex It,
+          based in {isMehedi ? 'Sapahar, Naogaon, Bangladesh' : 'Niamatpur, Naogaon, Bangladesh'}.
+          Also known as {nameVariants.slice(0, 6).join(', ')}.
+        </p>
+      </div>
       <Navbar />
 
       {/* Hero */}
