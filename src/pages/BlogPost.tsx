@@ -123,15 +123,53 @@ const BlogPost = () => {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
+            "@id": `https://upnexit.pro.bd/blog/${post.slug}#article`,
             "headline": post.title,
+            "name": post.title,
             "description": post.excerpt || post.title,
-            "image": post.cover_image || "https://upnexit.pro.bd/og-image.jpg",
-            "author": { "@type": "Person", "name": post.author },
-            "publisher": { "@type": "Organization", "name": "Upnex It", "logo": { "@type": "ImageObject", "url": "https://upnexit.pro.bd/logo.png" } },
+            "image": {
+              "@type": "ImageObject",
+              "url": post.cover_image || "https://upnexit.pro.bd/og-image.jpg",
+              "width": 1200,
+              "height": 630,
+            },
+            "author": {
+              "@type": "Person",
+              "name": post.author,
+              "url": "https://upnexit.pro.bd/about/mehedi-hasan",
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Upnex It",
+              "url": "https://upnexit.pro.bd",
+              "logo": { "@type": "ImageObject", "url": "https://upnexit.pro.bd/logo.png" }
+            },
             "datePublished": post.published_at,
             "dateModified": post.updated_at || post.published_at,
-            "mainEntityOfPage": `https://upnexit.pro.bd/blog/${post.slug}`,
-            "keywords": post.tags?.join(', ')
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": `https://upnexit.pro.bd/blog/${post.slug}`,
+            },
+            "url": `https://upnexit.pro.bd/blog/${post.slug}`,
+            "keywords": post.tags?.join(', '),
+            "articleSection": post.tags?.[0] || 'Software',
+            "inLanguage": 'bn-BD',
+            "wordCount": post.content ? post.content.replace(/<[^>]*>/g, '').split(/\s+/).filter(Boolean).length : undefined,
+            "isPartOf": { "@type": "Blog", "@id": "https://upnexit.pro.bd/blog#blog", "name": "Upnex It Blog" }
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://upnexit.pro.bd" },
+              { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://upnexit.pro.bd/blog" },
+              { "@type": "ListItem", "position": 3, "name": post.title, "item": `https://upnexit.pro.bd/blog/${post.slug}` },
+            ]
           })
         }}
       />

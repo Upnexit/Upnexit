@@ -46,6 +46,45 @@ const Portfolio = () => {
           })
         }}
       />
+      {items && items.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              "name": "Upnex It Projects",
+              "itemListElement": items.map((it, i) => ({
+                "@type": "ListItem",
+                "position": i + 1,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": it.title,
+                  "description": it.description || it.title,
+                  "image": it.cover_image || "https://upnexit.pro.bd/og-image.jpg",
+                  "url": it.live_url || "https://upnexit.pro.bd/portfolio",
+                  "creator": { "@type": "Organization", "name": "Upnex It", "url": "https://upnexit.pro.bd" },
+                  "keywords": (it.technologies || []).join(', '),
+                  ...(it.category ? { "genre": it.category } : {}),
+                }
+              }))
+            })
+          }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://upnexit.pro.bd" },
+              { "@type": "ListItem", "position": 2, "name": "Portfolio", "item": "https://upnexit.pro.bd/portfolio" },
+            ]
+          })
+        }}
+      />
       <Navbar />
 
       {/* Hero Banner with texture */}
