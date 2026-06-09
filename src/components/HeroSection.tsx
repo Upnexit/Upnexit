@@ -54,7 +54,6 @@ const orbitLogos: Array<{ key: LogoKey; pos: string; size: string; delay: number
   // Bottom arc — above the wave
   { key: 'Tailwind',   pos: 'bottom-[18%] sm:bottom-[20%] left-[10%] sm:left-[16%]',  size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 1.1, dur: 9.0, rot: -4 },
   { key: 'NodeJS',     pos: 'bottom-[18%] sm:bottom-[20%] right-[10%] sm:right-[16%]', size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.9, dur: 7.6, rot: 5 },
-  { key: 'JavaScript', pos: 'bottom-[5%] sm:bottom-[7%] left-[28%] sm:left-[36%]', size: 'w-9 h-9 sm:w-11 sm:h-11', delay: 1.3, dur: 8.0, rot: -5 },
 ];
 
 const FloatingTechBadges = () => (
