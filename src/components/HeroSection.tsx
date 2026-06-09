@@ -54,7 +54,6 @@ const orbitLogos: Array<{ key: LogoKey; pos: string; size: string; delay: number
   // Bottom arc — above the wave
   { key: 'Tailwind',   pos: 'bottom-[18%] sm:bottom-[20%] left-[10%] sm:left-[16%]',  size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 1.1, dur: 9.0, rot: -4 },
   { key: 'NodeJS',     pos: 'bottom-[18%] sm:bottom-[20%] right-[10%] sm:right-[16%]', size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.9, dur: 7.6, rot: 5 },
-  { key: 'JavaScript', pos: 'bottom-[5%] sm:bottom-[7%] left-[28%] sm:left-[36%]', size: 'w-9 h-9 sm:w-11 sm:h-11', delay: 1.3, dur: 8.0, rot: -5 },
 ];
 
 const FloatingTechBadges = () => (
@@ -94,6 +93,9 @@ const HeroSection = () => {
       <div className="absolute inset-0" style={{
         background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
       }} />
+
+      {/* Animated soft gradient wash */}
+      <div className="absolute inset-0 hero-animated-gradient pointer-events-none" aria-hidden="true" />
 
       {/* Grid texture overlay */}
       <div className="absolute inset-0 opacity-[0.04]" style={{
@@ -162,10 +164,9 @@ const HeroSection = () => {
             </span>
           </motion.div>
 
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.08] mb-6 tracking-tight text-foreground">
-            {t.hero.title1}{' '}
-            <br />
-            <span className="bn-display text-gradient">{t.hero.title2}</span>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.18] mb-6 tracking-tight text-foreground">
+            <span className="block pb-2">{t.hero.title1}</span>
+            <span className="bn-display text-gradient block mt-2 sm:mt-3">{t.hero.title2}</span>
           </h1>
 
           <motion.p
