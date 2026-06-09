@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Hind+Siliguri:wght@400;600;700&family=Baloo+Da+2:wght@800&family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Hind+Siliguri:wght@400;600;700&family=Baloo+Da+2:wght@600;700;800&family=Great+Vibes&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -146,9 +146,14 @@
   }
   .bn-display {
     font-family: 'Baloo Da 2', 'Hind Siliguri', system-ui, sans-serif;
-    font-weight: 800;
     letter-spacing: -0.01em;
     line-height: 1.25;
+  }
+  .bn-display-extrabold {
+    font-weight: 800;
+  }
+  .bn-display-semibold {
+    font-weight: 600;
   }
   .bn-display.text-gradient {
     /* Professional warm gradient — coral → amber → deep rose */
