@@ -148,6 +148,7 @@
     font-family: 'Baloo Da 2', 'Hind Siliguri', system-ui, sans-serif;
     font-weight: 800;
     letter-spacing: -0.01em;
+    line-height: 1.25;
   }
   .bn-display.text-gradient {
     /* Professional warm gradient — coral → amber → deep rose */
@@ -158,7 +159,8 @@
     -webkit-text-fill-color: transparent;
     color: transparent;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
-    padding-bottom: 0.08em;
+    padding-bottom: 0.18em;
+    padding-top: 0.08em;
     display: inline-block;
   }
   @supports not (color: oklch(0.62 0.2 50)) {
