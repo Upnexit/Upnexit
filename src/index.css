@@ -191,3 +191,23 @@
 @keyframes spinner-rotate {
   to { transform: rotate(360deg); }
 }
+
+/* Animated soft gradient wash for hero background */
+.hero-animated-gradient {
+  background:
+    radial-gradient(60% 50% at 20% 30%, hsl(145 63% 42% / 0.10), transparent 60%),
+    radial-gradient(50% 45% at 80% 20%, hsl(46 92% 55% / 0.14), transparent 60%),
+    radial-gradient(55% 50% at 70% 80%, hsl(20 85% 60% / 0.10), transparent 60%),
+    radial-gradient(50% 45% at 25% 85%, hsl(165 60% 45% / 0.10), transparent 60%);
+  background-size: 200% 200%;
+  animation: hero-gradient-shift 18s ease-in-out infinite;
+  filter: blur(2px);
+}
+
+@keyframes hero-gradient-shift {
+  0%   { background-position: 0% 0%,   100% 0%,   100% 100%, 0% 100%; }
+  25%  { background-position: 30% 20%, 70% 30%,   80% 80%,  20% 70%; }
+  50%  { background-position: 60% 50%, 40% 60%,   50% 50%,  50% 40%; }
+  75%  { background-position: 30% 80%, 70% 40%,   20% 60%,  80% 30%; }
+  100% { background-position: 0% 0%,   100% 0%,   100% 100%, 0% 100%; }
+}
