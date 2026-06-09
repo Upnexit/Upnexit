@@ -94,6 +94,9 @@ const HeroSection = () => {
         background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
       }} />
 
+      {/* Animated soft gradient wash */}
+      <div className="absolute inset-0 hero-animated-gradient pointer-events-none" aria-hidden="true" />
+
       {/* Grid texture overlay */}
       <div className="absolute inset-0 opacity-[0.04]" style={{
         backgroundImage: `
