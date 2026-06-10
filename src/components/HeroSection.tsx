@@ -165,10 +165,11 @@ const HeroSection = () => {
           </motion.div>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.12] mb-4 sm:mb-5 tracking-tight text-foreground">
-            <span className="sr-only">Upnex It — Best Software Company in Bangladesh. Custom Software, School Management, and Hospital Management Solutions.</span>
+            <span className="sr-only">Upnex It — Best Software Company in Bangladesh offering Custom Software, School Management, Hospital Management, ERP and Web Application development services.</span>
             <span className="bn-display bn-display-extrabold block pb-1">{t.hero.title1}</span>
             <span className="bn-display bn-display-bold text-gradient block -mt-1 sm:-mt-2">{t.hero.title2}</span>
           </h1>
+          <h2 className="sr-only">Top-rated software development company in Bangladesh — Custom Software, School Management Software, Hospital Management Software, ERP Solutions and Web Development.</h2>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
