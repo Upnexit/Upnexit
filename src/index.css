@@ -151,9 +151,11 @@
   }
   .bn-display-extrabold {
     font-weight: 800;
+    -webkit-text-stroke: 1.5px currentColor;
+    letter-spacing: -0.02em;
   }
-  .bn-display-semibold {
-    font-weight: 600;
+  .bn-display-bold {
+    font-weight: 800;
   }
   .bn-display.text-gradient {
     /* Professional warm gradient — coral → amber → deep rose */

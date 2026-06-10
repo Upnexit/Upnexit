@@ -166,7 +166,7 @@ const HeroSection = () => {
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.18] mb-6 tracking-tight text-foreground">
             <span className="bn-display bn-display-extrabold block pb-2">{t.hero.title1}</span>
-            <span className="bn-display bn-display-semibold text-gradient block mt-2 sm:mt-3">{t.hero.title2}</span>
+            <span className="bn-display bn-display-bold text-gradient block mt-2 sm:mt-3">{t.hero.title2}</span>
           </h1>
 
           <motion.p
