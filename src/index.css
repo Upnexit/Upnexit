@@ -156,6 +156,9 @@
   }
   .bn-display-bold {
     font-weight: 800;
+    /* Simulates ~1000 weight for Bengali "Baloo Da 2" which caps at 800 */
+    -webkit-text-stroke: 1px currentColor;
+    letter-spacing: -0.015em;
   }
   .bn-display.text-gradient {
     /* Professional warm gradient — coral → amber → deep rose */
