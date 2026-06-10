@@ -49,8 +49,8 @@ const orbitLogos: Array<{ key: LogoKey; pos: string; size: string; delay: number
   { key: 'Figma',      pos: 'top-[14%] sm:top-[16%] left-[14%] sm:left-[22%]',  size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.1, dur: 7.5, rot: -6 },
   { key: 'React',      pos: 'top-[14%] sm:top-[16%] right-[14%] sm:right-[22%]', size: 'w-11 h-11 sm:w-14 sm:h-14', delay: 0.3, dur: 8.5, rot: 0 },
   // Mid sides — flank the headline
-  { key: 'GitHub',     pos: 'top-[46%] left-[4%] sm:left-[6%]',   size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.5, dur: 7.8, rot: 6 },
-  { key: 'TypeScript', pos: 'top-[46%] right-[4%] sm:right-[6%]', size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.7, dur: 8.2, rot: 4 },
+  { key: 'GitHub',     pos: 'top-[34%] sm:top-[46%] left-[4%] sm:left-[6%]',   size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.5, dur: 7.8, rot: 6 },
+  { key: 'TypeScript', pos: 'top-[34%] sm:top-[46%] right-[4%] sm:right-[6%]', size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.7, dur: 8.2, rot: 4 },
   // Bottom arc — above the wave
   { key: 'Tailwind',   pos: 'bottom-[18%] sm:bottom-[20%] left-[10%] sm:left-[16%]',  size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 1.1, dur: 9.0, rot: -4 },
   { key: 'NodeJS',     pos: 'bottom-[18%] sm:bottom-[20%] right-[10%] sm:right-[16%]', size: 'w-10 h-10 sm:w-12 sm:h-12', delay: 0.9, dur: 7.6, rot: 5 },
@@ -164,16 +164,16 @@ const HeroSection = () => {
             </span>
           </motion.div>
 
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.18] mb-6 tracking-tight text-foreground">
-            <span className="bn-display bn-display-extrabold block pb-2">{t.hero.title1}</span>
-            <span className="bn-display bn-display-bold text-gradient block mt-2 sm:mt-3">{t.hero.title2}</span>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.12] mb-4 sm:mb-5 tracking-tight text-foreground">
+            <span className="bn-display bn-display-extrabold block pb-1">{t.hero.title1}</span>
+            <span className="bn-display bn-display-bold text-gradient block -mt-1 sm:-mt-2">{t.hero.title2}</span>
           </h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mt-2 sm:mt-3 mb-10 leading-relaxed"
           >
             {t.hero.subtitle}
           </motion.p>
