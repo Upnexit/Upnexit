@@ -17,8 +17,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
       <SEOHead
-        title="Upnex It — Software Company in Bangladesh"
-        description="Upnex It builds School & Hospital Management Software, Custom Software, and Web Applications for Bangladeshi businesses at affordable prices."
+        title="Upnex It | Best Software Company in Bangladesh — Custom, School & Hospital Software"
+        description="Upnex It — official homepage. Bangladesh's trusted software company building affordable Custom Software, School & Hospital Management Systems, and Web Applications."
         canonical="https://upnexit.pro.bd/"
         keywords="software company bangladesh, best software company in bangladesh, custom software development, school management software bangladesh, hospital management software, web development company bangladesh, IT company naogaon, সফটওয়্যার কোম্পানি বাংলাদেশ, স্কুল ম্যানেজমেন্ট সফটওয়্যার, হসপিটাল ম্যানেজমেন্ট সফটওয়্যার, কাস্টম সফটওয়্যার, ওয়েব ডেভেলপমেন্ট বাংলাদেশ, upnex it, upnexit, সফটওয়্যার কোম্পানি নওগাঁ, best IT company bangladesh, affordable software bangladesh, ERP software bangladesh, software development company bd"
       />
