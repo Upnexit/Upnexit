@@ -17,10 +17,32 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
       <SEOHead
-        title="Upnex It | Best Software Company in Bangladesh — Custom, School & Hospital Software"
-        description="Upnex It — official homepage. Bangladesh's trusted software company building affordable Custom Software, School & Hospital Management Systems, and Web Applications."
+        title="Upnex It — #1 Software Company in Bangladesh | Custom, School & Hospital Software"
+        description="Upnex It is Bangladesh's leading software development company — building affordable Custom Software, School Management, Hospital Management, ERP and Web Applications. Trusted by 10+ clients, 50+ projects delivered."
         canonical="https://upnexit.pro.bd/"
         keywords="software company bangladesh, best software company in bangladesh, custom software development, school management software bangladesh, hospital management software, web development company bangladesh, IT company naogaon, সফটওয়্যার কোম্পানি বাংলাদেশ, স্কুল ম্যানেজমেন্ট সফটওয়্যার, হসপিটাল ম্যানেজমেন্ট সফটওয়্যার, কাস্টম সফটওয়্যার, ওয়েব ডেভেলপমেন্ট বাংলাদেশ, upnex it, upnexit, সফটওয়্যার কোম্পানি নওগাঁ, best IT company bangladesh, affordable software bangladesh, ERP software bangladesh, software development company bd"
+      />
+      {/* JSON-LD WebPage schema marking this as the canonical homepage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": "https://upnexit.pro.bd/#webpage",
+            "url": "https://upnexit.pro.bd/",
+            "name": "Upnex It — Best Software Company in Bangladesh",
+            "isPartOf": { "@id": "https://upnexit.pro.bd/#website" },
+            "about": { "@id": "https://upnexit.pro.bd/#organization" },
+            "primaryImageOfPage": "https://upnexit.pro.bd/logo.png",
+            "description": "Official homepage of Upnex It — Bangladesh's trusted software development company offering Custom Software, School Management, Hospital Management, ERP and Web Applications.",
+            "inLanguage": ["en", "bn"],
+            "speakable": {
+              "@type": "SpeakableSpecification",
+              "cssSelector": ["h1", "h2", "meta[name='description']"]
+            }
+          })
+        }}
       />
       {/* JSON-LD Organization Schema */}
       <script
