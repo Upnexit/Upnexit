@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 interface PortfolioItem {
   id: string;
@@ -106,12 +107,11 @@ const PortfolioManagement = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">পোর্টফোলিও ম্যানেজমেন্ট</h1>
-          <p className="text-sm text-muted-foreground">প্রজেক্ট কেস স্টাডি পরিচালনা করুন</p>
-        </div>
-        <Dialog open={open} onOpenChange={setOpen}>
+      <AdminPageHeader
+        title="পোর্টফোলিও ম্যানেজমেন্ট"
+        subtitle="প্রজেক্ট কেস স্টাডি পরিচালনা করুন"
+        actions={
+          <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button onClick={openNew} className="gap-1.5"><Plus className="h-4 w-4" /> নতুন প্রজেক্ট</Button>
           </DialogTrigger>
@@ -139,7 +139,8 @@ const PortfolioManagement = () => {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
+        }
+      />
 
       {isLoading ? (
         <div className="space-y-3">{[1, 2].map(i => <div key={i} className="h-16 bg-muted rounded-xl animate-pulse" />)}</div>

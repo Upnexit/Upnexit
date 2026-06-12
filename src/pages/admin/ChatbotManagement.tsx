@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Plus, Trash2, Save, MessageCircle, Pencil, X } from 'lucide-react';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 const ChatbotManagement = () => {
   const { toast } = useToast();
@@ -91,7 +92,10 @@ const ChatbotManagement = () => {
 
   return (
     <div>
-      <h1 className="text-xl md:text-2xl font-bold text-foreground mb-6">চ্যাটবট ম্যানেজমেন্ট</h1>
+      <AdminPageHeader
+        title="চ্যাটবট ম্যানেজমেন্ট"
+        subtitle="সাইটে চলমান AI চ্যাটবটের প্রশ্ন ও উত্তর পরিচালনা করুন"
+      />
 
       {/* Add new Q&A */}
       <div className="bg-background rounded-2xl border border-border p-4 md:p-6 shadow-sm mb-6">

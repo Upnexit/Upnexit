@@ -6,6 +6,7 @@ import { Menu, Globe, Home, Briefcase, Users, MessageSquare, User, LogIn, Layout
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { useLogoUrl, useSiteSettings } from '@/hooks/useSiteSettings';
 
 const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
@@ -13,6 +14,9 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const logoUrl = useLogoUrl();
+  const { get } = useSiteSettings();
+  const companyName = get('company_name', 'Upnex It');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -50,8 +54,8 @@ const Navbar = () => {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-background/95 backdrop-blur-xl shadow-soft border-b border-primary/15' : 'bg-background border-b border-border/60'}`}>
         <div className="container mx-auto flex h-14 lg:h-16 items-center justify-between px-4 lg:px-8">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Upnex It Logo" className="w-9 h-9 lg:w-10 lg:h-10 rounded-xl object-contain" />
-            <span className="text-xl lg:text-[22px] font-extrabold tracking-tight text-foreground">Upnex <span className="text-gradient">It</span></span>
+            <img src={logoUrl} alt={`${companyName} Logo`} className="w-9 h-9 lg:w-10 lg:h-10 rounded-xl object-contain" />
+            <span className="text-xl lg:text-[22px] font-extrabold tracking-tight text-foreground">{companyName.split(' ')[0]} <span className="text-gradient">{companyName.split(' ').slice(1).join(' ') || 'It'}</span></span>
           </Link>
 
           {/* Desktop */}
@@ -121,8 +125,8 @@ const Navbar = () => {
           <div className="flex flex-col h-full">
             <div className="p-5 border-b border-border">
               <div className="flex items-center gap-2">
-                <img src="/logo.png" alt="Upnex It Logo" className="w-8 h-8 rounded-xl object-contain" />
-                <span className="text-lg font-extrabold tracking-tight text-foreground">Upnex <span className="text-gradient">It</span></span>
+                <img src={logoUrl} alt={`${companyName} Logo`} className="w-8 h-8 rounded-xl object-contain" />
+                <span className="text-lg font-extrabold tracking-tight text-foreground">{companyName.split(' ')[0]} <span className="text-gradient">{companyName.split(' ').slice(1).join(' ') || 'It'}</span></span>
               </div>
             </div>
 

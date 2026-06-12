@@ -5,6 +5,7 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, 
 import { useMemo, useState, useCallback } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { motion, AnimatePresence } from 'framer-motion';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 const bdDistrictGeoUrl = "/bd-districts.json";
@@ -198,17 +199,16 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-5">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl md:text-2xl font-bold text-foreground">ড্যাশবোর্ড</h1>
-          <p className="text-xs text-muted-foreground mt-0.5">সামগ্রিক পরিসংখ্যান ও বিশ্লেষণ</p>
-        </div>
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/60">
-          <Activity className="h-3 w-3 text-emerald-500" />
-          <span className="text-[11px] font-medium text-emerald-600">Live</span>
-        </div>
-      </div>
+      <AdminPageHeader
+        title="ড্যাশবোর্ড"
+        subtitle="সামগ্রিক পরিসংখ্যান ও বিশ্লেষণ"
+        actions={
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/60">
+            <Activity className="h-3 w-3 text-emerald-500 animate-pulse" />
+            <span className="text-[11px] font-semibold text-emerald-700">Live</span>
+          </div>
+        }
+      />
 
       {/* Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">

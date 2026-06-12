@@ -13,6 +13,7 @@ import {
 import { format, formatDistanceToNow } from 'date-fns';
 import { bn } from 'date-fns/locale';
 import { motion, AnimatePresence } from 'framer-motion';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 const QUICK_REPLIES = [
   {
@@ -155,25 +156,18 @@ const Messages = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/10">
-              <MessageSquare className="h-5.5 w-5.5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-xl md:text-2xl font-extrabold text-foreground tracking-tight">মেসেজ ইনবক্স</h1>
-              <p className="text-xs text-muted-foreground mt-0.5">সকল মেসেজ এখানে ম্যানেজ করুন</p>
-            </div>
-          </div>
-
-          {unreadCount > 0 && (
+      <AdminPageHeader
+        title="মেসেজ ইনবক্স"
+        subtitle="সকল মেসেজ এখানে ম্যানেজ করুন"
+        actions={
+          unreadCount > 0 ? (
             <Button variant="outline" size="sm" onClick={() => markAllRead.mutate()} className="gap-2 text-xs">
               <CheckCheck className="h-3.5 w-3.5" /> সকল পঠিত করুন
             </Button>
-          )}
-        </div>
+          ) : null
+        }
+      />
+      <div className="flex flex-col gap-5">
 
         {/* Stats Cards */}
         <div className="grid grid-cols-3 gap-3">

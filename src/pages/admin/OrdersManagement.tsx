@@ -14,6 +14,7 @@ import { format, formatDistanceToNow } from 'date-fns';
 import { bn } from 'date-fns/locale';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 const QUICK_REPLIES = [
   { label: '📦 অর্ডার গ্রহণ', icon: '📦', body: `প্রিয় গ্রাহক,\n\nআপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে এবং আমাদের ডেভেলপমেন্ট টিম এটি প্রসেস করা শুরু করেছে।\n\nআমরা আপনার প্রজেক্টের মান নিশ্চিত করতে প্রতিটি ধাপে সর্বোচ্চ যত্ন নিই। শীঘ্রই আপনাকে প্রগ্রেস আপডেট জানানো হবে।\n\nযেকোনো প্রশ্ন থাকলে নির্দ্বিধায় জানাবেন।\n\nশুভেচ্ছান্তে,\nUpnexIT টিম` },
@@ -156,27 +157,18 @@ const OrdersManagement = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/10">
-              <ShoppingCart className="h-5.5 w-5.5 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-xl md:text-2xl font-extrabold text-foreground tracking-tight">অর্ডার ম্যানেজমেন্ট</h1>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                সকল অর্ডার এখানে ম্যানেজ করুন
-              </p>
-            </div>
-          </div>
-
-          {unreadCount > 0 && (
+      <AdminPageHeader
+        title="অর্ডার ম্যানেজমেন্ট"
+        subtitle="সকল অর্ডার এখানে ম্যানেজ করুন"
+        actions={
+          unreadCount > 0 ? (
             <Button variant="outline" size="sm" onClick={() => markAllRead.mutate()} className="gap-2 text-xs">
               <CheckCheck className="h-3.5 w-3.5" /> সকল পঠিত করুন
             </Button>
-          )}
-        </div>
+          ) : null
+        }
+      />
+      <div className="flex flex-col gap-5">
 
         {/* Stats Cards */}
         <div className="grid grid-cols-3 gap-3">
