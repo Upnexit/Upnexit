@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Plus, Trash2, Edit2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 interface TeamMember {
   id: string;
@@ -108,9 +109,11 @@ const TeamManagement = () => {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <h1 className="text-xl md:text-2xl font-bold text-foreground">টিম ম্যানেজমেন্ট</h1>
-        <Dialog open={open} onOpenChange={(v) => { if (!v) resetForm(); setOpen(v); }}>
+      <AdminPageHeader
+        title="টিম ম্যানেজমেন্ট"
+        subtitle="ফাউন্ডার ও টিম সদস্যদের পরিচালনা করুন"
+        actions={
+          <Dialog open={open} onOpenChange={(v) => { if (!v) resetForm(); setOpen(v); }}>
           <DialogTrigger asChild>
             <Button variant="hero" className="gap-2"><Plus className="h-4 w-4" /> নতুন সদস্য</Button>
           </DialogTrigger>
@@ -135,8 +138,9 @@ const TeamManagement = () => {
               </Button>
             </form>
           </DialogContent>
-        </Dialog>
-      </div>
+          </Dialog>
+        }
+      />
 
       {isLoading ? (
         <div className="text-center py-12 text-muted-foreground">লোড হচ্ছে...</div>
