@@ -7,6 +7,7 @@ import {
   FileText, Briefcase, TrendingUp,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLogoUrl, useSiteSettings } from '@/hooks/useSiteSettings';
 
 // Each nav item gets a unique, professional gradient — used for active state,
 // icon swatches, and mobile bottom-nav highlight.
@@ -40,6 +41,9 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
+  const logoUrl = useLogoUrl();
+  const { get } = useSiteSettings();
+  const companyName = get('company_name', 'Upnex IT');
 
   useEffect(() => {
     if (!loading && (!user || !isAdmin)) navigate('/admin/login');
@@ -81,13 +85,13 @@ const AdminLayout = () => {
         <div className="relative px-4 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid hsla(145,40%,50%,0.15)' }}>
           <div className="flex items-center gap-2.5 overflow-hidden">
             <div className="relative shrink-0">
-              <img src="/logo.png" alt="Logo" className="w-9 h-9 rounded-xl shadow-md ring-1 ring-white/20" />
+              <img src={logoUrl} alt={`${companyName} logo`} className="w-9 h-9 rounded-xl shadow-md ring-1 ring-white/20 object-contain bg-white/5" />
               <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-300 border-2 border-[hsl(148,45%,18%)]" />
             </div>
             <AnimatePresence>
               {!collapsed && (
                 <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} className="overflow-hidden whitespace-nowrap">
-                  <span className="font-bold text-white text-sm tracking-tight">Upnex IT</span>
+                  <span className="font-bold text-white text-sm tracking-tight">{companyName}</span>
                   <p className="text-[10px] text-white/50">Admin Panel</p>
                 </motion.div>
               )}
@@ -156,7 +160,7 @@ const AdminLayout = () => {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="Logo" className="w-8 h-8 rounded-lg ring-1 ring-white/20" />
+            <img src={logoUrl} alt={`${companyName} logo`} className="w-8 h-8 rounded-lg ring-1 ring-white/20 object-contain bg-white/5" />
             <span className="font-bold text-sm text-white tracking-tight">Admin Panel</span>
           </div>
           <div className="flex items-center gap-1">
