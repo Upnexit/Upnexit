@@ -6,6 +6,7 @@ import { Menu, Globe, Home, Briefcase, Users, MessageSquare, User, LogIn, Layout
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { useLogoUrl, useSiteSettings } from '@/hooks/useSiteSettings';
 
 const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
@@ -13,6 +14,9 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const logoUrl = useLogoUrl();
+  const { get } = useSiteSettings();
+  const companyName = get('company_name', 'Upnex It');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);

@@ -1,9 +1,13 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Facebook, Twitter, Linkedin, Instagram, ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useLogoUrl, useSiteSettings } from '@/hooks/useSiteSettings';
 
 const Footer = () => {
   const { t, lang } = useLanguage();
+  const logoUrl = useLogoUrl();
+  const { get } = useSiteSettings();
+  const companyName = get('company_name', 'Upnex It');
 
   return (
     <footer className="gradient-dark text-white relative overflow-hidden pb-20 lg:pb-0">
@@ -16,8 +20,8 @@ const Footer = () => {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <img src="/logo.png" alt="Upnex It Logo" className="w-9 h-9 rounded-xl object-contain" />
-              <span className="text-xl font-extrabold tracking-tight">Upnex It</span>
+              <img src={logoUrl} alt={`${companyName} Logo`} className="w-9 h-9 rounded-xl object-contain" />
+              <span className="text-xl font-extrabold tracking-tight">{companyName}</span>
             </div>
             <p className="text-sm text-white/80 leading-relaxed mb-6 max-w-xs">{t.footer.desc}</p>
             <div className="flex gap-3">
