@@ -168,10 +168,10 @@ const Dashboard = () => {
   }, [allCountries, searchQuery]);
 
   const cards = [
-    { label: 'আজকের ভিজিটর', value: todayViews, icon: Eye, accent: 'hsl(145,63%,38%)', bg: 'hsl(145,50%,96%)' },
-    { label: 'মোট ভিজিটর', value: uniqueVisitors, icon: TrendingUp, accent: 'hsl(200,70%,50%)', bg: 'hsl(200,60%,96%)' },
-    { label: 'টিম সদস্য', value: teamCount ?? 0, icon: Users, accent: 'hsl(46,92%,50%)', bg: 'hsl(46,80%,95%)' },
-    { label: 'অপঠিত মেসেজ', value: unreadCount ?? 0, icon: MessageSquare, accent: 'hsl(0,70%,58%)', bg: 'hsl(0,60%,96%)' },
+    { label: 'আজকের ভিজিটর', value: todayViews,        icon: Eye,            gradient: 'linear-gradient(135deg, #10b981 0%, #0ea5e9 100%)', shadow: '#10b98155' },
+    { label: 'মোট ভিজিটর',    value: uniqueVisitors,    icon: TrendingUp,     gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)', shadow: '#8b5cf655' },
+    { label: 'টিম সদস্য',      value: teamCount ?? 0,    icon: Users,          gradient: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)', shadow: '#f59e0b55' },
+    { label: 'অপঠিত মেসেজ',   value: unreadCount ?? 0,  icon: MessageSquare,  gradient: 'linear-gradient(135deg, #f43f5e 0%, #ec4899 100%)', shadow: '#f43f5e55' },
   ];
 
   const getColor = (count: number) => {
@@ -218,16 +218,22 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.06 }}
-            className="bg-white rounded-2xl border border-[hsl(220,14%,92%)] p-4 md:p-5 hover:shadow-md transition-shadow duration-300 group"
+            className="relative rounded-2xl p-4 md:p-5 overflow-hidden group transition-all duration-300 hover:-translate-y-0.5"
+            style={{
+              background: card.gradient,
+              boxShadow: `0 10px 30px -10px ${card.shadow}, 0 4px 12px -4px ${card.shadow}`,
+            }}
           >
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: card.bg }}>
-                <card.icon className="h-4 w-4" style={{ color: card.accent }} />
+            {/* Decorative glow */}
+            <div className="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-white/10 blur-2xl pointer-events-none" />
+            <div className="relative flex items-center justify-between mb-3">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/20 backdrop-blur-sm ring-1 ring-white/30">
+                <card.icon className="h-4 w-4 text-white" />
               </div>
-              <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground/40 group-hover:text-primary transition-colors" />
+              <ArrowUpRight className="h-3.5 w-3.5 text-white/60 group-hover:text-white transition-colors" />
             </div>
-            <p className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">{card.value}</p>
-            <p className="text-[11px] text-muted-foreground mt-1 font-medium">{card.label}</p>
+            <p className="relative text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow-sm">{card.value}</p>
+            <p className="relative text-[11px] text-white/85 mt-1 font-medium">{card.label}</p>
           </motion.div>
         ))}
       </div>
