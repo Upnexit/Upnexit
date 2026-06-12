@@ -228,24 +228,21 @@ const SidebarNavItem = ({ item, currentPath, collapsed }: { item: typeof navItem
       style={
         active
           ? {
-              background: item.gradient,
+              background: 'hsla(0,0%,100%,0.06)',
               color: 'white',
-              boxShadow: '0 6px 20px hsla(0,0%,0%,0.25), inset 0 1px 0 hsla(0,0%,100%,0.2)',
             }
-          : { color: 'hsla(145,30%,85%,0.75)' }
+          : { color: 'hsla(145,30%,90%,0.92)' }
       }
       onMouseEnter={(e) => {
         if (!active) {
-          e.currentTarget.style.background = item.gradient;
-          e.currentTarget.style.opacity = '0.92';
+          e.currentTarget.style.background = 'hsla(0,0%,100%,0.05)';
           e.currentTarget.style.color = 'white';
         }
       }}
       onMouseLeave={(e) => {
         if (!active) {
           e.currentTarget.style.background = 'transparent';
-          e.currentTarget.style.opacity = '1';
-          e.currentTarget.style.color = 'hsla(145,30%,85%,0.75)';
+          e.currentTarget.style.color = 'hsla(145,30%,90%,0.92)';
         }
       }}
     >
@@ -256,10 +253,31 @@ const SidebarNavItem = ({ item, currentPath, collapsed }: { item: typeof navItem
           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         />
       )}
-      <item.icon className={`h-[17px] w-[17px] shrink-0 transition-transform duration-200 ${!active ? 'group-hover:scale-110' : ''}`} />
+      {/* Colorful gradient icon swatch — the only colored element */}
+      <span
+        className={`relative flex items-center justify-center h-8 w-8 rounded-lg shrink-0 transition-all duration-300 ease-out
+          group-hover:scale-110 group-hover:-rotate-3 group-active:scale-95
+          ${active ? 'scale-105 ring-2 ring-white/40' : ''}`}
+        style={{
+          background: item.gradient,
+          boxShadow: active
+            ? '0 8px 22px -4px hsla(0,0%,0%,0.45), inset 0 1px 0 hsla(0,0%,100%,0.3)'
+            : '0 2px 8px -2px hsla(0,0%,0%,0.3), inset 0 1px 0 hsla(0,0%,100%,0.18)',
+        }}
+      >
+        <item.icon className="h-[15px] w-[15px] text-white drop-shadow-sm" />
+        {active && (
+          <span className="absolute -inset-1 rounded-lg bg-white/0 animate-pulse" style={{ boxShadow: `0 0 16px 2px ${'rgba(255,255,255,0.25)'}` }} />
+        )}
+      </span>
       <AnimatePresence>
         {!collapsed && (
-          <motion.span initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} className="flex-1 truncate">
+          <motion.span
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -6 }}
+            className={`flex-1 truncate transition-all duration-200 ${active ? 'font-semibold text-white' : 'group-hover:translate-x-0.5'}`}
+          >
             {item.label}
           </motion.span>
         )}
