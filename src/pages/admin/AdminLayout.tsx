@@ -186,7 +186,7 @@ const AdminLayout = () => {
               <Link key={item.path} to={item.path} className="flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-xl min-w-0">
                 <div
                   className="p-1.5 rounded-lg transition-all"
-                  style={active ? { background: 'hsla(0,0%,100%,0.15)', backdropFilter: 'blur(8px)' } : {}}
+                  style={active ? { background: item.gradient, boxShadow: '0 4px 12px hsla(0,0%,0%,0.25)' } : {}}
                 >
                   <item.icon className="h-4 w-4" style={{ color: active ? 'white' : 'hsla(145,30%,80%,0.5)' }} />
                 </div>
