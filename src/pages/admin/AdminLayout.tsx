@@ -68,11 +68,11 @@ const AdminLayout = () => {
   return (
     <div className="min-h-screen bg-[hsl(140,8%,96%)] flex">
       {/* ──── Desktop Sidebar ──── */}
-      <motion.aside
-        layout
-        className={`${sidebarW} flex-col fixed h-full z-50 hidden lg:flex overflow-hidden transition-all duration-300`}
+      <aside
+        className={`${sidebarW} flex-col fixed h-full z-50 hidden lg:flex overflow-hidden transition-[width] duration-300 ease-out`}
         style={{
           background: 'linear-gradient(170deg, hsl(145,55%,28%) 0%, hsl(150,50%,22%) 40%, hsl(148,45%,18%) 100%)',
+          scrollbarGutter: 'stable',
         }}
       >
         {/* Decorative glow overlays */}
@@ -106,7 +106,7 @@ const AdminLayout = () => {
         </div>
 
         {/* Nav */}
-        <nav className="relative flex-1 px-2.5 py-3 space-y-4 overflow-y-auto">
+        <nav className="relative flex-1 px-2.5 py-3 space-y-4 overflow-y-auto" style={{ scrollbarGutter: 'stable' }}>
           {sections.map((sec, si) => (
             <div key={si}>
               <AnimatePresence>
@@ -148,7 +148,7 @@ const AdminLayout = () => {
             </AnimatePresence>
           </button>
         </div>
-      </motion.aside>
+      </aside>
 
       {/* ──── Mobile Top Header ──── */}
       <div

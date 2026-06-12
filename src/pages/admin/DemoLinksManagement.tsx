@@ -9,10 +9,10 @@ import { motion } from 'framer-motion';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 const demoServices = [
-  { key: 'school', label: 'School Management', icon: '🏫', color: 'bg-blue-500/10 text-blue-600' },
-  { key: 'hospital', label: 'Hospital Management', icon: '🏥', color: 'bg-red-500/10 text-red-600' },
-  { key: 'custom', label: 'Custom Software', icon: '⚙️', color: 'bg-purple-500/10 text-purple-600' },
-  { key: 'web', label: 'Web Application', icon: '🌐', color: 'bg-primary/10 text-primary' },
+  { key: 'school',   label: 'School Management',   icon: '🏫', gradient: 'linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)' },
+  { key: 'hospital', label: 'Hospital Management', icon: '🏥', gradient: 'linear-gradient(135deg, #ef4444 0%, #f97316 100%)' },
+  { key: 'custom',   label: 'Custom Software',     icon: '⚙️', gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)' },
+  { key: 'web',      label: 'Web Application',     icon: '🌐', gradient: 'linear-gradient(135deg, #10b981 0%, #0ea5e9 100%)' },
 ];
 
 const DemoLinksManagement = () => {
@@ -78,10 +78,15 @@ const DemoLinksManagement = () => {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
-            className="bg-background rounded-2xl border border-border p-5 shadow-sm space-y-4"
+            className="relative bg-background rounded-2xl border border-border p-5 shadow-sm space-y-4 overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
           >
+            <span className="absolute inset-x-0 top-0 h-1.5" style={{ background: service.gradient }} />
+            <span className="absolute -top-10 -right-10 w-28 h-28 rounded-full opacity-10" style={{ background: service.gradient, filter: 'blur(10px)' }} />
             <div className="flex items-center gap-3">
-              <span className={`w-10 h-10 rounded-xl ${service.color} flex items-center justify-center text-lg`}>
+              <span
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-lg ring-1 ring-white/30 text-white shadow-md"
+                style={{ background: service.gradient }}
+              >
                 {service.icon}
               </span>
               <h3 className="font-bold text-foreground">{service.label}</h3>

@@ -172,39 +172,31 @@ const OrdersManagement = () => {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="relative overflow-hidden rounded-xl border border-primary/15 bg-gradient-to-br from-primary/8 to-primary/3 p-3.5">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[10px] uppercase tracking-wider font-bold text-primary/60 mb-1">মোট অর্ডার</p>
-                <p className="text-2xl font-black text-primary">{orders.length}</p>
+          {[
+            { label: 'মোট অর্ডার', value: orders.length, icon: Package, gradient: 'linear-gradient(135deg, #f97316 0%, #f43f5e 100%)', glow: '#f9731655' },
+            { label: 'নতুন', value: unreadCount, icon: Clock, gradient: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)', glow: '#f59e0b55' },
+            { label: 'পঠিত', value: readCount, icon: Eye, gradient: 'linear-gradient(135deg, #10b981 0%, #0ea5e9 100%)', glow: '#10b98155' },
+          ].map((s) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -2 }}
+              className="relative overflow-hidden rounded-2xl p-4 text-white shadow-lg ring-1 ring-white/20"
+              style={{ background: s.gradient, boxShadow: `0 12px 30px -10px ${s.glow}` }}
+            >
+              <div className="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-white/10 blur-2xl" />
+              <div className="relative flex items-center justify-between">
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider font-bold text-white/85 mb-1">{s.label}</p>
+                  <p className="text-2xl font-black text-white drop-shadow-sm">{s.value}</p>
+                </div>
+                <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm ring-1 ring-white/30 flex items-center justify-center">
+                  <s.icon className="h-5 w-5 text-white" />
+                </div>
               </div>
-              <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Package className="h-4.5 w-4.5 text-primary" />
-              </div>
-            </div>
-          </div>
-          <div className="relative overflow-hidden rounded-xl border border-amber-500/15 bg-gradient-to-br from-amber-500/8 to-amber-500/3 p-3.5">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[10px] uppercase tracking-wider font-bold text-amber-600/60 mb-1">নতুন</p>
-                <p className="text-2xl font-black text-amber-600">{unreadCount}</p>
-              </div>
-              <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                <Clock className="h-4.5 w-4.5 text-amber-600" />
-              </div>
-            </div>
-          </div>
-          <div className="relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-muted/80 to-muted/30 p-3.5">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground/60 mb-1">পঠিত</p>
-                <p className="text-2xl font-black text-muted-foreground">{readCount}</p>
-              </div>
-              <div className="w-9 h-9 rounded-xl bg-muted flex items-center justify-center">
-                <Eye className="h-4.5 w-4.5 text-muted-foreground" />
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
