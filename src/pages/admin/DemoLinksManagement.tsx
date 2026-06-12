@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Save, Link2, User, Lock, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 const demoServices = [
   { key: 'school', label: 'School Management', icon: '🏫', color: 'bg-blue-500/10 text-blue-600' },
@@ -60,20 +61,15 @@ const DemoLinksManagement = () => {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-            <Link2 className="h-5 w-5 text-primary" />
-          </div>
-          <div>
-            <h1 className="text-xl md:text-2xl font-bold text-foreground">ডেমো লিংক ম্যানেজমেন্ট</h1>
-            <p className="text-xs text-muted-foreground">সার্ভিস ডেমো ক্রেডেনশিয়াল পরিচালনা</p>
-          </div>
-        </div>
-        <Button variant="hero" className="gap-2 w-full sm:w-auto" onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}>
-          <Save className="h-4 w-4" /> {saveMutation.isPending ? 'সংরক্ষণ হচ্ছে...' : 'সংরক্ষণ করুন'}
-        </Button>
-      </div>
+      <AdminPageHeader
+        title="ডেমো লিংক ম্যানেজমেন্ট"
+        subtitle="সার্ভিস ডেমো ক্রেডেনশিয়াল পরিচালনা"
+        actions={
+          <Button variant="hero" className="gap-2" onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}>
+            <Save className="h-4 w-4" /> {saveMutation.isPending ? 'সংরক্ষণ হচ্ছে...' : 'সংরক্ষণ করুন'}
+          </Button>
+        }
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {demoServices.map((service, i) => (

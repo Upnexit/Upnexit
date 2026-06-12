@@ -8,6 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Plus, Trash2, Edit2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Switch } from '@/components/ui/switch';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 const ServicesManagement = () => {
   const { toast } = useToast();
@@ -73,9 +74,11 @@ const ServicesManagement = () => {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <h1 className="text-xl md:text-2xl font-bold text-foreground">সার্ভিস ম্যানেজমেন্ট</h1>
-        <Dialog open={open} onOpenChange={(v) => { if (!v) resetForm(); setOpen(v); }}>
+      <AdminPageHeader
+        title="সার্ভিস ম্যানেজমেন্ট"
+        subtitle="আপনার সার্ভিস তালিকা এবং বিবরণ পরিচালনা করুন"
+        actions={
+          <Dialog open={open} onOpenChange={(v) => { if (!v) resetForm(); setOpen(v); }}>
           <DialogTrigger asChild>
             <Button variant="hero" className="gap-2"><Plus className="h-4 w-4" /> নতুন সার্ভিস</Button>
           </DialogTrigger>
@@ -98,8 +101,9 @@ const ServicesManagement = () => {
               </Button>
             </form>
           </DialogContent>
-        </Dialog>
-      </div>
+          </Dialog>
+        }
+      />
 
       {isLoading ? (
         <div className="text-center py-12 text-muted-foreground">লোড হচ্ছে...</div>

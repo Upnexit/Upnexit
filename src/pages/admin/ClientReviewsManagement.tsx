@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { Plus, Trash2, Star, Save, Upload } from 'lucide-react';
 
 const ClientReviewsManagement = () => {
@@ -101,7 +102,10 @@ const ClientReviewsManagement = () => {
 
   return (
     <div>
-      <h1 className="text-xl md:text-2xl font-bold text-foreground mb-6">ক্লায়েন্ট রিভিউ ম্যানেজমেন্ট</h1>
+      <AdminPageHeader
+        title="ক্লায়েন্ট রিভিউ ম্যানেজমেন্ট"
+        subtitle="হোমপেজে দেখানো ক্লায়েন্ট রিভিউ ও লোগো পরিচালনা করুন"
+      />
 
       {/* Add new */}
       <div className="bg-background rounded-2xl border border-border p-4 md:p-6 shadow-sm mb-6">

@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { Loader2, Plus, Trash2, RefreshCw, TrendingUp, TrendingDown, Minus } from 'lucide-react';
@@ -66,16 +67,16 @@ const SeoRankings = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-3 items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">SEO Rank Tracker</h1>
-          <p className="text-sm text-muted-foreground">Weekly position monitoring on DuckDuckGo for upnexit.pro.bd</p>
-        </div>
-        <Button onClick={runNow} disabled={running}>
-          {running ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <RefreshCw className="h-4 w-4 mr-2" />}
-          Run check now
-        </Button>
-      </div>
+      <AdminPageHeader
+        title="SEO Rank Tracker"
+        subtitle="Weekly position monitoring on DuckDuckGo for upnexit.pro.bd"
+        actions={
+          <Button onClick={runNow} disabled={running}>
+            {running ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <RefreshCw className="h-4 w-4 mr-2" />}
+            Run check now
+          </Button>
+        }
+      />
 
       <Card className="p-4">
         <div className="flex gap-2">
