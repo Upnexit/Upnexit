@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import {
@@ -8,20 +8,25 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Each nav item gets a unique, professional gradient — used for active state,
+// icon swatches, and mobile bottom-nav highlight.
 const navItems = [
-  { label: 'ড্যাশবোর্ড', shortLabel: 'Home', icon: LayoutDashboard, path: '/admin' },
-  { label: 'অর্ডার সমূহ', shortLabel: 'Orders', icon: ShoppingCart, path: '/admin/orders' },
-  { label: 'মেসেজ ইনবক্স', shortLabel: 'Inbox', icon: MessageSquare, path: '/admin/messages' },
-  { label: 'টিম ম্যানেজমেন্ট', shortLabel: 'Team', icon: Users, path: '/admin/team' },
-  { label: 'সার্ভিস সমূহ', shortLabel: 'Service', icon: Wrench, path: '/admin/services' },
-  { label: 'ক্লায়েন্ট রিভিউ', shortLabel: 'Review', icon: Star, path: '/admin/reviews' },
-  { label: 'ডেমো লিংক', shortLabel: 'Demo', icon: Link2, path: '/admin/demo-links' },
-  { label: 'ব্লগ ম্যানেজমেন্ট', shortLabel: 'Blog', icon: FileText, path: '/admin/blog' },
-  { label: 'পোর্টফোলিও', shortLabel: 'Portfolio', icon: Briefcase, path: '/admin/portfolio' },
-  { label: 'SEO র‍্যাঙ্কিং', shortLabel: 'SEO', icon: TrendingUp, path: '/admin/seo' },
-  { label: 'চ্যাটবট সেটআপ', shortLabel: 'Chatbot', icon: MessageCircle, path: '/admin/chatbot' },
-  { label: 'সাইট সেটিংস', shortLabel: 'Settings', icon: Settings, path: '/admin/settings' },
+  { label: 'ড্যাশবোর্ড',       shortLabel: 'Home',      icon: LayoutDashboard, path: '/admin',            gradient: 'linear-gradient(135deg, #10b981 0%, #0ea5e9 100%)' },
+  { label: 'অর্ডার সমূহ',       shortLabel: 'Orders',    icon: ShoppingCart,    path: '/admin/orders',     gradient: 'linear-gradient(135deg, #f97316 0%, #f43f5e 100%)' },
+  { label: 'মেসেজ ইনবক্স',     shortLabel: 'Inbox',     icon: MessageSquare,   path: '/admin/messages',   gradient: 'linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)' },
+  { label: 'টিম ম্যানেজমেন্ট',  shortLabel: 'Team',      icon: Users,           path: '/admin/team',       gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)' },
+  { label: 'সার্ভিস সমূহ',      shortLabel: 'Service',   icon: Wrench,          path: '/admin/services',   gradient: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)' },
+  { label: 'ক্লায়েন্ট রিভিউ',   shortLabel: 'Review',    icon: Star,            path: '/admin/reviews',    gradient: 'linear-gradient(135deg, #eab308 0%, #f59e0b 100%)' },
+  { label: 'ডেমো লিংক',         shortLabel: 'Demo',      icon: Link2,           path: '/admin/demo-links', gradient: 'linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)' },
+  { label: 'ব্লগ ম্যানেজমেন্ট',  shortLabel: 'Blog',      icon: FileText,        path: '/admin/blog',       gradient: 'linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)' },
+  { label: 'পোর্টফোলিও',        shortLabel: 'Portfolio', icon: Briefcase,       path: '/admin/portfolio',  gradient: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)' },
+  { label: 'SEO র‍্যাঙ্কিং',    shortLabel: 'SEO',       icon: TrendingUp,      path: '/admin/seo',        gradient: 'linear-gradient(135deg, #84cc16 0%, #16a34a 100%)' },
+  { label: 'চ্যাটবট সেটআপ',    shortLabel: 'Chatbot',   icon: MessageCircle,   path: '/admin/chatbot',    gradient: 'linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%)' },
+  { label: 'সাইট সেটিংস',      shortLabel: 'Settings',  icon: Settings,        path: '/admin/settings',   gradient: 'linear-gradient(135deg, #64748b 0%, #334155 100%)' },
 ];
+
+export type AdminNavItem = typeof navItems[number];
+export { navItems };
 
 const sections = [
   { title: 'প্রধান মেনু', items: navItems.slice(0, 3) },
@@ -197,7 +202,15 @@ const AdminLayout = () => {
       {/* ──── Main content ──── */}
       <main className={`flex-1 ${mainML} pt-16 pb-24 lg:pt-0 lg:pb-0 transition-all duration-300`}>
         <div className="p-4 md:p-6 lg:p-8 max-w-7xl">
-          <Outlet />
+          <Suspense
+            fallback={
+              <div className="flex items-center justify-center py-24">
+                <div className="w-7 h-7 border-[3px] border-primary border-t-transparent rounded-full animate-spin" />
+              </div>
+            }
+          >
+            <Outlet />
+          </Suspense>
         </div>
       </main>
     </div>
@@ -215,25 +228,23 @@ const SidebarNavItem = ({ item, currentPath, collapsed }: { item: typeof navItem
       style={
         active
           ? {
-              background: 'hsla(0,0%,100%,0.15)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
+              background: item.gradient,
               color: 'white',
-              boxShadow: '0 2px 12px hsla(145,60%,20%,0.25), inset 0 1px 0 hsla(0,0%,100%,0.1)',
+              boxShadow: '0 6px 20px hsla(0,0%,0%,0.25), inset 0 1px 0 hsla(0,0%,100%,0.2)',
             }
           : { color: 'hsla(145,30%,85%,0.75)' }
       }
       onMouseEnter={(e) => {
         if (!active) {
-          e.currentTarget.style.background = 'hsla(0,0%,100%,0.08)';
-          e.currentTarget.style.backdropFilter = 'blur(8px)';
+          e.currentTarget.style.background = item.gradient;
+          e.currentTarget.style.opacity = '0.92';
           e.currentTarget.style.color = 'white';
         }
       }}
       onMouseLeave={(e) => {
         if (!active) {
           e.currentTarget.style.background = 'transparent';
-          e.currentTarget.style.backdropFilter = 'none';
+          e.currentTarget.style.opacity = '1';
           e.currentTarget.style.color = 'hsla(145,30%,85%,0.75)';
         }
       }}
