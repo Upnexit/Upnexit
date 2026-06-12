@@ -31,10 +31,9 @@ const BlogPost = () => {
     enabled: !!post?.id,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('blog_comments')
-        .select('*')
+        .from('blog_comments_public' as any)
+        .select('id, blog_post_id, name, comment, rating, created_at')
         .eq('blog_post_id', post!.id)
-        .eq('is_approved', true)
         .order('created_at', { ascending: false });
       if (error) throw error;
       return data;
