@@ -148,8 +148,23 @@ const TeamManagement = () => {
         <div className="text-center py-12 text-muted-foreground">কোনো টিম সদস্য নেই। উপরে "নতুন সদস্য" বাটনে ক্লিক করুন।</div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {members.map((m) => (
-            <div key={m.id} className="bg-background rounded-2xl border border-border p-3 md:p-4 flex gap-3 md:gap-4 items-center shadow-sm">
+          {members.map((m, i) => {
+            const gradients = [
+              'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
+              'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
+              'linear-gradient(135deg, #f97316 0%, #f43f5e 100%)',
+              'linear-gradient(135deg, #10b981 0%, #0ea5e9 100%)',
+              'linear-gradient(135deg, #eab308 0%, #f59e0b 100%)',
+              'linear-gradient(135deg, #ec4899 0%, #6366f1 100%)',
+            ];
+            const grad = gradients[i % gradients.length];
+            return (
+            <div
+              key={m.id}
+              className="relative bg-background rounded-2xl border border-border p-3 md:p-4 flex gap-3 md:gap-4 items-center shadow-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              <span className="absolute inset-y-0 left-0 w-1.5" style={{ background: grad }} />
+              <span className="absolute -top-8 -right-8 w-20 h-20 rounded-full opacity-10" style={{ background: grad, filter: 'blur(8px)' }} />
               <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-muted overflow-hidden shrink-0">
                 {m.image_url ? (
                   <img src={m.image_url} alt={m.name} className="w-full h-full object-cover" />
@@ -169,7 +184,8 @@ const TeamManagement = () => {
                 <Button variant="ghost" size="icon" onClick={() => deleteMutation.mutate(m.id)} className="text-destructive"><Trash2 className="h-4 w-4" /></Button>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
