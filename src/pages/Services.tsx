@@ -222,12 +222,20 @@ const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="flex items-start gap-2.5 sm:gap-4 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-background border border-border hover:border-primary/20 hover:shadow-card transition-all group"
+                whileHover={{ y: -4 }}
+                className="relative flex items-start gap-2.5 sm:gap-4 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-background border border-border hover:border-transparent hover:shadow-elevated transition-all group overflow-hidden"
               >
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/8 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
-                  <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                {/* animated gradient border */}
+                <div className={`absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br ${f.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`} style={{ padding: '1.5px', WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)', WebkitMaskComposite: 'xor', maskComposite: 'exclude' as any }} />
+                {/* shimmer sweep */}
+                <div className="absolute -inset-x-1 -top-1 bottom-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute top-0 -left-1/2 h-full w-1/2 bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-12 translate-x-0 group-hover:translate-x-[300%] transition-transform duration-1000" />
                 </div>
-                <div>
+                <div className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br ${f.gradient} flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500 shadow-md overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <CheckCircle2 className="relative h-4 w-4 sm:h-5 sm:w-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.4} />
+                </div>
+                <div className="relative">
                   <h4 className="font-bold text-sm sm:text-base text-foreground mb-0.5 sm:mb-1">{f.title}</h4>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
                 </div>
