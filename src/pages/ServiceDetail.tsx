@@ -709,6 +709,27 @@ const ServiceDetail = () => {
   const IconComponent = data.icon;
   const isBn = lang === 'bn';
 
+  // Gradient palette per service for hero
+  const heroGradientMap: Record<string, { gradient: string; glow: string }> = {
+    school:   { gradient: 'from-emerald-400 via-teal-500 to-cyan-600', glow: 'shadow-[0_15px_40px_-10px_rgba(20,184,166,0.6)]' },
+    hospital: { gradient: 'from-rose-400 via-pink-500 to-red-500',    glow: 'shadow-[0_15px_40px_-10px_rgba(244,63,94,0.6)]' },
+    custom:   { gradient: 'from-indigo-500 via-violet-500 to-fuchsia-500', glow: 'shadow-[0_15px_40px_-10px_rgba(139,92,246,0.6)]' },
+    web:      { gradient: 'from-sky-400 via-blue-500 to-indigo-600', glow: 'shadow-[0_15px_40px_-10px_rgba(59,130,246,0.6)]' },
+    graphics: { gradient: 'from-amber-400 via-orange-500 to-pink-500', glow: 'shadow-[0_15px_40px_-10px_rgba(249,115,22,0.6)]' },
+    boosting: { gradient: 'from-lime-400 via-green-500 to-emerald-600', glow: 'shadow-[0_15px_40px_-10px_rgba(16,185,129,0.6)]' },
+  };
+  const heroG = heroGradientMap[serviceKey as string] || heroGradientMap.custom;
+  const cycleGradients = [
+    'from-emerald-400 via-teal-500 to-cyan-600',
+    'from-amber-400 via-orange-500 to-rose-500',
+    'from-violet-400 via-purple-500 to-fuchsia-500',
+    'from-sky-400 via-blue-500 to-indigo-600',
+    'from-rose-400 via-pink-500 to-red-500',
+    'from-lime-400 via-green-500 to-emerald-600',
+    'from-cyan-400 via-sky-500 to-blue-600',
+    'from-fuchsia-400 via-pink-500 to-rose-500',
+  ];
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       <SEOHead
@@ -825,8 +846,9 @@ const ServiceDetail = () => {
             <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="relative hidden md:block">
               <div className="bg-background rounded-3xl border border-border p-6 md:p-8 shadow-elevated relative overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-1.5 gradient-accent rounded-t-3xl" />
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-5">
-                  <IconComponent className="h-7 w-7 text-primary" />
+                <div className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${heroG.gradient} ${heroG.glow} flex items-center justify-center mb-5 overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <IconComponent className="relative h-7 w-7 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" strokeWidth={2.2} />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   {[
@@ -836,8 +858,11 @@ const ServiceDetail = () => {
                     { icon: Award, num: '24/7', label: isBn ? 'সাপোর্ট' : 'Support' },
                   ].map((item, i) => (
                     <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4 + i * 0.1 }}
-                      className="p-4 rounded-2xl text-center border bg-muted/30 border-border/50 hover:border-primary/20 transition-all">
-                      <item.icon className="h-5 w-5 mx-auto mb-2 text-primary" />
+                      className="p-4 rounded-2xl text-center border bg-muted/30 border-border/50 hover:border-primary/20 transition-all group">
+                      <div className={`w-9 h-9 mx-auto mb-2 rounded-xl bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} flex items-center justify-center shadow-md overflow-hidden relative group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                        <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                        <item.icon className="relative h-5 w-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.2} />
+                      </div>
                       <p className="text-xl font-black text-foreground">{item.num}</p>
                       <p className="text-xs text-muted-foreground font-medium">{item.label}</p>
                     </motion.div>
@@ -869,9 +894,11 @@ const ServiceDetail = () => {
             ].map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
                 whileHover={{ y: -4 }}
-                className="group p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-muted/50 border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300">
-                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-300">
-                  <item.icon className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
+                className="group p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-muted/50 border border-border hover:border-transparent hover:shadow-elevated transition-all duration-300 relative overflow-hidden">
+                <div className={`absolute -top-3 left-2 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500 pointer-events-none`} />
+                <div className={`relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500 shadow-md overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <item.icon className="relative h-3.5 w-3.5 sm:h-5 sm:w-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.3} />
                 </div>
                 <h4 className="font-bold text-sm sm:text-sm text-foreground mb-0.5">{item.title}</h4>
                 <p className="text-xs sm:text-xs text-muted-foreground leading-snug">{item.desc}</p>
@@ -910,8 +937,10 @@ const ServiceDetail = () => {
                   backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
                   backgroundSize: '10px 10px',
                 }} />
-                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
-                  <feature.icon className="h-4 w-4 sm:h-6 sm:w-6 text-primary" />
+                <div className={`absolute -top-3 left-2 w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500 pointer-events-none`} />
+                <div className={`relative w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} flex items-center justify-center mb-2 sm:mb-4 group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500 shadow-md overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <feature.icon className="relative h-4 w-4 sm:h-6 sm:w-6 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.3} />
                 </div>
                 <h3 className="font-bold text-sm sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
                 <p className="text-xs sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
@@ -946,8 +975,9 @@ const ServiceDetail = () => {
                   <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
                     whileHover={{ x: 4 }}
                     className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 rounded-lg sm:rounded-xl bg-muted/60 border border-border/50 hover:border-primary/20 hover:shadow-card transition-all group">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
-                      <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
+                    <div className={`relative w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} flex items-center justify-center shrink-0 shadow-md overflow-hidden group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                      <CheckCircle2 className="relative h-3 w-3 sm:h-4 sm:w-4 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.5} />
                     </div>
                     <span className="text-sm sm:text-sm font-semibold text-foreground">{b}</span>
                   </motion.div>
@@ -971,8 +1001,9 @@ const ServiceDetail = () => {
                   ].map((p, i) => (
                     <motion.div key={i} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                       className="flex items-center gap-2.5 sm:gap-4 group">
-                      <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl gradient-accent flex items-center justify-center text-primary-foreground font-black text-[10px] sm:text-sm shadow-glow shrink-0">
-                        {p.step}
+                      <div className={`relative w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} flex items-center justify-center text-white font-black text-[10px] sm:text-sm shadow-lg shrink-0 overflow-hidden group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                        <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                        <span className="relative drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]">{p.step}</span>
                       </div>
                       <div>
                         <h4 className="font-bold text-sm sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>

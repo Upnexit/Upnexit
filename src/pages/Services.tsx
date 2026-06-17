@@ -12,12 +12,12 @@ const Services = () => {
   const { t, lang } = useLanguage();
 
   const services = [
-    { icon: GraduationCap, ...t.services.school, accent: 'bg-primary/8 text-primary border-primary/15', gradient: 'from-primary/10 to-primary/5', slug: 'school' },
-    { icon: HeartPulse, ...t.services.hospital, accent: 'bg-destructive/8 text-destructive border-destructive/15', gradient: 'from-destructive/10 to-destructive/5', slug: 'hospital' },
-    { icon: Code, ...t.services.custom, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', gradient: 'from-secondary/15 to-secondary/5', slug: 'custom' },
-    { icon: Globe, ...t.services.web, accent: 'bg-primary/8 text-primary border-primary/15', gradient: 'from-primary/10 to-primary/5', slug: 'web' },
-    { icon: Palette, ...t.services.graphics, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', gradient: 'from-secondary/15 to-secondary/5', slug: 'graphics', comingSoon: true },
-    { icon: Megaphone, ...t.services.boosting, accent: 'bg-destructive/8 text-destructive border-destructive/15', gradient: 'from-destructive/10 to-destructive/5', slug: 'boosting', comingSoon: true },
+    { icon: GraduationCap, ...t.services.school, iconGradient: 'from-emerald-400 via-teal-500 to-cyan-600', glow: 'shadow-[0_10px_30px_-10px_rgba(20,184,166,0.55)]', gradient: 'from-emerald-50/60 to-cyan-50/30', slug: 'school' },
+    { icon: HeartPulse, ...t.services.hospital, iconGradient: 'from-rose-400 via-pink-500 to-red-500', glow: 'shadow-[0_10px_30px_-10px_rgba(244,63,94,0.55)]', gradient: 'from-rose-50/60 to-pink-50/30', slug: 'hospital' },
+    { icon: Code, ...t.services.custom, iconGradient: 'from-indigo-500 via-violet-500 to-fuchsia-500', glow: 'shadow-[0_10px_30px_-10px_rgba(139,92,246,0.55)]', gradient: 'from-violet-50/60 to-fuchsia-50/30', slug: 'custom' },
+    { icon: Globe, ...t.services.web, iconGradient: 'from-sky-400 via-blue-500 to-indigo-600', glow: 'shadow-[0_10px_30px_-10px_rgba(59,130,246,0.55)]', gradient: 'from-sky-50/60 to-indigo-50/30', slug: 'web' },
+    { icon: Palette, ...t.services.graphics, iconGradient: 'from-amber-400 via-orange-500 to-pink-500', glow: 'shadow-[0_10px_30px_-10px_rgba(249,115,22,0.55)]', gradient: 'from-amber-50/60 to-pink-50/30', slug: 'graphics', comingSoon: true },
+    { icon: Megaphone, ...t.services.boosting, iconGradient: 'from-lime-400 via-green-500 to-emerald-600', glow: 'shadow-[0_10px_30px_-10px_rgba(16,185,129,0.55)]', gradient: 'from-lime-50/60 to-emerald-50/30', slug: 'boosting', comingSoon: true },
   ];
 
   const process = lang === 'bn'
@@ -35,15 +35,23 @@ const Services = () => {
       ];
 
   const techStack = [
-    { icon: Monitor, label: 'React / Next.js' },
-    { icon: Smartphone, label: 'React Native' },
-    { icon: Database, label: 'PostgreSQL' },
-    { icon: Cloud, label: 'Cloud Hosting' },
-    { icon: Shield, label: 'Security First' },
-    { icon: Layers, label: 'Scalable Architecture' },
+    { icon: Monitor, label: 'React / Next.js', gradient: 'from-sky-400 via-blue-500 to-indigo-600', glow: 'shadow-[0_10px_30px_-10px_rgba(59,130,246,0.6)]' },
+    { icon: Smartphone, label: 'React Native', gradient: 'from-cyan-400 via-sky-500 to-blue-600', glow: 'shadow-[0_10px_30px_-10px_rgba(14,165,233,0.6)]' },
+    { icon: Database, label: 'PostgreSQL', gradient: 'from-violet-400 via-purple-500 to-fuchsia-500', glow: 'shadow-[0_10px_30px_-10px_rgba(168,85,247,0.6)]' },
+    { icon: Cloud, label: 'Cloud Hosting', gradient: 'from-amber-400 via-orange-500 to-rose-500', glow: 'shadow-[0_10px_30px_-10px_rgba(249,115,22,0.6)]' },
+    { icon: Shield, label: 'Security First', gradient: 'from-emerald-400 via-teal-500 to-cyan-600', glow: 'shadow-[0_10px_30px_-10px_rgba(20,184,166,0.6)]' },
+    { icon: Layers, label: 'Scalable Architecture', gradient: 'from-rose-400 via-pink-500 to-fuchsia-500', glow: 'shadow-[0_10px_30px_-10px_rgba(236,72,153,0.6)]' },
   ];
 
-  const features = lang === 'bn'
+  const featureGradients = [
+    'from-emerald-400 via-teal-500 to-cyan-600',
+    'from-amber-400 via-orange-500 to-rose-500',
+    'from-violet-400 via-purple-500 to-fuchsia-500',
+    'from-sky-400 via-blue-500 to-indigo-600',
+    'from-rose-400 via-pink-500 to-red-500',
+    'from-lime-400 via-green-500 to-emerald-600',
+  ];
+  const featuresBase = lang === 'bn'
     ? [
         { title: 'রেসপন্সিভ ডিজাইন', desc: 'সব ডিভাইসে পারফেক্ট দেখায়' },
         { title: 'দ্রুত পারফরম্যান্স', desc: 'অপটিমাইজড কোড ও ক্যাশিং' },
@@ -60,6 +68,13 @@ const Services = () => {
         { title: 'API Integration', desc: 'Connect third-party services' },
         { title: 'Real-time Updates', desc: 'Live data synchronization' },
       ];
+  const features = featuresBase.map((f, i) => ({ ...f, gradient: featureGradients[i % featureGradients.length] }));
+  const processGradients = [
+    'from-emerald-400 via-teal-500 to-cyan-600',
+    'from-amber-400 via-orange-500 to-rose-500',
+    'from-violet-400 via-purple-500 to-fuchsia-500',
+    'from-sky-400 via-blue-500 to-indigo-600',
+  ];
 
   return (
     <div className="min-h-screen pb-0 overflow-x-hidden">
@@ -166,8 +181,11 @@ const Services = () => {
                   {!(s as any).comingSoon && <div className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
                     <ArrowUpRight className="h-5 w-5 text-primary" />
                   </div>}
-                  <div className={`w-10 h-10 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl ${s.accent} border flex items-center justify-center mb-3 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <s.icon className="h-5 w-5 sm:h-8 sm:w-8" />
+                  {/* Glow halo */}
+                  <div className={`absolute -top-2 left-2 sm:left-4 w-14 h-14 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-gradient-to-br ${s.iconGradient} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500 pointer-events-none`} />
+                  <div className={`relative w-10 h-10 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br ${s.iconGradient} ${s.glow} flex items-center justify-center mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500 overflow-hidden`}>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                    <s.icon className="relative h-5 w-5 sm:h-8 sm:w-8 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.2} />
                   </div>
                   <h3 className="font-bold text-sm sm:text-lg md:text-xl mb-1 sm:mb-3 text-foreground group-hover:text-primary transition-colors">{s.title}</h3>
                   <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed hidden sm:block">{s.desc}</p>
@@ -204,12 +222,20 @@ const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="flex items-start gap-2.5 sm:gap-4 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-background border border-border hover:border-primary/20 hover:shadow-card transition-all group"
+                whileHover={{ y: -4 }}
+                className="relative flex items-start gap-2.5 sm:gap-4 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-background border border-border hover:border-transparent hover:shadow-elevated transition-all group overflow-hidden"
               >
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-primary/8 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
-                  <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                {/* animated gradient border */}
+                <div className={`absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br ${f.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`} style={{ padding: '1.5px', WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)', WebkitMaskComposite: 'xor', maskComposite: 'exclude' as any }} />
+                {/* shimmer sweep */}
+                <div className="absolute -inset-x-1 -top-1 bottom-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute top-0 -left-1/2 h-full w-1/2 bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-12 translate-x-0 group-hover:translate-x-[300%] transition-transform duration-1000" />
                 </div>
-                <div>
+                <div className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br ${f.gradient} flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500 shadow-md overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <CheckCircle2 className="relative h-4 w-4 sm:h-5 sm:w-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.4} />
+                </div>
+                <div className="relative">
                   <h4 className="font-bold text-sm sm:text-base text-foreground mb-0.5 sm:mb-1">{f.title}</h4>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
                 </div>
@@ -249,11 +275,15 @@ const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.12 }}
-                className="relative bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-border hover:border-primary/20 transition-all hover:shadow-elevated group"
+                whileHover={{ y: -6 }}
+                className="relative bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-border hover:border-transparent transition-all hover:shadow-elevated group overflow-hidden"
               >
+                {/* Glow halo */}
+                <div className={`absolute -top-3 left-3 w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br ${processGradients[i % processGradients.length]} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500 pointer-events-none`} />
                 {/* Step number circle */}
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full gradient-accent flex items-center justify-center mb-3 sm:mb-5 text-primary-foreground font-black text-sm sm:text-lg shadow-glow relative z-10">
-                  {p.step}
+                <div className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br ${processGradients[i % processGradients.length]} flex items-center justify-center mb-3 sm:mb-5 text-white font-black text-sm sm:text-lg shadow-lg z-10 overflow-hidden group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <span className="relative drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]">{p.step}</span>
                 </div>
                 <h3 className="font-bold text-sm sm:text-lg text-foreground mb-1 sm:mb-2 group-hover:text-primary transition-colors">{p.title}</h3>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
@@ -285,20 +315,23 @@ const Services = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07, type: 'spring', stiffness: 200 }}
                 whileHover={{ scale: 1.08, y: -6 }}
-                className="flex flex-col items-center gap-2 sm:gap-3 p-4 sm:p-6 rounded-2xl bg-background border border-border hover:border-primary/25 hover:shadow-elevated transition-all group relative overflow-hidden"
+                className="flex flex-col items-center gap-2 sm:gap-3 p-4 sm:p-6 rounded-2xl bg-background border border-border hover:border-transparent hover:shadow-elevated transition-all group relative overflow-hidden"
               >
-                {/* Subtle glow on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{
-                  background: 'radial-gradient(circle at center, hsl(var(--primary) / 0.06), transparent 70%)'
-                }} />
-                <motion.div 
-                  className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/15 transition-colors relative z-10"
-                  whileHover={{ rotate: [0, -5, 5, 0] }}
-                  transition={{ duration: 0.4 }}
+                {/* Gradient glow */}
+                <div className={`absolute -top-8 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full bg-gradient-to-br ${tech.gradient} opacity-0 group-hover:opacity-40 blur-3xl transition-opacity duration-500 pointer-events-none`} />
+                {/* Shimmer sweep */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden rounded-2xl">
+                  <div className="absolute top-0 -left-1/2 h-full w-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:translate-x-[400%] transition-transform duration-1000" />
+                </div>
+                <motion.div
+                  className={`relative w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br ${tech.gradient} ${tech.glow} flex items-center justify-center z-10 overflow-hidden`}
+                  whileHover={{ rotate: [0, -8, 8, -4, 0] }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <tech.icon className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <tech.icon className="relative h-5 w-5 sm:h-7 sm:w-7 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" strokeWidth={2.2} />
                 </motion.div>
-                <span className="text-xs sm:text-xs font-bold text-foreground text-center relative z-10">{tech.label}</span>
+                <span className={`text-xs sm:text-xs font-bold text-center relative z-10 bg-gradient-to-br ${tech.gradient} bg-clip-text text-transparent`}>{tech.label}</span>
               </motion.div>
             ))}
           </div>
