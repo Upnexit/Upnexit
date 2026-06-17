@@ -315,20 +315,23 @@ const Services = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07, type: 'spring', stiffness: 200 }}
                 whileHover={{ scale: 1.08, y: -6 }}
-                className="flex flex-col items-center gap-2 sm:gap-3 p-4 sm:p-6 rounded-2xl bg-background border border-border hover:border-primary/25 hover:shadow-elevated transition-all group relative overflow-hidden"
+                className="flex flex-col items-center gap-2 sm:gap-3 p-4 sm:p-6 rounded-2xl bg-background border border-border hover:border-transparent hover:shadow-elevated transition-all group relative overflow-hidden"
               >
-                {/* Subtle glow on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{
-                  background: 'radial-gradient(circle at center, hsl(var(--primary) / 0.06), transparent 70%)'
-                }} />
-                <motion.div 
-                  className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/15 transition-colors relative z-10"
-                  whileHover={{ rotate: [0, -5, 5, 0] }}
-                  transition={{ duration: 0.4 }}
+                {/* Gradient glow */}
+                <div className={`absolute -top-8 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full bg-gradient-to-br ${tech.gradient} opacity-0 group-hover:opacity-40 blur-3xl transition-opacity duration-500 pointer-events-none`} />
+                {/* Shimmer sweep */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden rounded-2xl">
+                  <div className="absolute top-0 -left-1/2 h-full w-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:translate-x-[400%] transition-transform duration-1000" />
+                </div>
+                <motion.div
+                  className={`relative w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br ${tech.gradient} ${tech.glow} flex items-center justify-center z-10 overflow-hidden`}
+                  whileHover={{ rotate: [0, -8, 8, -4, 0] }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <tech.icon className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <tech.icon className="relative h-5 w-5 sm:h-7 sm:w-7 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" strokeWidth={2.2} />
                 </motion.div>
-                <span className="text-xs sm:text-xs font-bold text-foreground text-center relative z-10">{tech.label}</span>
+                <span className={`text-xs sm:text-xs font-bold text-center relative z-10 bg-gradient-to-br ${tech.gradient} bg-clip-text text-transparent`}>{tech.label}</span>
               </motion.div>
             ))}
           </div>
