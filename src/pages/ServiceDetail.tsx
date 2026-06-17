@@ -972,6 +972,8 @@ const ServiceDetail = () => {
           </div>
         </section>
 
+        <ServiceClientReviews serviceKey={comingSoonKey as ServiceReviewKey} />
+
         <Footer />
       </div>
     );
