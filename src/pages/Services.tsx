@@ -60,7 +60,7 @@ const Services = () => {
       ];
 
   return (
-    <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
+    <div className="min-h-screen pb-0 overflow-x-hidden">
       <SEOHead
         title="Software Services - Upnex It | সফটওয়্যার সেবাসমূহ"
         description="Upnex It offers School Management Software, Hospital Management Software, Custom Software Development & Web Applications in Bangladesh. Get a free demo today."
@@ -135,11 +135,6 @@ const Services = () => {
             {t.services.subtitle}
           </motion.p>
         </div>
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 100" fill="none" className="w-full h-auto">
-            <path d="M0 100L48 90C96 80 192 60 288 50C384 40 480 40 576 45C672 50 768 60 864 65C960 70 1056 70 1152 60C1248 50 1344 30 1392 20L1440 10V100H0Z" fill="hsl(var(--background))" />
-          </svg>
-        </div>
       </section>
 
       {/* Services Grid - Enhanced */}
@@ -180,7 +175,7 @@ const Services = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="py-10 md:py-20 bg-muted/30">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -263,7 +258,7 @@ const Services = () => {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-10 md:py-20 bg-muted/30">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

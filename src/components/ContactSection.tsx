@@ -45,7 +45,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="section-padding bg-muted/40 relative">
+    <section id="contact" className="section-padding relative bg-gradient-to-b from-background via-secondary/15 to-background">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

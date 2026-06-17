@@ -566,7 +566,7 @@ const ServiceDetail = () => {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Service not found</h1>
           <Link to="/"><Button variant="default">Go Home</Button></Link>
@@ -579,7 +579,7 @@ const ServiceDetail = () => {
   const isBn = lang === 'bn';
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden">
       <SEOHead
         title={`${data.title} ${data.titleHighlight} - Upnex It | Best ${serviceKey === 'school' ? 'School ERP' : serviceKey === 'hospital' ? 'HMS' : serviceKey === 'web' ? 'Web Development' : 'Custom Software'} Bangladesh`}
         description={data.description}
@@ -751,7 +751,7 @@ const ServiceDetail = () => {
       </section>
 
       {/* ═══════════════════ FEATURES GRID ═══════════════════ */}
-      <section className="py-8 sm:py-16 md:py-20 bg-muted/30 relative">
+      <section className="py-8 sm:py-16 md:py-20 relative">
         <div className="absolute inset-0 opacity-[0.02]" style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
           backgroundSize: '28px 28px'
@@ -859,7 +859,7 @@ const ServiceDetail = () => {
       </section>
 
       {/* ═══════════════════ PRICING ═══════════════════ */}
-      <section className="py-8 sm:py-16 md:py-20 bg-muted/30 relative overflow-hidden">
+      <section className="py-8 sm:py-16 md:py-20 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, hsl(145 63% 42% / 0.06), transparent 70%)' }} />
           <div className="absolute -bottom-32 -left-32 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, hsl(46 92% 55% / 0.08), transparent 70%)' }} />
