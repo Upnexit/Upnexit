@@ -1439,6 +1439,8 @@ const ServiceDetail = () => {
         </div>
       </section>
 
+      <ServiceClientReviews serviceKey={serviceKey as ServiceReviewKey} />
+
       {/* Demo Credentials Modal */}
       <Dialog open={demoOpen} onOpenChange={setDemoOpen}>
         <DialogContent className="max-w-[320px] sm:max-w-sm rounded-2xl sm:rounded-3xl p-0 overflow-hidden border border-border shadow-2xl">
