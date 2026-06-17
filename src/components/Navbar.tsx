@@ -64,7 +64,10 @@ const Navbar = () => {
               style={{ fontFamily: '"Kaushan Script", "Brush Script MT", cursive', fontWeight: 700 }}
             >
               {companyName.split(' ')[0]}{' '}
-              <span className="text-gradient">
+              <span
+                className="text-gradient"
+                style={{ fontFamily: '"Kaushan Script", "Brush Script MT", cursive', fontWeight: 700 }}
+              >
                 {companyName.split(' ').slice(1).join(' ') || 'It'}
               </span>
             </span>
@@ -147,7 +150,10 @@ const Navbar = () => {
                   style={{ fontFamily: '"Kaushan Script", "Brush Script MT", cursive', fontWeight: 700 }}
                 >
                   {companyName.split(' ')[0]}{' '}
-                  <span className="text-gradient">
+                  <span
+                    className="text-gradient"
+                    style={{ fontFamily: '"Kaushan Script", "Brush Script MT", cursive', fontWeight: 700 }}
+                  >
                     {companyName.split(' ').slice(1).join(' ') || 'It'}
                   </span>
                 </span>
