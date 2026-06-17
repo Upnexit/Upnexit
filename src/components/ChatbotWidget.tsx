@@ -471,6 +471,13 @@ const ChatbotWidget = () => {
                   <p className="text-[9px] opacity-80">{lang === 'bn' ? 'AI দ্বারা চালিত' : 'AI-powered'}</p>
                 </div>
               </div>
+              <button
+                onClick={() => setOpen(false)}
+                className="w-8 h-8 rounded-full hover:bg-primary-foreground/15 active:bg-primary-foreground/25 flex items-center justify-center transition-colors"
+                aria-label="Close chat"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
 
             {/* Messages */}
