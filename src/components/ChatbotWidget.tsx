@@ -80,9 +80,27 @@ const ChatbotWidget = () => {
   }, [open, lang]);
 
   // Speech-to-Text - continuous mode
-  const startListening = useCallback(() => {
+  const startListening = useCallback(async () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) return;
+    if (!SpeechRecognition) {
+      alert(lang === 'bn'
+        ? 'আপনার ব্রাউজার ভয়েস ইনপুট সাপোর্ট করে না। Chrome বা Edge ব্যবহার করুন।'
+        : 'Your browser does not support voice input. Please use Chrome or Edge.');
+      return;
+    }
+
+    // Request mic permission explicitly so the browser shows the prompt
+    try {
+      if (navigator.mediaDevices?.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach((t) => t.stop());
+      }
+    } catch (err) {
+      alert(lang === 'bn'
+        ? 'মাইক্রোফোন অনুমতি প্রয়োজন। অনুগ্রহ করে ব্রাউজার সেটিংস থেকে মাইক্রোফোন অ্যাক্সেস চালু করুন।'
+        : 'Microphone permission is required. Please enable microphone access in your browser settings.');
+      return;
+    }
 
     const recognition = new SpeechRecognition();
     recognition.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
@@ -147,14 +165,24 @@ const ChatbotWidget = () => {
 
     recognition.onerror = (e: any) => {
       if (e.error === 'no-speech' || e.error === 'aborted') return;
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+        alert(lang === 'bn'
+          ? 'মাইক্রোফোন ব্লক করা আছে। ব্রাউজার অ্যাড্রেস বারের পাশের আইকন থেকে মাইক্রোফোন অনুমতি দিন।'
+          : 'Microphone is blocked. Allow microphone access from the icon in the browser address bar.');
+      }
       setIsListening(false);
       isListeningRef.current = false;
     };
 
     recognitionRef.current = recognition;
     isListeningRef.current = true;
-    recognition.start();
-    setIsListening(true);
+    try {
+      recognition.start();
+      setIsListening(true);
+    } catch (err) {
+      isListeningRef.current = false;
+      setIsListening(false);
+    }
   }, [lang, isTyping]);
 
   const stopListening = useCallback(() => {
