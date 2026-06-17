@@ -12,12 +12,12 @@ const Services = () => {
   const { t, lang } = useLanguage();
 
   const services = [
-    { icon: GraduationCap, ...t.services.school, accent: 'bg-primary/8 text-primary border-primary/15', gradient: 'from-primary/10 to-primary/5', slug: 'school' },
-    { icon: HeartPulse, ...t.services.hospital, accent: 'bg-destructive/8 text-destructive border-destructive/15', gradient: 'from-destructive/10 to-destructive/5', slug: 'hospital' },
-    { icon: Code, ...t.services.custom, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', gradient: 'from-secondary/15 to-secondary/5', slug: 'custom' },
-    { icon: Globe, ...t.services.web, accent: 'bg-primary/8 text-primary border-primary/15', gradient: 'from-primary/10 to-primary/5', slug: 'web' },
-    { icon: Palette, ...t.services.graphics, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', gradient: 'from-secondary/15 to-secondary/5', slug: 'graphics', comingSoon: true },
-    { icon: Megaphone, ...t.services.boosting, accent: 'bg-destructive/8 text-destructive border-destructive/15', gradient: 'from-destructive/10 to-destructive/5', slug: 'boosting', comingSoon: true },
+    { icon: GraduationCap, ...t.services.school, iconGradient: 'from-emerald-400 via-teal-500 to-cyan-600', glow: 'shadow-[0_10px_30px_-10px_rgba(20,184,166,0.55)]', gradient: 'from-emerald-50/60 to-cyan-50/30', slug: 'school' },
+    { icon: HeartPulse, ...t.services.hospital, iconGradient: 'from-rose-400 via-pink-500 to-red-500', glow: 'shadow-[0_10px_30px_-10px_rgba(244,63,94,0.55)]', gradient: 'from-rose-50/60 to-pink-50/30', slug: 'hospital' },
+    { icon: Code, ...t.services.custom, iconGradient: 'from-indigo-500 via-violet-500 to-fuchsia-500', glow: 'shadow-[0_10px_30px_-10px_rgba(139,92,246,0.55)]', gradient: 'from-violet-50/60 to-fuchsia-50/30', slug: 'custom' },
+    { icon: Globe, ...t.services.web, iconGradient: 'from-sky-400 via-blue-500 to-indigo-600', glow: 'shadow-[0_10px_30px_-10px_rgba(59,130,246,0.55)]', gradient: 'from-sky-50/60 to-indigo-50/30', slug: 'web' },
+    { icon: Palette, ...t.services.graphics, iconGradient: 'from-amber-400 via-orange-500 to-pink-500', glow: 'shadow-[0_10px_30px_-10px_rgba(249,115,22,0.55)]', gradient: 'from-amber-50/60 to-pink-50/30', slug: 'graphics', comingSoon: true },
+    { icon: Megaphone, ...t.services.boosting, iconGradient: 'from-lime-400 via-green-500 to-emerald-600', glow: 'shadow-[0_10px_30px_-10px_rgba(16,185,129,0.55)]', gradient: 'from-lime-50/60 to-emerald-50/30', slug: 'boosting', comingSoon: true },
   ];
 
   const process = lang === 'bn'
@@ -35,15 +35,23 @@ const Services = () => {
       ];
 
   const techStack = [
-    { icon: Monitor, label: 'React / Next.js' },
-    { icon: Smartphone, label: 'React Native' },
-    { icon: Database, label: 'PostgreSQL' },
-    { icon: Cloud, label: 'Cloud Hosting' },
-    { icon: Shield, label: 'Security First' },
-    { icon: Layers, label: 'Scalable Architecture' },
+    { icon: Monitor, label: 'React / Next.js', gradient: 'from-sky-400 via-blue-500 to-indigo-600', glow: 'shadow-[0_10px_30px_-10px_rgba(59,130,246,0.6)]' },
+    { icon: Smartphone, label: 'React Native', gradient: 'from-cyan-400 via-sky-500 to-blue-600', glow: 'shadow-[0_10px_30px_-10px_rgba(14,165,233,0.6)]' },
+    { icon: Database, label: 'PostgreSQL', gradient: 'from-violet-400 via-purple-500 to-fuchsia-500', glow: 'shadow-[0_10px_30px_-10px_rgba(168,85,247,0.6)]' },
+    { icon: Cloud, label: 'Cloud Hosting', gradient: 'from-amber-400 via-orange-500 to-rose-500', glow: 'shadow-[0_10px_30px_-10px_rgba(249,115,22,0.6)]' },
+    { icon: Shield, label: 'Security First', gradient: 'from-emerald-400 via-teal-500 to-cyan-600', glow: 'shadow-[0_10px_30px_-10px_rgba(20,184,166,0.6)]' },
+    { icon: Layers, label: 'Scalable Architecture', gradient: 'from-rose-400 via-pink-500 to-fuchsia-500', glow: 'shadow-[0_10px_30px_-10px_rgba(236,72,153,0.6)]' },
   ];
 
-  const features = lang === 'bn'
+  const featureGradients = [
+    'from-emerald-400 via-teal-500 to-cyan-600',
+    'from-amber-400 via-orange-500 to-rose-500',
+    'from-violet-400 via-purple-500 to-fuchsia-500',
+    'from-sky-400 via-blue-500 to-indigo-600',
+    'from-rose-400 via-pink-500 to-red-500',
+    'from-lime-400 via-green-500 to-emerald-600',
+  ];
+  const featuresBase = lang === 'bn'
     ? [
         { title: 'রেসপন্সিভ ডিজাইন', desc: 'সব ডিভাইসে পারফেক্ট দেখায়' },
         { title: 'দ্রুত পারফরম্যান্স', desc: 'অপটিমাইজড কোড ও ক্যাশিং' },
@@ -60,6 +68,13 @@ const Services = () => {
         { title: 'API Integration', desc: 'Connect third-party services' },
         { title: 'Real-time Updates', desc: 'Live data synchronization' },
       ];
+  const features = featuresBase.map((f, i) => ({ ...f, gradient: featureGradients[i % featureGradients.length] }));
+  const processGradients = [
+    'from-emerald-400 via-teal-500 to-cyan-600',
+    'from-amber-400 via-orange-500 to-rose-500',
+    'from-violet-400 via-purple-500 to-fuchsia-500',
+    'from-sky-400 via-blue-500 to-indigo-600',
+  ];
 
   return (
     <div className="min-h-screen pb-0 overflow-x-hidden">
