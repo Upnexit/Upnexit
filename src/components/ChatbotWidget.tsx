@@ -89,47 +89,14 @@ const ChatbotWidget = () => {
       return;
     }
 
-    // Secure-context check (mic only works on https or localhost)
-    if (typeof window !== 'undefined' && !window.isSecureContext) {
-      alert(lang === 'bn'
-        ? 'ভয়েস ইনপুট ব্যবহার করতে HTTPS সংযোগ দরকার।'
-        : 'Voice input requires a secure (HTTPS) connection.');
-      return;
-    }
-
-    // Check current permission state; if already denied, guide the user once.
-    try {
-      const perm: any = await (navigator as any).permissions?.query?.({ name: 'microphone' as PermissionName });
-      if (perm?.state === 'denied') {
-        alert(lang === 'bn'
-          ? 'মাইক্রোফোন ব্লক করা আছে। ব্রাউজার অ্যাড্রেস বারের 🔒/🎤 আইকনে ক্লিক করে "Allow microphone" সিলেক্ট করুন, তারপর আবার চেষ্টা করুন।'
-          : 'Microphone is blocked. Click the 🔒/🎤 icon in the browser address bar, choose "Allow microphone", then try again.');
-        return;
-      }
-    } catch {
-      /* Permissions API not available — proceed to getUserMedia */
-    }
-
-    // Trigger the native browser permission prompt on first click.
+    // Trigger the native browser permission prompt directly from the user gesture.
+    // No awaits before getUserMedia — preserves the gesture chain so Chrome shows the prompt.
     try {
       if (!navigator.mediaDevices?.getUserMedia) throw new Error('no-mediaDevices');
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       stream.getTracks().forEach((t) => t.stop());
-    } catch (err: any) {
-      const name = err?.name || '';
-      if (name === 'NotAllowedError' || name === 'SecurityError') {
-        alert(lang === 'bn'
-          ? 'মাইক্রোফোন অনুমতি দেওয়া হয়নি। পপ-আপে "Allow" চাপুন বা অ্যাড্রেস বারের আইকন থেকে অনুমতি দিন।'
-          : 'Microphone permission was not granted. Please click "Allow" in the popup, or grant access from the address-bar icon.');
-      } else if (name === 'NotFoundError' || name === 'OverconstrainedError') {
-        alert(lang === 'bn'
-          ? 'কোনো মাইক্রোফোন পাওয়া যায়নি। ডিভাইসে মাইক্রোফোন সংযুক্ত আছে কিনা চেক করুন।'
-          : 'No microphone was found. Please make sure a microphone is connected.');
-      } else {
-        alert(lang === 'bn'
-          ? 'মাইক্রোফোন চালু করা যায়নি। আবার চেষ্টা করুন।'
-          : 'Could not start the microphone. Please try again.');
-      }
+    } catch {
+      // Silent fail — no extra instructions. User can click again to retry the prompt.
       return;
     }
 
@@ -196,11 +163,6 @@ const ChatbotWidget = () => {
 
     recognition.onerror = (e: any) => {
       if (e.error === 'no-speech' || e.error === 'aborted') return;
-      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
-        alert(lang === 'bn'
-          ? 'মাইক্রোফোন ব্লক করা আছে। ব্রাউজার অ্যাড্রেস বারের পাশের আইকন থেকে মাইক্রোফোন অনুমতি দিন।'
-          : 'Microphone is blocked. Allow microphone access from the icon in the browser address bar.');
-      }
       setIsListening(false);
       isListeningRef.current = false;
     };
