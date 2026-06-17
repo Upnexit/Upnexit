@@ -204,7 +204,6 @@
    marked with [data-reveal]. Variants via data-reveal="up|left|right|zoom".
    ============================================================ */
 [data-reveal],
-main section,
 .reveal-section {
   opacity: 0;
   transform: translateY(40px);
@@ -219,7 +218,6 @@ main section,
 [data-reveal="fade"]  { transform: none; }
 
 [data-reveal].is-visible,
-main section.is-visible,
 .reveal-section.is-visible {
   opacity: 1;
   transform: translate(0, 0) scale(1);
@@ -227,7 +225,6 @@ main section.is-visible,
 
 @media (prefers-reduced-motion: reduce) {
   [data-reveal],
-  main section,
   .reveal-section {
     opacity: 1 !important;
     transform: none !important;
