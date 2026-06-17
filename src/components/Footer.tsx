@@ -1,7 +1,45 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Facebook, Twitter, Linkedin, Instagram, ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Linkedin, Instagram, ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLogoUrl, useSiteSettings } from '@/hooks/useSiteSettings';
+
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.83a8.16 8.16 0 0 0 4.77 1.52V6.91a4.85 4.85 0 0 1-1.84-.22z"/>
+  </svg>
+);
+
+const SOCIALS = [
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/share/1BGxtCwBud/',
+    Icon: Facebook,
+    bg: 'bg-[#1877F2]',
+    ring: 'hover:shadow-[0_8px_24px_-6px_rgba(24,119,242,0.7)]',
+  },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/upnexit/?hl=en',
+    Icon: Instagram,
+    bg: 'bg-[linear-gradient(135deg,#feda75_0%,#fa7e1e_25%,#d62976_55%,#962fbf_80%,#4f5bd5_100%)]',
+    ring: 'hover:shadow-[0_8px_24px_-6px_rgba(214,41,118,0.7)]',
+  },
+  {
+    label: 'LinkedIn',
+    href: '#',
+    Icon: Linkedin,
+    bg: 'bg-[#0A66C2]',
+    ring: 'hover:shadow-[0_8px_24px_-6px_rgba(10,102,194,0.7)]',
+  },
+  {
+    label: 'TikTok',
+    href: '#',
+    Icon: TikTokIcon,
+    bg: 'bg-[#010101] relative',
+    ring: 'hover:shadow-[0_8px_24px_-6px_rgba(37,244,238,0.6)]',
+    tiktok: true,
+  },
+];
 
 const Footer = () => {
   const { t, lang } = useLanguage();
@@ -29,19 +67,24 @@ const Footer = () => {
             </div>
             <p className="text-sm text-white/80 leading-relaxed mb-6 max-w-xs">{t.footer.desc}</p>
             <div className="flex gap-3">
-              {[
-                { Icon: Facebook, href: 'https://www.facebook.com/share/1BGxtCwBud/' },
-                { Icon: Twitter, href: '#' },
-                { Icon: Linkedin, href: '#' },
-                { Icon: Instagram, href: 'https://www.instagram.com/upnexit/?hl=en' },
-              ].map((item, i) => {
-                const labels = ['Facebook', 'Twitter', 'LinkedIn', 'Instagram'];
-                return (
-                  <a key={i} href={item.href} target="_blank" rel="noopener noreferrer" aria-label={`Upnex It on ${labels[i]}`} className="w-9 h-9 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center hover:bg-accent/20 hover:border-accent/40 transition-all duration-300 group">
-                    <item.Icon className="h-4 w-4 text-white/85 group-hover:text-accent transition-colors duration-300" />
-                  </a>
-                );
-              })}
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Upnex It on ${s.label}`}
+                  className={`relative w-10 h-10 rounded-xl ${s.bg} flex items-center justify-center text-white transition-all duration-300 hover:-translate-y-0.5 ${s.ring} ring-1 ring-white/15`}
+                >
+                  {s.tiktok && (
+                    <>
+                      <span aria-hidden className="absolute inset-0 rounded-xl translate-x-[1.5px] translate-y-[1.5px] bg-[#25F4EE] mix-blend-screen opacity-70" />
+                      <span aria-hidden className="absolute inset-0 rounded-xl -translate-x-[1.5px] -translate-y-[1.5px] bg-[#FE2C55] mix-blend-screen opacity-70" />
+                    </>
+                  )}
+                  <s.Icon className="h-[18px] w-[18px] relative z-10" />
+                </a>
+              ))}
             </div>
           </div>
 
