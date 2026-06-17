@@ -181,8 +181,11 @@ const Services = () => {
                   {!(s as any).comingSoon && <div className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
                     <ArrowUpRight className="h-5 w-5 text-primary" />
                   </div>}
-                  <div className={`w-10 h-10 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl ${s.accent} border flex items-center justify-center mb-3 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <s.icon className="h-5 w-5 sm:h-8 sm:w-8" />
+                  {/* Glow halo */}
+                  <div className={`absolute -top-2 left-2 sm:left-4 w-14 h-14 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-gradient-to-br ${s.iconGradient} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500 pointer-events-none`} />
+                  <div className={`relative w-10 h-10 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br ${s.iconGradient} ${s.glow} flex items-center justify-center mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500 overflow-hidden`}>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                    <s.icon className="relative h-5 w-5 sm:h-8 sm:w-8 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.2} />
                   </div>
                   <h3 className="font-bold text-sm sm:text-lg md:text-xl mb-1 sm:mb-3 text-foreground group-hover:text-primary transition-colors">{s.title}</h3>
                   <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed hidden sm:block">{s.desc}</p>
