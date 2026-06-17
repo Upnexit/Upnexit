@@ -894,9 +894,11 @@ const ServiceDetail = () => {
             ].map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
                 whileHover={{ y: -4 }}
-                className="group p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-muted/50 border border-border hover:border-primary/20 hover:shadow-card transition-all duration-300">
-                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-300">
-                  <item.icon className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary" />
+                className="group p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-muted/50 border border-border hover:border-transparent hover:shadow-elevated transition-all duration-300 relative overflow-hidden">
+                <div className={`absolute -top-3 left-2 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500 pointer-events-none`} />
+                <div className={`relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500 shadow-md overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <item.icon className="relative h-3.5 w-3.5 sm:h-5 sm:w-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.3} />
                 </div>
                 <h4 className="font-bold text-sm sm:text-sm text-foreground mb-0.5">{item.title}</h4>
                 <p className="text-xs sm:text-xs text-muted-foreground leading-snug">{item.desc}</p>
