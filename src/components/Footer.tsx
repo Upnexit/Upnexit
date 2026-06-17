@@ -11,10 +11,14 @@ const Footer = () => {
 
   return (
     <footer className="gradient-dark text-white relative overflow-hidden pb-20 lg:pb-0">
-      {/* Top accent line */}
-      <div className="h-1 gradient-accent" />
+      {/* Seamless fade from page gradient into footer */}
+      <div aria-hidden className="absolute inset-x-0 -top-16 h-16 bg-gradient-to-b from-transparent to-[hsl(150_45%_10%)] pointer-events-none" />
+      {/* Gold top accent ribbon */}
+      <div className="h-[3px] bg-gradient-to-r from-secondary via-secondary/70 to-primary" />
+      {/* Soft glowing orbs for depth */}
+      <div aria-hidden className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-secondary/10 blur-3xl pointer-events-none" />
+      <div aria-hidden className="absolute -bottom-32 -right-20 w-96 h-96 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
 
-      
       <div className="container mx-auto px-4 lg:px-8 py-10 md:py-16 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           {/* Brand */}
