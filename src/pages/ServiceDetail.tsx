@@ -975,8 +975,9 @@ const ServiceDetail = () => {
                   <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
                     whileHover={{ x: 4 }}
                     className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 rounded-lg sm:rounded-xl bg-muted/60 border border-border/50 hover:border-primary/20 hover:shadow-card transition-all group">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
-                      <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
+                    <div className={`relative w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} flex items-center justify-center shrink-0 shadow-md overflow-hidden group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                      <CheckCircle2 className="relative h-3 w-3 sm:h-4 sm:w-4 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.5} />
                     </div>
                     <span className="text-sm sm:text-sm font-semibold text-foreground">{b}</span>
                   </motion.div>
@@ -1000,8 +1001,9 @@ const ServiceDetail = () => {
                   ].map((p, i) => (
                     <motion.div key={i} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                       className="flex items-center gap-2.5 sm:gap-4 group">
-                      <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl gradient-accent flex items-center justify-center text-primary-foreground font-black text-[10px] sm:text-sm shadow-glow shrink-0">
-                        {p.step}
+                      <div className={`relative w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} flex items-center justify-center text-white font-black text-[10px] sm:text-sm shadow-lg shrink-0 overflow-hidden group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                        <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                        <span className="relative drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]">{p.step}</span>
                       </div>
                       <div>
                         <h4 className="font-bold text-sm sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
