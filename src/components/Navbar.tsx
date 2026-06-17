@@ -136,9 +136,21 @@ const Navbar = () => {
           <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
           <div className="flex flex-col h-full">
             <div className="p-5 border-b border-border">
-              <div className="flex items-center gap-2">
-                <img src={logoUrl} alt={`${companyName} Logo`} className="w-8 h-8 rounded-xl object-contain" />
-                <span className="text-lg font-extrabold tracking-tight text-foreground">{companyName.split(' ')[0]} <span className="text-gradient">{companyName.split(' ').slice(1).join(' ') || 'It'}</span></span>
+              <div className="flex items-center gap-2.5">
+                <img
+                  src={logoUrl}
+                  alt={`${companyName} Logo`}
+                  className="w-8 h-8 rounded-xl object-contain bg-white p-0.5 ring-2 ring-secondary/80 shadow-[0_0_0_2px_hsl(46_92%_88%/0.5)]"
+                />
+                <span
+                  className="text-[26px] leading-none tracking-tight text-foreground"
+                  style={{ fontFamily: '"Great Vibes", cursive', fontWeight: 700, WebkitTextStroke: '0.5px currentColor' }}
+                >
+                  {companyName.split(' ')[0]}{' '}
+                  <span className="text-gradient" style={{ WebkitTextStroke: '0.5px hsl(var(--primary))' }}>
+                    {companyName.split(' ').slice(1).join(' ') || 'It'}
+                  </span>
+                </span>
               </div>
             </div>
 
