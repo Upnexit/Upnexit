@@ -11,6 +11,7 @@ const ServicesSection = lazy(() => import('@/components/ServicesSection'));
 const StatsSection = lazy(() => import('@/components/StatsSection'));
 const AboutSection = lazy(() => import('@/components/AboutSection'));
 const ClientReviewsSection = lazy(() => import('@/components/ClientReviewsSection'));
+const CustomerReviews = lazy(() => import('@/components/CustomerReviews'));
 const ContactSection = lazy(() => import('@/components/ContactSection'));
 
 const Index = () => {
@@ -163,6 +164,7 @@ const Index = () => {
         <StatsSection />
         <AboutSection />
         <ClientReviewsSection />
+        <CustomerReviews />
         <ContactSection />
       </Suspense>
       <InternalLinks exclude="/" />
