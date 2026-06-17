@@ -275,11 +275,15 @@ const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.12 }}
-                className="relative bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-border hover:border-primary/20 transition-all hover:shadow-elevated group"
+                whileHover={{ y: -6 }}
+                className="relative bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-border hover:border-transparent transition-all hover:shadow-elevated group overflow-hidden"
               >
+                {/* Glow halo */}
+                <div className={`absolute -top-3 left-3 w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br ${processGradients[i % processGradients.length]} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500 pointer-events-none`} />
                 {/* Step number circle */}
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full gradient-accent flex items-center justify-center mb-3 sm:mb-5 text-primary-foreground font-black text-sm sm:text-lg shadow-glow relative z-10">
-                  {p.step}
+                <div className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br ${processGradients[i % processGradients.length]} flex items-center justify-center mb-3 sm:mb-5 text-white font-black text-sm sm:text-lg shadow-lg z-10 overflow-hidden group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <span className="relative drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]">{p.step}</span>
                 </div>
                 <h3 className="font-bold text-sm sm:text-lg text-foreground mb-1 sm:mb-2 group-hover:text-primary transition-colors">{p.title}</h3>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
