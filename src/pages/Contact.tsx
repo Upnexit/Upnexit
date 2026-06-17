@@ -98,11 +98,6 @@ const Contact = () => {
             {t.contact.subtitle}
           </motion.p>
         </div>
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 80" fill="none" className="w-full h-auto">
-            <path d="M0 80L48 72C96 64 192 48 288 40C384 32 480 32 576 36C672 40 768 48 864 52C960 56 1056 56 1152 48C1248 40 1344 24 1392 16L1440 8V80H0Z" fill="hsl(var(--background))" />
-          </svg>
-        </div>
       </section>
 
       {/* Contact Content */}

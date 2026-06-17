@@ -107,11 +107,6 @@ const About = () => {
             {t.about.p1}
           </motion.p>
         </div>
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 100" fill="none" className="w-full h-auto">
-            <path d="M0 100L48 90C96 80 192 60 288 50C384 40 480 40 576 45C672 50 768 60 864 65C960 70 1056 70 1152 60C1248 50 1344 30 1392 20L1440 10V100H0Z" fill="hsl(var(--background))" />
-          </svg>
-        </div>
       </section>
 
       {/* Mission & Vision */}
