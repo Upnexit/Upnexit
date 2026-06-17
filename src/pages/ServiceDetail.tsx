@@ -542,10 +542,6 @@ const serviceData = {
 type ServiceKey = 'school' | 'hospital' | 'custom' | 'web';
 type ComingSoonKey = 'graphics' | 'boosting';
 
-const comingSoonServices: Record<Lang | 'bn' | 'en', Record<ComingSoonKey, { title: string; titleHighlight: string; badge: string; subtitle: string; description: string; icon: any; bullets: string[] }>> = {} as any;
-// Lang shim
-type Lang = 'bn' | 'en';
-
 const comingSoonData = {
   bn: {
     graphics: {
