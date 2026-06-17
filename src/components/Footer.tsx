@@ -4,8 +4,24 @@ import { Link } from 'react-router-dom';
 import { useLogoUrl, useSiteSettings } from '@/hooks/useSiteSettings';
 
 const TikTokIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
-    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.83a8.16 8.16 0 0 0 4.77 1.52V6.91a4.85 4.85 0 0 1-1.84-.22z"/>
+  <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+    {/* Cyan shadow */}
+    <path
+      transform="translate(-1.1,1.1)"
+      fill="#25F4EE"
+      d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.83a8.16 8.16 0 0 0 4.77 1.52V6.91a4.85 4.85 0 0 1-1.84-.22z"
+    />
+    {/* Pink shadow */}
+    <path
+      transform="translate(1.1,-1.1)"
+      fill="#FE2C55"
+      d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.83a8.16 8.16 0 0 0 4.77 1.52V6.91a4.85 4.85 0 0 1-1.84-.22z"
+    />
+    {/* White main */}
+    <path
+      fill="#ffffff"
+      d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.83a8.16 8.16 0 0 0 4.77 1.52V6.91a4.85 4.85 0 0 1-1.84-.22z"
+    />
   </svg>
 );
 
@@ -35,9 +51,8 @@ const SOCIALS = [
     label: 'TikTok',
     href: '#',
     Icon: TikTokIcon,
-    bg: 'bg-[#010101] relative',
+    bg: 'bg-[#010101]',
     ring: 'hover:shadow-[0_8px_24px_-6px_rgba(37,244,238,0.6)]',
-    tiktok: true,
   },
 ];
 
@@ -76,13 +91,7 @@ const Footer = () => {
                   aria-label={`Upnex It on ${s.label}`}
                   className={`relative w-10 h-10 rounded-xl ${s.bg} flex items-center justify-center text-white transition-all duration-300 hover:-translate-y-0.5 ${s.ring} ring-1 ring-white/15`}
                 >
-                  {s.tiktok && (
-                    <>
-                      <span aria-hidden className="absolute inset-0 rounded-xl translate-x-[1.5px] translate-y-[1.5px] bg-[#25F4EE] mix-blend-screen opacity-70" />
-                      <span aria-hidden className="absolute inset-0 rounded-xl -translate-x-[1.5px] -translate-y-[1.5px] bg-[#FE2C55] mix-blend-screen opacity-70" />
-                    </>
-                  )}
-                  <s.Icon className="h-[18px] w-[18px] relative z-10" />
+                  <s.Icon className="h-[18px] w-[18px]" />
                 </a>
               ))}
             </div>
