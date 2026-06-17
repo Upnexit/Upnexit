@@ -21,6 +21,9 @@ const translations = {
       hospital: { title: 'হসপিটাল ম্যানেজমেন্ট সফটওয়্যার', desc: 'রোগী, ডাক্তার, অ্যাপয়েন্টমেন্ট, বিলিং — সবকিছু সহজে ম্যানেজ করুন।' },
       custom: { title: 'কাস্টম সফটওয়্যার ডেভেলপমেন্ট', desc: 'আপনার ব্যবসার চাহিদা অনুযায়ী সম্পূর্ণ কাস্টমাইজড সফটওয়্যার তৈরি করি।' },
       web: { title: 'ওয়েব অ্যাপ্লিকেশন', desc: 'আধুনিক ও রেসপন্সিভ ওয়েব অ্যাপ্লিকেশন যা যেকোনো ডিভাইসে কাজ করে।' },
+      graphics: { title: 'গ্রাফিক্স ডিজাইন', desc: 'লোগো, ব্যানার, পোস্টার, সোশ্যাল মিডিয়া ক্রিয়েটিভ — প্রফেশনাল গ্রাফিক্স ডিজাইন সলিউশন।' },
+      boosting: { title: 'ডিজিটাল মার্কেটিং ও বুস্টিং', desc: 'ফেসবুক, ইনস্টাগ্রাম, গুগল অ্যাডস ও SEO — আপনার ব্যবসাকে অনলাইনে এগিয়ে রাখুন।' },
+      comingSoon: 'শীঘ্রই আসছে',
     },
     stats: {
       clients: 'সন্তুষ্ট ক্লায়েন্ট',
@@ -68,6 +71,9 @@ const translations = {
       hospital: { title: 'Hospital Management Software', desc: 'Easily manage patients, doctors, appointments, and billing.' },
       custom: { title: 'Custom Software Development', desc: 'Fully customized software built according to your business needs.' },
       web: { title: 'Web Applications', desc: 'Modern & responsive web applications that work on any device.' },
+      graphics: { title: 'Graphic Design', desc: 'Logos, banners, posters & social media creatives — professional graphic design solutions.' },
+      boosting: { title: 'Digital Marketing & Boosting', desc: 'Facebook, Instagram, Google Ads & SEO — grow your business online.' },
+      comingSoon: 'Coming Soon',
     },
     stats: {
       clients: 'Happy Clients',
