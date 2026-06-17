@@ -709,6 +709,27 @@ const ServiceDetail = () => {
   const IconComponent = data.icon;
   const isBn = lang === 'bn';
 
+  // Gradient palette per service for hero
+  const heroGradientMap: Record<string, { gradient: string; glow: string }> = {
+    school:   { gradient: 'from-emerald-400 via-teal-500 to-cyan-600', glow: 'shadow-[0_15px_40px_-10px_rgba(20,184,166,0.6)]' },
+    hospital: { gradient: 'from-rose-400 via-pink-500 to-red-500',    glow: 'shadow-[0_15px_40px_-10px_rgba(244,63,94,0.6)]' },
+    custom:   { gradient: 'from-indigo-500 via-violet-500 to-fuchsia-500', glow: 'shadow-[0_15px_40px_-10px_rgba(139,92,246,0.6)]' },
+    web:      { gradient: 'from-sky-400 via-blue-500 to-indigo-600', glow: 'shadow-[0_15px_40px_-10px_rgba(59,130,246,0.6)]' },
+    graphics: { gradient: 'from-amber-400 via-orange-500 to-pink-500', glow: 'shadow-[0_15px_40px_-10px_rgba(249,115,22,0.6)]' },
+    boosting: { gradient: 'from-lime-400 via-green-500 to-emerald-600', glow: 'shadow-[0_15px_40px_-10px_rgba(16,185,129,0.6)]' },
+  };
+  const heroG = heroGradientMap[serviceKey as string] || heroGradientMap.custom;
+  const cycleGradients = [
+    'from-emerald-400 via-teal-500 to-cyan-600',
+    'from-amber-400 via-orange-500 to-rose-500',
+    'from-violet-400 via-purple-500 to-fuchsia-500',
+    'from-sky-400 via-blue-500 to-indigo-600',
+    'from-rose-400 via-pink-500 to-red-500',
+    'from-lime-400 via-green-500 to-emerald-600',
+    'from-cyan-400 via-sky-500 to-blue-600',
+    'from-fuchsia-400 via-pink-500 to-rose-500',
+  ];
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       <SEOHead
