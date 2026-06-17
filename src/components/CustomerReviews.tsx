@@ -31,57 +31,100 @@ const isFemaleName = (name: string) =>
 const MaleAvatar = () => (
   <svg viewBox="0 0 64 64" className="h-full w-full" aria-hidden="true">
     <defs>
-      <linearGradient id="mAvBg" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="hsl(var(--primary) / 0.12)" />
-        <stop offset="100%" stopColor="hsl(var(--primary) / 0.04)" />
+      <linearGradient id="mBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#bfe3ff" />
+        <stop offset="100%" stopColor="#7fb8e6" />
+      </linearGradient>
+      <linearGradient id="mSkin" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#f5d0a9" />
+        <stop offset="100%" stopColor="#e8b483" />
+      </linearGradient>
+      <linearGradient id="mShirt" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#16a34a" />
+        <stop offset="100%" stopColor="#0f7a37" />
       </linearGradient>
     </defs>
-    <rect width="64" height="64" rx="32" fill="url(#mAvBg)" />
-    <g
-      fill="none"
-      stroke="hsl(var(--primary))"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {/* head */}
-      <circle cx="32" cy="25" r="9" />
-      {/* hair */}
-      <path d="M23 23c1-6 6-9 9-9s8 2 9 8" />
-      {/* shoulders / shirt */}
-      <path d="M16 54c2-8 9-12 16-12s14 4 16 12" />
-      {/* collar */}
-      <path d="M27 43l5 5 5-5" />
-    </g>
+    {/* background */}
+    <rect width="64" height="64" rx="32" fill="url(#mBg)" />
+    {/* shirt / shoulders */}
+    <path d="M8 60c2-10 11-16 24-16s22 6 24 16z" fill="url(#mShirt)" />
+    {/* collar */}
+    <path d="M26 44l6 7 6-7-3-2-3 3-3-3z" fill="#ffffff" />
+    {/* neck */}
+    <path d="M28 38h8v6h-8z" fill="url(#mSkin)" />
+    {/* head */}
+    <circle cx="32" cy="28" r="11" fill="url(#mSkin)" />
+    {/* hair */}
+    <path d="M21 26c0-8 5-13 11-13s11 4 11 12c0 1-1 2-2 2-1-3-4-5-9-5s-8 2-9 5c-1 0-2-1-2-1z" fill="#2b1d12" />
+    {/* eyebrows */}
+    <path d="M25 26l4-1M35 25l4 1" stroke="#2b1d12" strokeWidth="1.2" strokeLinecap="round" />
+    {/* eyes */}
+    <circle cx="28" cy="29" r="1.4" fill="#1a1a1a" />
+    <circle cx="36" cy="29" r="1.4" fill="#1a1a1a" />
+    <circle cx="28.4" cy="28.6" r="0.4" fill="#fff" />
+    <circle cx="36.4" cy="28.6" r="0.4" fill="#fff" />
+    {/* nose */}
+    <path d="M32 30v3" stroke="#b88860" strokeWidth="1" strokeLinecap="round" fill="none" />
+    {/* mouth — slight smile */}
+    <path d="M29 35q3 2 6 0" stroke="#a44343" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+    {/* ears */}
+    <circle cx="21.5" cy="29" r="1.6" fill="url(#mSkin)" />
+    <circle cx="42.5" cy="29" r="1.6" fill="url(#mSkin)" />
   </svg>
 );
 
 const FemaleAvatar = () => (
   <svg viewBox="0 0 64 64" className="h-full w-full" aria-hidden="true">
     <defs>
-      <linearGradient id="fAvBg" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="hsl(45 90% 55% / 0.18)" />
-        <stop offset="100%" stopColor="hsl(45 90% 55% / 0.05)" />
+      <linearGradient id="fBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#ffe0ec" />
+        <stop offset="100%" stopColor="#ffb3c7" />
+      </linearGradient>
+      <linearGradient id="fSkin" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#fbdcbf" />
+        <stop offset="100%" stopColor="#f2c098" />
+      </linearGradient>
+      <linearGradient id="fHair" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#3a1f12" />
+        <stop offset="100%" stopColor="#1a0d07" />
+      </linearGradient>
+      <linearGradient id="fDress" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#d946ef" />
+        <stop offset="100%" stopColor="#9333ea" />
       </linearGradient>
     </defs>
-    <rect width="64" height="64" rx="32" fill="url(#fAvBg)" />
-    <g
-      fill="none"
-      stroke="hsl(35 75% 40%)"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {/* head */}
-      <circle cx="32" cy="25" r="9" />
-      {/* long hair flowing */}
-      <path d="M22 24c-1-7 5-12 10-12s11 4 10 12c0 4-1 8-2 12" />
-      <path d="M24 36c-1 4-2 8-2 12" />
-      {/* shoulders */}
-      <path d="M16 54c2-8 9-12 16-12s14 4 16 12" />
-      {/* neckline */}
-      <path d="M28 43l4 4 4-4" />
-    </g>
+    {/* background */}
+    <rect width="64" height="64" rx="32" fill="url(#fBg)" />
+    {/* long hair back */}
+    <path d="M16 58c0-18 6-30 16-30s16 12 16 30z" fill="url(#fHair)" />
+    {/* dress / shoulders */}
+    <path d="M10 60c2-10 12-16 22-16s20 6 22 16z" fill="url(#fDress)" />
+    {/* neck */}
+    <path d="M28 38h8v6h-8z" fill="url(#fSkin)" />
+    {/* head */}
+    <circle cx="32" cy="28" r="11" fill="url(#fSkin)" />
+    {/* front hair / bangs */}
+    <path d="M20 26c1-9 6-14 12-14s12 5 12 14c0 1-1 2-2 2-2-4-5-6-7-6-1 2-3 3-5 3-3 0-6-2-7-3-1 1-2 2-3 4z" fill="url(#fHair)" />
+    {/* side hair tucked */}
+    <path d="M21 28c-1 6-1 14 1 22M43 28c1 6 1 14-1 22" stroke="#1a0d07" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.85" />
+    {/* eyebrows */}
+    <path d="M25 25.5q2-1.2 4-0.2M35 25.3q2-1 4 0.2" stroke="#2b1408" strokeWidth="1.1" strokeLinecap="round" fill="none" />
+    {/* eyes */}
+    <circle cx="28" cy="29" r="1.5" fill="#2a1a0a" />
+    <circle cx="36" cy="29" r="1.5" fill="#2a1a0a" />
+    <circle cx="28.4" cy="28.6" r="0.4" fill="#fff" />
+    <circle cx="36.4" cy="28.6" r="0.4" fill="#fff" />
+    {/* eyelashes */}
+    <path d="M26.5 27.8l-1-0.6M29.5 27.8l1-0.6M34.5 27.8l-1-0.6M37.5 27.8l1-0.6" stroke="#2b1408" strokeWidth="0.8" strokeLinecap="round" />
+    {/* nose */}
+    <path d="M32 30.5v2.5" stroke="#c08866" strokeWidth="1" strokeLinecap="round" fill="none" />
+    {/* lips — pink */}
+    <path d="M29 35.5q3 2.5 6 0" stroke="#e11d74" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+    {/* earring */}
+    <circle cx="22" cy="31" r="0.9" fill="#fbbf24" />
+    <circle cx="42" cy="31" r="0.9" fill="#fbbf24" />
+    {/* bindi / tika */}
+    <circle cx="32" cy="20" r="0.9" fill="#dc2626" />
   </svg>
 );
 
@@ -141,25 +184,17 @@ const CustomerReviews = () => {
     <section className="bg-gradient-to-b from-background via-secondary/20 to-background py-12 md:py-20">
       <div className="container mx-auto px-4">
         <div className="mb-10 flex flex-col items-center text-center md:mb-14">
-          <h2
-            className="text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl"
-            style={{ fontFamily: "'Mina', 'Hind Siliguri', system-ui, sans-serif", letterSpacing: "0.5px" }}
-          >
+          <h2 className="bn-display bn-display-bold text-4xl leading-tight text-foreground md:text-5xl lg:text-6xl">
             আমাদের{" "}
             <span
               className="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 bg-clip-text text-transparent"
-              style={{ fontFamily: "'Great Vibes', 'Allura', cursive", fontWeight: 400, fontSize: "1.25em" }}
+              style={{ fontFamily: "'Great Vibes', 'Allura', cursive", fontWeight: 400, fontSize: "1.25em", WebkitTextStroke: "0" }}
             >
               Client
             </span>{" "}
-            <span style={{ fontFamily: "'Mina', 'Hind Siliguri', sans-serif" }}>
-              দের মতামত
-            </span>
+            <span className="bn-display">দের রিভিউ</span>
           </h2>
-          <p
-            className="mt-3 max-w-2xl text-base text-muted-foreground md:text-lg"
-            style={{ fontFamily: "'Hind Siliguri', system-ui, sans-serif" }}
-          >
+          <p className="bn-display mt-3 max-w-2xl text-base text-muted-foreground md:text-lg">
             সারা বাংলাদেশের গ্রাহকেরা আমাদের সম্পর্কে কী বলছেন
           </p>
           <Button
@@ -188,10 +223,7 @@ const CustomerReviews = () => {
                     <article className="group relative flex h-full flex-col rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl md:p-6">
                       <Quote className="pointer-events-none absolute right-4 top-4 h-12 w-12 text-primary/10 md:h-16 md:w-16" />
                       <StarRow rating={r.rating} />
-                      <p
-                        className="mt-3 line-clamp-4 text-sm leading-relaxed text-foreground/90 md:line-clamp-5 md:text-base"
-                        style={{ fontFamily: "'Hind Siliguri', system-ui, sans-serif" }}
-                      >
+                      <p className="bn-display mt-3 line-clamp-4 text-sm leading-relaxed text-foreground/90 md:line-clamp-5 md:text-base">
                         {r.review_text}
                       </p>
                       <div className="mt-5 flex items-center gap-3 border-t border-border/60 pt-4">
@@ -199,10 +231,7 @@ const CustomerReviews = () => {
                           {isFemaleName(r.customer_name) ? <FemaleAvatar /> : <MaleAvatar />}
                         </div>
                         <div className="min-w-0">
-                          <p
-                            className="truncate text-sm font-semibold text-foreground"
-                            style={{ fontFamily: "'Hind Siliguri', system-ui, sans-serif" }}
-                          >
+                          <p className="bn-display truncate text-sm font-semibold text-foreground">
                             {r.customer_name}
                           </p>
                           {r.location && (
