@@ -846,8 +846,9 @@ const ServiceDetail = () => {
             <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="relative hidden md:block">
               <div className="bg-background rounded-3xl border border-border p-6 md:p-8 shadow-elevated relative overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-1.5 gradient-accent rounded-t-3xl" />
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-5">
-                  <IconComponent className="h-7 w-7 text-primary" />
+                <div className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${heroG.gradient} ${heroG.glow} flex items-center justify-center mb-5 overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <IconComponent className="relative h-7 w-7 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" strokeWidth={2.2} />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   {[
@@ -857,8 +858,11 @@ const ServiceDetail = () => {
                     { icon: Award, num: '24/7', label: isBn ? 'সাপোর্ট' : 'Support' },
                   ].map((item, i) => (
                     <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4 + i * 0.1 }}
-                      className="p-4 rounded-2xl text-center border bg-muted/30 border-border/50 hover:border-primary/20 transition-all">
-                      <item.icon className="h-5 w-5 mx-auto mb-2 text-primary" />
+                      className="p-4 rounded-2xl text-center border bg-muted/30 border-border/50 hover:border-primary/20 transition-all group">
+                      <div className={`w-9 h-9 mx-auto mb-2 rounded-xl bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} flex items-center justify-center shadow-md overflow-hidden relative group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                        <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                        <item.icon className="relative h-5 w-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.2} />
+                      </div>
                       <p className="text-xl font-black text-foreground">{item.num}</p>
                       <p className="text-xs text-muted-foreground font-medium">{item.label}</p>
                     </motion.div>
