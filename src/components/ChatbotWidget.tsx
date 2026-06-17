@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { MessageCircle, X, Send, Mic, MicOff, Image } from 'lucide-react';
+import { MessageCircle, X, Send, Mic, MicOff, Image, Headset } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ChatMessage {
@@ -26,6 +26,7 @@ const WhatsAppIcon = () => (
 const ChatbotWidget = () => {
   const { lang } = useLanguage();
   const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [showHelpText, setShowHelpText] = useState(false);
@@ -52,15 +53,15 @@ const ChatbotWidget = () => {
 
   const whatsappNumber = settings.find(s => s.key === 'whatsapp_number')?.value || '';
 
-  // Help Center text animation
+  // Help Center text animation (shown next to support FAB when collapsed)
   useEffect(() => {
-    if (open) return;
+    if (open || menuOpen) return;
     const interval = setInterval(() => {
       setShowHelpText(true);
       setTimeout(() => setShowHelpText(false), 1500);
     }, 5000);
     return () => clearInterval(interval);
-  }, [open]);
+  }, [open, menuOpen]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -330,6 +331,7 @@ const ChatbotWidget = () => {
     if (!whatsappNumber) return;
     const cleaned = whatsappNumber.replace(/[^0-9]/g, '');
     window.open(`https://wa.me/${cleaned}`, '_blank');
+    setMenuOpen(false);
   };
 
   // Close on outside click
@@ -355,48 +357,87 @@ const ChatbotWidget = () => {
 
   return (
     <>
-      {/* WhatsApp Button */}
-      <button
-        onClick={handleWhatsApp}
-        className="fixed bottom-[11rem] lg:bottom-[5.5rem] right-4 lg:right-6 z-[60] w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#25D366] text-white shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
-        aria-label="WhatsApp"
-      >
-        <WhatsAppIcon />
-      </button>
-
-      {/* Chatbot Toggle */}
-      <div className="fixed bottom-[7.5rem] lg:bottom-6 right-4 lg:right-6 z-[60] flex items-center gap-2">
+      {/* Customer Support FAB stack */}
+      <div className="fixed bottom-[5.5rem] lg:bottom-6 right-4 lg:right-6 z-[60] flex flex-col items-end gap-3">
+        {/* Expanded action buttons */}
         <AnimatePresence>
-          {showHelpText && !open && (
-            <motion.div
-              initial={{ opacity: 0, x: 20, scale: 0.8 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 20, scale: 0.8 }}
-              transition={{ duration: 0.3 }}
-              className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap"
-            >
-              Help Center
-            </motion.div>
+          {menuOpen && !open && (
+            <>
+              <motion.button
+                key="ai"
+                initial={{ opacity: 0, y: 20, scale: 0.6 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 20, scale: 0.6 }}
+                transition={{ duration: 0.2, delay: 0.05 }}
+                onClick={() => { setOpen(true); setMenuOpen(false); }}
+                className="flex items-center gap-2 group"
+                aria-label={lang === 'bn' ? 'AI সহকারীর সাথে কথা বলুন' : 'Chat with AI Assistant'}
+              >
+                <span className="bg-background border border-border text-foreground text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap">
+                  {lang === 'bn' ? 'AI সহকারী' : 'AI Assistant'}
+                </span>
+                <span className="w-12 h-12 rounded-full bg-primary text-primary-foreground shadow-elevated flex items-center justify-center group-hover:scale-105 group-active:scale-95 transition-transform">
+                  <MessageCircle className="h-5 w-5" />
+                </span>
+              </motion.button>
+              <motion.button
+                key="wa"
+                initial={{ opacity: 0, y: 20, scale: 0.6 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 20, scale: 0.6 }}
+                transition={{ duration: 0.2 }}
+                onClick={handleWhatsApp}
+                className="flex items-center gap-2 group"
+                aria-label="WhatsApp"
+              >
+                <span className="bg-background border border-border text-foreground text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap">
+                  WhatsApp
+                </span>
+                <span className="w-12 h-12 rounded-full bg-[#25D366] text-white shadow-elevated flex items-center justify-center group-hover:scale-105 group-active:scale-95 transition-transform">
+                  <WhatsAppIcon />
+                </span>
+              </motion.button>
+            </>
           )}
         </AnimatePresence>
-        <motion.button
-          onClick={() => setOpen(!open)}
-          className="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-primary text-primary-foreground shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
-          whileTap={{ scale: 0.9 }}
-          aria-label="Toggle chatbot"
-        >
-          <AnimatePresence mode="wait">
-            {open ? (
-              <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                <X className="h-5 w-5 lg:h-6 lg:w-6" />
-              </motion.div>
-            ) : (
-              <motion.div key="chat" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                <MessageCircle className="h-5 w-5 lg:h-6 lg:w-6" />
+
+        {/* Main Support Toggle */}
+        <div className="flex items-center gap-2">
+          <AnimatePresence>
+            {showHelpText && !open && !menuOpen && (
+              <motion.div
+                initial={{ opacity: 0, x: 20, scale: 0.8 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 20, scale: 0.8 }}
+                transition={{ duration: 0.3 }}
+                className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap"
+              >
+                {lang === 'bn' ? 'হেল্প সেন্টার' : 'Help Center'}
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.button>
+          <motion.button
+            onClick={() => {
+              if (open) { setOpen(false); return; }
+              setMenuOpen(!menuOpen);
+            }}
+            className="w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
+            whileTap={{ scale: 0.9 }}
+            aria-label={lang === 'bn' ? 'কাস্টমার সাপোর্ট' : 'Customer Support'}
+          >
+            <AnimatePresence mode="wait">
+              {open || menuOpen ? (
+                <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                  <X className="h-6 w-6" />
+                </motion.div>
+              ) : (
+                <motion.div key="support" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                  <Headset className="h-6 w-6" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.button>
+        </div>
       </div>
 
       {/* Hidden file input */}
@@ -417,7 +458,7 @@ const ChatbotWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-36 lg:bottom-24 right-3 lg:right-6 z-[60] w-[calc(100vw-1.5rem)] max-w-[320px] sm:max-w-[360px] h-[360px] sm:h-[420px] bg-background border border-border rounded-2xl shadow-elevated flex flex-col overflow-hidden"
+            className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 z-[70] w-full sm:w-[360px] h-[100dvh] sm:h-[480px] bg-background border border-border sm:rounded-2xl shadow-elevated flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="bg-primary text-primary-foreground px-3 py-2 flex items-center justify-between shrink-0">
