@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/hooks/useAuth";
 import { usePageTracker } from "@/hooks/usePageTracker";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { lazy, Suspense, useEffect, useState } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -93,6 +94,7 @@ const PageFallback = () => (
 
 const AppRoutes = () => {
   usePageTracker();
+  useScrollReveal();
   return (
     <Suspense fallback={<PageFallback />}>
       <Routes>
