@@ -77,8 +77,23 @@ const Footer = () => {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <img src={logoUrl} alt={`${companyName} Logo`} className="w-9 h-9 rounded-xl object-contain" />
-              <span className="text-xl font-extrabold tracking-tight">{companyName}</span>
+              <img
+                src={logoUrl}
+                alt={`${companyName} Logo`}
+                className="w-10 h-10 rounded-xl object-contain bg-white p-0.5 ring-2 ring-secondary/80 shadow-[0_0_0_3px_hsl(46_92%_88%/0.35),0_4px_12px_-2px_hsl(46_92%_55%/0.45)]"
+              />
+              <span
+                className="text-[34px] leading-none tracking-wide text-white"
+                style={{ fontFamily: '"Kaushan Script", "Brush Script MT", cursive', fontWeight: 700 }}
+              >
+                {companyName.split(' ')[0]}{' '}
+                <span
+                  className="text-gradient"
+                  style={{ fontFamily: '"Kaushan Script", "Brush Script MT", cursive', fontWeight: 700 }}
+                >
+                  {companyName.split(' ').slice(1).join(' ') || 'It'}
+                </span>
+              </span>
             </div>
             <p className="text-sm text-white/80 leading-relaxed mb-6 max-w-xs">{t.footer.desc}</p>
             <div className="flex gap-3">
