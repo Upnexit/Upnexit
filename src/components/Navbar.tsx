@@ -60,11 +60,11 @@ const Navbar = () => {
               className="w-9 h-9 lg:w-10 lg:h-10 rounded-xl object-contain bg-white p-0.5 ring-2 ring-secondary/80 shadow-[0_0_0_3px_hsl(46_92%_88%/0.5),0_4px_12px_-2px_hsl(46_92%_55%/0.45)]"
             />
             <span
-              className="text-[28px] lg:text-[34px] leading-none tracking-tight text-foreground"
-              style={{ fontFamily: '"Great Vibes", cursive', fontWeight: 700, WebkitTextStroke: '0.6px currentColor' }}
+              className="text-[30px] lg:text-[38px] leading-none tracking-wide text-foreground"
+              style={{ fontFamily: '"Kaushan Script", "Brush Script MT", cursive', fontWeight: 700 }}
             >
               {companyName.split(' ')[0]}{' '}
-              <span className="text-gradient" style={{ WebkitTextStroke: '0.6px hsl(var(--primary))' }}>
+              <span className="text-gradient">
                 {companyName.split(' ').slice(1).join(' ') || 'It'}
               </span>
             </span>
@@ -143,11 +143,11 @@ const Navbar = () => {
                   className="w-8 h-8 rounded-xl object-contain bg-white p-0.5 ring-2 ring-secondary/80 shadow-[0_0_0_2px_hsl(46_92%_88%/0.5)]"
                 />
                 <span
-                  className="text-[26px] leading-none tracking-tight text-foreground"
-                  style={{ fontFamily: '"Great Vibes", cursive', fontWeight: 700, WebkitTextStroke: '0.5px currentColor' }}
+                  className="text-[28px] leading-none tracking-wide text-foreground"
+                  style={{ fontFamily: '"Kaushan Script", "Brush Script MT", cursive', fontWeight: 700 }}
                 >
                   {companyName.split(' ')[0]}{' '}
-                  <span className="text-gradient" style={{ WebkitTextStroke: '0.5px hsl(var(--primary))' }}>
+                  <span className="text-gradient">
                     {companyName.split(' ').slice(1).join(' ') || 'It'}
                   </span>
                 </span>
