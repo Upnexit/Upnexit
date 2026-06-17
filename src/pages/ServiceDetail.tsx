@@ -937,8 +937,10 @@ const ServiceDetail = () => {
                   backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
                   backgroundSize: '10px 10px',
                 }} />
-                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
-                  <feature.icon className="h-4 w-4 sm:h-6 sm:w-6 text-primary" />
+                <div className={`absolute -top-3 left-2 w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500 pointer-events-none`} />
+                <div className={`relative w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-gradient-to-br ${cycleGradients[i % cycleGradients.length]} flex items-center justify-center mb-2 sm:mb-4 group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500 shadow-md overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                  <feature.icon className="relative h-4 w-4 sm:h-6 sm:w-6 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.3} />
                 </div>
                 <h3 className="font-bold text-sm sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
                 <p className="text-xs sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
