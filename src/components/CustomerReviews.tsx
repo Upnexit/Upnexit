@@ -1,18 +1,26 @@
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { Star, Quote, ChevronLeft, ChevronRight, MapPin, PenLine } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Star, Quote, ChevronLeft, ChevronRight, MapPin, PenLine, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReviewSubmissionDialog from "./ReviewSubmissionDialog";
+import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  serviceReviews,
+  serviceLabels,
+  serviceGradients,
+  type ServiceReviewKey,
+} from "@/data/serviceReviews";
 
 interface Review {
   id: string;
   customer_name: string;
-  customer_image: string | null;
   rating: number;
   review_text: string;
   location: string | null;
+  company: string;
+  service: ServiceReviewKey;
+  female: boolean;
 }
 
 // Heuristic: detect gender from Bangla/English name for choosing avatar sketch
@@ -140,8 +148,8 @@ const StarRow = ({ rating }: { rating: number }) => (
 );
 
 const CustomerReviews = () => {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { lang } = useLanguage();
+  const isBn = lang === "bn";
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
@@ -151,17 +159,20 @@ const CustomerReviews = () => {
     [Autoplay({ delay: 4500, stopOnMouseEnter: true, stopOnInteraction: false })]
   );
 
-  useEffect(() => {
-    (async () => {
-      const { data } = await supabase
-        .from("customer_reviews")
-        .select("id, customer_name, customer_image, rating, review_text, location")
-        .eq("is_active", true)
-        .order("sort_order", { ascending: true });
-      setReviews(data || []);
-      setLoading(false);
-    })();
-  }, []);
+  // Build 2 reviews per service from the centralized dataset
+  const reviews: Review[] = (Object.keys(serviceReviews) as ServiceReviewKey[])
+    .flatMap((key) =>
+      serviceReviews[key].slice(0, 2).map((r, i) => ({
+        id: `${key}-${i}`,
+        customer_name: r.name,
+        rating: r.rating,
+        review_text: isBn ? r.bn : r.en,
+        location: r.location,
+        company: r.company,
+        service: key,
+        female: !!r.female,
+      }))
+    );
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -195,7 +206,9 @@ const CustomerReviews = () => {
             <span className="bn-display">দের রিভিউ</span>
           </h2>
           <p className="bn-display mt-3 max-w-2xl text-base text-muted-foreground md:text-lg">
-            সারা বাংলাদেশের গ্রাহকেরা আমাদের সম্পর্কে কী বলছেন
+            {isBn
+              ? "আমাদের প্রতিটি সেবার ব্যবহারকারী প্রতিষ্ঠানদের অভিজ্ঞতা"
+              : "What our clients say about every Upnex It service"}
           </p>
           <Button
             variant="outline"
@@ -203,15 +216,11 @@ const CustomerReviews = () => {
             onClick={() => setDialogOpen(true)}
           >
             <PenLine className="mr-2 h-4 w-4" />
-            আপনার মতামত দিন
+            {isBn ? "আপনার মতামত দিন" : "Share Your Review"}
           </Button>
         </div>
 
-        {loading ? null : reviews.length === 0 ? (
-          <p className="text-center text-muted-foreground">
-            প্রথম রিভিউটি আপনিই দিন!
-          </p>
-        ) : (
+        {reviews.length === 0 ? null : (
           <div className="relative">
             <div className="overflow-hidden" ref={emblaRef}>
               <div className="flex -ml-4">
@@ -222,17 +231,28 @@ const CustomerReviews = () => {
                   >
                     <article className="group relative flex h-full flex-col rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl md:p-6">
                       <Quote className="pointer-events-none absolute right-4 top-4 h-12 w-12 text-primary/10 md:h-16 md:w-16" />
-                      <StarRow rating={r.rating} />
+                      <div
+                        className={`inline-flex w-fit items-center gap-1.5 rounded-full bg-gradient-to-r ${serviceGradients[r.service]} px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-md`}
+                      >
+                        <Briefcase className="h-3 w-3" />
+                        {isBn ? serviceLabels[r.service].bn : serviceLabels[r.service].en}
+                      </div>
+                      <div className="mt-3">
+                        <StarRow rating={r.rating} />
+                      </div>
                       <p className="bn-display mt-3 line-clamp-4 text-sm leading-relaxed text-foreground/90 md:line-clamp-5 md:text-base">
                         {r.review_text}
                       </p>
                       <div className="mt-5 flex items-center gap-3 border-t border-border/60 pt-4">
                         <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full ring-2 ring-amber-400/40">
-                          {isFemaleName(r.customer_name) ? <FemaleAvatar /> : <MaleAvatar />}
+                          {r.female || isFemaleName(r.customer_name) ? <FemaleAvatar /> : <MaleAvatar />}
                         </div>
                         <div className="min-w-0">
                           <p className="bn-display truncate text-sm font-semibold text-foreground">
                             {r.customer_name}
+                          </p>
+                          <p className="truncate text-xs font-medium text-primary/80">
+                            {r.company}
                           </p>
                           {r.location && (
                             <p className="flex items-center gap-1 truncate text-xs text-muted-foreground">
