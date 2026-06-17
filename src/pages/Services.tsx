@@ -175,7 +175,7 @@ const Services = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="py-10 md:py-20 bg-muted/30">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -258,7 +258,7 @@ const Services = () => {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-10 md:py-20 bg-muted/30">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

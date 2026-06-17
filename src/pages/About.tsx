@@ -238,7 +238,7 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-10 md:py-20 bg-muted/30">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -361,7 +361,7 @@ const About = () => {
       </section>
 
       {/* Team Section - from DB */}
-      <section className="section-padding bg-muted/30">
+      <section className="section-padding">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -404,7 +404,7 @@ const About = () => {
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-muted/30">
+      <section className="section-padding">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
