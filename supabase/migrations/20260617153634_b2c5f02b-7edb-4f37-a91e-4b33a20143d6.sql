@@ -1,0 +1,1 @@
+UPDATE public.site_settings SET value = (extract(epoch from now())*1000)::bigint::text WHERE key = 'logo_version';
