@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { GraduationCap, HeartPulse, Code, Globe, ArrowUpRight, CheckCircle2, Layers, Monitor, Smartphone, Database, Cloud, Shield, ArrowRight, Sparkles } from 'lucide-react';
+import { GraduationCap, HeartPulse, Code, Globe, ArrowUpRight, CheckCircle2, Layers, Monitor, Smartphone, Database, Cloud, Shield, ArrowRight, Sparkles, Palette, Megaphone, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import InternalLinks from '@/components/InternalLinks';
@@ -12,10 +12,12 @@ const Services = () => {
   const { t, lang } = useLanguage();
 
   const services = [
-    { icon: GraduationCap, ...t.services.school, accent: 'bg-primary/8 text-primary border-primary/15', gradient: 'from-primary/10 to-primary/5' },
-    { icon: HeartPulse, ...t.services.hospital, accent: 'bg-destructive/8 text-destructive border-destructive/15', gradient: 'from-destructive/10 to-destructive/5' },
-    { icon: Code, ...t.services.custom, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', gradient: 'from-secondary/15 to-secondary/5' },
-    { icon: Globe, ...t.services.web, accent: 'bg-primary/8 text-primary border-primary/15', gradient: 'from-primary/10 to-primary/5' },
+    { icon: GraduationCap, ...t.services.school, accent: 'bg-primary/8 text-primary border-primary/15', gradient: 'from-primary/10 to-primary/5', slug: 'school' },
+    { icon: HeartPulse, ...t.services.hospital, accent: 'bg-destructive/8 text-destructive border-destructive/15', gradient: 'from-destructive/10 to-destructive/5', slug: 'hospital' },
+    { icon: Code, ...t.services.custom, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', gradient: 'from-secondary/15 to-secondary/5', slug: 'custom' },
+    { icon: Globe, ...t.services.web, accent: 'bg-primary/8 text-primary border-primary/15', gradient: 'from-primary/10 to-primary/5', slug: 'web' },
+    { icon: Palette, ...t.services.graphics, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', gradient: 'from-secondary/15 to-secondary/5', slug: 'graphics', comingSoon: true },
+    { icon: Megaphone, ...t.services.boosting, accent: 'bg-destructive/8 text-destructive border-destructive/15', gradient: 'from-destructive/10 to-destructive/5', slug: 'boosting', comingSoon: true },
   ];
 
   const process = lang === 'bn'
@@ -140,11 +142,10 @@ const Services = () => {
       {/* Services Grid - Enhanced */}
       <section className="py-10 md:py-20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
             {services.map((s, i) => {
-              const slugs = ['school', 'hospital', 'custom', 'web'];
               return (
-              <Link to={`/services/${slugs[i]}`} key={i}>
+              <Link to={`/services/${s.slug}`} key={i}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -153,13 +154,18 @@ const Services = () => {
                   whileHover={{ y: -6 }}
                   className={`group bg-gradient-to-br ${s.gradient} rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:p-9 border border-border hover:border-primary/25 transition-all duration-500 cursor-pointer relative overflow-hidden shadow-soft hover:shadow-elevated h-full`}
                 >
+                  {(s as any).comingSoon && (
+                    <span className="absolute top-3 right-3 sm:top-4 sm:right-4 inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-secondary text-secondary-foreground border border-secondary/40 shadow-sm z-10">
+                      <Clock className="h-2.5 w-2.5 sm:h-3 sm:w-3" /> {t.services.comingSoon}
+                    </span>
+                  )}
                   <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.04]" style={{
                     backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
                     backgroundSize: '12px 12px',
                   }} />
-                  <div className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                  {!(s as any).comingSoon && <div className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
                     <ArrowUpRight className="h-5 w-5 text-primary" />
-                  </div>
+                  </div>}
                   <div className={`w-10 h-10 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl ${s.accent} border flex items-center justify-center mb-3 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
                     <s.icon className="h-5 w-5 sm:h-8 sm:w-8" />
                   </div>

@@ -7,7 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
-import { Check, X, ArrowLeft, GraduationCap, HeartPulse, Code, Globe, Shield, Clock, Headphones, Zap, ArrowRight, Sparkles, Users, BarChart3, Settings, Monitor, Database, Lock, FileText, CheckCircle2, Play, Award } from 'lucide-react';
+import { Check, X, ArrowLeft, GraduationCap, HeartPulse, Code, Globe, Shield, Clock, Headphones, Zap, ArrowRight, Sparkles, Users, BarChart3, Settings, Monitor, Database, Lock, FileText, CheckCircle2, Play, Award, Palette, Megaphone, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
@@ -540,13 +540,60 @@ const serviceData = {
 };
 
 type ServiceKey = 'school' | 'hospital' | 'custom' | 'web';
+type ComingSoonKey = 'graphics' | 'boosting';
+
+const comingSoonData = {
+  bn: {
+    graphics: {
+      title: 'গ্রাফিক্স ডিজাইন',
+      titleHighlight: 'সার্ভিস',
+      badge: 'Coming Soon',
+      icon: Palette,
+      subtitle: 'প্রফেশনাল ব্র্যান্ডিং, লোগো, ব্যানার ও সোশ্যাল মিডিয়া ক্রিয়েটিভ ডিজাইন',
+      description: 'খুব শীঘ্রই Upnex IT নিয়ে আসছে সম্পূর্ণ প্রফেশনাল গ্রাফিক্স ডিজাইন সার্ভিস। লোগো ডিজাইন, ব্র্যান্ড আইডেন্টিটি, পোস্টার, ব্যানার, সোশ্যাল মিডিয়া পোস্ট ও বিজনেস কার্ড — সবকিছু এক জায়গায়।',
+      bullets: ['লোগো ও ব্র্যান্ড আইডেন্টিটি', 'সোশ্যাল মিডিয়া ক্রিয়েটিভ', 'পোস্টার, ব্যানার ও ফ্লায়ার', 'বিজনেস কার্ড ও স্টেশনারি', 'প্রোডাক্ট ও থাম্বনেইল ডিজাইন', 'অনলিমিটেড রিভিশন'],
+    },
+    boosting: {
+      title: 'ডিজিটাল মার্কেটিং',
+      titleHighlight: 'ও বুস্টিং',
+      badge: 'Coming Soon',
+      icon: Megaphone,
+      subtitle: 'ফেসবুক, ইনস্টাগ্রাম, গুগল অ্যাডস ও SEO দিয়ে আপনার ব্যবসা বাড়ান',
+      description: 'খুব শীঘ্রই Upnex IT নিয়ে আসছে সম্পূর্ণ ডিজিটাল মার্কেটিং ও বুস্টিং সার্ভিস। ফেসবুক/ইনস্টাগ্রাম অ্যাডস থেকে শুরু করে গুগল অ্যাডস, SEO ও কন্টেন্ট মার্কেটিং — সব আপনার ব্যবসার গ্রোথের জন্য।',
+      bullets: ['ফেসবুক ও ইনস্টাগ্রাম অ্যাডস', 'গুগল অ্যাডস ক্যাম্পেইন', 'SEO অপটিমাইজেশন', 'কন্টেন্ট মার্কেটিং স্ট্র্যাটেজি', 'টার্গেটেড অডিয়েন্স রিসার্চ', 'মাসিক পারফরম্যান্স রিপোর্ট'],
+    },
+  },
+  en: {
+    graphics: {
+      title: 'Graphic Design',
+      titleHighlight: 'Service',
+      badge: 'Coming Soon',
+      icon: Palette,
+      subtitle: 'Professional branding, logos, banners & social media creatives',
+      description: 'Upnex IT is launching a full professional graphic design service very soon. Logo design, brand identity, posters, banners, social media posts and business cards — everything in one place.',
+      bullets: ['Logo & brand identity', 'Social media creatives', 'Posters, banners & flyers', 'Business cards & stationery', 'Product & thumbnail design', 'Unlimited revisions'],
+    },
+    boosting: {
+      title: 'Digital Marketing',
+      titleHighlight: '& Boosting',
+      badge: 'Coming Soon',
+      icon: Megaphone,
+      subtitle: 'Grow your business with Facebook, Instagram, Google Ads & SEO',
+      description: 'Upnex IT is launching a complete digital marketing and boosting service very soon. From Facebook/Instagram ads to Google Ads, SEO and content marketing — all built to grow your business.',
+      bullets: ['Facebook & Instagram Ads', 'Google Ads campaigns', 'SEO optimization', 'Content marketing strategy', 'Targeted audience research', 'Monthly performance reports'],
+    },
+  },
+} as const;
 
 const ServiceDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { lang } = useLanguage();
   const [demoOpen, setDemoOpen] = useState(false);
   const serviceKey = slug as ServiceKey;
-  const data = serviceData[lang]?.[serviceKey];
+  const comingSoonKey = slug as ComingSoonKey;
+  const isComingSoon = comingSoonKey === 'graphics' || comingSoonKey === 'boosting';
+  const data = isComingSoon ? null : serviceData[lang]?.[serviceKey];
+  const csData = isComingSoon ? (comingSoonData as any)[lang]?.[comingSoonKey] : null;
 
   const { data: settings = [] } = useQuery({
     queryKey: ['site-settings-demo'],
@@ -563,6 +610,90 @@ const ServiceDetail = () => {
     username: getSetting(`demo_user_${serviceKey}`) || 'demo',
     password: getSetting(`demo_pass_${serviceKey}`) || 'demo123',
   };
+
+  if (isComingSoon && csData) {
+    const CsIcon = csData.icon;
+    const isBn = lang === 'bn';
+    return (
+      <div className="min-h-screen overflow-x-hidden">
+        <SEOHead
+          title={`${csData.title} ${csData.titleHighlight} - Upnex It | ${csData.badge}`}
+          description={csData.description}
+          canonical={`https://upnexit.pro.bd/services/${slug}`}
+        />
+        <Navbar />
+        <section className="relative pt-24 pb-16 sm:pt-32 sm:pb-24 md:pt-40 md:pb-32 overflow-hidden">
+          <div className="absolute inset-0" style={{
+            background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
+          }} />
+          <div className="absolute inset-0 opacity-[0.04]" style={{
+            backgroundImage: `linear-gradient(hsl(145 63% 32%) 1px, transparent 1px), linear-gradient(90deg, hsl(145 63% 32%) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
+          }} />
+          <div className="container mx-auto px-4 lg:px-8 relative z-10">
+            <Link to="/#services" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 text-xs sm:text-sm group">
+              <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+              {isBn ? 'ফিরে যান' : 'Go Back'}
+            </Link>
+
+            <div className="max-w-4xl mx-auto text-center">
+              <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', stiffness: 200 }}
+                className="inline-flex items-center justify-center w-20 h-20 sm:w-28 sm:h-28 rounded-3xl gradient-accent shadow-glow mb-6">
+                <CsIcon className="h-10 w-10 sm:h-14 sm:w-14 text-primary-foreground" />
+              </motion.div>
+
+              <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider bg-secondary text-secondary-foreground border border-secondary/50 mb-5 shadow-sm">
+                <Clock className="h-3.5 w-3.5" /> {csData.badge}
+              </motion.span>
+
+              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+                className="text-3xl sm:text-5xl md:text-6xl font-black leading-tight mb-4 tracking-tight text-foreground">
+                {csData.title} <span className="text-gradient">{csData.titleHighlight}</span>
+              </motion.h1>
+
+              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                className="text-sm sm:text-lg text-muted-foreground mb-3 leading-relaxed max-w-2xl mx-auto">
+                {csData.subtitle}
+              </motion.p>
+              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
+                className="text-xs sm:text-sm text-muted-foreground/80 mb-8 leading-relaxed max-w-2xl mx-auto">
+                {csData.description}
+              </motion.p>
+
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+                className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto mb-10 text-left">
+                {csData.bullets.map((b: string, i: number) => (
+                  <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-background border border-border shadow-soft hover:border-primary/25 hover:shadow-card transition-all">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/15 flex items-center justify-center shrink-0">
+                      <CheckCircle2 className="h-4 w-4 text-primary" />
+                    </div>
+                    <span className="text-sm font-semibold text-foreground">{b}</span>
+                  </div>
+                ))}
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
+                className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <Link to="/contact" className="w-full sm:w-auto">
+                  <Button variant="hero" size="lg" className="gap-2 w-full sm:w-auto">
+                    <Bell className="h-4 w-4" />
+                    {isBn ? 'লঞ্চ হলে জানান' : 'Notify Me on Launch'}
+                  </Button>
+                </Link>
+                <Link to="/#services" className="w-full sm:w-auto">
+                  <Button variant="heroOutline" size="lg" className="w-full sm:w-auto">
+                    {isBn ? 'অন্যান্য সার্ভিস দেখুন' : 'Explore Other Services'}
+                  </Button>
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!data) {
     return (

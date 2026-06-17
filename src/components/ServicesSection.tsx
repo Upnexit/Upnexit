@@ -1,6 +1,6 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { GraduationCap, HeartPulse, Code, Globe, ArrowUpRight } from 'lucide-react';
+import { GraduationCap, HeartPulse, Code, Globe, ArrowUpRight, Palette, Megaphone, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ServicesSection = () => {
@@ -11,6 +11,8 @@ const ServicesSection = () => {
     { icon: HeartPulse, ...t.services.hospital, accent: 'bg-destructive/8 text-destructive border-destructive/15', slug: 'hospital' },
     { icon: Code, ...t.services.custom, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', slug: 'custom' },
     { icon: Globe, ...t.services.web, accent: 'bg-primary/8 text-primary border-primary/15', slug: 'web' },
+    { icon: Palette, ...t.services.graphics, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', slug: 'graphics', comingSoon: true },
+    { icon: Megaphone, ...t.services.boosting, accent: 'bg-destructive/8 text-destructive border-destructive/15', slug: 'boosting', comingSoon: true },
   ];
 
   return (
@@ -29,7 +31,7 @@ const ServicesSection = () => {
           <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">{t.services.subtitle}</p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {services.map((s, i) => (
             <Link to={`/services/${s.slug}`} key={i}>
               <motion.div
@@ -39,9 +41,14 @@ const ServicesSection = () => {
                 transition={{ delay: i * 0.08 }}
                 className="group bg-background rounded-2xl p-6 md:p-7 border border-border hover:border-primary/20 transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 cursor-pointer relative overflow-hidden h-full"
               >
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                {(s as any).comingSoon && (
+                  <span className="absolute top-4 right-4 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary text-secondary-foreground border border-secondary/40 shadow-sm">
+                    <Clock className="h-3 w-3" /> {t.services.comingSoon}
+                  </span>
+                )}
+                {!(s as any).comingSoon && <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
                   <ArrowUpRight className="h-4 w-4 text-primary" />
-                </div>
+                </div>}
                 <div className={`w-14 h-14 rounded-2xl ${s.accent} border flex items-center justify-center mb-5`}>
                   <s.icon className="h-7 w-7" />
                 </div>

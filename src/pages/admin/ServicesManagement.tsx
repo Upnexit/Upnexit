@@ -16,7 +16,7 @@ const ServicesManagement = () => {
   const [open, setOpen] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState({
-    title_bn: '', title_en: '', description_bn: '', description_en: '', icon: 'Code2', is_active: true,
+    title_bn: '', title_en: '', description_bn: '', description_en: '', icon: 'Code2', is_active: true, is_coming_soon: false,
   });
 
   const { data: services = [], isLoading } = useQuery({
@@ -57,7 +57,7 @@ const ServicesManagement = () => {
   });
 
   const resetForm = () => {
-    setForm({ title_bn: '', title_en: '', description_bn: '', description_en: '', icon: 'Code2', is_active: true });
+    setForm({ title_bn: '', title_en: '', description_bn: '', description_en: '', icon: 'Code2', is_active: true, is_coming_soon: false });
     setEditId(null);
     setOpen(false);
   };
@@ -66,7 +66,7 @@ const ServicesManagement = () => {
     setForm({
       title_bn: s.title_bn, title_en: s.title_en,
       description_bn: s.description_bn ?? '', description_en: s.description_en ?? '',
-      icon: s.icon ?? 'Code2', is_active: s.is_active,
+      icon: s.icon ?? 'Code2', is_active: s.is_active, is_coming_soon: s.is_coming_soon ?? false,
     });
     setEditId(s.id);
     setOpen(true);
@@ -96,6 +96,13 @@ const ServicesManagement = () => {
                 <Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} />
                 <span className="text-sm">{form.is_active ? 'সক্রিয়' : 'নিষ্ক্রিয়'}</span>
               </div>
+              <div className="flex items-center gap-3 rounded-lg border border-dashed border-secondary/50 bg-secondary/10 px-3 py-2">
+                <Switch checked={form.is_coming_soon} onCheckedChange={(v) => setForm({ ...form, is_coming_soon: v })} />
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-foreground">শীঘ্রই আসছে (Coming Soon)</p>
+                  <p className="text-xs text-muted-foreground">ভবিষ্যৎ সার্ভিস হিসেবে দেখানো হবে — অর্ডার নেওয়া যাবে না</p>
+                </div>
+              </div>
               <Button type="submit" disabled={saveMutation.isPending} className="w-full">
                 {saveMutation.isPending ? 'সংরক্ষণ হচ্ছে...' : 'সংরক্ষণ করুন'}
               </Button>
@@ -112,7 +119,12 @@ const ServicesManagement = () => {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
           {services.map((s) => (
-            <div key={s.id} className={`bg-background rounded-2xl border p-4 shadow-sm ${!s.is_active ? 'opacity-50' : ''}`}>
+            <div key={s.id} className={`bg-background rounded-2xl border p-4 shadow-sm relative ${!s.is_active ? 'opacity-50' : ''}`}>
+              {s.is_coming_soon && (
+                <span className="absolute top-2 right-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary text-secondary-foreground border border-secondary/40">
+                  শীঘ্রই আসছে
+                </span>
+              )}
               <div className="flex justify-between items-start">
                 <div>
                   <p className="font-semibold text-foreground">{s.title_bn}</p>
