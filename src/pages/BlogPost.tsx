@@ -79,7 +79,7 @@ const BlogPost = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen">
         <Navbar />
         <div className="pt-28 pb-16 px-4 max-w-4xl mx-auto">
           <div className="animate-pulse space-y-4">
@@ -95,7 +95,7 @@ const BlogPost = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen">
         <Navbar />
         <div className="pt-28 pb-16 px-4 text-center">
           <h1 className="text-2xl font-bold text-foreground mb-4">পোস্ট পাওয়া যায়নি</h1>
@@ -107,7 +107,7 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <SEOHead
         title={`${post.title} | Upnex It Blog`}
         description={post.excerpt || post.title}

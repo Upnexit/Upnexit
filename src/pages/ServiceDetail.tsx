@@ -566,7 +566,7 @@ const ServiceDetail = () => {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Service not found</h1>
           <Link to="/"><Button variant="default">Go Home</Button></Link>
@@ -579,7 +579,7 @@ const ServiceDetail = () => {
   const isBn = lang === 'bn';
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden">
       <SEOHead
         title={`${data.title} ${data.titleHighlight} - Upnex It | Best ${serviceKey === 'school' ? 'School ERP' : serviceKey === 'hospital' ? 'HMS' : serviceKey === 'web' ? 'Web Development' : 'Custom Software'} Bangladesh`}
         description={data.description}

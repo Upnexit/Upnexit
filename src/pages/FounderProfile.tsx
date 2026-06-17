@@ -247,7 +247,7 @@ const FounderProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden">
       <SEOHead
         title={isMehedi
           ? `Mehedi Hasan — CEO & Founder of Upnex It | মেহেদী হাসান`

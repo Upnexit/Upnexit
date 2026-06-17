@@ -148,7 +148,7 @@ const PrivacyPolicy = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <SEOHead
         title="Privacy Policy - Upnex It | গোপনীয়তা নীতি"
         description="Read Upnex It's privacy policy. Learn how we collect, use, and protect your personal information."
