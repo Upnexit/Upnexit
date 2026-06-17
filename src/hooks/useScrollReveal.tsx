@@ -31,8 +31,15 @@ export function useScrollReveal() {
       // Auto-tag top-level <section> elements that haven't been tagged yet.
       const sections = document.querySelectorAll("section:not([data-reveal])");
       sections.forEach((el) => {
-        const variant = REVEAL_VARIANTS[counter % REVEAL_VARIANTS.length];
-        el.setAttribute("data-reveal", variant);
+        // Skip the hero (first section above the fold) — keep it instantly
+        // visible to protect LCP and avoid flash of invisible content.
+        if (counter === 0) {
+          el.setAttribute("data-reveal", "fade");
+          el.classList.add("is-visible");
+        } else {
+          const variant = REVEAL_VARIANTS[counter % REVEAL_VARIANTS.length];
+          el.setAttribute("data-reveal", variant);
+        }
         counter++;
       });
       // Observe everything marked for reveal that isn't already visible.
