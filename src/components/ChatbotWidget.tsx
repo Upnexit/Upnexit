@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { MessageCircle, X, Send, Mic, MicOff, Image } from 'lucide-react';
+import { MessageCircle, X, Send, Mic, MicOff, Image, Headset } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ChatMessage {
@@ -26,6 +26,7 @@ const WhatsAppIcon = () => (
 const ChatbotWidget = () => {
   const { lang } = useLanguage();
   const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [showHelpText, setShowHelpText] = useState(false);
@@ -52,15 +53,15 @@ const ChatbotWidget = () => {
 
   const whatsappNumber = settings.find(s => s.key === 'whatsapp_number')?.value || '';
 
-  // Help Center text animation
+  // Help Center text animation (shown next to support FAB when collapsed)
   useEffect(() => {
-    if (open) return;
+    if (open || menuOpen) return;
     const interval = setInterval(() => {
       setShowHelpText(true);
       setTimeout(() => setShowHelpText(false), 1500);
     }, 5000);
     return () => clearInterval(interval);
-  }, [open]);
+  }, [open, menuOpen]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -330,6 +331,7 @@ const ChatbotWidget = () => {
     if (!whatsappNumber) return;
     const cleaned = whatsappNumber.replace(/[^0-9]/g, '');
     window.open(`https://wa.me/${cleaned}`, '_blank');
+    setMenuOpen(false);
   };
 
   // Close on outside click
@@ -355,48 +357,87 @@ const ChatbotWidget = () => {
 
   return (
     <>
-      {/* WhatsApp Button */}
-      <button
-        onClick={handleWhatsApp}
-        className="fixed bottom-[11rem] lg:bottom-[5.5rem] right-4 lg:right-6 z-[60] w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#25D366] text-white shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
-        aria-label="WhatsApp"
-      >
-        <WhatsAppIcon />
-      </button>
-
-      {/* Chatbot Toggle */}
-      <div className="fixed bottom-[7.5rem] lg:bottom-6 right-4 lg:right-6 z-[60] flex items-center gap-2">
+      {/* Customer Support FAB stack */}
+      <div className="fixed bottom-[5.5rem] lg:bottom-6 right-4 lg:right-6 z-[60] flex flex-col items-end gap-3">
+        {/* Expanded action buttons */}
         <AnimatePresence>
-          {showHelpText && !open && (
-            <motion.div
-              initial={{ opacity: 0, x: 20, scale: 0.8 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 20, scale: 0.8 }}
-              transition={{ duration: 0.3 }}
-              className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap"
-            >
-              Help Center
-            </motion.div>
+          {menuOpen && !open && (
+            <>
+              <motion.button
+                key="ai"
+                initial={{ opacity: 0, y: 20, scale: 0.6 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 20, scale: 0.6 }}
+                transition={{ duration: 0.2, delay: 0.05 }}
+                onClick={() => { setOpen(true); setMenuOpen(false); }}
+                className="flex items-center gap-2 group"
+                aria-label={lang === 'bn' ? 'AI সহকারীর সাথে কথা বলুন' : 'Chat with AI Assistant'}
+              >
+                <span className="bg-background border border-border text-foreground text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap">
+                  {lang === 'bn' ? 'AI সহকারী' : 'AI Assistant'}
+                </span>
+                <span className="w-12 h-12 rounded-full bg-primary text-primary-foreground shadow-elevated flex items-center justify-center group-hover:scale-105 group-active:scale-95 transition-transform">
+                  <MessageCircle className="h-5 w-5" />
+                </span>
+              </motion.button>
+              <motion.button
+                key="wa"
+                initial={{ opacity: 0, y: 20, scale: 0.6 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 20, scale: 0.6 }}
+                transition={{ duration: 0.2 }}
+                onClick={handleWhatsApp}
+                className="flex items-center gap-2 group"
+                aria-label="WhatsApp"
+              >
+                <span className="bg-background border border-border text-foreground text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap">
+                  WhatsApp
+                </span>
+                <span className="w-12 h-12 rounded-full bg-[#25D366] text-white shadow-elevated flex items-center justify-center group-hover:scale-105 group-active:scale-95 transition-transform">
+                  <WhatsAppIcon />
+                </span>
+              </motion.button>
+            </>
           )}
         </AnimatePresence>
-        <motion.button
-          onClick={() => setOpen(!open)}
-          className="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-primary text-primary-foreground shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
-          whileTap={{ scale: 0.9 }}
-          aria-label="Toggle chatbot"
-        >
-          <AnimatePresence mode="wait">
-            {open ? (
-              <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                <X className="h-5 w-5 lg:h-6 lg:w-6" />
-              </motion.div>
-            ) : (
-              <motion.div key="chat" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                <MessageCircle className="h-5 w-5 lg:h-6 lg:w-6" />
+
+        {/* Main Support Toggle */}
+        <div className="flex items-center gap-2">
+          <AnimatePresence>
+            {showHelpText && !open && !menuOpen && (
+              <motion.div
+                initial={{ opacity: 0, x: 20, scale: 0.8 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 20, scale: 0.8 }}
+                transition={{ duration: 0.3 }}
+                className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full shadow-md whitespace-nowrap"
+              >
+                {lang === 'bn' ? 'হেল্প সেন্টার' : 'Help Center'}
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.button>
+          <motion.button
+            onClick={() => {
+              if (open) { setOpen(false); return; }
+              setMenuOpen(!menuOpen);
+            }}
+            className="w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-elevated flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
+            whileTap={{ scale: 0.9 }}
+            aria-label={lang === 'bn' ? 'কাস্টমার সাপোর্ট' : 'Customer Support'}
+          >
+            <AnimatePresence mode="wait">
+              {open || menuOpen ? (
+                <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                  <X className="h-6 w-6" />
+                </motion.div>
+              ) : (
+                <motion.div key="support" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                  <Headset className="h-6 w-6" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.button>
+        </div>
       </div>
 
       {/* Hidden file input */}
@@ -417,26 +458,33 @@ const ChatbotWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-36 lg:bottom-24 right-3 lg:right-6 z-[60] w-[calc(100vw-1.5rem)] max-w-[320px] sm:max-w-[360px] h-[360px] sm:h-[420px] bg-background border border-border rounded-2xl shadow-elevated flex flex-col overflow-hidden"
+            className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 z-[70] w-full sm:w-[360px] h-[100dvh] sm:h-[480px] bg-background border border-border sm:rounded-2xl shadow-elevated flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-primary text-primary-foreground px-3 py-2 flex items-center justify-between shrink-0">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-                  <MessageCircle className="h-3.5 w-3.5" />
+            <div className="bg-primary text-primary-foreground px-4 py-3 sm:px-3 sm:py-2 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 sm:w-7 sm:h-7 rounded-full bg-primary-foreground/20 flex items-center justify-center">
+                  <MessageCircle className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
                 </div>
                 <div>
-                  <p className="font-semibold text-[11px]">Upnex AI Assistant</p>
-                  <p className="text-[9px] opacity-80">{lang === 'bn' ? 'AI দ্বারা চালিত' : 'AI-powered'}</p>
+                  <p className="font-semibold text-sm sm:text-[11px]">Upnex AI Assistant</p>
+                  <p className="text-[11px] sm:text-[9px] opacity-80">{lang === 'bn' ? 'AI দ্বারা চালিত' : 'AI-powered'}</p>
                 </div>
               </div>
+              <button
+                onClick={() => setOpen(false)}
+                className="w-8 h-8 rounded-full hover:bg-primary-foreground/15 active:bg-primary-foreground/25 flex items-center justify-center transition-colors"
+                aria-label="Close chat"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-2 space-y-2">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-2 space-y-2.5 sm:space-y-2">
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] px-2.5 py-1.5 rounded-2xl text-[11px] leading-relaxed whitespace-pre-wrap ${
+                  <div className={`max-w-[85%] px-3.5 py-2 sm:px-2.5 sm:py-1.5 rounded-2xl text-[13px] sm:text-[11px] leading-relaxed whitespace-pre-wrap ${
                     msg.sender === 'user'
                       ? 'bg-primary text-primary-foreground rounded-br-md'
                       : 'bg-muted text-foreground rounded-bl-md'
@@ -489,30 +537,30 @@ const ChatbotWidget = () => {
             )}
 
             {/* Input */}
-            <div className="border-t border-border p-1.5 shrink-0">
-              <div className="flex gap-1 items-center bg-muted/50 rounded-full px-1 py-0.5 border border-border/30">
+            <div className="border-t border-border p-2 sm:p-1.5 shrink-0 pb-[max(env(safe-area-inset-bottom),0.5rem)] sm:pb-1.5">
+              <div className="flex gap-1 items-center bg-muted/50 rounded-full px-1.5 py-1 sm:px-1 sm:py-0.5 border border-border/30">
                 {/* Image button */}
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isTyping}
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 disabled:opacity-30 transition-all"
+                  className="w-9 h-9 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 disabled:opacity-30 transition-all"
                   title={lang === 'bn' ? 'ছবি পাঠান' : 'Send image'}
                 >
-                  <Image className="h-3.5 w-3.5" />
+                  <Image className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
                 </button>
 
                 {/* Voice button */}
                 <button
                   onClick={isListening ? stopListening : startListening}
                   disabled={isTyping}
-                  className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
+                  className={`w-9 h-9 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-all ${
                     isListening
                       ? 'bg-destructive/15 text-destructive animate-pulse'
                       : 'text-muted-foreground hover:text-primary hover:bg-primary/10'
                   } disabled:opacity-30`}
                   title={isListening ? 'বন্ধ করুন' : 'ভয়েস ইনপুট'}
                 >
-                  {isListening ? <MicOff className="h-3.5 w-3.5" /> : <Mic className="h-3.5 w-3.5" />}
+                  {isListening ? <MicOff className="h-4 w-4 sm:h-3.5 sm:w-3.5" /> : <Mic className="h-4 w-4 sm:h-3.5 sm:w-3.5" />}
                 </button>
 
                 {/* Text input */}
@@ -522,7 +570,7 @@ const ChatbotWidget = () => {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder={isListening ? (lang === 'bn' ? '🎙 শুনছি...' : '🎙 Listening...') : (lang === 'bn' ? 'প্রশ্ন লিখুন...' : 'Ask question...')}
-                  className="flex-1 h-7 px-2 bg-transparent border-0 text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none"
+                  className="flex-1 h-9 sm:h-7 px-2 bg-transparent border-0 text-[13px] sm:text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none"
                   disabled={isTyping}
                 />
 
@@ -530,10 +578,10 @@ const ChatbotWidget = () => {
                 <motion.button
                   onClick={handleSend}
                   disabled={(!input.trim() && !pendingImage) || isTyping}
-                  className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 hover:bg-primary/90 disabled:opacity-30 transition-all"
+                  className="w-9 h-9 sm:w-7 sm:h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 hover:bg-primary/90 disabled:opacity-30 transition-all"
                   whileTap={{ scale: 0.9 }}
                 >
-                  <Send className="h-3 w-3" />
+                  <Send className="h-4 w-4 sm:h-3 sm:w-3" />
                 </motion.button>
               </div>
             </div>
