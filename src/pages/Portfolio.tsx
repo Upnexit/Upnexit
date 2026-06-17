@@ -26,7 +26,7 @@ const Portfolio = () => {
   const filteredItems = activeCategory ? items?.filter(i => i.category === activeCategory) : items;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <SEOHead
         title="পোর্টফোলিও | Upnex It - আমাদের সফল প্রজেক্টসমূহ"
         description="Upnex It এর সফলভাবে সম্পন্ন করা প্রজেক্টসমূহ দেখুন।"

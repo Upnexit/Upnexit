@@ -39,7 +39,7 @@ const Blog = () => {
   const getReadingTime = (content: string) => Math.max(1, Math.ceil(content.replace(/<[^>]*>/g, '').split(/\s+/).length / 200));
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <SEOHead
         title="ব্লগ | Upnex It - সফটওয়্যার টিপস, গাইড ও আপডেট"
         description="Upnex It এর ব্লগে পড়ুন সফটওয়্যার ডেভেলপমেন্ট, স্কুল ম্যানেজমেন্ট ERP, হসপিটাল ম্যানেজমেন্ট সিস্টেম এবং ওয়েব টেকনোলজি সম্পর্কিত বাংলা আর্টিকেল ও গাইড।"

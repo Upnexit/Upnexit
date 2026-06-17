@@ -60,7 +60,7 @@ const Services = () => {
       ];
 
   return (
-    <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
+    <div className="min-h-screen pb-0 overflow-x-hidden">
       <SEOHead
         title="Software Services - Upnex It | সফটওয়্যার সেবাসমূহ"
         description="Upnex It offers School Management Software, Hospital Management Software, Custom Software Development & Web Applications in Bangladesh. Get a free demo today."

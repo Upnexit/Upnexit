@@ -50,7 +50,7 @@ const About = () => {
       ];
 
   return (
-    <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
+    <div className="min-h-screen pb-0 overflow-x-hidden">
       <SEOHead
         title="About Upnex It — Software Company in Naogaon"
         description="Learn about Upnex It — a Naogaon-based software company building School, Hospital, and Custom Software solutions across Bangladesh."
