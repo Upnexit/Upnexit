@@ -7,12 +7,42 @@ const ServicesSection = () => {
   const { t } = useLanguage();
 
   const services = [
-    { icon: GraduationCap, ...t.services.school, accent: 'bg-primary/8 text-primary border-primary/15', slug: 'school' },
-    { icon: HeartPulse, ...t.services.hospital, accent: 'bg-destructive/8 text-destructive border-destructive/15', slug: 'hospital' },
-    { icon: Code, ...t.services.custom, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', slug: 'custom' },
-    { icon: Globe, ...t.services.web, accent: 'bg-primary/8 text-primary border-primary/15', slug: 'web' },
-    { icon: Palette, ...t.services.graphics, accent: 'bg-secondary/15 text-secondary-foreground border-secondary/20', slug: 'graphics', comingSoon: true },
-    { icon: Megaphone, ...t.services.boosting, accent: 'bg-destructive/8 text-destructive border-destructive/15', slug: 'boosting', comingSoon: true },
+    {
+      icon: GraduationCap, ...t.services.school, slug: 'school',
+      gradient: 'from-emerald-400 via-teal-500 to-cyan-600',
+      glow: 'shadow-[0_10px_30px_-10px_rgba(20,184,166,0.55)]',
+      ring: 'hover:border-emerald-400/40',
+    },
+    {
+      icon: HeartPulse, ...t.services.hospital, slug: 'hospital',
+      gradient: 'from-rose-400 via-pink-500 to-red-500',
+      glow: 'shadow-[0_10px_30px_-10px_rgba(244,63,94,0.55)]',
+      ring: 'hover:border-rose-400/40',
+    },
+    {
+      icon: Code, ...t.services.custom, slug: 'custom',
+      gradient: 'from-indigo-500 via-violet-500 to-fuchsia-500',
+      glow: 'shadow-[0_10px_30px_-10px_rgba(139,92,246,0.55)]',
+      ring: 'hover:border-violet-400/40',
+    },
+    {
+      icon: Globe, ...t.services.web, slug: 'web',
+      gradient: 'from-sky-400 via-blue-500 to-indigo-600',
+      glow: 'shadow-[0_10px_30px_-10px_rgba(59,130,246,0.55)]',
+      ring: 'hover:border-sky-400/40',
+    },
+    {
+      icon: Palette, ...t.services.graphics, slug: 'graphics', comingSoon: true,
+      gradient: 'from-amber-400 via-orange-500 to-pink-500',
+      glow: 'shadow-[0_10px_30px_-10px_rgba(249,115,22,0.55)]',
+      ring: 'hover:border-amber-400/40',
+    },
+    {
+      icon: Megaphone, ...t.services.boosting, slug: 'boosting', comingSoon: true,
+      gradient: 'from-lime-400 via-green-500 to-emerald-600',
+      glow: 'shadow-[0_10px_30px_-10px_rgba(34,197,94,0.55)]',
+      ring: 'hover:border-lime-400/40',
+    },
   ];
 
   return (
@@ -39,21 +69,42 @@ const ServicesSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="group bg-background rounded-2xl p-6 md:p-7 border border-border hover:border-primary/20 transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 cursor-pointer relative overflow-hidden h-full"
+                className={`group bg-background rounded-2xl p-6 md:p-7 border border-border ${s.ring} transition-all duration-500 hover:shadow-elevated hover:-translate-y-1 cursor-pointer relative overflow-hidden h-full`}
               >
+                {/* Animated gradient sheen on hover */}
+                <span
+                  aria-hidden
+                  className={`pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br ${s.gradient} opacity-0 group-hover:opacity-[0.08] transition-opacity duration-500`}
+                />
+                {/* Shimmer sweep */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                />
                 {(s as any).comingSoon && (
-                  <span className="absolute top-4 right-4 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary text-secondary-foreground border border-secondary/40 shadow-sm">
+                  <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary text-secondary-foreground border border-secondary/40 shadow-sm">
                     <Clock className="h-3 w-3" /> {t.services.comingSoon}
                   </span>
                 )}
-                {!(s as any).comingSoon && <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                {!(s as any).comingSoon && <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-1 transition-all duration-300">
                   <ArrowUpRight className="h-4 w-4 text-primary" />
                 </div>}
-                <div className={`w-14 h-14 rounded-2xl ${s.accent} border flex items-center justify-center mb-5`}>
-                  <s.icon className="h-7 w-7" />
+                <div className="relative mb-5">
+                  <div
+                    className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${s.gradient} ${s.glow} flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[-6deg]`}
+                  >
+                    <s.icon className="h-7 w-7 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.2} />
+                    {/* Glossy highlight */}
+                    <span aria-hidden className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/40 via-transparent to-transparent opacity-60 mix-blend-overlay" />
+                  </div>
+                  {/* Soft pulsing halo */}
+                  <span
+                    aria-hidden
+                    className={`absolute -inset-2 rounded-3xl bg-gradient-to-br ${s.gradient} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-700`}
+                  />
                 </div>
-                <h3 className="font-bold text-base md:text-lg mb-3 text-foreground group-hover:text-primary transition-colors">{s.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                <h3 className="relative font-bold text-base md:text-lg mb-3 text-foreground group-hover:text-primary transition-colors">{s.title}</h3>
+                <p className="relative text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               </motion.div>
             </Link>
           ))}
