@@ -25,13 +25,7 @@ const VideoSection = () => {
   }, []);
 
   return (
-    <section id="video-section" className="relative bg-muted/50" ref={sectionRef}>
-      {/* Top decorative wave separator */}
-      <div className="absolute top-0 left-0 right-0 -translate-y-[99%]">
-        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-          <path d="M0 60L60 52C120 44 240 28 360 22C480 16 600 20 720 26C840 32 960 40 1080 42C1200 44 1320 40 1380 38L1440 36V60H0Z" fill="hsl(140 8% 96% / 0.5)" />
-        </svg>
-      </div>
+    <section id="video-section" ref={sectionRef}>
       <div className="section-padding">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-6 md:mb-10">

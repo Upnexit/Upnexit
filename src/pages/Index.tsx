@@ -16,7 +16,7 @@ const ContactSection = lazy(() => import('@/components/ContactSection'));
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background pb-0 overflow-x-hidden">
+    <div className="min-h-screen pb-0 overflow-x-hidden">
       <SEOHead
         title="Upnex It — #1 Software Company in Bangladesh | Custom, School & Hospital Software"
         description="Upnex It is Bangladesh's leading software development company — building affordable Custom Software, School Management, Hospital Management, ERP and Web Applications. Trusted by 10+ clients, 50+ projects delivered."
