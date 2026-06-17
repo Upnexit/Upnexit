@@ -670,6 +670,26 @@ const ServiceDetail = () => {
   if (isComingSoon && csData) {
     const CsIcon = csData.icon;
     const isBn = lang === 'bn';
+    const csHeroMap: Record<string, { gradient: string; glow: string }> = {
+      graphics: { gradient: 'from-amber-400 via-orange-500 to-pink-500', glow: 'shadow-[0_15px_40px_-10px_rgba(249,115,22,0.6)]' },
+      boosting: { gradient: 'from-lime-400 via-green-500 to-emerald-600', glow: 'shadow-[0_15px_40px_-10px_rgba(16,185,129,0.6)]' },
+    };
+    const csHero = csHeroMap[comingSoonKey] || csHeroMap.graphics;
+    const csCycleGradients = [
+      'from-emerald-400 via-teal-500 to-cyan-600',
+      'from-amber-400 via-orange-500 to-rose-500',
+      'from-violet-400 via-purple-500 to-fuchsia-500',
+      'from-sky-400 via-blue-500 to-indigo-600',
+      'from-rose-400 via-pink-500 to-red-500',
+      'from-lime-400 via-green-500 to-emerald-600',
+      'from-cyan-400 via-sky-500 to-blue-600',
+      'from-fuchsia-400 via-pink-500 to-rose-500',
+    ];
+    const planGradients = [
+      'linear-gradient(135deg, hsl(25 95% 55%), hsl(330 85% 55%))',
+      'linear-gradient(135deg, hsl(145 65% 45%), hsl(190 80% 45%))',
+    ];
+
     return (
       <div className="min-h-screen overflow-x-hidden">
         <SEOHead
@@ -678,74 +698,278 @@ const ServiceDetail = () => {
           canonical={`https://upnexit.pro.bd/services/${slug}`}
         />
         <Navbar />
-        <section className="relative pt-24 pb-16 sm:pt-32 sm:pb-24 md:pt-40 md:pb-32 overflow-hidden">
+
+        {/* ═══════════════════ HERO ═══════════════════ */}
+        <section className="relative pt-20 pb-10 sm:pt-32 sm:pb-20 md:pt-36 md:pb-28 overflow-hidden">
           <div className="absolute inset-0" style={{
             background: 'linear-gradient(160deg, hsl(145 63% 96%) 0%, hsl(0 0% 100%) 25%, hsl(46 80% 96%) 55%, hsl(145 45% 94%) 100%)'
           }} />
-          <div className="absolute inset-0 opacity-[0.04]" style={{
+          <div className="absolute inset-0 opacity-[0.03]" style={{
             backgroundImage: `linear-gradient(hsl(145 63% 32%) 1px, transparent 1px), linear-gradient(90deg, hsl(145 63% 32%) 1px, transparent 1px)`,
             backgroundSize: '40px 40px'
           }} />
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <motion.div animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute top-20 right-[10%] w-48 sm:w-60 h-48 sm:h-60 rounded-full"
+              style={{ background: 'radial-gradient(circle, hsl(145 63% 42% / 0.08), transparent 70%)' }} />
+            <motion.div animate={{ y: [0, 12, 0] }} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              className="absolute bottom-16 left-[5%] w-56 sm:w-80 h-56 sm:h-80 rounded-full"
+              style={{ background: 'radial-gradient(circle, hsl(46 92% 55% / 0.1), transparent 70%)' }} />
+          </div>
+
           <div className="container mx-auto px-4 lg:px-8 relative z-10">
-            <Link to="/#services" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 text-xs sm:text-sm group">
+            <Link to="/#services" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-4 sm:mb-6 text-xs sm:text-sm group">
               <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
               {isBn ? 'ফিরে যান' : 'Go Back'}
             </Link>
 
-            <div className="max-w-4xl mx-auto text-center">
-              <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', stiffness: 200 }}
-                className="inline-flex items-center justify-center w-20 h-20 sm:w-28 sm:h-28 rounded-3xl gradient-accent shadow-glow mb-6">
-                <CsIcon className="h-10 w-10 sm:h-14 sm:w-14 text-primary-foreground" />
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+                <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 sm:px-5 sm:py-2 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r ${csHero.gradient} ${csHero.glow} mb-3 sm:mb-5`}>
+                  <Clock className="h-3.5 w-3.5" /> {csData.badge}
+                </motion.span>
+
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.15] mb-2.5 sm:mb-4 tracking-tight text-foreground">
+                  {csData.title}
+                  <br className="sm:hidden" />{' '}
+                  <span className="text-gradient">{csData.titleHighlight}</span>
+                </h1>
+                <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-2 sm:mb-3 leading-relaxed">{csData.subtitle}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground/70 leading-relaxed mb-4 sm:mb-8 max-w-xl hidden sm:block">{csData.description}</p>
+
+                <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+                  <Link to="/contact" className="w-full sm:w-auto">
+                    <Button variant="hero" size="default" className="gap-2 w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12">
+                      <Bell className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      {isBn ? 'লঞ্চ হলে জানান' : 'Notify Me on Launch'}
+                    </Button>
+                  </Link>
+                  <Link to="/#services" className="w-full sm:w-auto">
+                    <Button variant="heroOutline" size="default" className="w-full sm:w-auto sm:size-lg text-xs sm:text-sm h-10 sm:h-12">
+                      {isBn ? 'অন্যান্য সার্ভিস' : 'Other Services'}
+                    </Button>
+                  </Link>
+                </div>
               </motion.div>
 
-              <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider bg-secondary text-secondary-foreground border border-secondary/50 mb-5 shadow-sm">
-                <Clock className="h-3.5 w-3.5" /> {csData.badge}
-              </motion.span>
-
-              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                className="text-3xl sm:text-5xl md:text-6xl font-black leading-tight mb-4 tracking-tight text-foreground">
-                {csData.title} <span className="text-gradient">{csData.titleHighlight}</span>
-              </motion.h1>
-
-              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                className="text-sm sm:text-lg text-muted-foreground mb-3 leading-relaxed max-w-2xl mx-auto">
-                {csData.subtitle}
-              </motion.p>
-              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-                className="text-xs sm:text-sm text-muted-foreground/80 mb-8 leading-relaxed max-w-2xl mx-auto">
-                {csData.description}
-              </motion.p>
-
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto mb-10 text-left">
-                {csData.bullets.map((b: string, i: number) => (
-                  <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-background border border-border shadow-soft hover:border-primary/25 hover:shadow-card transition-all">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/15 flex items-center justify-center shrink-0">
-                      <CheckCircle2 className="h-4 w-4 text-primary" />
-                    </div>
-                    <span className="text-sm font-semibold text-foreground">{b}</span>
+              {/* Right side: hero icon card */}
+              <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="relative hidden md:block">
+                <div className="bg-background rounded-3xl border border-border p-6 md:p-8 shadow-elevated relative overflow-hidden">
+                  <div className="absolute top-0 left-0 right-0 h-1.5 gradient-accent rounded-t-3xl" />
+                  <div className={`relative w-20 h-20 rounded-3xl bg-gradient-to-br ${csHero.gradient} ${csHero.glow} flex items-center justify-center mb-5 overflow-hidden mx-auto`}>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                    <CsIcon className="relative h-10 w-10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" strokeWidth={2.2} />
                   </div>
-                ))}
+                  <h3 className="text-center text-lg font-black text-foreground mb-1">{csData.title} {csData.titleHighlight}</h3>
+                  <p className="text-center text-xs text-muted-foreground mb-5">{csData.subtitle}</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {csData.benefits.slice(0, 4).map((b: string, i: number) => (
+                      <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4 + i * 0.1 }}
+                        className="p-3 rounded-2xl text-center border bg-muted/30 border-border/50 hover:border-primary/20 transition-all group">
+                        <div className={`w-9 h-9 mx-auto mb-2 rounded-xl bg-gradient-to-br ${csCycleGradients[i % csCycleGradients.length]} flex items-center justify-center shadow-md overflow-hidden relative group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                          <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                          <CheckCircle2 className="relative h-5 w-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.4} />
+                        </div>
+                        <p className="text-xs font-bold text-foreground leading-snug">{b}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+                <div className="absolute -top-6 -right-6 w-32 h-32 rounded-full" style={{ background: 'hsl(46 92% 55% / 0.08)' }} />
+                <div className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full" style={{ background: 'hsl(145 63% 32% / 0.06)' }} />
+              </motion.div>
+            </div>
+          </div>
+
+          <div className="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 100" fill="none" className="w-full h-auto">
+              <path d="M0 100L48 90C96 80 192 60 288 50C384 40 480 40 576 45C672 50 768 60 864 65C960 70 1056 70 1152 60C1248 50 1344 30 1392 20L1440 10V100H0Z" fill="hsl(var(--background))" />
+            </svg>
+          </div>
+        </section>
+
+        {/* ═══════════════════ FEATURES GRID ═══════════════════ */}
+        <section className="py-8 sm:py-16 md:py-20 relative">
+          <div className="absolute inset-0 opacity-[0.02]" style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
+            backgroundSize: '28px 28px'
+          }} />
+          <div className="container mx-auto px-4 lg:px-8 relative">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-7 sm:mb-14">
+              <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-primary/8 text-primary mb-3 sm:mb-5">
+                {isBn ? 'বৈশিষ্ট্যসমূহ' : 'Features'}
+              </span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-1.5 sm:mb-3">
+                {isBn ? 'যা যা পাবেন' : 'What You Get'}
+              </h2>
+              <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto">
+                {isBn ? 'এই সার্ভিসে অন্তর্ভুক্ত প্রধান ফিচারসমূহ' : 'Key features included in this service'}
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5">
+              {csData.features.map((feature: any, i: number) => (
+                <motion.div key={i} initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+                  whileHover={{ y: -6 }}
+                  className="group bg-background rounded-xl sm:rounded-3xl p-3 sm:p-6 border border-border hover:border-primary/20 hover:shadow-elevated transition-all duration-300 relative overflow-hidden">
+                  <div className={`absolute -top-3 left-2 w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br ${csCycleGradients[i % csCycleGradients.length]} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500 pointer-events-none`} />
+                  <div className={`relative w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-gradient-to-br ${csCycleGradients[i % csCycleGradients.length]} flex items-center justify-center mb-2 sm:mb-4 group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500 shadow-md overflow-hidden`}>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                    <feature.icon className="relative h-4 w-4 sm:h-6 sm:w-6 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.3} />
+                  </div>
+                  <h3 className="font-bold text-sm sm:text-sm md:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
+                  <p className="text-xs sm:text-xs md:text-sm text-muted-foreground leading-snug">{feature.desc}</p>
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary/0 group-hover:bg-primary/20 transition-all duration-500 rounded-b-3xl" />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════ BENEFITS & PROCESS ═══════════════════ */}
+        <section className="py-8 sm:py-16 md:py-20">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-6 md:gap-12 lg:gap-16 items-center">
+              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+                <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-secondary/15 mb-3 sm:mb-5" style={{ color: 'hsl(40 95% 38%)' }}>
+                  {isBn ? 'সুবিধাসমূহ' : 'Benefits'}
+                </span>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-5 leading-tight text-foreground">
+                  {isBn ? 'কেন আমাদের' : 'Why Choose'}{' '}
+                  <span className="text-gradient">{isBn ? 'বেছে নেবেন?' : 'Us?'}</span>
+                </h2>
+                <p className="text-sm sm:text-sm text-muted-foreground mb-4 sm:mb-8 leading-relaxed">
+                  {isBn ? 'প্রফেশনাল কোয়ালিটি, সময়মতো ডেলিভারি ও সেরা প্রাইসে আপনার ব্যবসার জন্য পরিপূর্ণ সমাধান।' : 'Professional quality, on-time delivery and best price for a complete solution for your business.'}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                  {csData.benefits.map((b: string, i: number) => (
+                    <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                      whileHover={{ x: 4 }}
+                      className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-4 rounded-lg sm:rounded-xl bg-muted/60 border border-border/50 hover:border-primary/20 hover:shadow-card transition-all group">
+                      <div className={`relative w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-gradient-to-br ${csCycleGradients[i % csCycleGradients.length]} flex items-center justify-center shrink-0 shadow-md overflow-hidden group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                        <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                        <CheckCircle2 className="relative h-3 w-3 sm:h-4 sm:w-4 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.5} />
+                      </div>
+                      <span className="text-sm sm:text-sm font-semibold text-foreground">{b}</span>
+                    </motion.div>
+                  ))}
+                </div>
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
-                className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                <Link to="/contact" className="w-full sm:w-auto">
-                  <Button variant="hero" size="lg" className="gap-2 w-full sm:w-auto">
-                    <Bell className="h-4 w-4" />
-                    {isBn ? 'লঞ্চ হলে জানান' : 'Notify Me on Launch'}
-                  </Button>
-                </Link>
-                <Link to="/#services" className="w-full sm:w-auto">
-                  <Button variant="heroOutline" size="lg" className="w-full sm:w-auto">
-                    {isBn ? 'অন্যান্য সার্ভিস দেখুন' : 'Explore Other Services'}
-                  </Button>
-                </Link>
+              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
+                <div className="bg-background rounded-xl sm:rounded-3xl border border-border p-3.5 sm:p-6 md:p-8 shadow-elevated relative overflow-hidden">
+                  <div className="absolute top-0 left-0 right-0 h-1 sm:h-1.5 gradient-accent rounded-t-xl sm:rounded-t-3xl" />
+                  <h3 className="text-sm sm:text-lg font-bold text-foreground mb-3 sm:mb-6 mt-1">
+                    {isBn ? 'আমাদের কাজের প্রক্রিয়া' : 'Our Work Process'}
+                  </h3>
+                  <div className="space-y-2.5 sm:space-y-4">
+                    {[
+                      { step: isBn ? '০১' : '01', title: isBn ? 'কনসালটেশন' : 'Consultation', desc: isBn ? 'আপনার প্রয়োজন বুঝে নেওয়া' : 'Understand your needs' },
+                      { step: isBn ? '০২' : '02', title: isBn ? 'স্ট্র্যাটেজি' : 'Strategy', desc: isBn ? 'কাস্টম পরিকল্পনা তৈরি' : 'Build a custom plan' },
+                      { step: isBn ? '০৩' : '03', title: isBn ? 'এক্সিকিউশন' : 'Execution', desc: isBn ? 'ক্রিয়েটিভ ডেলিভারি' : 'Creative delivery' },
+                      { step: isBn ? '০৪' : '04', title: isBn ? 'অপটিমাইজেশন' : 'Optimization', desc: isBn ? 'রেজাল্ট অনুযায়ী ইমপ্রুভ' : 'Improve based on results' },
+                    ].map((p, i) => (
+                      <motion.div key={i} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                        className="flex items-center gap-2.5 sm:gap-4 group">
+                        <div className={`relative w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-gradient-to-br ${csCycleGradients[i % csCycleGradients.length]} flex items-center justify-center text-white font-black text-[10px] sm:text-sm shadow-lg shrink-0 overflow-hidden group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                          <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent mix-blend-overlay" />
+                          <span className="relative drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]">{p.step}</span>
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm sm:text-sm text-foreground group-hover:text-primary transition-colors">{p.title}</h4>
+                          <p className="text-xs sm:text-xs text-muted-foreground">{p.desc}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+                <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full" style={{ background: 'hsl(46 92% 55% / 0.08)' }} />
+                <div className="absolute -bottom-4 -left-4 w-20 h-20 rounded-full" style={{ background: 'hsl(145 63% 32% / 0.06)' }} />
               </motion.div>
             </div>
           </div>
         </section>
+
+        {/* ═══════════════════ PACKAGES ═══════════════════ */}
+        <section className="py-8 sm:py-16 md:py-20 relative overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, hsl(145 63% 42% / 0.06), transparent 70%)' }} />
+            <div className="absolute -bottom-32 -left-32 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, hsl(46 92% 55% / 0.08), transparent 70%)' }} />
+          </div>
+          <div className="container mx-auto px-4 lg:px-8 relative">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-7 sm:mb-14">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3">
+                {isBn ? 'প্যাকেজ ও মূল্য' : 'Packages & Pricing'}
+              </h2>
+              <p className="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto mb-3 sm:mb-5">
+                {isBn ? 'আপনার ব্যবসার চাহিদা অনুযায়ী সেরা প্ল্যান বেছে নিন' : 'Pick the best plan for your business needs'}
+              </p>
+              <div className="flex items-center justify-center gap-1.5">
+                <span className="block w-8 sm:w-12 h-[2px] rounded-full bg-primary/40" />
+                <span className="block w-14 sm:w-20 h-[3px] rounded-full bg-primary" />
+                <span className="block w-8 sm:w-12 h-[2px] rounded-full bg-primary/40" />
+              </div>
+            </motion.div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8 max-w-5xl mx-auto">
+              {csData.packages.map((plan: any, planIdx: number) => {
+                const planGradient = planGradients[planIdx % planGradients.length];
+                return (
+                  <motion.div key={planIdx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: planIdx * 0.1 }}
+                    className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-elevated hover:shadow-xl transition-all duration-300 bg-background relative">
+                    {planIdx === 1 && (
+                      <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-white shadow-lg" style={{ background: planGradient }}>
+                        {isBn ? 'জনপ্রিয়' : 'Popular'}
+                      </div>
+                    )}
+                    <div className="relative h-[160px] sm:h-[240px] md:h-[270px] overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                      <div className="absolute inset-0 bg-background" />
+                      <div className="absolute inset-0" style={{ background: planGradient, clipPath: planIdx === 1 ? 'polygon(0 0, 100% 0, 100% 70%, 0 100%)' : 'polygon(0 0, 100% 0, 100% 100%, 0 70%)' }} />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-transparent to-transparent mix-blend-overlay" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-start pt-7 sm:pt-9 md:pt-10 z-10">
+                        <h3 className="text-xl sm:text-3xl md:text-4xl font-black text-white tracking-wider uppercase" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)', letterSpacing: '0.08em' }}>{plan.name}</h3>
+                        {plan.subtitle && (
+                          <p className="text-xs sm:text-base font-extrabold text-white tracking-wide mt-1 sm:mt-1.5" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}>{plan.subtitle}</p>
+                        )}
+                      </div>
+                      <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-10">
+                        <div className="inline-flex items-baseline gap-0.5 sm:gap-1 bg-background rounded-lg sm:rounded-2xl px-4 sm:px-8 py-2 sm:py-4 shadow-xl border border-border/60">
+                          {plan.currency && <span className="text-sm sm:text-2xl font-bold text-foreground">{plan.currency}</span>}
+                          <span className="text-2xl sm:text-5xl md:text-6xl font-black text-foreground tracking-tight">{plan.price}</span>
+                        </div>
+                      </div>
+                    </div>
+                    {plan.period && (
+                      <p className="text-xs sm:text-sm font-bold text-foreground/70 text-center py-2">{plan.period}</p>
+                    )}
+                    <div className="px-5 sm:px-8 py-5 sm:py-8">
+                      <ul className="space-y-2 sm:space-y-2.5">
+                        {plan.items.map((item: string, itemIdx: number) => (
+                          <li key={itemIdx} className="flex items-start gap-2 sm:gap-3">
+                            <div className="mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: planGradient }}>
+                              <Check className="h-3 w-3 text-white" strokeWidth={3} />
+                            </div>
+                            <span className="text-xs sm:text-sm text-foreground/85 leading-snug">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-5 sm:mt-8">
+                        <Link to="/contact" className="block">
+                          <Button className="w-full rounded-xl text-sm h-11 sm:h-12 font-bold text-white shadow-md" size="lg" style={{ background: planGradient }}>
+                            <Bell className="h-4 w-4 mr-1" />
+                            {isBn ? 'লঞ্চ হলে জানান' : 'Notify Me'} <ArrowRight className="h-4 w-4 ml-1" />
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         <Footer />
       </div>
     );
