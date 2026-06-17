@@ -460,6 +460,7 @@ export type Database = {
           icon: string | null
           id: string
           is_active: boolean | null
+          is_coming_soon: boolean
           sort_order: number | null
           title_bn: string
           title_en: string
@@ -472,6 +473,7 @@ export type Database = {
           icon?: string | null
           id?: string
           is_active?: boolean | null
+          is_coming_soon?: boolean
           sort_order?: number | null
           title_bn: string
           title_en: string
@@ -484,6 +486,7 @@ export type Database = {
           icon?: string | null
           id?: string
           is_active?: boolean | null
+          is_coming_soon?: boolean
           sort_order?: number | null
           title_bn?: string
           title_en?: string
