@@ -251,7 +251,7 @@ const Navbar = () => {
                         layoutId="bottomNavIndicator"
                         className="absolute inset-x-2 -inset-y-1 rounded-2xl"
                         style={{
-                          background: `linear-gradient(135deg, ${l.tint} / 0.14, ${l.tint.replace(')', ' / 0.06)')})`,
+                          background: `linear-gradient(135deg, ${l.tint.replace(')', ' / 0.14)')}, ${l.tint.replace(')', ' / 0.06)')})`,
                           boxShadow: `inset 0 0 0 1px ${l.tint.replace(')', ' / 0.25)')}`,
                         }}
                         transition={{ type: 'spring', stiffness: 350, damping: 28 }}
