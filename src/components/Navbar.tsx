@@ -41,12 +41,12 @@ const Navbar = () => {
 
   // Bottom nav: 2 left, center dashboard, 2 right
   const leftNav = [
-    { label: 'Home', href: '/', icon: Home },
-    { label: 'Services', href: '/services', icon: Briefcase },
+    { label: lang === 'bn' ? 'হোম' : 'Home', href: '/', icon: Home, tint: 'hsl(150 65% 42%)' },
+    { label: lang === 'bn' ? 'সেবা' : 'Services', href: '/services', icon: Briefcase, tint: 'hsl(200 80% 45%)' },
   ];
   const rightNav = [
-    { label: 'About', href: '/about', icon: Users },
-    { label: 'Contact', href: '/contact', icon: MessageSquare },
+    { label: lang === 'bn' ? 'আমরা' : 'About', href: '/about', icon: Users, tint: 'hsl(280 60% 55%)' },
+    { label: lang === 'bn' ? 'যোগাযোগ' : 'Contact', href: '/contact', icon: MessageSquare, tint: 'hsl(20 85% 55%)' },
   ];
 
   return (
