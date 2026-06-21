@@ -15,6 +15,20 @@ const About = () => {
   const { t, lang } = useLanguage();
   const reasonIcons = [Zap, Shield, Clock, Heart];
 
+  const reasonStyles = [
+    { gradient: 'from-amber-400 via-orange-500 to-pink-500', tint: 'hsl(20 90% 55%)', glow: 'shadow-[0_8px_24px_-10px_rgba(249,115,22,0.55)]' },
+    { gradient: 'from-sky-400 via-blue-500 to-indigo-600', tint: 'hsl(217 90% 55%)', glow: 'shadow-[0_8px_24px_-10px_rgba(59,130,246,0.55)]' },
+    { gradient: 'from-emerald-400 via-teal-500 to-cyan-600', tint: 'hsl(160 75% 40%)', glow: 'shadow-[0_8px_24px_-10px_rgba(20,184,166,0.55)]' },
+    { gradient: 'from-rose-400 via-pink-500 to-red-500', tint: 'hsl(340 80% 55%)', glow: 'shadow-[0_8px_24px_-10px_rgba(244,63,94,0.55)]' },
+  ];
+
+  const valueStyles = [
+    { gradient: 'from-amber-400 via-orange-500 to-rose-500', tint: 'hsl(30 95% 55%)', soft: 'hsl(30 95% 55% / 0.08)', border: 'hsl(30 95% 55% / 0.2)', glow: 'shadow-[0_12px_30px_-12px_rgba(249,115,22,0.5)]' },
+    { gradient: 'from-emerald-400 via-teal-500 to-cyan-600', tint: 'hsl(160 75% 40%)', soft: 'hsl(160 75% 40% / 0.08)', border: 'hsl(160 75% 40% / 0.2)', glow: 'shadow-[0_12px_30px_-12px_rgba(20,184,166,0.5)]' },
+    { gradient: 'from-violet-500 via-purple-500 to-fuchsia-500', tint: 'hsl(280 70% 55%)', soft: 'hsl(280 70% 55% / 0.08)', border: 'hsl(280 70% 55% / 0.2)', glow: 'shadow-[0_12px_30px_-12px_rgba(168,85,247,0.5)]' },
+    { gradient: 'from-sky-400 via-blue-500 to-indigo-600', tint: 'hsl(217 90% 55%)', soft: 'hsl(217 90% 55% / 0.08)', border: 'hsl(217 90% 55% / 0.2)', glow: 'shadow-[0_12px_30px_-12px_rgba(59,130,246,0.5)]' },
+  ];
+
   // Fetch all team members from DB
   const { data: allMembers = [] } = useQuery({
     queryKey: ['team-members-public'],
@@ -176,6 +190,7 @@ const About = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {t.about.reasons.map((r, i) => {
                   const Icon = reasonIcons[i] || CheckCircle2;
+                  const s = reasonStyles[i % reasonStyles.length];
                   return (
                     <motion.div
                       key={i}
@@ -184,12 +199,16 @@ const About = () => {
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.1 }}
                       whileHover={{ x: 4 }}
-                      className="flex items-center gap-3 p-4 rounded-xl bg-muted/60 border border-border/50 hover:border-primary/20 hover:shadow-card transition-all group"
+                      className="relative flex items-center gap-3 p-4 rounded-2xl bg-background border border-border/60 hover:shadow-elevated transition-all group overflow-hidden"
+                      style={{ borderColor: `${s.tint.replace(')', ' / 0.18)')}` }}
                     >
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
-                        <Icon className="h-5 w-5 text-primary" />
+                      <span aria-hidden className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${s.gradient} opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-500`} />
+                      <span aria-hidden className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                      <div className={`relative w-11 h-11 rounded-xl bg-gradient-to-br ${s.gradient} ${s.glow} flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-[-6deg] transition-transform duration-500`}>
+                        <Icon className="h-5 w-5 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.3} />
+                        <span aria-hidden className="absolute inset-0 rounded-xl bg-gradient-to-tr from-white/40 via-transparent to-transparent opacity-60 mix-blend-overlay" />
                       </div>
-                      <span className="text-sm font-semibold text-foreground">{r}</span>
+                      <span className="relative text-sm font-bold text-foreground">{r}</span>
                     </motion.div>
                   );
                 })}
@@ -255,6 +274,7 @@ const About = () => {
           </motion.div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {values.map((v, i) => (
+              (() => { const s = valueStyles[i % valueStyles.length]; return (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 25 }}
@@ -262,14 +282,21 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -6 }}
-                className="bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group"
+                className="relative bg-background rounded-2xl sm:rounded-3xl p-4 sm:p-7 border hover:shadow-elevated transition-all text-center group overflow-hidden"
+                style={{ borderColor: s.border }}
               >
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-primary/8 border border-primary/15 flex items-center justify-center mx-auto mb-3 sm:mb-5 group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
-                  <v.icon className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />
+                <span aria-hidden className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${s.gradient} opacity-[0.05] group-hover:opacity-[0.12] transition-opacity duration-500`} />
+                <span aria-hidden className="pointer-events-none absolute top-0 left-0 right-0 h-1" style={{ background: `linear-gradient(90deg, transparent, ${s.tint}, transparent)` }} />
+                <span aria-hidden className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out bg-gradient-to-r from-transparent via-white/35 to-transparent" />
+                <div className={`relative w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br ${s.gradient} ${s.glow} flex items-center justify-center mx-auto mb-3 sm:mb-5 group-hover:scale-110 group-hover:rotate-[-6deg] transition-all duration-500`}>
+                  <v.icon className="h-5 w-5 sm:h-7 sm:w-7 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]" strokeWidth={2.2} />
+                  <span aria-hidden className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-white/40 via-transparent to-transparent opacity-60 mix-blend-overlay" />
+                  <span aria-hidden className={`absolute -inset-2 rounded-2xl bg-gradient-to-br ${s.gradient} opacity-0 group-hover:opacity-25 blur-2xl transition-opacity duration-700`} />
                 </div>
-                <h3 className="font-bold text-xs sm:text-base text-foreground mb-1 group-hover:text-primary transition-colors">{v.title}</h3>
+                <h3 className="relative font-bold text-xs sm:text-base text-foreground mb-1 transition-colors" style={{}}>{v.title}</h3>
                 <p className="text-[10px] sm:text-sm text-muted-foreground leading-relaxed hidden sm:block">{v.desc}</p>
               </motion.div>
+              );})()
             ))}
           </div>
         </div>
@@ -318,7 +345,11 @@ const About = () => {
                         src={leader.image_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'}
                         alt={`${leader.name} - ${leader.role} of Upnex It, Naogaon Bangladesh`}
                         title={`${leader.name} - ${leader.role}`}
-                        loading="lazy"
+                        loading="eager"
+                        fetchPriority="high"
+                        decoding="async"
+                        width="400"
+                        height="400"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />

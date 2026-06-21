@@ -11,7 +11,7 @@ interface TeamMember {
 const MemberCard = ({ member }: { member: TeamMember }) => (
   <div className="bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden h-full">
     <div className="w-full aspect-square overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
-      <img src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      <img src={member.image} alt={member.name} loading="lazy" decoding="async" width="300" height="300" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
     </div>
     <div className="p-3 sm:p-5">
       <h3 className="font-bold text-xs sm:text-base text-foreground mb-0.5 sm:mb-1 group-hover:text-primary transition-colors">{member.name}</h3>
@@ -23,7 +23,7 @@ const MemberCard = ({ member }: { member: TeamMember }) => (
 const MarqueeCard = ({ member }: { member: TeamMember }) => (
   <div className="bg-background rounded-2xl border border-border hover:border-primary/20 hover:shadow-elevated transition-all text-center group relative overflow-hidden shrink-0 w-[calc(50%-6px)]">
     <div className="w-full aspect-square overflow-hidden rounded-t-2xl">
-      <img src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      <img src={member.image} alt={member.name} loading="lazy" decoding="async" width="300" height="300" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
     </div>
     <div className="p-3">
       <h3 className="font-bold text-xs text-foreground mb-0.5 group-hover:text-primary transition-colors">{member.name}</h3>
