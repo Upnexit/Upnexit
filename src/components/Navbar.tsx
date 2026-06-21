@@ -212,58 +212,111 @@ const Navbar = () => {
       </Sheet>
 
       {/* Floating Mobile Bottom Navigation Bar with Center Dashboard Button */}
-      <div className="lg:hidden fixed inset-x-0 bottom-4 z-50 px-4">
+      <div className="lg:hidden fixed inset-x-0 bottom-3 z-50 px-3">
         <div
-          className="mx-auto w-full max-w-md rounded-[28px] p-1.5"
+          className="mx-auto w-full max-w-md rounded-[30px] p-[3px]"
           style={{
-            background: 'hsl(var(--foreground) / 0.06)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
-            boxShadow: '0 8px 40px hsl(150 10% 15% / 0.12), 0 0 0 1px hsl(var(--border) / 0.5)',
+            background:
+              'linear-gradient(135deg, hsl(150 65% 45% / 0.55) 0%, hsl(46 92% 60% / 0.55) 50%, hsl(150 65% 45% / 0.55) 100%)',
+            boxShadow:
+              '0 18px 50px -12px hsl(150 40% 20% / 0.35), 0 4px 14px -4px hsl(46 92% 45% / 0.25)',
           }}
         >
-          <div className="flex items-center justify-around rounded-[22px] py-1.5 px-1" style={{ background: 'hsl(var(--background) / 0.85)' }}>
+          <div
+            className="relative flex items-end justify-around rounded-[27px] py-2 px-1"
+            style={{
+              background:
+                'linear-gradient(180deg, hsl(0 0% 100% / 0.96) 0%, hsl(150 30% 98% / 0.96) 100%)',
+              backdropFilter: 'blur(24px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+              boxShadow: 'inset 0 1px 0 hsl(0 0% 100% / 0.9), inset 0 -1px 0 hsl(150 20% 90% / 0.6)',
+            }}
+          >
             {/* Left 2 items */}
             {leftNav.map((l) => {
               const active = isActive(l.href);
               return (
-                <Link key={l.href} to={l.href} className="relative flex flex-col items-center gap-0.5 py-1.5 px-2 flex-1">
-                  <motion.div className="relative z-10 flex flex-col items-center gap-0.5 w-full" whileTap={{ scale: 0.85 }} transition={{ type: 'spring', stiffness: 400, damping: 15 }}>
+                <Link
+                  key={l.href}
+                  to={l.href}
+                  className="relative flex flex-col items-center justify-center py-1 flex-1 min-w-0"
+                >
+                  <motion.div
+                    whileTap={{ scale: 0.88 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                    className="relative flex flex-col items-center gap-1 w-full"
+                  >
                     {active && (
-                      <motion.div layoutId="bottomNavIndicator" className="absolute -inset-x-1 -inset-y-1 rounded-2xl" style={{ background: 'hsl(var(--primary) / 0.12)' }} transition={{ type: 'spring', stiffness: 350, damping: 25 }} />
+                      <motion.div
+                        layoutId="bottomNavIndicator"
+                        className="absolute inset-x-2 -inset-y-1 rounded-2xl"
+                        style={{
+                          background: `linear-gradient(135deg, ${l.tint} / 0.14, ${l.tint.replace(')', ' / 0.06)')})`,
+                          boxShadow: `inset 0 0 0 1px ${l.tint.replace(')', ' / 0.25)')}`,
+                        }}
+                        transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                      />
                     )}
-                    <div className="relative z-10">
-                      <motion.div animate={active ? { y: -2, scale: 1.15 } : { y: 0, scale: 1 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-                        <l.icon className={`h-[20px] w-[20px] transition-colors duration-200 ${active ? 'text-primary' : 'text-muted-foreground'}`} />
-                      </motion.div>
-                    </div>
-                    <motion.span animate={active ? { opacity: 1 } : { opacity: 0.6 }} className={`text-[9px] font-semibold relative z-10 ${active ? 'text-primary' : 'text-muted-foreground'}`}>
+                    <motion.div
+                      animate={active ? { y: -3, scale: 1.12 } : { y: 0, scale: 1 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                      className="relative z-10 w-9 h-9 rounded-xl flex items-center justify-center"
+                      style={
+                        active
+                          ? {
+                              background: `linear-gradient(135deg, ${l.tint}, ${l.tint.replace(')', ' / 0.85)')})`,
+                              boxShadow: `0 6px 14px -4px ${l.tint.replace(')', ' / 0.55)')}, inset 0 1px 0 hsl(0 0% 100% / 0.35)`,
+                            }
+                          : { background: 'hsl(150 15% 96%)' }
+                      }
+                    >
+                      <l.icon
+                        className="h-[18px] w-[18px] transition-colors duration-200"
+                        style={{ color: active ? 'hsl(0 0% 100%)' : 'hsl(150 8% 40%)' }}
+                        strokeWidth={active ? 2.4 : 2}
+                      />
+                    </motion.div>
+                    <span
+                      className="text-[10px] font-bold tracking-tight relative z-10 leading-none"
+                      style={{ color: active ? l.tint : 'hsl(150 8% 45%)' }}
+                    >
                       {l.label}
-                    </motion.span>
+                    </span>
                   </motion.div>
                 </Link>
               );
             })}
 
-            {/* Center Dashboard Button - highlighted circle */}
+            {/* Center Dashboard Button */}
             <Link
               to={user ? '/dashboard' : '/login'}
-              className="relative flex items-center justify-center -mt-6 mx-1"
+              className="relative flex flex-col items-center justify-end -mt-7 mx-1"
             >
               <motion.div
                 whileTap={{ scale: 0.9 }}
-                className={`w-14 h-14 rounded-full flex items-center justify-center shadow-glow transition-all ${
-                  isActive('/dashboard')
-                    ? 'gradient-accent'
-                    : 'gradient-accent opacity-90 hover:opacity-100'
-                }`}
+                whileHover={{ y: -2 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+                className="relative w-[58px] h-[58px] rounded-full flex items-center justify-center"
                 style={{
-                  boxShadow: '0 4px 20px hsl(var(--primary) / 0.35), 0 0 0 3px hsl(var(--background) / 0.9)',
+                  background:
+                    'linear-gradient(135deg, hsl(150 65% 45%) 0%, hsl(150 70% 38%) 60%, hsl(46 92% 55%) 100%)',
+                  boxShadow:
+                    '0 10px 28px -6px hsl(150 65% 35% / 0.55), 0 0 0 4px hsl(0 0% 100%), 0 0 0 5px hsl(46 92% 80% / 0.6)',
                 }}
               >
-                <LayoutDashboard className="h-6 w-6 text-primary-foreground" />
+                <div
+                  className="absolute inset-0 rounded-full pointer-events-none"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 30% 25%, hsl(0 0% 100% / 0.45), transparent 55%)',
+                  }}
+                />
+                <LayoutDashboard className="h-[24px] w-[24px] text-white relative z-10" strokeWidth={2.2} />
               </motion.div>
-              <span className="absolute -bottom-4 text-[8px] font-bold text-primary whitespace-nowrap">
+              <span
+                className="mt-1 text-[9px] font-extrabold tracking-tight leading-none"
+                style={{ color: 'hsl(150 65% 30%)' }}
+              >
                 {user ? (lang === 'bn' ? 'প্যানেল' : 'Panel') : (lang === 'bn' ? 'লগইন' : 'Login')}
               </span>
             </Link>
@@ -272,19 +325,52 @@ const Navbar = () => {
             {rightNav.map((l) => {
               const active = isActive(l.href);
               return (
-                <Link key={l.href} to={l.href} className="relative flex flex-col items-center gap-0.5 py-1.5 px-2 flex-1">
-                  <motion.div className="relative z-10 flex flex-col items-center gap-0.5 w-full" whileTap={{ scale: 0.85 }} transition={{ type: 'spring', stiffness: 400, damping: 15 }}>
+                <Link
+                  key={l.href}
+                  to={l.href}
+                  className="relative flex flex-col items-center justify-center py-1 flex-1 min-w-0"
+                >
+                  <motion.div
+                    whileTap={{ scale: 0.88 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                    className="relative flex flex-col items-center gap-1 w-full"
+                  >
                     {active && (
-                      <motion.div layoutId="bottomNavIndicator" className="absolute -inset-x-1 -inset-y-1 rounded-2xl" style={{ background: 'hsl(var(--primary) / 0.12)' }} transition={{ type: 'spring', stiffness: 350, damping: 25 }} />
+                      <motion.div
+                        layoutId="bottomNavIndicator"
+                        className="absolute inset-x-2 -inset-y-1 rounded-2xl"
+                        style={{
+                          background: `linear-gradient(135deg, ${l.tint.replace(')', ' / 0.14)')}, ${l.tint.replace(')', ' / 0.06)')})`,
+                          boxShadow: `inset 0 0 0 1px ${l.tint.replace(')', ' / 0.25)')}`,
+                        }}
+                        transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                      />
                     )}
-                    <div className="relative z-10">
-                      <motion.div animate={active ? { y: -2, scale: 1.15 } : { y: 0, scale: 1 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-                        <l.icon className={`h-[20px] w-[20px] transition-colors duration-200 ${active ? 'text-primary' : 'text-muted-foreground'}`} />
-                      </motion.div>
-                    </div>
-                    <motion.span animate={active ? { opacity: 1 } : { opacity: 0.6 }} className={`text-[9px] font-semibold relative z-10 ${active ? 'text-primary' : 'text-muted-foreground'}`}>
+                    <motion.div
+                      animate={active ? { y: -3, scale: 1.12 } : { y: 0, scale: 1 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                      className="relative z-10 w-9 h-9 rounded-xl flex items-center justify-center"
+                      style={
+                        active
+                          ? {
+                              background: `linear-gradient(135deg, ${l.tint}, ${l.tint.replace(')', ' / 0.85)')})`,
+                              boxShadow: `0 6px 14px -4px ${l.tint.replace(')', ' / 0.55)')}, inset 0 1px 0 hsl(0 0% 100% / 0.35)`,
+                            }
+                          : { background: 'hsl(150 15% 96%)' }
+                      }
+                    >
+                      <l.icon
+                        className="h-[18px] w-[18px] transition-colors duration-200"
+                        style={{ color: active ? 'hsl(0 0% 100%)' : 'hsl(150 8% 40%)' }}
+                        strokeWidth={active ? 2.4 : 2}
+                      />
+                    </motion.div>
+                    <span
+                      className="text-[10px] font-bold tracking-tight relative z-10 leading-none"
+                      style={{ color: active ? l.tint : 'hsl(150 8% 45%)' }}
+                    >
                       {l.label}
-                    </motion.span>
+                    </span>
                   </motion.div>
                 </Link>
               );
