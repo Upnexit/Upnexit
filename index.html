@@ -160,6 +160,14 @@
     <script>
       (function () {
         function loadAnalytics() {
+          // Google Tag Manager (GTM-TXPPGXZ2)
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var gtmScript = document.createElement('script');
+          gtmScript.async = true;
+          gtmScript.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-TXPPGXZ2';
+          document.head.appendChild(gtmScript);
+
           // Google Analytics
           var gaScript = document.createElement('script');
           gaScript.async = true;
@@ -209,6 +217,17 @@
 </head>
 
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-TXPPGXZ2"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+        title="Google Tag Manager"
+      ></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <noscript>
       <img
         height="1"
