@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Public can view branding and team photos" ON storage.objects;
