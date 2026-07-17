@@ -23,6 +23,12 @@ const getSafeRedirectPath = (value: string | null) => {
   }
 };
 
+const getOAuthRedirectUrl = (targetPath: string) => {
+  const isProductionHost = window.location.hostname === 'upnexit.pro.bd';
+  const origin = isProductionHost ? 'https://upnexit.pro.bd' : window.location.origin;
+  return `${origin}/login?redirect=${encodeURIComponent(targetPath)}`;
+};
+
 const UserLogin = () => {
   const { lang } = useLanguage();
   const isBn = lang === 'bn';
@@ -57,9 +63,7 @@ const UserLogin = () => {
     setSocialLoading('google');
     try {
       try { sessionStorage.setItem('post_login_redirect', redirect); } catch {}
-      const result = await lovable.auth.signInWithOAuth('google', {
-        redirect_uri: `${window.location.origin}/login?redirect=${encodeURIComponent(redirect)}`,
-      });
+      const result = await lovable.auth.signInWithOAuth('google', { redirect_uri: getOAuthRedirectUrl(redirect) });
       if (result.error) {
         toast({ title: isBn ? 'Google লগইন ব্যর্থ' : 'Google login failed', variant: 'destructive' });
         return;
