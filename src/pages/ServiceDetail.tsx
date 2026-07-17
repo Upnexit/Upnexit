@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ServiceClientReviews from '@/components/ServiceClientReviews';
+import ServicePortfolio from '@/components/ServicePortfolio';
 import type { ServiceReviewKey } from '@/data/serviceReviews';
 import { motion } from 'framer-motion';
 import { Check, X, ArrowLeft, GraduationCap, HeartPulse, Code, Globe, Shield, Clock, Headphones, Zap, ArrowRight, Sparkles, Users, BarChart3, Settings, Monitor, Database, Lock, FileText, CheckCircle2, Play, Award, Palette, Megaphone, Bell } from 'lucide-react';
@@ -972,6 +973,8 @@ const ServiceDetail = () => {
           </div>
         </section>
 
+        <ServicePortfolio slug={slug || ''} />
+
         <ServiceClientReviews serviceKey={comingSoonKey as ServiceReviewKey} />
 
         <Footer />
@@ -1438,6 +1441,8 @@ const ServiceDetail = () => {
           </div>
         </div>
       </section>
+
+      <ServicePortfolio slug={slug || ''} />
 
       <ServiceClientReviews serviceKey={serviceKey as ServiceReviewKey} />
 
