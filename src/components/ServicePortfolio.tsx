@@ -17,8 +17,8 @@ const CATEGORY_MAP: Record<string, string[]> = {
 interface Props { slug: string; headerLabel?: string; }
 
 const ServicePortfolio = ({ slug, headerLabel }: Props) => {
-  const { language } = useLanguage();
-  const isBn = language === 'bn';
+  const { lang } = useLanguage();
+  const isBn = lang === 'bn';
   const categories = CATEGORY_MAP[slug] || [];
 
   const { data: items = [], isLoading } = useQuery({
