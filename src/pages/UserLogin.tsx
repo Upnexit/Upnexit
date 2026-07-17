@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -27,18 +27,18 @@ const UserLogin = () => {
   const [loading, setLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<'google' | 'apple' | null>(null);
 
-  if (user) {
-    navigate(redirect, { replace: true });
-    return null;
-  }
+  useEffect(() => {
+    if (user) navigate(redirect, { replace: true });
+  }, [user, redirect, navigate]);
 
   const handleGoogleLogin = async () => {
     setSocialLoading('google');
     try {
+      try { sessionStorage.setItem('post_login_redirect', redirect); } catch {}
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin + redirect,
+          redirectTo: window.location.origin + '/login',
         },
       });
       if (error) {
