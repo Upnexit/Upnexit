@@ -9,12 +9,36 @@ import { useToast } from '@/hooks/use-toast';
 import { Mail, Lock, Eye, EyeOff, ArrowRight, Shield, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
+import { lovable } from '@/integrations/lovable/index';
+
+const getSafeRedirectPath = (value: string | null) => {
+  if (!value) return '/dashboard';
+  try {
+    const decoded = decodeURIComponent(value);
+    if (!decoded.startsWith('/') || decoded.startsWith('//')) return '/dashboard';
+    if (decoded.startsWith('/login')) return '/dashboard';
+    return decoded;
+  } catch {
+    return '/dashboard';
+  }
+};
+
+const getOAuthRedirectUrl = (targetPath: string) => {
+  const isProductionHost = window.location.hostname === 'upnexit.pro.bd';
+  const origin = isProductionHost ? 'https://upnexit.pro.bd' : window.location.origin;
+  return `${origin}/login?redirect=${encodeURIComponent(targetPath)}`;
+};
+
+const canUseLovableOAuthBroker = () => {
+  const host = window.location.hostname;
+  return host === 'localhost' || host.endsWith('.lovable.app') || host.endsWith('.lovable.dev');
+};
 
 const UserLogin = () => {
   const { lang } = useLanguage();
   const isBn = lang === 'bn';
   const [searchParams] = useSearchParams();
-  const redirect = searchParams.get('redirect') || '/dashboard';
+  const redirect = getSafeRedirectPath(searchParams.get('redirect'));
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useAuth();
@@ -44,15 +68,26 @@ const UserLogin = () => {
     setSocialLoading('google');
     try {
       try { sessionStorage.setItem('post_login_redirect', redirect); } catch {}
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: window.location.origin + '/login',
-        },
-      });
-      if (error) {
-        toast({ title: isBn ? 'Google লগইন ব্যর্থ' : 'Google login failed', variant: 'destructive' });
+      const redirectUrl = getOAuthRedirectUrl(redirect);
+
+      if (!canUseLovableOAuthBroker()) {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: redirectUrl },
+        });
+        if (error) {
+          toast({ title: isBn ? 'Google লগইন ব্যর্থ' : 'Google login failed', variant: 'destructive' });
+        }
+        return;
       }
+
+      const result = await lovable.auth.signInWithOAuth('google', { redirect_uri: redirectUrl });
+      if (result.error) {
+        toast({ title: isBn ? 'Google লগইন ব্যর্থ' : 'Google login failed', variant: 'destructive' });
+        return;
+      }
+      if (result.redirected) return;
+      navigate(redirect, { replace: true });
     } catch {
       toast({ title: isBn ? 'কিছু ভুল হয়েছে' : 'Something went wrong', variant: 'destructive' });
     } finally {

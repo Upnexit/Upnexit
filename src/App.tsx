@@ -3,8 +3,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { usePageTracker } from "@/hooks/usePageTracker";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { lazy, Suspense, useEffect, useState } from "react";
@@ -95,6 +97,23 @@ const PageFallback = () => (
 const AppRoutes = () => {
   usePageTracker();
   useScrollReveal();
+  const { user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) return;
+    try {
+      const target = sessionStorage.getItem("post_login_redirect");
+      if (!target) return;
+      sessionStorage.removeItem("post_login_redirect");
+      if (!target.startsWith("/") || target.startsWith("//") || target.startsWith("/login")) return;
+      if (location.pathname !== target) navigate(target, { replace: true });
+    } catch {
+      // Ignore storage access issues and keep the current route.
+    }
+  }, [user, location.pathname, navigate]);
+
   return (
     <Suspense fallback={<PageFallback />}>
       <Routes>
