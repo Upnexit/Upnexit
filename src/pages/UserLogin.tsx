@@ -29,6 +29,11 @@ const getOAuthRedirectUrl = (targetPath: string) => {
   return `${origin}/login?redirect=${encodeURIComponent(targetPath)}`;
 };
 
+const canUseLovableOAuthBroker = () => {
+  const host = window.location.hostname;
+  return host === 'localhost' || host.endsWith('.lovable.app') || host.endsWith('.lovable.dev');
+};
+
 const UserLogin = () => {
   const { lang } = useLanguage();
   const isBn = lang === 'bn';
@@ -63,7 +68,20 @@ const UserLogin = () => {
     setSocialLoading('google');
     try {
       try { sessionStorage.setItem('post_login_redirect', redirect); } catch {}
-      const result = await lovable.auth.signInWithOAuth('google', { redirect_uri: getOAuthRedirectUrl(redirect) });
+      const redirectUrl = getOAuthRedirectUrl(redirect);
+
+      if (!canUseLovableOAuthBroker()) {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: redirectUrl },
+        });
+        if (error) {
+          toast({ title: isBn ? 'Google লগইন ব্যর্থ' : 'Google login failed', variant: 'destructive' });
+        }
+        return;
+      }
+
+      const result = await lovable.auth.signInWithOAuth('google', { redirect_uri: redirectUrl });
       if (result.error) {
         toast({ title: isBn ? 'Google লগইন ব্যর্থ' : 'Google login failed', variant: 'destructive' });
         return;
