@@ -28,7 +28,16 @@ const UserLogin = () => {
   const [socialLoading, setSocialLoading] = useState<'google' | 'apple' | null>(null);
 
   useEffect(() => {
-    if (user) navigate(redirect, { replace: true });
+    if (!user) return;
+    let target = redirect;
+    try {
+      const stored = sessionStorage.getItem('post_login_redirect');
+      if (stored) {
+        target = stored;
+        sessionStorage.removeItem('post_login_redirect');
+      }
+    } catch {}
+    navigate(target, { replace: true });
   }, [user, redirect, navigate]);
 
   const handleGoogleLogin = async () => {
