@@ -1,8 +1,11 @@
+import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { ExternalLink, Sparkles, Layers } from 'lucide-react';
+import { ExternalLink, Sparkles, Layers, ChevronLeft, ChevronRight } from 'lucide-react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 
 // Map service slug → category values used in portfolio_items.category
 const CATEGORY_MAP: Record<string, string[]> = {
@@ -36,6 +39,26 @@ const ServicePortfolio = ({ slug, headerLabel }: Props) => {
     },
   });
 
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: 'start' },
+    [Autoplay({ delay: 4000, stopOnMouseEnter: true, stopOnInteraction: false })]
+  );
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    setScrollSnaps(emblaApi.scrollSnapList());
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+    onSelect();
+  }, [emblaApi, onSelect, items.length]);
+
   if (isLoading || !items.length) return null;
 
   return (
@@ -64,17 +87,15 @@ const ServicePortfolio = ({ slug, headerLabel }: Props) => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {items.map((item: any, i: number) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              whileHover={{ y: -6 }}
-              className="group bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/30 hover:shadow-elevated transition-all duration-300 overflow-hidden flex flex-col"
-            >
+        <div className="relative">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex -ml-4">
+              {items.map((item: any) => (
+                <div
+                  key={item.id}
+                  className="min-w-0 shrink-0 grow-0 basis-full pl-4 sm:basis-1/2 lg:basis-1/3"
+                >
+                  <div className="group h-full bg-background rounded-2xl sm:rounded-3xl border border-border hover:border-primary/30 hover:shadow-elevated transition-all duration-300 overflow-hidden flex flex-col">
               <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                 {item.cover_image ? (
                   <img
@@ -138,8 +159,42 @@ const ServicePortfolio = ({ slug, headerLabel }: Props) => {
                   </a>
                 )}
               </div>
-            </motion.div>
-          ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => emblaApi?.scrollPrev()}
+            aria-label="Previous"
+            className="absolute left-0 top-1/2 hidden h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-md transition hover:bg-primary hover:text-primary-foreground lg:flex"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => emblaApi?.scrollNext()}
+            aria-label="Next"
+            className="absolute right-0 top-1/2 hidden h-10 w-10 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-md transition hover:bg-primary hover:text-primary-foreground lg:flex"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+
+          <div className="mt-6 flex justify-center gap-2">
+            {scrollSnaps.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => emblaApi?.scrollTo(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                className={`h-2 rounded-full transition-all ${
+                  i === selectedIndex ? 'w-8 bg-primary' : 'w-2 bg-muted-foreground/30'
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

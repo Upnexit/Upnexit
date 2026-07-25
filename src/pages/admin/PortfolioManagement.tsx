@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Upload, Loader2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
@@ -33,6 +33,30 @@ const PortfolioManagement = () => {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<PortfolioItem | null>(null);
   const [form, setForm] = useState(defaultItem);
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { toast.error('ইমেজ 5MB এর কম হতে হবে'); return; }
+    setUploading(true);
+    try {
+      const ext = file.name.split('.').pop() || 'jpg';
+      const path = `portfolio/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      const { error } = await supabase.storage.from('team-photos').upload(path, file, {
+        cacheControl: '3600', upsert: false, contentType: file.type,
+      });
+      if (error) throw error;
+      const { data } = supabase.storage.from('team-photos').getPublicUrl(path);
+      setForm(f => ({ ...f, cover_image: data.publicUrl }));
+      toast.success('ইমেজ আপলোড হয়েছে');
+    } catch (err: any) {
+      toast.error(err.message || 'আপলোড ব্যর্থ');
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
+  };
 
   const { data: items, isLoading } = useQuery({
     queryKey: ['admin-portfolio'],
@@ -125,7 +149,22 @@ const PortfolioManagement = () => {
               <div><Label>বিবরণ</Label><Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3} /></div>
               <div><Label>ক্লায়েন্ট নাম</Label><Input value={form.client_name} onChange={e => setForm(f => ({ ...f, client_name: e.target.value }))} /></div>
               <div><Label>ক্যাটাগরি</Label><Input value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} placeholder="School Software / Web App" /></div>
-              <div><Label>কভার ইমেজ URL</Label><Input value={form.cover_image} onChange={e => setForm(f => ({ ...f, cover_image: e.target.value }))} /></div>
+              <div>
+                <Label>কভার ইমেজ</Label>
+                <div className="flex gap-2 items-start mt-1.5">
+                  <div className="flex-1 space-y-2">
+                    <Input value={form.cover_image} onChange={e => setForm(f => ({ ...f, cover_image: e.target.value }))} placeholder="URL অথবা আপলোড করুন" />
+                    <label className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-primary/10 hover:bg-primary/20 text-primary text-xs font-semibold cursor-pointer transition-colors">
+                      {uploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
+                      {uploading ? 'আপলোড হচ্ছে...' : 'ইমেজ আপলোড করুন'}
+                      <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
+                    </label>
+                  </div>
+                  {form.cover_image && (
+                    <img src={form.cover_image} alt="preview" className="w-20 h-20 object-cover rounded-lg border border-border" />
+                  )}
+                </div>
+              </div>
               <div><Label>টেকনোলজি (কমা দিয়ে)</Label><Input value={form.technologies} onChange={e => setForm(f => ({ ...f, technologies: e.target.value }))} placeholder="React, Node.js, PostgreSQL" /></div>
               <div><Label>লাইভ URL</Label><Input value={form.live_url} onChange={e => setForm(f => ({ ...f, live_url: e.target.value }))} /></div>
               <div><Label>সর্ট অর্ডার</Label><Input type="number" value={form.sort_order} onChange={e => setForm(f => ({ ...f, sort_order: parseInt(e.target.value) || 0 }))} /></div>
