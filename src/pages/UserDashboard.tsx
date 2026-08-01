@@ -136,7 +136,7 @@ const UserDashboard = () => {
   const avatarUrl = profile.avatar_url || user.user_metadata?.avatar_url;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar />
 
       <div className="pt-20 lg:pt-24 pb-28 lg:pb-16">

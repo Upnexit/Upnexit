@@ -97,6 +97,38 @@ const Dashboard = () => {
 
   const uniqueVisitors = useMemo(() => new Set(pageViews.map(v => v.visitor_id).filter(Boolean)).size, [pageViews]);
 
+  // ===== Today-focused analytics =====
+  const todayRows = useMemo(() => {
+    const today = new Date().toISOString().split('T')[0];
+    return pageViews.filter(v => v.created_at?.startsWith(today));
+  }, [pageViews]);
+
+  const todayUniqueVisitors = useMemo(
+    () => new Set(todayRows.map(v => v.visitor_id).filter(Boolean)).size,
+    [todayRows]
+  );
+
+  const todayCountryData = useMemo(() => {
+    const counts: Record<string, { code: string; name: string; views: number; visitors: Set<string> }> = {};
+    todayRows.forEach(v => {
+      const code = v.country_code || 'XX';
+      if (!counts[code]) {
+        counts[code] = { code, name: v.country || countryNames[code] || 'অজানা', views: 0, visitors: new Set() };
+      }
+      counts[code].views++;
+      if (v.visitor_id) counts[code].visitors.add(v.visitor_id);
+    });
+    return Object.values(counts)
+      .map(c => ({ code: c.code, name: c.name, views: c.views, visitors: c.visitors.size }))
+      .sort((a, b) => b.views - a.views);
+  }, [todayRows]);
+
+  const todayCityData = useMemo(() => {
+    const counts: Record<string, number> = {};
+    todayRows.forEach(v => { if (v.city) counts[v.city] = (counts[v.city] || 0) + 1; });
+    return Object.entries(counts).map(([city, count]) => ({ city, count })).sort((a, b) => b.count - a.count).slice(0, 6);
+  }, [todayRows]);
+
   const dailyChartData = useMemo(() => {
     const days: Record<string, number> = {};
     for (let i = 6; i >= 0; i--) {
@@ -169,10 +201,12 @@ const Dashboard = () => {
   }, [allCountries, searchQuery]);
 
   const cards = [
-    { label: 'আজকের ভিজিটর', value: todayViews,        icon: Eye,            gradient: 'linear-gradient(135deg, #10b981 0%, #0ea5e9 100%)', shadow: '#10b98155' },
-    { label: 'মোট ভিজিটর',    value: uniqueVisitors,    icon: TrendingUp,     gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)', shadow: '#8b5cf655' },
-    { label: 'টিম সদস্য',      value: teamCount ?? 0,    icon: Users,          gradient: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)', shadow: '#f59e0b55' },
-    { label: 'অপঠিত মেসেজ',   value: unreadCount ?? 0,  icon: MessageSquare,  gradient: 'linear-gradient(135deg, #f43f5e 0%, #ec4899 100%)', shadow: '#f43f5e55' },
+    { label: 'আজকের পেজ ভিজিট', value: todayViews,             icon: Eye,           gradient: 'linear-gradient(135deg, #10b981 0%, #0ea5e9 100%)', shadow: '#10b98155' },
+    { label: 'আজকের ইউনিক ভিজিটর', value: todayUniqueVisitors, icon: Users,         gradient: 'linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%)', shadow: '#0ea5e955' },
+    { label: 'আজকের দেশ সংখ্যা', value: todayCountryData.length, icon: Globe,       gradient: 'linear-gradient(135deg, #14b8a6 0%, #22c55e 100%)', shadow: '#14b8a655' },
+    { label: 'মোট ইউনিক ভিজিটর', value: uniqueVisitors,        icon: TrendingUp,    gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)', shadow: '#8b5cf655' },
+    { label: 'টিম সদস্য',      value: teamCount ?? 0,           icon: Users,         gradient: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)', shadow: '#f59e0b55' },
+    { label: 'অপঠিত মেসেজ',   value: unreadCount ?? 0,          icon: MessageSquare, gradient: 'linear-gradient(135deg, #f43f5e 0%, #ec4899 100%)', shadow: '#f43f5e55' },
   ];
 
   const getColor = (count: number) => {
@@ -211,7 +245,7 @@ const Dashboard = () => {
       />
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
         {cards.map((card, i) => (
           <motion.div
             key={i}
@@ -237,6 +271,79 @@ const Dashboard = () => {
           </motion.div>
         ))}
       </div>
+
+      {/* Today's Visitors — Country & City breakdown */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-4"
+      >
+        <div className="bg-white rounded-2xl border border-[hsl(220,14%,92%)] p-5">
+          <div className="flex items-center gap-2.5 mb-4">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
+              <Globe className="h-4 w-4 text-emerald-600" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-foreground text-sm">আজকের ভিজিটর — দেশ অনুযায়ী</h2>
+              <p className="text-[10px] text-muted-foreground">আজ কোন দেশ থেকে কতজন এসেছে</p>
+            </div>
+          </div>
+          {todayCountryData.length === 0 ? (
+            <p className="text-xs text-muted-foreground py-6 text-center">আজ এখনও কোনো ভিজিটর নেই</p>
+          ) : (
+            <div className="space-y-2.5">
+              {todayCountryData.slice(0, 8).map((c, i) => {
+                const max = todayCountryData[0].views || 1;
+                return (
+                  <div key={c.code} className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-foreground">
+                        {i + 1}. {c.name} <span className="text-muted-foreground">({c.code})</span>
+                      </span>
+                      <span className="text-muted-foreground">
+                        <span className="font-semibold text-foreground">{c.visitors}</span> ভিজিটর · {c.views} ভিজিট
+                      </span>
+                    </div>
+                    <div className="h-1.5 rounded-full bg-[hsl(220,14%,95%)] overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${(c.views / max) * 100}%` }}
+                        transition={{ duration: 0.6, delay: i * 0.05 }}
+                        className="h-full rounded-full"
+                        style={{ background: 'linear-gradient(90deg,#10b981,#0ea5e9)' }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        <div className="bg-white rounded-2xl border border-[hsl(220,14%,92%)] p-5">
+          <div className="flex items-center gap-2.5 mb-4">
+            <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+              <Activity className="h-4 w-4 text-blue-500" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-foreground text-sm">আজকের শহর/জেলা</h2>
+              <p className="text-[10px] text-muted-foreground">আজকের টপ লোকেশন</p>
+            </div>
+          </div>
+          {todayCityData.length === 0 ? (
+            <p className="text-xs text-muted-foreground py-6 text-center">আজ এখনও কোনো লোকেশন ডেটা নেই</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {todayCityData.map(c => (
+                <span key={c.city} className="px-2.5 py-1.5 rounded-xl bg-[hsl(220,14%,97%)] border border-[hsl(220,14%,92%)] text-xs font-medium text-foreground">
+                  {c.city} <span className="text-primary font-semibold">{c.count}</span>
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </motion.div>
 
       {/* Traffic Chart */}
       <motion.div
