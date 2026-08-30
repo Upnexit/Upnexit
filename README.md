@@ -33,7 +33,7 @@
 
 ### 🏢 About Upnex IT
 
-Welcome to the official GitHub organization profile of **Upnex IT** (আপনেক্স আইটি) — a forward-thinking software engineering and IT innovation studio founded by **[Mehedi Hasan](https://github.com/Mehedi-dev26)**, based in **Naogaon, Rajshahi, Bangladesh**.
+Welcome to the official GitHub organization profile of **Upnex IT** — a forward-thinking software engineering and IT innovation studio founded by **[Mehedi Hasan](https://github.com/Mehedi-dev26)**, based in **Naogaon, Rajshahi, Bangladesh**.
 
 We specialize in designing and engineering high-availability cloud platforms, intelligent multi-tenant SaaS suites, custom ERP systems, and modern digital ecosystems for businesses, institutions, and enterprises across Bangladesh and beyond.
 
