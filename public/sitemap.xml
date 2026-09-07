@@ -39,6 +39,17 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://upnexit.pro.bd/services/graphic-design</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://upnexit.pro.bd/services/digital-marketing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- About -->
   <url>
     <loc>https://upnexit.pro.bd/about</loc>
@@ -103,9 +114,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- Account and admin routes reported by the SEO scan -->
-  <url><loc>https://upnexit.pro.bd/team</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
 
   <!-- Privacy Policy -->
   <url>
