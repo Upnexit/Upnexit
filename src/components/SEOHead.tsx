@@ -10,7 +10,10 @@ interface SEOHeadProps {
   keywords?: string;
 }
 
-const DEFAULT_OG_IMAGE = 'https://upnexit.pro.bd/og-image.jpg';
+const DEFAULT_OG_IMAGE =
+  'https://storage.googleapis.com/gpt-engineer-file-uploads/Fex7fztUL7ddcBz0intQqXmidY43/social-images/social-1775317823285-Screenshot_2026-04-04_211241.webp';
+
+const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
 const SEOHead = ({
   title,
@@ -42,12 +45,9 @@ const SEOHead = ({
       setMeta('name', 'keywords', keywords);
     }
 
-    if (noindex) {
-      setMeta('name', 'robots', 'noindex, nofollow');
-    } else {
-      const robotsMeta = document.querySelector('meta[name="robots"]');
-      if (robotsMeta) robotsMeta.remove();
-    }
+    // Keep a valid robots directive at all times (never strip the sitewide one)
+    setMeta('name', 'robots', noindex ? 'noindex, nofollow' : DEFAULT_ROBOTS);
+    setMeta('name', 'googlebot', noindex ? 'noindex, nofollow' : 'index, follow');
 
     // Open Graph
     setMeta('property', 'og:title', title);
@@ -82,11 +82,8 @@ const SEOHead = ({
       link.setAttribute('href', canonical);
     }
 
-    return () => {
-      // Clean up canonical on unmount
-      const link = document.querySelector('link[rel="canonical"]');
-      if (link) link.remove();
-    };
+    // Note: canonical is intentionally NOT removed on unmount — the next
+    // route's SEOHead overwrites it, so a canonical tag is always present.
   }, [title, description, canonical, ogImage, type, noindex, keywords]);
 
   return null;
